@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamer - Portfolio Digital</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Garantir que todos os elementos interativos mantenham o cursor personalizado */
+        *, *:before, *:after {
+            cursor: none !important;
+        }
+
+        a, button, input, textarea, select {
+            cursor: none !important;
+        }
+
+        /* Cursor personalizado - apenas para desktop */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #4ecdc4, #ff6b6b);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+            display: block;
+        }
+
+        .custom-cursor.hover {
+            transform: scale(2);
+            background: radial-gradient(circle, #ff6b6b, #4ecdc4);
+        }
+
+        /* Ocultar cursor personalizado em dispositivos móveis */
+        @media (max-width: 768px), (hover: none) {
+            .custom-cursor {
+                display: none !important;
+            }
+            
+            body {
+                cursor: auto !important;
+            }
+            
+            *, *:before, *:after {
+                cursor: auto !important;
+            }
+
+            a, button, input, textarea, select {
+                cursor: auto !important;
+            }
+        }
+
+        /* Background animado */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Partículas flutuantes */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(78, 205, 196, 0.8);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b, #4ecdc4);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradient 3s ease-in-out infinite;
+            text-shadow: 0 0 50px rgba(78, 205, 196, 0.5);
+            position: relative;
+            overflow: visible;
+        }
+
+        @keyframes textGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 1;
+            animation: none;
+        }
+
+        .cta-button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary {
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+            color: white;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(78, 205, 196, 0.5);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #4ecdc4;
+            border: 2px solid #4ecdc4;
+        }
+
+        .cta-secondary:hover {
+            background: #4ecdc4;
+            color: #0a0a0a;
+            transform: translateY(-3px);
+        }
+
+        /* Geometric shapes */
+        .geometric-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #4ecdc4;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            top: 20%;
+            right: 15%;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #ff6b6b;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 20%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #4ecdc4;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Seções de conteúdo */
+        .content-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 60px;
+            color: #4ecdc4;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .quote-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            line-height: 1.8;
+            color: #b0b0b0;
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: #4ecdc4;
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .quote-text::before {
+            top: -20px;
+            left: 0;
+        }
+
+        .quote-text::after {
+            bottom: -40px;
+            right: 0;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        /* Grid de portfólio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+        }
+
+        .portfolio-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .portfolio-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .portfolio-description {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-link {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .portfolio-link:hover {
+            color: #4ecdc4;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(78, 205, 196, 0.2);
+            text-align: center;
+        }
+
+        .footer-quote {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            font-style: italic;
+        }
+
+        .footer-subtext {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            .scroll-indicator {
+                display: none !important;
+            }
+        }
+
+        .scroll-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(78, 205, 196, 0.3);
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s;
+            box-shadow: 0 0 0 rgba(78, 205, 196, 0.0);
+            position: relative;
+        }
+
+        .scroll-dot::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: transparent;
+            pointer-events: auto;
+        }
+
+        .scroll-dot:hover,
+        .scroll-dot.proximity {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #4ecdc4 60%, #ff6b6b 100%);
+            box-shadow: 0 0 30px 8px rgba(78, 205, 196, 0.3), 0 0 0 4px rgba(78,205,196,0.15);
+            filter: brightness(1.2) saturate(1.3);
+            z-index: 101;
+        }
+
+        /* Estilos para os links de perfis sociais abaixo do botão "Explorar" */
+        .profile-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 200px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(78, 205, 196, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-link:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+        }
+
+        .profile-icon {
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .profile-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-1 {
+            0% {
+                transform: translate(0);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(-2px, 2px);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(-2px, -2px);
+                opacity: 1;
+            }
+            60% {
+                transform: translate(2px, 2px);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(2px, -2px);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glitch-2 {
+            0% {
+                transform: translate(0);
+                opacity: 0.8;
+            }
+            20% {
+                transform: translate(2px, 2px);
+                opacity: 0.8;
+            }
+            40% {
+                transform: translate(2px, -2px);
+                opacity: 0.8;
+            }
+            60% {
+                transform: translate(-2px, 2px);
+                opacity: 0.8;
+            }
+            80% {
+                transform: translate(-2px, -2px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(0);
+                opacity: 0.8;
+            }
+        }
+
+        /* Epic mode filter - aplicado apenas ao conteúdo, não ao cursor */
+        body.epic-mode > *:not(.custom-cursor) {
+            filter: hue-rotate(300deg) saturate(2) contrast(1.5);
+            transition: filter 1s ease-in-out;
+        }
+
+        /* Remover áreas e dicas antigas */
+        .touch-area, .touch-hint { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="animated-background"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title glitch" data-text="DREAMER"><span class="progress-text">DREAMER</span><span class="progress-bar"></span></h1>
+            <div class="cta-buttons">
+                <a href="#portfolio" class="cta-button cta-primary">Explorar</a>
+            </div>
+            <!-- Seção de links de perfis -->
+            <div class="profile-links">
+                <a href="https://steamcommunity.com/id/SweetDreamsJP/" target="_blank" class="profile-link">
+                    <span class="profile-icon">🎮</span> Steam
+                </a>
+                <a href="https://github.com/DreamerJP" target="_blank" class="profile-link">
+                    <span class="profile-icon">💻</span> GitHub
+                </a>
+                <a href="https://www.youtube.com/@DreamerJP" target="_blank" class="profile-link">
+                    <span class="profile-icon">📺</span> YouTube
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="quote-container">
+            <div class="quote-text">
+                I am the son<br>
+                And the heir<br>
+                Of a shyness that is criminally vulgar<br>
+                I am the son and heir<br>
+                Of nothing in particular<br>
+                You shut your mouth<br>
+                How can you say<br>
+                I go about things the wrong way?<br>
+                I am human and I need to be loved<br>
+                Just like everybody else does.
+            </div>
+            <div class="quote-author">— The Smiths</div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="content-section" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">UNIVERSO CRIATIVO</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">🎬</span>
+                    <h3 class="portfolio-title">Filmes</h3>
+                    <p class="portfolio-description">
+                        Uma curadoria cinematográfica pessoal com clássicos e descobertas modernas
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/filmes" class="portfolio-link">Explorar Coleção →</a>
+                </div>
+                
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">🎵</span>
+                    <h3 class="portfolio-title">Músicas</h3>
+                    <p class="portfolio-description">
+                        Playlists que marcaram momentos especiais
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/m%C3%BAsicas" class="portfolio-link">Ouvir Playlist →</a>
+                </div>
+                
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">🎮</span>
+                    <h3 class="portfolio-title">Jogos</h3>
+                    <p class="portfolio-description">
+                        Mundos virtuais e aventuras digitais que expandem os limites da imaginação
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/jogos" class="portfolio-link">Descobrir Games →</a>
+                </div>
+                
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">📚</span>
+                    <h3 class="portfolio-title">Animes</h3>
+                    <p class="portfolio-description">
+                        Animes com narrativas cativantes
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/animes" class="portfolio-link">Ver Lista →</a>
+                </div>
+                
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">🎨</span>
+                    <h3 class="portfolio-title">Imagens</h3>
+                    <p class="portfolio-description">
+                        Uma Coleção de Fotos
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/imagens" class="portfolio-link">Ver Galeria →</a>
+                </div>
+                
+                <div class="portfolio-item">
+                    <span class="portfolio-icon">🎥</span>
+                    <h3 class="portfolio-title">Vídeos</h3>
+                    <p class="portfolio-description">
+                        Conteúdo Audiovisual: Música, Animações
+                    </p>
+                    <a href="https://sites.google.com/view/dreamerjpmg/videos" class="portfolio-link">Assistir →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-quote">
+                "Dreams live on<br>
+                Even after the dreamer..."
+            </div>
+            <div class="footer-subtext">
+                dreamerjpmg@gmail.com
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot active"></div>
+        <div class="scroll-dot"></div>
+        <div class="scroll-dot"></div>
+    </div>
+
+    <script>
+        // Cursor personalizado - apenas para desktop
+        const cursor = document.querySelector('.custom-cursor');
+        const interactiveElements = document.querySelectorAll('a, button, .portfolio-item');
+
+        // Verificar se é dispositivo móvel
+        const isMobile = window.matchMedia("(max-width: 768px)").matches || 
+                        ('ontouchstart' in window) || 
+                        (navigator.maxTouchPoints > 0);
+
+        if (!isMobile && cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
+
+        // Partículas animadas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 50;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                
+                // Cores alternadas
+                if (Math.random() > 0.5) {
+                    particle.style.background = 'rgba(255, 107, 107, 0.8)';
+                }
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Navegação suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll indicator
+        const scrollDots = document.querySelectorAll('.scroll-dot');
+        const sections = document.querySelectorAll('section, .quote-section');
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+            
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                    scrollDots.forEach(dot => dot.classList.remove('active'));
+                    if (scrollDots[index]) {
+                        scrollDots[index].classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Clique nos pontos do scroll indicator para rolar até a seção correspondente
+        scrollDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const targetSection = sections[index];
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efeito de paralaxe nas formas geométricas
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.geometric-shape');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const xPos = (x - 0.5) * speed * 50;
+                const yPos = (y - 0.5) * speed * 50;
+                
+                shape.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Animação de entrada dos elementos
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(50px)';
+            item.style.transition = 'all 0.8s ease';
+            observer.observe(item);
+        });
+
+        // Fade in para profile-links
+        const profileLinks = document.querySelector('.profile-links');
+        profileLinks.style.opacity = '0';
+        profileLinks.style.transform = 'translateY(50px)';
+        profileLinks.style.transition = 'all 4s cubic-bezier(0.23, 1, 0.32, 1)';
+        observer.observe(profileLinks);
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // Efeito de digitação no título
+            const title = document.querySelector('.hero-title');
+            const text = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            const typeEffect = setInterval(() => {
+                if (i < text.length) {
+                    title.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeEffect);
+                }
+            }, 150);
+        });
+
+        // Easter egg - Konami Code (Desktop e Mobile)
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+
+        // Konami Code para desktop (teclado)
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                document.body.classList.toggle('epic-mode');
+                konamiCode = [];
+            }
+        });
+
+        // Novo método Konami mobile: long press no DREAMER
+        if (isMobile) {
+            const heroTitle = document.querySelector('.hero-title');
+            let progressTimeout = null;
+            let isLoading = false;
+            const holdDuration = 3500; // ms
+
+            function startProgress() {
+                if (isLoading) return;
+                isLoading = true;
+                progressTimeout = setTimeout(() => {
+                    document.body.classList.toggle('epic-mode');
+                    isLoading = false;
+                }, holdDuration);
+            }
+            function cancelProgress() {
+                if (!isLoading) return;
+                clearTimeout(progressTimeout);
+                isLoading = false;
+            }
+            heroTitle.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 1) return; // ignore multi-touch
+                startProgress();
+            });
+            heroTitle.addEventListener('touchend', cancelProgress);
+            heroTitle.addEventListener('touchcancel', cancelProgress);
+        }
+    </script>
+</body>
+</html>

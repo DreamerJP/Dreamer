@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            transition: all 3s ease;
+        }
+
+        /* Efeito Otherworld */
+        body.otherworld {
+            background: radial-gradient(circle at 50% 50%, #2c1810 0%, #1a0e08 30%, #0a0503 60%, #000000 100%);
+            animation: otherworld-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes otherworld-pulse {
+            0%, 100% { filter: brightness(0.3) contrast(1.2) saturate(0.1); }
+            50% { filter: brightness(0.5) contrast(1.5) saturate(0.3); }
+        }
+
+        /* Efeito de ferrugem e decay */
+        .rust-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 60%, rgba(101, 67, 33, 0.4) 0%, transparent 35%),
+                radial-gradient(circle at 40% 80%, rgba(160, 82, 45, 0.2) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(139, 69, 19, 0.1) 0%, rgba(101, 67, 33, 0.2) 50%, rgba(160, 82, 45, 0.1) 100%);
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        .rust-overlay.active {
+            opacity: 1;
+            animation: rust-spread 6s ease-in-out infinite;
+        }
+
+        @keyframes rust-spread {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.02) rotate(0.5deg); }
+            50% { transform: scale(1.01) rotate(-0.3deg); }
+            75% { transform: scale(1.03) rotate(0.8deg); }
+        }
+
+        /* Efeito de sangue escorrendo */
+        .blood-drips {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        .blood-drips.active {
+            opacity: 1;
+        }
+
+        .blood-drip {
+            position: absolute;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, 
+                #8B0000 0%, 
+                #DC143C 20%, 
+                #8B0000 40%, 
+                #4A0000 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: blood-drop 8s linear forwards;
+            box-shadow: 0 0 2px rgba(139, 0, 0, 0.8);
+        }
+
+        @keyframes blood-drop {
+            0% {
+                height: 0;
+                opacity: 0.7;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                height: 100vh;
+                opacity: 0.8;
+            }
+        }
+
+        /* Efeito de rachadura nas paredes */
+        .cracks-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 49%, rgba(0,0,0,0.8) 49.5%, rgba(0,0,0,0.8) 50.5%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(0,0,0,0.6) 49.5%, rgba(0,0,0,0.6) 50.5%, transparent 51%);
+            background-size: 200px 200px, 150px 150px;
+            background-position: 0 0, 75px 75px;
+            pointer-events: none;
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        .cracks-overlay.active {
+            opacity: 0.3;
+            animation: crack-grow 10s ease-in-out infinite;
+        }
+
+        @keyframes crack-grow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .gaming-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+            transition: opacity 2s ease;
+        }
+
+        .gaming-particles.otherworld {
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+            border-radius: 50%;
+            animation: particle-float 6s ease-in-out infinite;
+            transition: all 2s ease;
+        }
+
+        .particle.otherworld {
+            background: linear-gradient(45deg, #8B0000, #4A0000);
+            animation: otherworld-particle 4s ease-in-out infinite;
+        }
+
+        @keyframes otherworld-particle {
+            0%, 100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.3; }
+            25% { transform: translateY(-40px) translateX(20px) scale(1.5); opacity: 0.8; }
+            50% { transform: translateY(-20px) translateX(-20px) scale(0.8); opacity: 0.5; }
+            75% { transform: translateY(-60px) translateX(15px) scale(1.2); opacity: 0.9; }
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+            25% { transform: translateY(-30px) translateX(15px); opacity: 1; }
+            50% { transform: translateY(-10px) translateX(-15px); opacity: 0.7; }
+            75% { transform: translateY(-40px) translateX(10px); opacity: 0.9; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            transition: all 3s ease;
+        }
+
+        .container.otherworld {
+            background: rgba(50, 30, 20, 0.9);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            border: 2px solid #8B0000;
+        }
+
+        .container.otherworld * {
+            color: #D2B48C !important;
+            transition: color 2s ease;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            transition: all 2s ease;
+        }
+
+        .container.otherworld::before {
+            background: linear-gradient(90deg, #8B0000, #4A0000);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            transition: all 2s ease;
+        }
+
+        .header h1.otherworld {
+            color: #8B0000 !important;
+            text-shadow: 2px 2px 8px rgba(139, 0, 0, 0.8);
+            animation: otherworld-title 3s ease-in-out infinite;
+        }
+
+        @keyframes otherworld-title {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gaming-icons {
+            position: absolute;
+            font-size: 1.8em;
+            opacity: 0.3;
+            animation: float-icons 5s ease-in-out infinite;
+            transition: all 2s ease;
+        }
+
+        .gaming-icons.otherworld {
+            opacity: 0.6;
+            filter: hue-rotate(180deg);
+        }
+
+        .icon-1 { top: -15px; left: -40px; animation-delay: 0s; }
+        .icon-2 { top: 15px; right: -40px; animation-delay: 1.5s; }
+        .icon-3 { bottom: -15px; left: 60%; animation-delay: 3s; }
+
+        @keyframes float-icons {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .games-intro {
+            background: linear-gradient(45deg, rgba(155, 89, 182, 0.1), rgba(52, 152, 219, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 4px solid #9b59b6;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            transition: all 2s ease;
+        }
+
+        .games-intro.otherworld {
+            background: linear-gradient(45deg, rgba(139, 0, 0, 0.2), rgba(101, 67, 33, 0.2));
+            border-left: 4px solid #8B0000;
+        }
+
+        .games-intro h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-intro p {
+            color: #566573;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .special-mention {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.15), rgba(192, 57, 43, 0.15));
+            border: 2px solid rgba(231, 76, 60, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 2s ease;
+        }
+
+        .special-mention:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        .special-mention.otherworld {
+            background: linear-gradient(45deg, rgba(139, 0, 0, 0.4), rgba(101, 67, 33, 0.4));
+            border: 2px solid #8B0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        .special-mention::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(231, 76, 60, 0.05), transparent);
+            animation: special-shine 4s ease-in-out infinite;
+        }
+
+        .special-mention.otherworld::before {
+            background: linear-gradient(45deg, transparent, rgba(139, 0, 0, 0.2), transparent);
+        }
+
+        @keyframes special-shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .special-mention h3 {
+            color: #e74c3c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .special-mention p {
+            color: #c0392b;
+            font-size: 1.2em;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .silent-hill-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .silent-hill-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .silent-hill-image.otherworld {
+            filter: brightness(0.4) contrast(1.5) saturate(0.2);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            align-items: start;
+        }
+
+        .game-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out both;
+            border: 2px solid transparent;
+            /* min-height removido para cards ficarem do tamanho do conteúdo */
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .game-card.otherworld {
+            background: linear-gradient(145deg, rgba(50, 30, 20, 0.9), rgba(40, 25, 15, 0.9));
+            border-color: #8B0000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .game-card.otherworld:hover {
+            border-color: rgba(139, 0, 0, 0.8);
+            box-shadow: 0 25px 50px rgba(139, 0, 0, 0.4);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-card.otherworld::before {
+            background: linear-gradient(90deg, #8B0000, #4A0000);
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-title {
+            color: #2c3e50;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .game-franchise {
+            margin-bottom: 15px;
+        }
+
+        .franchise-title {
+            color: #34495e;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(78, 205, 196, 0.3);
+            transition: all 2s ease;
+        }
+
+        .franchise-title.otherworld {
+            border-bottom: 2px solid rgba(139, 0, 0, 0.6);
+        }
+
+        .game-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(78, 205, 196, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .game-item.otherworld {
+            background: rgba(139, 0, 0, 0.1);
+            border-left: 4px solid #8B0000;
+        }
+
+        .game-item:hover {
+            background: rgba(78, 205, 196, 0.1);
+            transform: translateX(5px);
+        }
+
+        .game-item.otherworld:hover {
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .game-name {
+            color: #2c3e50;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        }
+
+        .video-container.otherworld {
+            filter: brightness(0.6) contrast(1.3) sepia(0.3);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.08;
+            animation: float 10s ease-in-out infinite;
+            transition: all 2s ease;
+        }
+
+        .floating-element.otherworld {
+            opacity: 0.2;
+            filter: hue-rotate(180deg);
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 25%; right: 10%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { bottom: 15%; right: 8%; animation-delay: 6s; }
+        .floating-element:nth-child(5) { top: 60%; left: 8%; animation-delay: 1s; }
+        .floating-element:nth-child(6) { top: 45%; right: 12%; animation-delay: 3s; }
+        .floating-element:nth-child(7) { bottom: 50%; left: 50%; animation-delay: 5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-25px) rotate(8deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+            75% { transform: translateY(-35px) rotate(12deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animações escalonadas para os cards */
+        .game-card:nth-child(1) { animation-delay: 0.8s; }
+        .game-card:nth-child(2) { animation-delay: 1s; }
+        .game-card:nth-child(3) { animation-delay: 1.2s; }
+        .game-card:nth-child(4) { animation-delay: 1.4s; }
+
+        /* Efeito de distorção de tela */
+        .screen-distortion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.1) 2px,
+                rgba(0,0,0,0.1) 4px
+            );
+            animation: screen-flicker 0.3s ease-in-out infinite;
+        }
+
+        .screen-distortion.active {
+            opacity: 1;
+        }
+
+        @keyframes screen-flicker {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.3; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .header p {
+                font-size: 1.1em;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-card {
+                padding: 25px;
+            }
+
+            .game-title {
+                font-size: 1.4em;
+            }
+
+            .franchise-title {
+                font-size: 1.2em;
+            }
+
+            .video-modal-content {
+                width: 95%;
+                padding-bottom: 56.25%; /* Mantém responsivo no mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .game-card {
+                padding: 20px;
+            }
+
+            .floating-element {
+                font-size: 1.5em;
+            }
+        }
+
+        /* Modal de vídeo */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            height: 0;
+            padding-bottom: 45%; /* Menor altura, ainda 16:9 em telas largas */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.7) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                width: 95%;
+                padding-bottom: 56.25%; /* Mantém responsivo no mobile */
+            }
+        }
+
+        .video-modal.active .video-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .video-modal-content iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .video-close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .video-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Overlay de play nos vídeos pequenos */
+        .video-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-container::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .video-container:hover::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .video-container.otherworld::after {
+            color: #8B0000;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        /* Efeito de thumb nos vídeos pequenos */
+        .video-container iframe {
+            pointer-events: none;
+        }
+
+        .blood-splatter {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background-image: radial-gradient(
+                ellipse at center,
+                rgba(139, 0, 0, 0.7) 0%,
+                rgba(139, 0, 0, 0.5) 30%,
+                transparent 70%
+            );
+            opacity: 0;
+            animation: blood-splatter-fade 8s ease-out forwards;
+            transform: rotate(var(--rotation)) scale(var(--scale));
+        }
+
+        @keyframes blood-splatter-fade {
+            0% {
+                opacity: 0;
+                transform: rotate(var(--rotation)) scale(0.5);
+            }
+            20% {
+                opacity: 0.9;
+                transform: rotate(var(--rotation)) scale(var(--scale));
+            }
+            100% {
+                opacity: 0.6;
+                transform: rotate(var(--rotation)) scale(calc(var(--scale) * 1.1));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gaming-particles" id="gamingParticles"></div>
+    <div class="rust-overlay" id="rustOverlay"></div>
+    <div class="blood-drips" id="bloodDrips"></div>
+    <div class="cracks-overlay" id="cracksOverlay"></div>
+    <div class="screen-distortion" id="screenDistortion"></div>
+
+    <div class="container">
+        <div class="floating-elements">
+            <div class="floating-element">🎮</div>
+            <div class="floating-element">🕹️</div>
+            <div class="floating-element">🎯</div>
+            <div class="floating-element">🎲</div>
+            <div class="floating-element">⚡</div>
+            <div class="floating-element">🏆</div>
+            <div class="floating-element">🌟</div>
+        </div>
+
+        <div class="header">
+            <div class="gaming-icons icon-1">🎮</div>
+            <div class="gaming-icons icon-2">🕹️</div>
+            <div class="gaming-icons icon-3">🎯</div>
+            
+            <h1>🎮 Jogos</h1>
+            <p>Uma jornada através dos melhores jogos que já experienciei</p>
+        </div>
+
+        <div class="games-intro">
+            <h3>🌟 Minha Coleção Pessoal</h3>
+            <p>Cada jogo aqui representa uma experiência marcante, histórias que ficaram gravadas na memória e momentos únicos de imersão.</p>
+        </div>
+
+        <div class="special-mention" id="silentHillSection">
+            <h3>👑 Hors Concours</h3>
+            <p><strong>Silent Hill</strong> - Uma obra-prima</p>
+            <img src="https://i.imgur.com/mgEvwei.jpeg" alt="Silent Hill" class="silent-hill-image" id="silentHillImage">
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-name">🤖 Nier Automata</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/wJxNhJ8fjFk" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-name">🏠 What Remains of Edith Finch</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/DhH5bfoZJFo" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-name">👻 Beyond Two Souls</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/b7AuSnCM8Uo" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-franchise">
+                    <div class="franchise-title">🦋 Franquia Life is Strange</div>
+                    <div class="game-item">
+                        <div class="game-name">Life is Strange</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/bSE5FbT38dY" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <div class="game-name">Life is Strange: Before the Storm</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/OunUnpKLEGQ" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <div class="game-name">Life is Strange: True Colors</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/b6CkzwVAr0M" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-franchise">
+                    <div class="franchise-title">🚀 Franquia Mass Effect</div>
+                    <div class="game-item">
+                        <div class="game-name">Mass Effect Trilogy</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/n8i53TtQ6IQ" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <div class="game-name">Mass Effect: Andromeda</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/X6PJEmEHIaY" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-franchise">
+                    <div class="franchise-title">⚔️ Franquia Hellblade</div>
+                    <div class="game-item">
+                        <div class="game-name">Hellblade: Senua's Sacrifice</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/fBJ0ifVtK5c" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <div class="game-name">Senua's Saga: Hellblade II</div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/9ywWqKhujeI" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de vídeo -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-close-btn" id="closeVideoModal">×</button>
+            <iframe id="modalVideoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        let isOtherworldActive = false;
+        let sirenAudio = null;
+        let fallbackAudioContext = null;
+        let fallbackOscillator = null;
+        let fallbackGainNode = null;
+        let otherworldTimeout = null;
+
+        // Função de limpeza robusta para áudio
+        function cleanupAudio() {
+            if (sirenAudio) {
+                sirenAudio.pause();
+                sirenAudio.currentTime = 0;
+                sirenAudio.src = '';
+                sirenAudio.load();
+                sirenAudio = null;
+            }
+            if (fallbackAudioContext && fallbackAudioContext.state !== 'closed') {
+                try {
+                    if (fallbackOscillator) {
+                        fallbackOscillator.stop();
+                        fallbackOscillator.disconnect();
+                    }
+                    if (fallbackGainNode) {
+                        fallbackGainNode.disconnect();
+                    }
+                    fallbackAudioContext.close();
+                } catch (e) {}
+                fallbackAudioContext = null;
+                fallbackOscillator = null;
+                fallbackGainNode = null;
+            }
+        }
+
+        // Função para criar partículas flutuantes no fundo
+        function createGamingParticles() {
+            const particlesContainer = document.getElementById('gamingParticles');
+            const numberOfParticles = 40;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+                particle.style.animationDuration = `${4 + Math.random() * 4}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Função para criar gotas de sangue
+        function createBloodDrops() {
+            const bloodContainer = document.getElementById('bloodDrips');
+            bloodContainer.innerHTML = '';
+            const numberOfDrops = 15;
+            for (let i = 0; i < numberOfDrops; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'blood-drip';
+                drop.style.left = `${Math.random() * 98}%`;
+                drop.style.top = `-${10 + Math.random() * 30}px`;
+                drop.style.height = `${60 + Math.random() * 40}vh`;
+                drop.style.animationDelay = `${Math.random() * 8}s`;
+                drop.style.animationDuration = `${6 + Math.random() * 4}s`;
+                bloodContainer.appendChild(drop);
+            }
+            // Criar manchas de sangue
+            for (let i = 0; i < 8; i++) {
+                const splatter = document.createElement('div');
+                splatter.className = 'blood-splatter';
+                splatter.style.left = `${Math.random() * 90}%`;
+                splatter.style.top = `${Math.random() * 90}%`;
+                splatter.style.setProperty('--rotation', `${Math.random() * 360}deg`);
+                splatter.style.setProperty('--scale', `${0.5 + Math.random() * 0.7}`);
+                splatter.style.animationDelay = `${Math.random() * 5}s`;
+                bloodContainer.appendChild(splatter);
+            }
+        }
+
+        // Função para efeitos finais
+        function startFinalEffects() {
+            let flickerCount = 0;
+            const flickerInterval = setInterval(() => {
+                if (!isOtherworldActive) {
+                    clearInterval(flickerInterval);
+                    return;
+                }
+                document.getElementById('screenDistortion').style.opacity = 
+                    Math.random() > 0.7 ? '0.5' : '0.1';
+                flickerCount++;
+                if (flickerCount > 20) {
+                    clearInterval(flickerInterval);
+                    if (isOtherworldActive) {
+                        document.getElementById('screenDistortion').style.opacity = '0.2';
+                    }
+                }
+            }, 100);
+            let shakeCount = 0;
+            const shakeInterval = setInterval(() => {
+                if (!isOtherworldActive) {
+                    clearInterval(shakeInterval);
+                    document.querySelector('.container').style.transform = 'translate(0, 0)';
+                    return;
+                }
+                const container = document.querySelector('.container');
+                const x = (Math.random() - 0.5) * 4;
+                const y = (Math.random() - 0.5) * 4;
+                container.style.transform = `translate(${x}px, ${y}px)`;
+                shakeCount++;
+                if (shakeCount > 30) {
+                    clearInterval(shakeInterval);
+                    if (isOtherworldActive) {
+                        container.style.transform = 'translate(0, 0)';
+                    }
+                }
+            }, 50);
+        }
+
+        // Função modificada para ativar Otherworld em etapas
+        function activateOtherworld() {
+            cleanupAudio();
+            if (isOtherworldActive) return;
+            isOtherworldActive = true;
+            if (otherworldTimeout) {
+                clearTimeout(otherworldTimeout);
+            }
+            createSirenSound();
+            document.getElementById('bloodDrips').classList.add('active');
+            setTimeout(() => {
+                if (!isOtherworldActive) return;
+                document.getElementById('rustOverlay').classList.add('active');
+            }, 2000);
+            setTimeout(() => {
+                if (!isOtherworldActive) return;
+                document.getElementById('cracksOverlay').classList.add('active');
+            }, 6000);
+            setTimeout(() => {
+                if (!isOtherworldActive) return;
+                document.body.classList.add('otherworld');
+                document.querySelector('.container').classList.add('otherworld');
+                document.querySelector('.gaming-particles').classList.add('otherworld');
+                document.getElementById('screenDistortion').classList.add('active');
+                const elementsToTransform = [
+                    '.header h1', '.gaming-icons', '.games-intro', 
+                    '.special-mention', '.game-card', '.franchise-title', 
+                    '.game-item', '.video-container', '.floating-element',
+                    '.silent-hill-image'
+                ];
+                elementsToTransform.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => el.classList.add('otherworld'));
+                });
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => particle.classList.add('otherworld'));
+                startFinalEffects();
+            }, 8000);
+            otherworldTimeout = setTimeout(() => {
+                deactivateOtherworld();
+            }, 25000);
+        }
+
+        // Função modificada para desativar Otherworld
+        function deactivateOtherworld() {
+            cleanupAudio();
+            if (!isOtherworldActive) return;
+            isOtherworldActive = false;
+            if (otherworldTimeout) {
+                clearTimeout(otherworldTimeout);
+                otherworldTimeout = null;
+            }
+            document.body.classList.remove('otherworld');
+            document.querySelector('.container').classList.remove('otherworld');
+            document.querySelector('.gaming-particles').classList.remove('otherworld');
+            document.getElementById('rustOverlay').classList.remove('active');
+            document.getElementById('bloodDrips').classList.remove('active');
+            document.getElementById('cracksOverlay').classList.remove('active');
+            document.getElementById('screenDistortion').classList.remove('active');
+            const elementsToTransform = [
+                '.header h1', '.gaming-icons', '.games-intro', 
+                '.special-mention', '.game-card', '.franchise-title', 
+                '.game-item', '.video-container', '.floating-element',
+                '.silent-hill-image'
+            ];
+            elementsToTransform.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => el.classList.remove('otherworld'));
+            });
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => particle.classList.remove('otherworld'));
+        }
+
+        // Limpar áudio ao recarregar a página
+        window.addEventListener('beforeunload', cleanupAudio);
+        window.addEventListener('unload', cleanupAudio);
+
+        // Criar som de sirene usando Web Audio API
+        function createSirenSound() {
+            try {
+                sirenAudio = new Audio('https://us-tuna-sounds-files.voicemod.net/72d784b7-37bf-4902-95eb-dcd8a457b5d4-1661120840943.mp3');
+                sirenAudio.volume = 0.52;
+                sirenAudio.loop = true;
+                const playPromise = sirenAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Erro ao reproduzir áudio da sirene.');
+                    });
+                }
+            } catch (error) {
+                console.log('Erro ao carregar áudio da sirene.');
+            }
+        }
+
+        // Criar sons ambiente assombrados
+        function createAmbienceSound(audioContext) {
+            const oscillator2 = audioContext.createOscillator();
+            const gainNode2 = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            oscillator2.connect(filter);
+            filter.connect(gainNode2);
+            gainNode2.connect(audioContext.destination);
+            
+            oscillator2.type = 'sine';
+            oscillator2.frequency.setValueAtTime(80, audioContext.currentTime);
+            
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(200, audioContext.currentTime);
+            
+            gainNode2.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode2.gain.linearRampToValueAtTime(0.03, audioContext.currentTime + 1);
+            
+            // Variações aleatórias na frequência para criar atmosfera sinistra
+            let time = audioContext.currentTime;
+            for (let i = 0; i < 30; i++) {
+                const freq = 60 + Math.random() * 40;
+                oscillator2.frequency.setValueAtTime(freq, time);
+                time += 0.5 + Math.random() * 0.5;
+            }
+            
+            oscillator2.start(audioContext.currentTime);
+            oscillator2.stop(audioContext.currentTime + 30);
+        }
+
+        // Desativar efeito Otherworld
+        function deactivateOtherworld() {
+            if (!isOtherworldActive) return;
+            
+            isOtherworldActive = false;
+            
+            // Parar sirene
+            if (sirenAudio) {
+                sirenAudio.pause();
+                sirenAudio.currentTime = 0;
+            }
+            
+            // Remover classes de efeito
+            document.body.classList.remove('otherworld');
+            document.querySelector('.container').classList.remove('otherworld');
+            document.querySelector('.gaming-particles').classList.remove('otherworld');
+            document.getElementById('rustOverlay').classList.remove('active');
+            document.getElementById('bloodDrips').classList.remove('active');
+            document.getElementById('cracksOverlay').classList.remove('active');
+            document.getElementById('screenDistortion').classList.remove('active');
+            
+            // Remover efeito de todos os elementos
+            const elementsToTransform = [
+                '.header h1', '.gaming-icons', '.games-intro', 
+                '.special-mention', '.game-card', '.franchise-title', 
+                '.game-item', '.video-container', '.floating-element',
+                '.silent-hill-image'
+            ];
+            
+            elementsToTransform.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => el.classList.remove('otherworld'));
+            });
+            
+            // Remover efeito das partículas
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => particle.classList.remove('otherworld'));
+        }
+
+        // Efeito de paralaxe nos elementos flutuantes
+        function setupParallax() {
+            document.addEventListener('mousemove', function(e) {
+                if (isOtherworldActive) return; // Desabilitar paralaxe no Otherworld
+                
+                const floatingElements = document.querySelectorAll('.floating-element');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                floatingElements.forEach((element, index) => {
+                    const speed = (index + 1) * 0.4;
+                    const xPos = (x - 0.5) * speed * 25;
+                    const yPos = (y - 0.5) * speed * 25;
+                    
+                    element.style.transform = `translate(${xPos}px, ${yPos}px)`;
+                });
+            });
+        }
+
+        // Animação dos ícones do header
+        function animateHeaderIcons() {
+            const icons = document.querySelectorAll('.gaming-icons');
+            icons.forEach((icon, index) => {
+                setInterval(() => {
+                    if (isOtherworldActive) {
+                        // Animação mais errática no Otherworld
+                        const time = Date.now() / 1000;
+                        const yOffset = Math.sin(time * 2 + index * 3) * 12 + Math.random() * 6;
+                        const rotation = Math.sin(time * 1.5 + index) * 25 + Math.random() * 10;
+                        icon.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`;
+                    } else {
+                        const time = Date.now() / 1000;
+                        const yOffset = Math.sin(time + index * 2) * 6;
+                        const rotation = Math.sin(time * 0.8 + index) * 12;
+                        icon.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`;
+                    }
+                }, 50);
+            });
+        }
+
+        // Efeito de hover aprimorado para os cards
+        function enhanceCardHovers() {
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transition = 'all 0.4s ease';
+                });
+            });
+        }
+
+        // Observador de interseção para animações
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.game-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            createGamingParticles();
+            createBloodDrops();
+            setupParallax();
+            animateHeaderIcons();
+            enhanceCardHovers();
+            setupIntersectionObserver();
+            setupVideoModal();
+            
+            // Event listener para ativar Otherworld
+            const silentHillImage = document.getElementById('silentHillImage');
+            silentHillImage.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!isOtherworldActive) {
+                    activateOtherworld();
+                } else {
+                    deactivateOtherworld();
+                }
+            });
+            
+            // Efeito de entrada suave do container
+            const container = document.querySelector('.container');
+            setTimeout(() => {
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Atualizar posições das partículas periodicamente
+            setInterval(() => {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    const randomDelay = Math.random() * 2;
+                    particle.style.animationDelay = `${randomDelay}s`;
+                });
+            }, 8000);
+            
+            // Easter egg: Ativar Otherworld com tecla especial
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F' && e.shiftKey && e.ctrlKey) {
+                    e.preventDefault();
+                    if (!isOtherworldActive) {
+                        activateOtherworld();
+                    } else {
+                        deactivateOtherworld();
+                    }
+                }
+            });
+        });
+
+        // Abrir modal de vídeo
+        function openVideoModal(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('modalVideoFrame');
+            iframe.src = videoUrl;
+            modal.classList.add('active');
+        }
+
+        // Fechar modal de vídeo
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('modalVideoFrame');
+            iframe.src = '';
+            modal.classList.remove('active');
+        }
+
+        // Sistema de modal para vídeos
+        function setupVideoModal() {
+            const videoModal = document.getElementById('videoModal');
+            const modalVideoFrame = document.getElementById('modalVideoFrame');
+            const closeVideoModal = document.getElementById('closeVideoModal');
+            const videoContainers = document.querySelectorAll('.video-container');
+
+            // Abrir modal ao clicar em um vídeo
+            videoContainers.forEach(container => {
+                container.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const iframe = this.querySelector('iframe');
+                    let videoSrc = iframe.src;
+                    // Remove autoplay anterior, se houver
+                    videoSrc = videoSrc.replace(/[?&]autoplay=1/, '');
+                    // Adiciona autoplay corretamente
+                    const autoplayUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+                    modalVideoFrame.src = autoplayUrl;
+                    videoModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Fechar modal
+            function closeModal() {
+                videoModal.classList.remove('active');
+                modalVideoFrame.src = '';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Fechar ao clicar no X
+            closeVideoModal.addEventListener('click', closeModal);
+
+            // Fechar ao clicar fora do vídeo
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeModal();
+                }
+            });
+
+            // Fechar com tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Prevenir scroll quando modal estiver aberto
+            videoModal.addEventListener('wheel', function(e) {
+                e.preventDefault();
+            });
+        }
+
+        // Inicializar sistema de modal
+        setupVideoModal();
+    </script>
+</body>
+</html>

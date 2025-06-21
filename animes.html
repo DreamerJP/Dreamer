@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Animes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #e74c3c;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        .filter-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+        }
+
+        .filter-btn .count {
+            background: rgba(255,255,255,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 25px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .animes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .anime-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #e74c3c;
+        }
+
+        .anime-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        }
+
+        .anime-images {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .anime-images.has-images {
+            background: none;
+        }
+
+        .image-slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .slide-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .anime-images:hover .slide-controls {
+            opacity: 1;
+        }
+
+        .slide-controls:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slide-controls.prev {
+            left: 10px;
+        }
+
+        .slide-controls.next {
+            right: 10px;
+        }
+
+        .slide-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+        }
+
+        .anime-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .anime-category {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 12px;
+            text-transform: capitalize;
+        }
+
+        .anime-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #f39c12;
+            font-size: 1.2em;
+        }
+
+        .anime-synopsis {
+            color: #566573;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .anime-info {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .anime-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .watch-btn {
+            flex: 1;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .watch-btn:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .favorite-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .favorite-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .favorite-btn.favorited {
+            background: #e67e22;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            grid-column: 1 / -1;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .animes-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+
+            .slide-controls {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .slide-controls.prev {
+                left: 5px;
+            }
+
+            .slide-controls.next {
+                right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎌 Catálogo de Animes</h1>
+            <p>Animes assistidos e recomendados</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Pesquisar animes...">
+        </div>
+
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-category="todos">Todos <span class="count">0</span></button>
+        </div>
+
+        <div class="animes-grid" id="animesGrid">
+            <div class="loading">Carregando animes...</div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos animes expandidos
+        const animes = [
+            {
+                    id: "52",
+                    title: "No Game, No Life",
+                    category: "comédia",
+                    images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife5.jpg"
+					],
+                    rating: 3,
+                    synopsis: "A história de No Game, No Life se passa ao redor de Sora e Shiro, irmãos cuja a reputação como NEETs brilhantes, gamers reclusos, espalhou várias lendas urbanas pela internet, Esses dois gamers até mesmo consideram o mundo real como um jogo com péssimos gráficos. Certo dia, eles são evocados por um garoto chamado Deus para um mundo nativo. Lá, Deus proibiu a guerra e declarou este um mundo onde tudo é decidido com jogos, até fronteiras de países. A humanidade foi conduzida de volta à única cidade restante pelas outras raças. Sora e Shiro, os irmãos inúteis se tornarão os Salvadores da Humanidade neste mundo nativo? Que os jogos comecem!",
+                    episodes: "Episódios 12",
+                    watchUrl: "https://animefire.plus/pesquisar/no-game-no-life"
+                },
+				{
+                    id: "51",
+                    title: "Chiyu Mahou no Machigatta Tsukaikata",
+                    category: "comédia",
+                    images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ChiyuMahou/chiyumahou1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ChiyuMahou/chiyumahou2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ChiyuMahou/chiyumahou3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ChiyuMahou/chiyumahou4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ChiyuMahou/chiyumahou5.jpg"
+					],
+                    rating: 2,
+                    synopsis: "Usato é transportado para outro mundo junto com dois colegas de classe e descobre que possui magia de cura. É recrutado pelo brutal pelotão de resgate do reino, onde aprende que magia de cura pode ser usada de formas muito mais violentas e criativas do que imaginava.",
+                    episodes: "Episódios 10",
+                    watchUrl: "https://animefire.plus/pesquisar/chiyu-mahou-no-machigatta-tsuk"
+                },
+				{
+                    id: "50",
+                    title: "Kuro no Shoukanshi",
+                    category: "ação",
+                    images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kuro_no_Shoukanshi/kuronoshoukanshi1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kuro_no_Shoukanshi/kuronoshoukanshi2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kuro_no_Shoukanshi/kuronoshoukanshi3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kuro_no_Shoukanshi/kuronoshoukanshi4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kuro_no_Shoukanshi/kuronoshoukanshi5.jpg"
+					],
+                    rating: 1,
+                    synopsis: "Acordando em um novo lugar estranho sem memória de sua vida passada, Kelvin descobre que ele trocou essas mesmas memórias em troca de novas habilidades poderosas durante sua recente transmigração. Indo para um mundo totalmente novo como um Summoner—com seu primeiro seguidor sendo a própria deusa que o trouxe!—Kelvin começa sua nova vida como um aventureiro, e não demora muito para que ele descubra sua disposição oculta como um viciado em batalhas. . Do Cavaleiro Negro do Antigo Castelo dos Espíritos Malignos ao demônio dentro da Caverna Oculta do Sábio, ele se diverte na luta contra um inimigo formidável após o outro. Junte-se a este aventureiro poderoso em uma saga emocionante e épica enquanto ele e seus aliados abrem caminho para os anais da história!",
+                    episodes: "Episódios 12",
+                    watchUrl: "https://animefire.plus/animes/kuro-no-shoukanshi-dublado-todos-os-episodios"
+                },
+				{
+					id: "49",
+					title: "No Game, No Life Zero",
+					category: "filmes",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life_Zero/nogamenolifezero1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life_Zero/nogamenolifezero2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life_Zero/nogamenolifezero3.png"
+					],
+					rating: 4,
+					synopsis: "Este prequel, ambientado 6.000 anos antes da série principal, narra a história de Riku, o último líder da humanidade em um mundo devastado por uma guerra entre raças mágicas. O filme acompanha sua luta desesperada para salvar a humanidade da extinção através de estratégias impossíveis e sacrifícios imensos.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/no-game-no-life-zero-dublado-todos-os-episodios"
+				},
+				{
+					id: "48",
+					title: "Toki wo Kakeru Shoujo",
+					category: "filmes",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo3.png"
+					],
+					rating: 4,
+					synopsis: "Uma estudante do ensino médio descobre a habilidade de saltar no tempo, voltando a momentos anteriores de sua vida. Inicialmente, ela usa esse poder para resolver problemas cotidianos, mas logo percebe que alterar o passado tem consequências inesperadas. Ela precisa aprender a lidar com as responsabilidades que vêm com essa extraordinária habilidade.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/toki-wo-kakeru-shoujo-todos-os-episodios"
+				},
+				{
+					id: "47",
+					title: "Koe no Katachi: A Voz do Silêncio",
+					category: "filmes",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Koe_no_Katachi/koenokatachi6.jpg"
+					],
+					rating: 5,
+					synopsis: "Nishimiya Shoko, uma aluna com deficiência auditiva, sofre bullying, principalmente de Ishida Shouya. Após ela se transferir de escola por causa dele, Shouya é ostracizado e perde seus amigos. Anos depois, ele tenta obter redenção por suas ações passadas, buscando uma forma de se reconectar com Shoko e consertar os erros que cometeu.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/koe-no-katachi/1"
+				},
+				{
+					id: "46",
+					title: "Kokoro ga Sakebitagatterun Da.",
+					category: "filmes",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokor5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokoro1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokoro2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokoro3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokoro4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kokoro_ga_Sakebitagatterun_Da/kokoro6.jpg"
+					],
+					rating: 4,
+					synopsis: "Jun Naruse, uma garota que machucava as pessoas com suas palavras, encontra uma fada que sela sua voz para que ela não possa mais falar. Sua vida muda no liceu, onde ela descobre o poder da música e da amizade, e começa a encontrar uma nova forma de expressar seus verdadeiros sentimentos.",
+					episodes: "",
+					watchUrl: "https://animeyabu.com/play/37053/"
+				},
+				{
+					id: "45",
+					title: "Kimi no na wa",
+					category: "filmes",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa1.jpeg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa2.jpeg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa3.jpeg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa4.jpeg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa5.jpeg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kimi_no_na_wa/kiminonawa6.jpeg"
+					],
+					rating: 4,
+					synopsis: "Mitsuha, uma estudante do ensino médio de Itomori, deseja uma vida mais emocionante em Tóquio. Taki, um estudante de Tóquio, começa a trocar de corpo com ela. Eles se comunicam através de bilhetes até que as trocas cessam. Taki, curioso, pesquisa sobre a cidade de Mitsuha, fazendo uma descoberta terrível que o impulsiona a investigar mais a fundo.",
+					episodes: "",
+					watchUrl: "https://xpanimes.com/filme-anime-kimi-no-na-wa-your-name/"
+				},
+				{
+					id: "44",
+					title: "Sousou no Frieren",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sousou_no_Frieren/sousounofrieren1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sousou_no_Frieren/sousounofrieren2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sousou_no_Frieren/sousounofrieren3.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sousou_no_Frieren/sousounofrieren4.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sousou_no_Frieren/sousounofrieren5.png"
+					],
+					rating: 5,
+					synopsis: "Após 10 anos derrotando o Rei Demônio com o herói Himmel, a maga elfa Frieren, que vive por milênios, promete retornar. 50 anos depois, ela visita Himmel e os outros, mas percebe que eles envelheceram. Após a morte de Himmel, Frieren se arrepende de não ter passado mais tempo com ele e embarca em uma nova jornada para se conectar e conhecer melhor as pessoas, vivendo incontáveis aventuras.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/sousou-no-frieren-todos-os-episodios"
+				},
+				{
+					id: "43",
+					title: "My Unique Skill Makes Me OP even at Level 1",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill6.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill7.jpg"
+					],
+					rating: 3,
+					synopsis: "Ryota Sato, um assalariado, é transportado para uma masmorra em um mundo onde monstros soltam loots. Ele descobre que seus atributos são péssimos e seu nível está travado no 1. No entanto, ele possui a \"Habilidade de Drop: S Geral\", a mais poderosa existente. Com a ajuda de Emily, ele tenta sobreviver neste mundo bizarro.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/level-1-dakedo-unique-skill-de-saikyou-desu-todos-os-episodios"
+				},
+				{
+					id: "42",
+					title: "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax4.jpg"
+					],
+					rating: 4,
+					synopsis: "Uma garota é convidada para um VRMMORPG e, preocupada em sentir dor, cria uma personagem totalmente focada em defesa. Ao colocar todos os pontos em Vitalidade, ela ganha a habilidade \"Absolute Defense\", que a impede de sofrer dano ou sentir dor. Mesmo sem velocidade, magia ou força, Maple se aventura com seus amigos no mundo do jogo.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu-todos-os-episodios"
+				},
+				{
+					id: "41",
+					title: "Yowai 5000-nen no Soushoku Dragon",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon4.jpg"
+					],
+					rating: 3,
+					synopsis: "Reiko se oferece a um dragão de 5.000 anos para defender sua vila do rei demônio. Contudo, o dragão é vegetariano e fraco. Juntos, eles embarcam em uma jornada para derrotar o rei demônio. Reiko afirma ser discípula do dragão, capaz de extrair seus poderes infinitos, mas a verdade por trás disso ainda será revelada.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/yowai-5000-nen-no-soushoku-dragon-iwarenaki-jaryuu-nintei-todos-os-episodios"
+				},
+				{
+					id: "40",
+					title: "Isekai Shikkaku",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Isekai_Shikkaku/isekaishikkaku1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Isekai_Shikkaku/isekaishikkaku2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Isekai_Shikkaku/isekaishikkaku3.jpg"
+					],
+					rating: 4,
+					synopsis: "Para o melancólico autor Osamu Dazai, uma aventura em outro mundo com garotas fofas e poderes de videojogos não é um sonho. Puxado para outro mundo em 1948, ele não está interessado em aventuras, mas sim em encontrar o lugar perfeito para morrer. Apesar de arriscar a vida, tudo parece dar certo para ele nesta comédia isekai alegremente sombria.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/isekai-shikkaku-todos-os-episodios"
+				},
+				{
+					id: "39",
+					title: "Shinmai Ossan Boukensha, Saikyou Party ni Shinu hodo Kitaerarete Muteki ni Naru.",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TheOssan/TheOssan1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TheOssan/TheOssan2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TheOssan/TheOssan3.png"
+					],
+					rating: 4,
+					synopsis: "Geralmente, é melhor se tornar um aventureiro jovem para treinar o poder mágico. No entanto, Rick Gladiador, que se tornou aventureiro com mais de trinta anos, possui o poder de combate de um aventureiro rank S. Rick viveu uma vida inimaginável com os membros do lendário Orihalcon Fist, um grupo dos aventureiros mais fortes. Treinado por mentores \"monstros\", Rick derrota aventureiros de elite que o subestimam.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/shinmai-ossan-boukensha-saikyou-party-ni-shinu-hodo-kitaerarete-muteki-ni-naru-todos-os-episodios"
+				},
+				{
+					id: "38",
+					title: "Ore wa Subete wo “Parry” suru: Gyaku Kanchigai no Sekai Saikyou wa Boukensha ni Naritai",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Parry/Parry1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Parry/Parry2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Parry/Parry3.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Parry/Parry4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Parry/Parry5.jpg"
+					],
+					rating: 3,
+					synopsis: "O Reino de Clays enfrenta uma crise após uma tentativa de assassinato contra a Princesa Lynneburg. Enquanto países vizinhos planejam sua queda, Noor, recém-chegado à capital real após anos de treinamento isolado, sonha em ser um aventureiro. Apesar de só ter a habilidade \"Aparar\" milhares de espadas, ele acredita que precisa de mais. Sua jornada para realizar seu sonho será longa e árdua, mas Noor não teme o trabalho duro.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/pesquisar/ore-wa-subete-wo-parry-suru"
+				},
+				{
+					id: "37",
+					title: "Lv2 kara Cheat datta Motoyuusha Kouho no Mattari Isekai Life",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Lv2Cheat/lv2cheat1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Lv2Cheat/lv2cheat2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Lv2Cheat/lv2cheat3.jpg"
+					],
+					rating: 2,
+					synopsis: "O Reino de Klyrode invoca heróis de outros mundos para a guerra contra o Escuro. Banaza, um comerciante comum, é um desses heróis, mas sem magia, habilidade de luta ou boas estatísticas. Preso em outro mundo e rejeitado, ele parece ter um destino sombrio. No entanto, sua vida muda quando ele adquire superpoderes de trapaça ao atingir o nível dois.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/lv2-kara-cheat-datta-motoyuusha-kouho-no-mattari-isekai-life-todos-os-episodios"
+				},
+				{
+					id: "36",
+					title: "Goblin Slayer",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer4.jpg"
+					],
+					rating: 4,
+					synopsis: "Uma jovem sacerdotisa, em sua primeira aventura, encontra-se em perigo e é resgatada pelo Goblin Slayer, um homem que dedicou sua vida a exterminar goblins por todos os meios. Conforme os rumores de seus feitos se espalham, a sacerdotisa descobre o que virá a seguir.",
+					episodes: "",
+					watchUrl: "https://anitube.site/79293/"
+				},
+				{
+					id: "35",
+					title: "Zuihou de Zhaohuan Shi",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi5.jpg"
+					],
+					rating: 3,
+					synopsis: "A vida de um talentoso jovem cozinheiro muda quando uma garota faminta, Dora (um espírito convocado e deusa), aparece em sua cozinha e o chama de mestre. Ele não está interessado e tenta fugir dela. No entanto, ele se torna um invocador por acidente, sem ter como voltar atrás em sua vida.",
+					episodes: "",
+					watchUrl: "https://goyabu.com/assistir/zuihou-de-zhaohuan-shi/"
+				},
+				{
+					id: "34",
+					title: "Tsuki ga Michibiku Isekai Douchuu",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu4.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu6.jpg"
+					],
+					rating: 5,
+					synopsis: "Makoto Misumi é invocado para um mundo de fantasia para ser um herói, mas a Deusa do local o bane para uma região deserta por achá-lo \"feio\". Com grandes poderes nesse novo mundo, Makoto sobrevive e forma alianças inesperadas com criaturas como aranhas e dragões, com o objetivo de remodelar o mundo que o abandonou.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/pesquisar/tsuki-ga-michibiku-isekai-douc"
+				},
+				{
+					id: "33",
+					title: "Kanata no Astra",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kanata_no_Astra/kanatanoastra6.jpg"
+					],
+					rating: 5,
+					synopsis: "Em 2061, durante um acampamento planetário, nove estudantes da Caird High School são transportados por uma esfera de luz para o espaço sideral, a 5012 anos-luz de distância de casa. Eles encontram uma nave espacial abandonada, a Astra, e embarcam em uma longa e perigosa jornada para voltar para casa.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/kanata-no-astra/"
+				},
+				{
+					id: "32",
+					title: "Majo no Tabitabi",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Majo_no_Tabitabi/majonotabitabi6.jpg"
+					],
+					rating: 4,
+					synopsis: "Desde a infância, Elaina foi fascinada por histórias de bruxas viajantes. Ela se esforça para se tornar uma bruxa e, após conseguir, embarca em sua própria jornada. Ela encontra diversas pessoas, aprende suas histórias e explora o mundo em sua plenitude, vivenciando tanto seus lados brilhantes quanto sombrios.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/majo-no-tabitabi/"
+				},
+				{
+					id: "31",
+					title: "Uchi no Ko no Tame naraba, Ore wa Moshikashitara Maou mo Taoseru kamo Shirenai",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko5.jpg"
+					],
+					rating: 2,
+					synopsis: "Dale, um aventureiro habilidoso, encontra uma garota demoníaca em péssimas condições na floresta. Ele a adota, tornando-se seu pai. Latina é adorável, mas Dale enfrenta as responsabilidades da paternidade e o mistério em torno da marca criminosa da garota.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/uchi-no-ko-no-tame-naraba-ore-wa-moshikashitara-maou-mo-taoseru-kamo-shirenai/"
+				},
+				{
+					id: "30",
+					title: "Dungeon ni Deai o Motomeru no wa Machigatteiru Darou ka?",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/BellCranel/bellcranel6.jpg"
+					],
+					rating: 2,
+					synopsis: "A história segue Bell Cranel, um aventureiro de 14 anos da Família Héstia. Ele trabalha duro na masmorra para sobreviver e se aperfeiçoar, inspirado por Aiz Wallenstein, uma poderosa espadachim que o salvou. Bell não sabe que outras garotas e divindades também desenvolvem afeição por ele.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/dungeon-ni-deai-o-motomeru-no-wa-machigatteiru-darou-ka/"
+				},
+				{
+					id: "29",
+					title: "Princess Connect! Re:Dive",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Princess_Connect_Re_Dive/princessconnectredive1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Princess_Connect_Re_Dive/princessconnectredive2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Princess_Connect_Re_Dive/princessconnectredive3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Princess_Connect_Re_Dive/princessconnectredive4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Princess_Connect_Re_Dive/princessconnectredive5.jpg"
+					],
+					rating: 5,
+					synopsis: "Na terra de Astraea, Yuuki acorda sem memórias e encontra Kokkoro, uma guia; Pecorine, uma espadachim amável; e Karyl, uma feiticeira mandona. Unidos pelo destino, eles formam a Guilda Gourmet e embarcam em uma aventura.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/princess-connect-redive/"
+				},
+				{
+					id: "28",
+					title: "Mushoku Tensei: Isekai Ittara Honki Dasu",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mushoku_Tensei/mushokutensei1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mushoku_Tensei/mushokutensei2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mushoku_Tensei/mushokutensei3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mushoku_Tensei/mushokutensei4.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mushoku_Tensei/mushokutensei5.jpg"
+					],
+					rating: 2,
+					synopsis: "Um homem de 34 anos com uma vida infeliz reencarna como um bebê em um mundo de fantasia, no corpo de uma família de aventureiros. Com as memórias de sua vida passada e grande aptidão para magia, ele está determinado a aproveitar sua nova chance e não repetir seus erros anteriores.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/mushoku-tensei-isekai-ittara-honki-dasu/"
+				},
+				{
+					id: "27",
+					title: "I’ve Been Killing Slimes for 300 Years and Maxed Out My Level",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3001.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3002.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3003.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3004.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3005.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3006.jpg"
+					],
+					rating: 3,
+					synopsis: "Após uma vida de excesso de trabalho, Azusa reencarna como uma bruxa imortal e invulnerável. Ela promete viver uma vida sem estresse, caçando slimes para sobreviver. Contudo, séculos de caça simples a levam a acumular poderes insanos, dificultando sua vida discreta.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/slime-taoshite-300-nen-shiranai-uchi-ni-level-max-ni-nattemashita/"
+				},
+				{
+					id: "26",
+					title: "Tensura Nikki: Tensei shitara Slime Datta Ken",
+					category: "aventura",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TensuraNikki/tensuranikki6.jpg"
+					],
+					rating: 5,
+					synopsis: "Satoru Mikami, um funcionário comum, é esfaqueado e reencarna como um Slime em um mundo desconhecido. Ele adquire a habilidade \"Predador\", que permite devorar e imitar. Torna-se amigo do Dragão da Tempestade Veldora, prometendo libertá-lo e recebendo o nome Rimuru Tempest. Agora, Rimuru embarca em uma missão para provar seu valor, enquanto seus feitos se espalham, mudando seu destino.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/pesquisar/tensei-shitara-slime-datta-ken"
+				},
+				{
+					id: "25",
+					title: "Maou no Ore ga Dorei Elf wo Yome ni Shitanda ga, Dou Medereba Ii?",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ElfBride/elfbride1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ElfBride/elfbride2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/ElfBride/elfbride3.png"
+					],
+					rating: 2,
+					synopsis: "Um lorde demônio se casa com uma escrava élfica como parte de um acordo político, mas rapidamente se apaixona por ela. A história acompanha seus desajeitados esforços para conquistar o coração de sua esposa enquanto ele lida com as complexidades de um casamento arranjado e as diferenças culturais entre demônios e elfos.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/maou-no-ore-ga-dorei-elf-wo-yome-ni-shitanda-ga-dou-medereba-ii-todos-os-episodios"
+				},
+				{
+					id: "24",
+					title: "Aharen-san wa Hakarenai",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Aharen-san/aharensan1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Aharen-san/aharensan2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Aharen-san/aharensan3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Aharen-san/aharensan4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Aharen-san/aharensan5.jpg"
+					],
+					rating: 2,
+					synopsis: "Reina Aharen, uma aluna pequena e com voz baixa, tem dificuldade em determinar distâncias e espaço pessoal. Ela pode estar a centímetros ou quilômetros de distância. Raidou Matsuboshi, seu colega de classe com um rosto ameaçador mas um coração gentil e uma imaginação fértil, é o único que tenta entender suas peculiaridades.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/aharen-san-wa-hakarenai-todos-os-episodios"
+				},
+				{
+					id: "23",
+					title: "Yofukashi no Uta",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Yofukashi_no_Uta/yofukashinouta1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Yofukashi_no_Uta/yofukashinouta2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Yofukashi_no_Uta/yofukashinouta3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Yofukashi_no_Uta/yofukashinouta4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Yofukashi_no_Uta/yofukashinouta5.jpg"
+					],
+					rating: 5,
+					synopsis: "Incapaz de dormir e insatisfeito com sua vida, Yamori Kou começa a explorar a cidade durante a noite. Ele conhece uma garota que lhe oferece ajuda para combater sua insônia, levando-o a um mundo noturno diferente e inesperado.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/yofukashi-no-uta-todos-os-episodios"
+				},
+				{
+					id: "22",
+					title: "Tomo-chan wa Onnanoko!",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko4.jpg"
+					],
+					rating: 3,
+					synopsis: "Tomo Aizawa, uma garota com aparência e personalidade de menino, decide confessar seu amor a seu melhor amigo de infância, Junichirou Kubota. No entanto, Junichirou, que sempre a viu como um \"irmão\", não percebe a confissão. A história acompanha as tentativas de Tomo para convencer Jun de que ela é uma garota e conquistar seu coração.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/tomo-chan-wa-onnanoko-todos-os-episodios"
+				},
+				{
+					id: "21",
+					title: "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaguya-sama/kaguyasama6.jpg"
+					],
+					rating: 3,
+					synopsis: "Miyuki Shirogane e Kaguya Shinomiya, presidente e vice-presidente do conselho estudantil da Academia Shuchiin, são considerados o casal perfeito. Apesar de terem sentimentos um pelo outro, nenhum está disposto a confessar, pois seria um sinal de fraqueza. Com seu orgulho em jogo, Miyuki e Kaguya embarcam em uma batalha de inteligência para fazer o outro confessar primeiro.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen/"
+				},
+				{
+					id: "20",
+					title: "Komi-san wa, Comyushou desu",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Komi-san/Komi-san6.jpg"
+					],
+					rating: 5,
+					synopsis: "Shouko Komi é uma estudante popular na elite Itan High School por sua beleza e elegância. No entanto, seu colega Hitohito Tadano, um estudante comum, percebe que Komi tem sérios problemas de comunicação. Após um incidente, Komi revela seu sonho de fazer 100 amigos, e Tadano decide ajudá-la nessa jornada.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/komi-san-wa-comyushou-desu/"
+				},
+				{
+					id: "19",
+					title: "Uzaki-chan wa Asobitai!",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan6.jpg"
+					],
+					rating: 3,
+					synopsis: "Shinichi Sakurai, um estudante universitário introvertido, é incomodado pela extrovertida Hana Uzaki, que decide torná-lo mais social. Apesar das provocações constantes de Uzaki, Shinichi começa a gostar da companhia dela e eles se tornam amigos. A série explora se é possível se divertir tanto com outra pessoa quanto sozinho, e como essa relação pode evoluir.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/uzaki-chan-wa-asobitai/"
+				},
+				{
+					id: "18",
+					title: "Sono Bisque Doll wa Koi o Suru",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll6.jpg"
+					],
+					rating: 3,
+					synopsis: "Wakana Gojo, um jovem que sonha em ser um artesão de bonecas tradicionais, é alheio às tendências sociais e tem dificuldade em se enturmar. Sua vida muda quando Marin Kitagawa, uma garota popular, compartilha um segredo inesperado, fazendo seus mundos colidirem. A história acompanha o desenvolvimento de um relacionamento através do cosplay.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/sono-bisque-doll-wa-koi-wo-suru/"
+				},
+				{
+					id: "17",
+					title: "Darling in the Franxx",
+					category: "romance",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Darling_in_the_Franxx/darlinginthefranxx6.jpg"
+					],
+					rating: 5,
+					synopsis: "Em um futuro distópico, os humanos vivem em \"plantações\" tecnológicas na superfície do planeta. Crianças, chamadas de \"parasitas\", são criadas em ambientes isolados para pilotar Franxxs em pares (um menino e uma menina) e defender a humanidade. Eles são destituídos de individualidade e treinados para desenvolver respostas emocionais específicas para a pilotagem.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/darling-in-the-franxx/"
+				},
+				{
+					id: "16",
+					title: "Rokudenashi Majutsu Koushi to Akashic Records",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/AkashicRecords/akashicrecords1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/AkashicRecords/akashicrecords2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/AkashicRecords/akashicrecords3.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/AkashicRecords/akashicrecords4.png"
+					],
+					rating: 2,
+					synopsis: "Glenn é um professor de magia preguiçoso e aparentemente incompetente em uma prestigiada academia mágica. Apesar de sua atitude desleixada, ele possui conhecimentos profundos sobre magia e, através de situações cômicas e perigosas, gradualmente conquista o respeito de seus estudantes.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/rokudenashi-majutsu-koushi-to-akashic-records-todos-os-episodios"
+				},
+				{
+					id: "15",
+					title: "Oniichan wa Oshimai!",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Oniichan_wa_Oshimai/oniichanwaoshimai1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Oniichan_wa_Oshimai/oniichanwaoshimai2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Oniichan_wa_Oshimai/oniichanwaoshimai3.png"
+					],
+					rating: 3,
+					synopsis: "Mahiro, um NEET viciado em jogos, acorda transformado em uma garota devido a uma droga experimental criada por sua irmã cientista. A comédia surge de suas tentativas de se adaptar à nova vida enquanto sua irmã o \"treina\" para ser uma garota adequada.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/oniichan-wa-oshimai-todos-os-episodios"
+				},
+				{
+					id: "14",
+					title: "Kill la Kill",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kill_la_Kill/killlakill1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kill_la_Kill/killlakill2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kill_la_Kill/killlakill3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kill_la_Kill/killlakill4.jpg"
+					],
+					rating: 5,
+					synopsis: "Ryuuko Matoi busca vingar a morte de seu pai, o que a leva a um conflito violento com Satsuki Kiryuuin, a presidente do conselho estudantil da Academia Honnouji, e o império da moda de sua mãe.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/kill-la-kill-todos-os-episodios"
+				},
+				{
+					id: "13",
+					title: "Bocchi the Rock!",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Bocchi_the_Rock/bocchitherock6.jpg"
+					],
+					rating: 5,
+					synopsis: "Hitori Gotou é uma estudante colegial extremamente tímida que sonha em tocar em uma banda. Apesar de aprender a tocar guitarra, sua timidez a impede de fazer amigos. Seu sonho começa a se tornar realidade quando ela conhece Nijika Ijichi, uma baterista que procura um novo guitarrista para sua banda.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/bocchi-the-rock"
+				},
+				{
+					id: "12",
+					title: "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame6.jpg"
+					],
+					rating: 2,
+					synopsis: "Katarina, uma filha de nobre, se lembra de sua vida passada e percebe que reencarnou como a vilã de um jogo otome que havia jogado. O problema, no entanto, é que magia naquela época é bem fraca, e ninguém consegue medir o quão poderoso Anoth realmente é.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta/"
+				},
+				{
+					id: "11",
+					title: "Kobayashi-san Chi no Maid Dragon",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Maid_Dragon/No_Maid_Dragon6.jpg"
+					],
+					rating: 5,
+					synopsis: "A vida simples da trabalhadora de escritório Kobayashi muda drasticamente após ela salvar a vida de Tohru, um dragão que pode se transformar em uma adorável garota humana. Tohru, que antes via os humanos como inferiores, agora se esforça para pagar sua dívida, resultando em uma comédia mítica sobre o cotidiano de uma senhora que trabalha em um escritório vivendo com uma menina dragão.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/kobayashi-san-chi-no-maid-dragon"
+				},
+				{
+					id: "10",
+					title: "Asobi Asobase",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Asobi_Asobase/asobiasobase6.jpg"
+					],
+					rating: 3,
+					synopsis: "A história acompanha as vidas surreais de três estudantes: Hanako, uma estudante atlética e de mente poluída com um senso de moda peculiar; Olivia, uma estudante transferida americana que, na verdade, nasceu e foi criada no Japão e não sabe falar inglês de verdade; e Kasuki, que não gosta de passatempos. A comédia surge das interações hilárias e inesperadas entre essas garotas.",
+					episodes: "",
+					watchUrl: "https://anitube.site/78828/"
+				},
+				{
+					id: "9",
+					title: "Spy × Family",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Spy_x_Family/spyxfamily6.jpg"
+					],
+					rating: 2,
+					synopsis: "O mestre espião \"Twilight\" recebe uma missão desafiadora: formar uma família temporária para iniciar uma nova vida. Esta comédia de espionagem e ação acompanha as aventuras e desventuras de uma família única, onde cada membro guarda segredos sobre suas verdadeiras identidades e propósitos.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/spyxfamily/"
+				},
+				{
+					id: "8",
+					title: "Kono Subarashii Sekai ni Bakuen wo!",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu3.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu4.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu5.png"
+					],
+					rating: 5,
+					synopsis: "Este spin-off foca em Megumin, a maga obcecada por magia explosiva, antes de ela conhecer Kazuma. A história explora sua infância, seu treinamento e os eventos que moldaram sua personalidade excêntrica e sua fixação por feitiços de explosão.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/kono-subarashii-sekai-ni-bakuen-wo-todos-os-episodios"
+				},
+				{
+					id: "7",
+					title: "Kono Subarashii Sekai Ni Shukufuku Wo!",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba6.jpg"
+					],
+					rating: 5,
+					synopsis: "Após uma morte embaraçosa, o adolescente hikikomori Kazuma Satō é reencarnado em um mundo de MMORPG por uma deusa chamada Aqua. Em retaliação às provocações de Aqua, Kazuma a escolhe para acompanhá-lo em sua jornada. No novo mundo, eles precisam trabalhar juntos para sobreviver, recrutando Megumin, uma maga obcecada por explosões, e Darkness, uma cruzada masoquista. Apesar das habilidades disfuncionais do grupo, eles são constantemente forçados a lutar contra os generais do Rei Demônio.",
+					episodes: "",
+					watchUrl: "https://xpanimes.com/assistir-kono-subarashii-sekai-ni-shukufuku-wo-1"
+				},
+				{
+					id: "6",
+					title: "Kotoura-san",
+					category: "comédia",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kotoura-san/kotourasan6.jpg"
+					],
+					rating: 2,
+					synopsis: "Haruka Kotoura possui um dom que considera uma maldição: ela consegue ler mentes. Sua habilidade causou o divórcio de seus pais e a fez viver isolada por medo de machucar os outros. Ao se transferir para uma nova escola, ela conhece Manabe, um colega cujos pensamentos pervertidos e eróticos acabam por trazê-la de volta à vida. Mais tarde, ela se junta à Sociedade de Pesquisas PES, onde a presidente Yuriko e seu amigo Daichi não se assustam com sua habilidade, mas se divertem com ela.",
+					episodes: "",
+					watchUrl: "https://animesonline.cc/anime/kotoura-san/"
+				},
+				{
+					id: "5",
+					title: "Maou Gakuin no Futekigousha",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DemonKingAcademy/demonkingacademy6.jpg"
+						],
+					rating: 1,
+					synopsis: "Nesse anime você acompanhará o rei demônio Anoth, que após vários séculos semeando caos e destruição, decide que quer ter uma vida mais calma na sua próxima encarnação. Por conta desse desejo, ele acaba reencarnado 2 mil anos depois, junto de seus servos, em uma escola de magia. O problema, no entanto, é que magia naquela época é bem fraca, e ninguém consegue medir o quão poderoso Anoth realmente é.",
+					episodes: "",
+					watchUrl: "https://animesbr.biz/anime/maou-gakuin-no-futekigousha-shijou-saikyou-no-maou-no-shiso-tensei-shite-shison-tachi-no-gakkou-e/"
+				},
+				{
+					id: "4",
+					title: "NieR:Automata Ver1.1a",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a5.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a6.jpg"
+					],
+					rating: 3,
+					synopsis: "Em um futuro distante, 5012. A súbita invasão aérea da Terra por Aliens e suas criações Machine Lifeforms levou a humanidade à beira da extinção. O número sobrevivente de humanos se refugiou na lua para organizar um contra-ataque usando soldados androides para recapturar a Terra. No entanto, a guerra chega a um impasse, pois as formas de vida das máquinas continuam a se multiplicar infinitamente. Por sua vez, a humanidade implanta uma nova unidade de soldados androides como uma arma definitiva: YoRHa.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/pesquisar/nier-automata"
+				},
+				{
+					id: "3",
+					title: "Hazurewaku no 'Joutai Ijou Skill'",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Hazurewaku/hazurewaku1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Hazurewaku/hazurewaku2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Hazurewaku/hazurewaku3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Hazurewaku/hazurewaku4.jpg"
+					],
+					rating: 1,
+					synopsis: "Catapultados abruptamente para um mundo de fantasia, Mimori Touka e seus colegas foram convocados pela deusa residente do mundo para servir como heróis. Felizmente, a maioria dos alunos demonstra habilidades incríveis ao chegar, exceto Mimori, cujas habilidades chegam a um mísero rank E. Sem mais utilidade para ele, a deusa bane Mimori para uma masmorra da qual ninguém jamais voltou vivo. No entanto, acontece que as habilidades de Mimori não são tão inúteis quanto anormais.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/hazurewaku-no-joutai-ijou-skill-de-saikyou-ni-natta-ore-ga-subete-wo-juurin-suru-made-todos-os-episodios"
+				},
+				{
+					id: "2",
+					title: "Kaijuu 8-gou",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaijuu_8-gou/kaijuu8gou1.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaijuu_8-gou/kaijuu8gou2.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaijuu_8-gou/kaijuu8gou3.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaijuu_8-gou/kaijuu8gou4.png",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Kaijuu_8-gou/kaijuu8gou5.png"
+					],
+					rating: 2,
+					synopsis: "Baseado na manga de Naoya Matsumoto, o anime Kaiju nº 8 conta a história do jovem Kafka Hibino, que passou sua infância acompanhando o mundo desmoronar após o surgimento de criaturas ameaçadoras conhecidas como Kaiju. Ao lado de sua melhor amiga, Mina Ashiro, os dois prometeram que ao crescer iriam se tornar membros da Força de Defesa do Japão e derrotar a ameaçadora presença dos monstros.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/kaijuu-8-gou-todos-os-episodios"
+				},
+				{
+					id: "1",
+					title: "Gate: Jieitai Kano Chi nite, Kaku Tatakaeri",
+					category: "ação",
+					images: [
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate1.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate2.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate3.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate4.jpg",
+						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate5.jpg"
+					],
+					rating: 3,
+					synopsis: "Um portal misterioso se abre em Tóquio, conectando o mundo moderno a um reino de fantasia medieval. As Forças de Autodefesa do Japão são enviadas para explorar este novo mundo, levando tecnologia moderna para um lugar de magia, dragões e política complexa.",
+					episodes: "",
+					watchUrl: "https://animefire.plus/animes/gate-jieitai-kanochi-nite-kaku-tatakaeri-todos-os-episodios"
+				}
+        ];
+
+        let currentSlides = {};
+        let sliderIntervals = {};
+        let currentFilter = animes[0]?.category || '';
+        let searchQuery = '';
+
+        // Atualizar contadores dos filtros
+        function updateFilterCounts() {
+            const categories = {};
+            animes.forEach(anime => {
+                categories[anime.category] = (categories[anime.category] || 0) + 1;
+            });
+
+            const filtersContainer = document.getElementById('filters');
+            filtersContainer.innerHTML = '';
+
+            Object.keys(categories).forEach(category => {
+                const button = document.createElement('button');
+                button.className = `filter-btn ${currentFilter === category ? 'active' : ''}`;
+                button.dataset.category = category;
+                button.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)} <span class="count">${categories[category]}</span>`;
+                filtersContainer.appendChild(button);
+            });
+
+            // Reattach event listeners
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.category;
+                    renderAnimes();
+                });
+            });
+        }
+
+        // Toggle favorito
+        function toggleFavorite(animeId) {
+            if (favorites.has(animeId)) {
+                favorites.delete(animeId);
+            } else {
+                favorites.add(animeId);
+            }
+            
+            // Atualizar o anime no array
+            const anime = animes.find(a => a.id === animeId);
+            if (anime) {
+                anime.favorite = favorites.has(animeId);
+            }
+            
+            renderAnimes(); // Re-render para atualizar o botão
+        }
+
+        // Inicializar slider de imagens
+        function initSlider(animeId, images) {
+            if (images.length <= 1) return;
+
+            currentSlides[animeId] = 0;
+            
+            if (sliderIntervals[animeId]) {
+                clearInterval(sliderIntervals[animeId]);
+            }
+            
+            sliderIntervals[animeId] = setInterval(() => {
+                const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
+                if (!slider) {
+                    clearInterval(sliderIntervals[animeId]);
+                    return;
+                }
+
+                nextSlide(animeId);
+            }, 4000);
+        }
+
+        // Navegar para próximo slide
+        function nextSlide(animeId) {
+            const anime = animes.find(a => a.id === animeId);
+            if (!anime || !anime.images || anime.images.length <= 1) return;
+
+            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
+            if (!slider) return;
+
+            const slides = slider.querySelectorAll('.slide');
+            const indicators = slider.querySelectorAll('.indicator');
+            
+            if (slides.length === 0) return;
+            
+            slides[currentSlides[animeId]].classList.remove('active');
+            if (indicators.length > 0) {
+                indicators[currentSlides[animeId]].classList.remove('active');
+            }
+            
+            currentSlides[animeId] = (currentSlides[animeId] + 1) % anime.images.length;
+            
+            slides[currentSlides[animeId]].classList.add('active');
+            if (indicators.length > 0) {
+                indicators[currentSlides[animeId]].classList.add('active');
+            }
+        }
+
+        // Navegar para slide anterior
+        function prevSlide(animeId) {
+            const anime = animes.find(a => a.id === animeId);
+            if (!anime || !anime.images || anime.images.length <= 1) return;
+
+            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
+            if (!slider) return;
+
+            const slides = slider.querySelectorAll('.slide');
+            const indicators = slider.querySelectorAll('.indicator');
+            
+            if (slides.length === 0) return;
+            
+            slides[currentSlides[animeId]].classList.remove('active');
+            if (indicators.length > 0) {
+                indicators[currentSlides[animeId]].classList.remove('active');
+            }
+            
+            currentSlides[animeId] = currentSlides[animeId] === 0 ? anime.images.length - 1 : currentSlides[animeId] - 1;
+            
+            slides[currentSlides[animeId]].classList.add('active');
+            if (indicators.length > 0) {
+                indicators[currentSlides[animeId]].classList.add('active');
+            }
+        }
+
+        // Renderizar animes
+        function renderAnimes() {
+            const grid = document.getElementById('animesGrid');
+            
+            Object.values(sliderIntervals).forEach(interval => clearInterval(interval));
+            sliderIntervals = {};
+            
+            let filteredAnimes = animes;
+            
+            // Se houver busca, ignora o filtro de categoria
+            if (searchQuery) {
+                filteredAnimes = filteredAnimes.filter(anime =>
+                    anime.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    anime.synopsis.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            } else if (currentFilter !== 'todos') {
+                filteredAnimes = filteredAnimes.filter(anime =>
+                    anime.category.toLowerCase() === currentFilter.toLowerCase()
+                );
+            }
+
+            if (filteredAnimes.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>🍥 Nenhum anime encontrado</h3>
+                        <p>${searchQuery ? 'Tente uma pesquisa diferente.' : 'Tente outro filtro.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredAnimes.map(anime => {
+                const images = anime.images || [];
+                const hasImages = images.length > 0;
+                
+                let imageContent = '';
+                if (hasImages) {
+                    const slides = images.map((img, index) => `
+                        <div class="slide ${index === 0 ? 'active' : ''}">
+                            <img src="${img}" 
+                                alt="${anime.title}" 
+                                onload="this.style.opacity='1';" 
+                                onerror="this.style.display='none';"
+                                style="opacity: 0; transition: opacity 0.3s ease;">
+                        </div>
+                    `).join('');
+                    
+                    const controls = images.length > 1 ? `
+                        <button class="slide-controls prev" onclick="prevSlide('${anime.id}')">‹</button>
+                        <button class="slide-controls next" onclick="nextSlide('${anime.id}')">›</button>
+                    ` : '';
+                    
+                    const indicators = images.length > 1 ? `
+                        <div class="slide-indicators">
+                            ${images.map((_, index) => `<div class="indicator ${index === 0 ? 'active' : ''}" onclick="changeSlide('${anime.id}', ${index})"></div>`).join('')}
+                        </div>
+                    ` : '';
+                    
+                    imageContent = `
+                        <div class="image-slider">
+                            ${slides}
+                            ${controls}
+                            ${indicators}
+                        </div>
+                    `;
+                } else {
+                    imageContent = '<div class="slide-placeholder">🎌</div>';
+                }
+
+                return `
+                    <div class="anime-card" data-anime-id="${anime.id}">
+                        <div class="anime-images ${hasImages ? 'has-images' : ''}">
+                            ${imageContent}
+                        </div>
+                        <div class="anime-title">${anime.title}</div>
+                        <div class="anime-category">${anime.category}</div>
+                        <div class="anime-rating">
+                            <span class="stars">${'⭐'.repeat(anime.rating)}</span>
+                            <span>(${anime.rating}/5)</span>
+                        </div>
+                        <div class="anime-synopsis">${anime.synopsis}</div>
+                        ${anime.episodes ? `<div class="anime-info">${anime.episodes}</div>` : ''}
+                        <div class="anime-actions">
+                            <a href="${anime.watchUrl}" target="_blank" class="watch-btn">🎬 Assistir</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            setTimeout(() => {
+                filteredAnimes.forEach(anime => {
+                    if (anime.images && anime.images.length > 1) {
+                        initSlider(anime.id, anime.images);
+                    }
+                });
+            }, 100);
+        }
+
+        // Mudar slide manualmente
+        function changeSlide(animeId, slideIndex) {
+            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
+            if (!slider) return;
+
+            const slides = slider.querySelectorAll('.slide');
+            const indicators = slider.querySelectorAll('.indicator');
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            if (slides[slideIndex]) {
+                slides[slideIndex].classList.add('active');
+            }
+            if (indicators[slideIndex]) {
+                indicators[slideIndex].classList.add('active');
+            }
+            
+            currentSlides[animeId] = slideIndex;
+            
+            // Reiniciar o timer do slider automático
+            if (sliderIntervals[animeId]) {
+                clearInterval(sliderIntervals[animeId]);
+                const images = animes.find(anime => anime.id === animeId)?.images || [];
+                if (images.length > 1) {
+                    initSlider(animeId, images);
+                }
+            }
+        }
+
+        // Configurar pesquisa
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchQuery = this.value.trim();
+                    renderAnimes();
+                }, 300);
+            });
+        }
+
+        // Inicializar aplicação
+        function init() {
+            updateFilterCounts();
+            setupSearch();
+            
+            // Simular carregamento
+            setTimeout(() => {
+                renderAnimes();
+            }, 500);
+        }
+
+        // Inicializar quando a página carregar
+        init();
+    </script>
+</body>
+</html>
