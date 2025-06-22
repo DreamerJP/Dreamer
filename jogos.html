@@ -21,99 +21,6 @@
             transition: all 3s ease;
         }
 
-        /* Navegação */
-        .navigation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 107, 107, 0.3);
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        .nav-home {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2c3e50;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .nav-home:hover {
-            color: #ff6b6b;
-            transform: scale(1.05);
-        }
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-        }
-        .nav-links a {
-            color: #2c3e50;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .nav-links a:hover {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .nav-links a.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-        }
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #2c3e50;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-                border-radius: 0 0 15px 15px;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .container {
-                margin-top: 120px;
-            }
-        }
-        @media (max-width: 480px) {
-            .nav-container {
-                padding: 0 15px;
-            }
-        }
-
         /* Efeito Otherworld */
         body.otherworld {
             background: radial-gradient(circle at 50% 50%, #2c1810 0%, #1a0e08 30%, #0a0503 60%, #000000 100%);
@@ -477,7 +384,7 @@
         }
 
         .silent-hill-image.otherworld {
-            filter: brightness(0.4) contrast(1.5) saturate(0.2);
+            filter: brightness(0.7) contrast(1.1) saturate(0.5);
             box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
         }
 
@@ -678,45 +585,139 @@
             }
         }
 
-        /* Animações escalonadas para os cards */
-        .game-card:nth-child(1) { animation-delay: 0.8s; }
-        .game-card:nth-child(2) { animation-delay: 1s; }
-        .game-card:nth-child(3) { animation-delay: 1.2s; }
-        .game-card:nth-child(4) { animation-delay: 1.4s; }
-
-        /* Efeito de distorção de tela */
-        .screen-distortion {
+        /* Novas classes para as fases iniciais */
+        /* Efeito de glitch sutil (para textos) */
+        @keyframes text-glitch {
+            0%, 100% { opacity: 1; }
+            10% { opacity: 0.8; text-shadow: 1px 1px 0 rgba(255, 0, 0, 0.3); }
+            20% { opacity: 0.9; }
+        }
+        .glitch-sublime {
+            animation: text-glitch 2s infinite alternate;
+        }
+        /* Overlay de estática (ajuste para transição suave) */
+        .static-overlay-light {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: 
+                repeating-linear-gradient(0deg, 
+                    rgba(255, 255, 255, 0.02) 0%, 
+                    rgba(255, 255, 255, 0.02) 1%, 
+                    transparent 1%, 
+                    transparent 2%
+                ),
+                repeating-linear-gradient(90deg, 
+                    rgba(255, 255, 255, 0.03) 0%, 
+                    rgba(255, 255, 255, 0.03) 1%, 
+                    transparent 1%, 
+                    transparent 2%
+                );
             pointer-events: none;
-            z-index: 9999;
+            z-index: 999;
             opacity: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,0,0,0.1) 2px,
-                rgba(0,0,0,0.1) 4px
-            );
-            animation: screen-flicker 0.3s ease-in-out infinite;
+            transition: opacity 0.5s ease;
+        }
+        .text-corrupt {
+            font-family: 'Courier New', monospace;
+            color: #8B0000 !important;
+            text-shadow: 0 0 2px rgba(139, 0, 0, 0.5);
+        }
+        .screen-invert {
+            filter: invert(1);
+            transition: filter 0.01s;
+        }
+        .shake-light {
+            animation: shake-light 0.5s infinite;
+        }
+        @keyframes shake-light {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
         }
 
-        .screen-distortion.active {
-            opacity: 1;
+        /* ===== VHS Overlay e Blood Theme (Fase 3) ===== */
+        .vhs-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(0deg, 
+                    transparent 2px
+                ),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="2" numOctaves="2"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.1"/></svg>');
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 1s;
+            mix-blend-mode: lighten;
         }
 
-        @keyframes screen-flicker {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.3; }
+        .enter-btn {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2em;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: transparent;
+            -webkit-text-stroke: 2px #fff;
+            text-stroke: 2px #fff;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: 
+                -webkit-text-stroke 0.3s, 
+                text-stroke 0.3s, 
+                color 0.3s, 
+                box-shadow 0.3s;
+            outline: none;
+            pointer-events: auto;
+            user-select: none;
+        }
+
+        .enter-btn::before {
+            content: "Enter";
+            color: transparent;
+            -webkit-text-stroke: 2px #fff;
+            text-stroke: 2px #fff;
+            text-shadow: 0 0 8px #000, 0 0 2px #fff;
+            transition: 
+                -webkit-text-stroke 0.3s, 
+                text-stroke 0.3s, 
+                text-shadow 0.3s;
+        }
+
+        .enter-btn.selected::before {
+            -webkit-text-stroke: 2px #8B0000;
+            text-stroke: 2px #8B0000;
+            text-shadow: 0 0 12px #8B0000, 0 0 2px #fff;
+        }
+
+        .enter-btn:focus-visible {
+            outline: 2px solid #8B0000;
+        }
+
+        .enter-btn:hover::before {
+            -webkit-text-stroke: 2px #4ecdc4;
+            text-stroke: 2px #4ecdc4;
+            text-shadow: 0 0 12px #4ecdc4, 0 0 2px #fff;
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
-                margin: 120px 10px 0 10px;
+                margin: 10px;
+                margin-top: 120px;
             }
             
             .header h1 {
@@ -746,6 +747,39 @@
             .video-modal-content {
                 width: 95%;
                 padding-bottom: 56.25%; /* Mantém responsivo no mobile */
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .nav-links.active {
+                max-height: 300px;
+            }
+            
+            .nav-links li {
+                width: 100%;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 1rem 2rem;
+                border-radius: 0;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
 
@@ -917,22 +951,224 @@
                 transform: rotate(var(--rotation)) scale(calc(var(--scale) * 1.1));
             }
         }
+
+        /* Adiciona shake-effect ao CSS */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        .shake-effect {
+            animation: shake 0.5s infinite;
+        }
+
+        /* Estática de TV */
+        .tv-static-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 10002;
+            pointer-events: all;
+            opacity: 0;
+            transition: opacity 0.5s;
+            background: #222;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        .tv-static-overlay.show {
+            opacity: 1 !important;
+            transition: none;
+        }
+        .tv-static-noise {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="5"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.7"/></svg>') repeat;
+            opacity: 0.85;
+            mix-blend-mode: screen;
+            animation: tv-static-noise-move 0.18s steps(2) infinite;
+        }
+        @keyframes tv-static-noise-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 40px; }
+        }
+        .tv-static-scanlines {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.07) 0px,
+                rgba(0,0,0,0.18) 2px,
+                transparent 4px,
+                transparent 8px
+            );
+            opacity: 0.45;
+            pointer-events: none;
+        }
+        .tv-static-interference {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                rgba(255,255,255,0.18) 2px,
+                transparent 4px,
+                transparent 24px,
+                rgba(255,255,255,0.12) 26px,
+                transparent 28px
+            );
+            opacity: 0.35;
+            animation: tv-static-interf-move 0.7s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes tv-static-interf-move {
+            0% { background-position-y: 0; }
+            100% { background-position-y: 40px; }
+        }
+        .tv-static-flash {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: white;
+            opacity: 0;
+            z-index: 10003;
+            pointer-events: none;
+            transition: opacity 0.15s;
+        }
+        body.static-active {
+            overflow: hidden !important;
+        }
+
+        /* Navegação */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-home {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-home:hover {
+            color: #4ecdc4;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+        }
+
+        .nav-links .active {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .nav-links.active {
+                max-height: 300px;
+            }
+            
+            .nav-links li {
+                width: 100%;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 1rem 2rem;
+                border-radius: 0;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .container {
+                margin-top: 120px;
+            }
+        }
+
     </style>
 </head>
 <body>
-<!-- Navegação -->
-<nav class="navigation">
-    <div class="nav-container">
-        <a href="index.html" class="nav-home">🏠 Home</a>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="animes.html">🎌 Animes</a></li>
-            <li><a href="filmes.html">🎬 Filmes</a></li>
-            <li><a href="jogos.html" class="active">🎮 Jogos</a></li>
-            <li><a href="musicas.html">🎵 Músicas</a></li>
-        </ul>
+    <!-- Navegação -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="nav-home">🏠 Home</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="animes.html">🎌 Animes</a></li>
+                <li><a href="filmes.html">🎬 Filmes</a></li>
+                <li><a href="jogos.html" class="active">🎮 Jogos</a></li>
+                <li><a href="musicas.html">🎵 Músicas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="tv-static-overlay show" id="tvStaticOverlay">
+        <div class="tv-static-noise"></div>
+        <div class="tv-static-scanlines"></div>
+        <div class="tv-static-interference"></div>
     </div>
-</nav>
+    <div class="tv-static-flash" id="tvStaticFlash"></div>
 
     <div class="gaming-particles" id="gamingParticles"></div>
     <div class="rust-overlay" id="rustOverlay"></div>
@@ -968,10 +1204,13 @@
         <div class="special-mention" id="silentHillSection">
             <h3>👑 Hors Concours</h3>
             <p><strong>Silent Hill</strong> - Uma obra-prima</p>
-            <img src="https://i.imgur.com/mgEvwei.jpeg" alt="Silent Hill" class="silent-hill-image" id="silentHillImage">
+            <div style="position:relative; display:inline-block; width:100%; max-width:400px;">
+                <img src="https://i.imgur.com/mgEvwei.jpeg" alt="Silent Hill" class="silent-hill-image" id="silentHillImage">
+                <button id="silentHillEnterBtn" class="enter-btn" tabindex="0" aria-label="Ativar efeito"></button>
+            </div>
         </div>
 
-        <div class="games-grid" id="gamesGrid">
+        <div class="games-grid">
             <div class="game-card">
                 <div class="game-name">🤖 Nier Automata</div>
                 <div class="video-container">
@@ -1070,6 +1309,7 @@
         let fallbackOscillator = null;
         let fallbackGainNode = null;
         let otherworldTimeout = null;
+        let glitchIntervals = [];
 
         // Função de limpeza robusta para áudio
         function cleanupAudio() {
@@ -1181,7 +1421,18 @@
             }, 50);
         }
 
-        // Função modificada para ativar Otherworld em etapas
+        // ===== NOVO SISTEMA DE FASES E LINHA DO TEMPO =====
+        const effectsTimeline = {
+            phase1: { start: 0, end: 3000 },    // Suspeita
+            phase2: { start: 3000, end: 8000 }, // Inquietação  
+            phase3: { start: 8000, end: 15000 }, // Perturbação
+            phase4: { start: 15000, end: 20000 }, // Terror
+            phase5: { start: 20000, end: null }    // Efeitos atuais
+        };
+        let phaseInterval = null;
+        let phaseStartTime = null;
+
+        // Função principal para ativar a progressão
         function activateOtherworld() {
             cleanupAudio();
             if (isOtherworldActive) return;
@@ -1189,18 +1440,207 @@
             if (otherworldTimeout) {
                 clearTimeout(otherworldTimeout);
             }
+            phaseStartTime = Date.now();
+            startPhaseProgression();
+        }
+
+        // Função para iniciar a progressão por fases
+        function startPhaseProgression() {
+            phaseInterval = setInterval(() => {
+                const elapsed = Date.now() - phaseStartTime;
+                if (elapsed >= effectsTimeline.phase1.start && elapsed < effectsTimeline.phase1.end) {
+                    startPhase1();
+                } else if (elapsed >= effectsTimeline.phase2.start && elapsed < effectsTimeline.phase2.end) {
+                    startPhase2();
+                } else if (elapsed >= effectsTimeline.phase3.start && elapsed < effectsTimeline.phase3.end) {
+                    startPhase3();
+                } else if (elapsed >= effectsTimeline.phase4.start && elapsed < effectsTimeline.phase4.end) {
+                    startPhase4();
+                } else if (elapsed >= effectsTimeline.phase5.start) {
+                    clearInterval(phaseInterval);
+                    startPhase5();
+                }
+            }, 100);
+        }
+
+        // Funções para cada fase (placeholders, você pode detalhar depois)
+        function startPhase1() {
+            // 1. Glitch sutil em textos
+            const titles = [
+                document.querySelector('.header h1'),
+                document.querySelector('.special-mention h3')
+            ];
+            const corruptChars = ['█', '▓', '▒', '░', '≋'];
+            titles.forEach(title => {
+                if (!title) return;
+                const originalText = title.textContent;
+                title.classList.add('text-glitch-subtle');
+                let glitchInterval = setInterval(() => {
+                    if (!isOtherworldActive) {
+                        clearInterval(glitchInterval);
+                        title.classList.remove('text-glitch-subtle');
+                        title.textContent = originalText;
+                        return;
+                    }
+                    const words = originalText.split(' ');
+                    // Escolhe 1 ou 2 palavras aleatórias
+                    let indices = [Math.floor(Math.random() * words.length)];
+                    if (words.length > 2 && Math.random() > 0.5) {
+                        let idx2;
+                        do { idx2 = Math.floor(Math.random() * words.length); } while (idx2 === indices[0]);
+                        indices.push(idx2);
+                    }
+                    indices.forEach(targetIndex => {
+                        const corrupted = words[targetIndex].split('').map(c => 
+                            Math.random() > 0.7 ? corruptChars[Math.floor(Math.random() * corruptChars.length)] : c
+                        ).join('');
+                        words[targetIndex] = corrupted;
+                    });
+                    title.textContent = words.join(' ');
+                    // Restaura após 50-100ms
+                    setTimeout(() => {
+                        title.textContent = originalText;
+                    }, 50 + Math.random() * 50);
+                }, 1200 + Math.random() * 800);
+                glitchIntervals.push(glitchInterval);
+                setTimeout(() => {
+                    clearInterval(glitchInterval);
+                    title.classList.remove('text-glitch-subtle');
+                    title.textContent = originalText;
+                }, effectsTimeline.phase1.end);
+            });
+
+            // 2. Overlay de estática sutil
+            const staticOverlay = document.createElement('div');
+            staticOverlay.className = 'static-overlay-light';
+            staticOverlay.style.opacity = '0';
+            document.body.appendChild(staticOverlay);
+            setTimeout(() => {
+                staticOverlay.style.opacity = '0.03';
+                setTimeout(() => {
+                    staticOverlay.style.opacity = '0';
+                }, 1500);
+            }, 500);
+            setTimeout(() => {
+                staticOverlay.remove();
+            }, effectsTimeline.phase1.end);
+        }
+        function startPhase2() {
+            // Flash branco rápido
+            const flash = document.createElement('div');
+            flash.id = 'phase2Flash';
+            flash.style.position = 'fixed';
+            flash.style.top = '0';
+            flash.style.left = '0';
+            flash.style.width = '100%';
+            flash.style.height = '100%';
+            flash.style.backgroundColor = 'white';
+            flash.style.opacity = '0';
+            flash.style.zIndex = '9999';
+            flash.style.pointerEvents = 'none';
+            document.body.appendChild(flash);
+            setTimeout(() => {
+                flash.style.opacity = '0.3';
+                setTimeout(() => {
+                    flash.style.opacity = '0';
+                }, 100);
+            }, 0);
+            // Inversão de cores momentânea
+            setTimeout(() => {
+                document.body.classList.add('screen-invert');
+                setTimeout(() => {
+                    document.body.classList.remove('screen-invert');
+                }, 200);
+            }, 2000);
+            // Glitch cromático leve
+            setTimeout(() => {
+                const h1 = document.querySelector('.header h1');
+                if (h1) h1.classList.add('chromatic-glitch');
+                let chromaInterval = setInterval(() => {
+                    h1 && h1.classList.toggle('chromatic-glitch');
+                }, 1200);
+                chromaIntervals.push(chromaInterval);
+                setTimeout(() => {
+                    clearInterval(chromaInterval);
+                    h1 && h1.classList.remove('chromatic-glitch');
+                }, 3000);
+            }, 1000);
+            // Mensagens corrompidas
+            setTimeout(() => {
+                const headerTitle = document.querySelector('.header h1');
+                const headerSubtitle = document.querySelector('.header p');
+                if (headerTitle && headerSubtitle) {
+                    const originalTitle = headerTitle.textContent;
+                    const originalSubtitle = headerSubtitle.textContent;
+                    headerTitle.classList.add('text-corrupt');
+                    headerTitle.textContent = 'J̴̈ö̸g̵̈ö̴s̸';
+                    headerSubtitle.textContent = '█ņə j̴̈ö̸r̵n̴ãđa';
+                    setTimeout(() => {
+                        headerTitle.classList.remove('text-corrupt');
+                        headerTitle.textContent = originalTitle;
+                        headerSubtitle.textContent = originalSubtitle;
+                    }, 2000);
+                }
+            }, 3000);
+        }
+        function startPhase3() {
+            // Removido: VHS effect, shake, blood-red-theme
+            // Mensagens perturbadoras (mantido)
+            setTimeout(() => {
+                const h1 = document.querySelector('.header h1');
+                const p = document.querySelector('.header p');
+                if (h1 && p) {
+                    const origH1 = h1.textContent;
+                    const origP = p.textContent;
+                    h1.textContent = 'COME TO SILENT HILL';
+                    p.textContent = "YOU CAN'T ESCAPE";
+                    h1.classList.add('text-corrupt');
+                    setTimeout(() => {
+                        h1.textContent = origH1;
+                        p.textContent = origP;
+                        h1.classList.remove('text-corrupt');
+                    }, 4000); // Agora a frase fica 4 segundos
+                }
+            }, 4000);
+            // Shake/tremulação
+            setTimeout(() => {
+                const container = document.querySelector('.container');
+                if (container) container.classList.add('shake-light');
+                let shakeInterval = setInterval(() => {
+                    if (!isOtherworldActive) {
+                        clearInterval(shakeInterval);
+                        container && container.classList.remove('shake-light');
+                        return;
+                    }
+                }, 500);
+                shakeIntervals.push(shakeInterval);
+                setTimeout(() => {
+                    clearInterval(shakeInterval);
+                    container && container.classList.remove('shake-light');
+                }, 2000);
+            }, 5000);
+        }
+        function startPhase4() {
+            // Removido: flashes intensos, glitch de tela
+            // Mantém apenas o efeito negativo (invert) prolongado
+            setTimeout(() => {
+                document.body.classList.add('screen-invert-hue');
+                setTimeout(() => {
+                    document.body.classList.remove('screen-invert-hue');
+                }, 800);
+            }, 3000);
+        }
+        function startPhase5() {
+            // Efeitos atuais (original)
             createSirenSound();
             document.getElementById('bloodDrips').classList.add('active');
             setTimeout(() => {
-                if (!isOtherworldActive) return;
                 document.getElementById('rustOverlay').classList.add('active');
             }, 2000);
             setTimeout(() => {
-                if (!isOtherworldActive) return;
                 document.getElementById('cracksOverlay').classList.add('active');
             }, 6000);
             setTimeout(() => {
-                if (!isOtherworldActive) return;
                 document.body.classList.add('otherworld');
                 document.querySelector('.container').classList.add('otherworld');
                 document.querySelector('.gaming-particles').classList.add('otherworld');
@@ -1224,15 +1664,42 @@
             }, 25000);
         }
 
-        // Função modificada para desativar Otherworld
+        // Função para desativar todos os efeitos (unificada e robusta)
         function deactivateOtherworld() {
-            cleanupAudio();
             if (!isOtherworldActive) return;
+            clearInterval(phaseInterval);
             isOtherworldActive = false;
             if (otherworldTimeout) {
                 clearTimeout(otherworldTimeout);
                 otherworldTimeout = null;
             }
+            // Limpa todos os intervalos de glitch
+            if (window.glitchIntervals && Array.isArray(window.glitchIntervals)) {
+                window.glitchIntervals.forEach(id => clearInterval(id));
+                window.glitchIntervals = [];
+            }
+            // Limpa todos os intervalos de shake
+            if (window.shakeIntervals && Array.isArray(window.shakeIntervals)) {
+                window.shakeIntervals.forEach(id => clearInterval(id));
+                window.shakeIntervals = [];
+            }
+            // Limpa todos os intervalos de chroma
+            if (window.chromaIntervals && Array.isArray(window.chromaIntervals)) {
+                window.chromaIntervals.forEach(id => clearInterval(id));
+                window.chromaIntervals = [];
+            }
+            // Remove todos os efeitos temporários das fases iniciais
+            document.querySelectorAll('.static-overlay-light, #phase2Flash').forEach(el => el.remove());
+            const h1 = document.querySelector('.header h1');
+            if (h1) {
+                h1.classList.remove('text-glitch-subtle', 'chromatic-glitch', 'text-corrupt');
+                h1.textContent = '🎮 Jogos';
+            }
+            document.querySelector('.container').classList.remove('shake-light');
+            document.body.classList.remove('screen-invert');
+            document.body.classList.remove('screen-invert-hue');
+            // Remove os efeitos atuais (original)
+            cleanupAudio();
             document.body.classList.remove('otherworld');
             document.querySelector('.container').classList.remove('otherworld');
             document.querySelector('.gaming-particles').classList.remove('otherworld');
@@ -1252,6 +1719,9 @@
             });
             const particles = document.querySelectorAll('.particle');
             particles.forEach(particle => particle.classList.remove('otherworld'));
+            // Restaura transform do container
+            const container = document.querySelector('.container');
+            if (container) container.style.transform = 'translate(0, 0)';
         }
 
         // Limpar áudio ao recarregar a página
@@ -1304,45 +1774,6 @@
             
             oscillator2.start(audioContext.currentTime);
             oscillator2.stop(audioContext.currentTime + 30);
-        }
-
-        // Desativar efeito Otherworld
-        function deactivateOtherworld() {
-            if (!isOtherworldActive) return;
-            
-            isOtherworldActive = false;
-            
-            // Parar sirene
-            if (sirenAudio) {
-                sirenAudio.pause();
-                sirenAudio.currentTime = 0;
-            }
-            
-            // Remover classes de efeito
-            document.body.classList.remove('otherworld');
-            document.querySelector('.container').classList.remove('otherworld');
-            document.querySelector('.gaming-particles').classList.remove('otherworld');
-            document.getElementById('rustOverlay').classList.remove('active');
-            document.getElementById('bloodDrips').classList.remove('active');
-            document.getElementById('cracksOverlay').classList.remove('active');
-            document.getElementById('screenDistortion').classList.remove('active');
-            
-            // Remover efeito de todos os elementos
-            const elementsToTransform = [
-                '.header h1', '.gaming-icons', '.games-intro', 
-                '.special-mention', '.game-card', '.franchise-title', 
-                '.game-item', '.video-container', '.floating-element',
-                '.silent-hill-image'
-            ];
-            
-            elementsToTransform.forEach(selector => {
-                const elements = document.querySelectorAll(selector);
-                elements.forEach(el => el.classList.remove('otherworld'));
-            });
-            
-            // Remover efeito das partículas
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach(particle => particle.classList.remove('otherworld'));
         }
 
         // Efeito de paralaxe nos elementos flutuantes
@@ -1417,6 +1848,55 @@
             });
         }
 
+        // ===== TV Static Overlay Effect =====
+        document.body.classList.add('static-active');
+        const staticOverlay = document.getElementById('tvStaticOverlay');
+        const staticFlash = document.getElementById('tvStaticFlash');
+        if (staticOverlay) {
+            staticOverlay.classList.add('show'); // Garante visibilidade imediata
+            // Flashes rápidos durante a estática
+            let flashCount = 0;
+            function doFlash() {
+                if (!staticFlash) return;
+                staticFlash.style.opacity = '0.22';
+                setTimeout(() => {
+                    staticFlash.style.opacity = '0';
+                }, 60 + Math.random()*60);
+            }
+            // Sequência de flashes
+            let flashInterval = setInterval(() => {
+                if (flashCount < 6) {
+                    doFlash();
+                    flashCount++;
+                }
+            }, 180 + Math.random()*120);
+            // Fade-out após 2.7s
+            setTimeout(() => {
+                staticOverlay.classList.remove('show');
+                staticOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    staticOverlay.remove();
+                    staticFlash && staticFlash.remove();
+                    document.body.classList.remove('static-active');
+                }, 900);
+            }, 2700);
+        }
+
+        // Menu mobile toggle
+        function toggleMenu() {
+            var navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function(e) {
+            var navLinks = document.getElementById('navLinks');
+            var menuToggle = document.querySelector('.menu-toggle');
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             createGamingParticles();
@@ -1438,6 +1918,44 @@
                 }
             });
             
+            const silentHillEnterBtn = document.getElementById('silentHillEnterBtn');
+
+            function updateEnterBtnState() {
+                if (isOtherworldActive) {
+                    silentHillEnterBtn.classList.add('selected');
+                } else {
+                    silentHillEnterBtn.classList.remove('selected');
+                }
+            }
+
+            silentHillEnterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!isOtherworldActive) {
+                    activateOtherworld();
+                } else {
+                    deactivateOtherworld();
+                }
+                updateEnterBtnState();
+            });
+
+            // Backup das funções originais
+            const origActivate = activateOtherworld;
+            const origDeactivate = deactivateOtherworld;
+
+            // Sobrescrever funções para atualizar botão
+            window.activateOtherworld = function() {
+                origActivate();
+                updateEnterBtnState();
+            };
+
+            window.deactivateOtherworld = function() {
+                origDeactivate();
+                updateEnterBtnState();
+            };
+
+            // Estado inicial
+            updateEnterBtnState();
+
             // Efeito de entrada suave do container
             const container = document.querySelector('.container');
             setTimeout(() => {
@@ -1538,20 +2056,6 @@
 
         // Inicializar sistema de modal
         setupVideoModal();
-
-        // Menu mobile toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-        // Fechar menu ao clicar fora
-        document.addEventListener('click', function(e) {
-            const nav = document.querySelector('.navigation');
-            const navLinks = document.getElementById('navLinks');
-            if (!nav.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>
