@@ -638,7 +638,7 @@
             75% { transform: translateX(2px); }
         }
 
-        /* ===== VHS Overlay e Blood Theme (Fase 3) ===== */
+        /* ===== VHS Overlay e Blood Theme ===== */
         .vhs-overlay {
             position: fixed;
             top: 0;
@@ -1430,6 +1430,7 @@
 
         // Função principal para ativar a progressão
         function activateOtherworld() {
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo suavemente
             cleanupAudio();
             if (isOtherworldActive) return;
             isOtherworldActive = true;
@@ -1459,7 +1460,7 @@
             }, 100);
         }
 
-        // Funções para cada fase (placeholders, você pode detalhar depois)
+        // Funções para cada fase
         function startPhase1() {
             // 1. Glitch sutil em textos
             const titles = [
@@ -1580,8 +1581,6 @@
             }, 3000);
         }
         function startPhase3() {
-            // Removido: VHS effect, shake, blood-red-theme
-            // Mensagens perturbadoras (mantido)
             setTimeout(() => {
                 const h1 = document.querySelector('.header h1');
                 const p = document.querySelector('.header p');
@@ -1595,7 +1594,7 @@
                         h1.textContent = origH1;
                         p.textContent = origP;
                         h1.classList.remove('text-corrupt');
-                    }, 4000); // Agora a frase fica 4 segundos
+                    }, 4000);
                 }
             }, 4000);
             // Shake/tremulação
@@ -1921,7 +1920,7 @@
                     silentHillEnterBtn.classList.add('selected');
                 } else {
                     silentHillEnterBtn.classList.remove('selected');
-                }
+                               }
             }
 
             silentHillEnterBtn.addEventListener('click', function(e) {
