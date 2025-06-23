@@ -288,6 +288,18 @@
             overflow: hidden;
         }
 
+        .quote-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
+            z-index: -1;
+        }
+
         .quote-container {
             max-width: 900px;
             margin: 0 auto;
@@ -599,6 +611,98 @@
 
         /* Remover áreas e dicas antigas */
         .touch-area, .touch-hint { display: none !important; }
+
+        /* Video background para quote section */
+        .quote-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
+            z-index: -1;
+        }
+
+        /* Controle de áudio */
+        .audio-control {
+            position: absolute;
+            bottom: 20px;
+            right: 300px;
+            z-index: 10;
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid rgba(78, 205, 196, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+        }
+
+        .audio-control:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+        }
+
+        .audio-control.active {
+            background: rgba(78, 205, 196, 0.4);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            animation: pulse-audio 2s infinite;
+        }
+
+        @keyframes pulse-audio {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
+            }
+        }
+
+        /* Tooltip do áudio */
+        .audio-tooltip {
+            position: absolute;
+            bottom: 60px;
+            right: -10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #4ecdc4;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .audio-control:hover .audio-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .audio-control {
+                bottom: 15px;
+                left: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -634,6 +738,15 @@
 
     <!-- Quote Section -->
     <section class="quote-section">
+        <video class="quote-video-bg" autoplay muted loop playsinline preload="metadata">
+            <source src="https://raw.githubusercontent.com/DreamerJP/Dreamer/main/HSIN%20.mp4" type="video/mp4">
+        </video>
+
+        <div class="audio-control" onclick="toggleAudio()" id="audioControl">
+            🔇
+            <div class="audio-tooltip">Clique para ouvir</div>
+        </div>
+
         <div class="quote-container">
             <div class="quote-text">
                 I am the son<br>
@@ -662,7 +775,7 @@
                     <p class="portfolio-description">
                         Uma curadoria cinematográfica pessoal com clássicos e descobertas modernas
                     </p>
-                    <a href="https://dreamerjp.github.io/Dreamer/filmes.html" class="portfolio-link">Explorar Coleção →</a>
+                    <a href="https://sites.google.com/view/dreamerjpmg/filmes" class="portfolio-link">Explorar Coleção →</a>
                 </div>
                 
                 <div class="portfolio-item">
@@ -671,7 +784,7 @@
                     <p class="portfolio-description">
                         Playlists que marcaram momentos especiais
                     </p>
-                    <a href="https://dreamerjp.github.io/Dreamer/musicas.html" class="portfolio-link">Ouvir Playlist →</a>
+                    <a href="https://sites.google.com/view/dreamerjpmg/m%C3%BAsicas" class="portfolio-link">Ouvir Playlist →</a>
                 </div>
                 
                 <div class="portfolio-item">
@@ -680,7 +793,7 @@
                     <p class="portfolio-description">
                         Mundos virtuais e aventuras digitais que expandem os limites da imaginação
                     </p>
-                    <a href="https://dreamerjp.github.io/Dreamer/jogos.html" class="portfolio-link">Descobrir Games →</a>
+                    <a href="https://sites.google.com/view/dreamerjpmg/jogos" class="portfolio-link">Descobrir Games →</a>
                 </div>
                 
                 <div class="portfolio-item">
@@ -689,7 +802,7 @@
                     <p class="portfolio-description">
                         Animes com narrativas cativantes
                     </p>
-                    <a href="https://dreamerjp.github.io/Dreamer/animes.html" class="portfolio-link">Ver Lista →</a>
+                    <a href="https://sites.google.com/view/dreamerjpmg/animes" class="portfolio-link">Ver Lista →</a>
                 </div>
                 
                 <div class="portfolio-item">
@@ -933,6 +1046,43 @@
             heroTitle.addEventListener('touchend', cancelProgress);
             heroTitle.addEventListener('touchcancel', cancelProgress);
         }
+
+        // Controle de áudio do vídeo
+        function toggleAudio() {
+            const video = document.querySelector('.quote-video-bg');
+            const btn = document.getElementById('audioControl');
+            const tooltip = btn.querySelector('.audio-tooltip');
+
+            if (video.muted) {
+                video.muted = false;
+                btn.classList.add('active');
+                btn.innerHTML = '🔊<div class="audio-tooltip">Clique para silenciar</div>';
+
+                // Garantir que o vídeo está tocando
+                video.play().catch(e => console.log('Erro ao reproduzir:', e));
+            } else {
+                video.muted = true;
+                btn.classList.remove('active');
+                btn.innerHTML = '🔇<div class="audio-tooltip">Clique para ouvir</div>';
+            }
+        }
+
+        // Garantir que o vídeo carregue corretamente
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('.quote-video-bg');
+
+            if (video) {
+                video.addEventListener('loadeddata', () => {
+                    console.log('Vídeo carregado com sucesso');
+                });
+
+                video.addEventListener('error', (e) => {
+                    console.log('Erro ao carregar vídeo:', e);
+                    // Fallback: ocultar vídeo se não carregar
+                    video.style.display = 'none';
+                });
+            }
+        });
     </script>
 </body>
 </html>
