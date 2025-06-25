@@ -1351,9 +1351,14 @@
             const viewerImage = document.getElementById('viewerImage');
             viewerImage.style.transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${viewerZoom}) rotate(${viewerRotation}deg)`;
             viewerImage.style.transition = isDragging ? 'none' : 'transform 0.3s ease';
-            
-            // Mudar cursor baseado no zoom
-            if (viewerZoom > 1) {
+            // Mudar cursor baseado no tamanho da imagem e zoom
+            const viewerContent = document.querySelector('.viewer-content');
+            const containerWidth = viewerContent.clientWidth;
+            const containerHeight = viewerContent.clientHeight;
+            const imageWidth = viewerImage.naturalWidth * viewerZoom;
+            const imageHeight = viewerImage.naturalHeight * viewerZoom;
+            const canDrag = (imageWidth > containerWidth) || (imageHeight > containerHeight) || (viewerZoom > 1);
+            if (canDrag) {
                 viewerImage.style.cursor = isDragging ? 'grabbing' : 'grab';
             } else {
                 viewerImage.style.cursor = 'default';
@@ -1639,16 +1644,23 @@
         document.addEventListener('mousedown', function(e) {
             const viewer = document.getElementById('imageViewer');
             const viewerImage = document.getElementById('viewerImage');
-            
-            if (viewer.style.display === 'flex' && e.target === viewerImage && viewerZoom > 1) {
-                isDragging = true;
-                dragStartX = e.clientX;
-                dragStartY = e.clientY;
-                lastImageOffsetX = imageOffsetX;
-                lastImageOffsetY = imageOffsetY;
-                
-                e.preventDefault();
-                document.body.style.userSelect = 'none';
+            if (viewer.style.display === 'flex' && e.target === viewerImage) {
+                // Permitir arrastar sempre que a imagem for maior que o container em qualquer dimensão OU se o zoom for maior que 1
+                const viewerContent = document.querySelector('.viewer-content');
+                const containerWidth = viewerContent.clientWidth;
+                const containerHeight = viewerContent.clientHeight;
+                const imageWidth = viewerImage.naturalWidth * viewerZoom;
+                const imageHeight = viewerImage.naturalHeight * viewerZoom;
+                const canDrag = (imageWidth > containerWidth) || (imageHeight > containerHeight) || (viewerZoom > 1);
+                if (canDrag) {
+                    isDragging = true;
+                    dragStartX = e.clientX;
+                    dragStartY = e.clientY;
+                    lastImageOffsetX = imageOffsetX;
+                    lastImageOffsetY = imageOffsetY;
+                    e.preventDefault();
+                    document.body.style.userSelect = 'none';
+                }
             }
         });
 
