@@ -510,6 +510,19 @@
         .nav-prev { left: 20px; }
         .nav-next { right: 20px; }
 
+        .viewer-image {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            pointer-events: auto;
+            touch-action: none;
+        }
+
+        .image-viewer {
+            touch-action: none;
+        }
+
         /* PAGINAÇÃO */
         .pagination {
             display: flex;
@@ -817,6 +830,13 @@
     let viewerZoom = 1;
     let viewerRotation = 0;
     let viewMode = 'grid';
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let imageOffsetX = 0;
+    let imageOffsetY = 0;
+    let lastImageOffsetX = 0;
+    let lastImageOffsetY = 0;
 
     // DADOS DA GALERIA
     let galleryData = {};
@@ -1225,20 +1245,9 @@
             setTimeout(() => {
                 viewerImage.src = currentImages[currentImageIndex].url;
                 viewerImage.alt = currentImages[currentImageIndex].name;
-                
-                // Aguardar a nova imagem carregar para ajustar à tela
-                viewerImage.onload = function() {
-                    viewerImage.style.opacity = '1';
-                    fitImageToScreen();
-                    preloadAdjacentImages();
-                };
-                
-                // Se a imagem já estiver carregada (cache)
-                if (viewerImage.complete) {
-                    viewerImage.style.opacity = '1';
-                    fitImageToScreen();
-                    preloadAdjacentImages();
-                }
+                viewerImage.style.opacity = '1';
+                resetZoom(); // Isso agora também reseta a posição
+                preloadAdjacentImages();
             }, 150);
         }
 
@@ -1311,11 +1320,26 @@
 
         function zoomOut() {
             viewerZoom = Math.max(viewerZoom / 1.2, 0.1);
+            
+            // Se o zoom for muito pequeno, centralizar a imagem
+            if (viewerZoom <= 1) {
+                imageOffsetX = 0;
+                imageOffsetY = 0;
+                lastImageOffsetX = 0;
+                lastImageOffsetY = 0;
+            }
+            
             applyImageTransform();
         }
 
         function resetZoom() {
-            fitImageToScreen(); // Usar o ajuste à tela como "reset"
+            viewerZoom = 1;
+            viewerRotation = 0;
+            imageOffsetX = 0;
+            imageOffsetY = 0;
+            lastImageOffsetX = 0;
+            lastImageOffsetY = 0;
+            applyImageTransform();
         }
 
         function rotateImage() {
@@ -1325,8 +1349,15 @@
 
         function applyImageTransform() {
             const viewerImage = document.getElementById('viewerImage');
-            viewerImage.style.transform = `scale(${viewerZoom}) rotate(${viewerRotation}deg)`;
-            viewerImage.style.transition = 'transform 0.3s ease';
+            viewerImage.style.transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${viewerZoom}) rotate(${viewerRotation}deg)`;
+            viewerImage.style.transition = isDragging ? 'none' : 'transform 0.3s ease';
+            
+            // Mudar cursor baseado no zoom
+            if (viewerZoom > 1) {
+                viewerImage.style.cursor = isDragging ? 'grabbing' : 'grab';
+            } else {
+                viewerImage.style.cursor = 'default';
+            }
         }
 
         function downloadImage() {
@@ -1366,22 +1397,61 @@
             }
         });
 
-        // EVENTO DE SCROLL WHEEL PARA ZOOM
         document.addEventListener('wheel', function(e) {
             const viewer = document.getElementById('imageViewer');
+            const viewerImage = document.getElementById('viewerImage');
             
             if (viewer.style.display === 'flex') {
-                e.preventDefault(); // Previne o scroll da página
+                e.preventDefault();
+                
+                // Obter posição do mouse relativa à imagem
+                const rect = viewerImage.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left - rect.width / 2;
+                const mouseY = e.clientY - rect.top - rect.height / 2;
+                
+                // Converter para coordenadas da imagem (considerando transformações atuais)
+                const relativeX = (mouseX - imageOffsetX) / viewerZoom;
+                const relativeY = (mouseY - imageOffsetY) / viewerZoom;
+                
+                const oldZoom = viewerZoom;
                 
                 if (e.deltaY < 0) {
                     // Scroll para cima = Zoom in
-                    zoomIn();
+                    viewerZoom = Math.min(viewerZoom * 1.1, 5);
                 } else {
                     // Scroll para baixo = Zoom out
-                    zoomOut();
+                    viewerZoom = Math.max(viewerZoom / 1.1, 0.1);
+                    
+                    // Se zoom for muito pequeno, centralizar
+                    if (viewerZoom <= 1) {
+                        imageOffsetX = 0;
+                        imageOffsetY = 0;
+                        lastImageOffsetX = 0;
+                        lastImageOffsetY = 0;
+                        applyImageTransform();
+                        return;
+                    }
                 }
+                
+                // Aplicar zoom focal (manter ponto do mouse fixo)
+                const zoomChange = viewerZoom / oldZoom;
+                imageOffsetX -= relativeX * (zoomChange - 1) * viewerZoom;
+                imageOffsetY -= relativeY * (zoomChange - 1) * viewerZoom;
+                
+                applyImageTransform();
             }
         }, { passive: false });
+
+        // ADICIONAR suporte para duplo clique para reset zoom:
+        document.addEventListener('dblclick', function(e) {
+            const viewer = document.getElementById('imageViewer');
+            const viewerImage = document.getElementById('viewerImage');
+            
+            if (viewer.style.display === 'flex' && e.target === viewerImage) {
+                resetZoom();
+                e.preventDefault();
+            }
+        });
 
         // GESTOS TOUCH PARA MOBILE
         let touchStartX = 0;
@@ -1564,6 +1634,151 @@
                 imageObserver.observe(img);
             });
         }
+
+        // Event listeners para desktop (mouse)
+        document.addEventListener('mousedown', function(e) {
+            const viewer = document.getElementById('imageViewer');
+            const viewerImage = document.getElementById('viewerImage');
+            
+            if (viewer.style.display === 'flex' && e.target === viewerImage && viewerZoom > 1) {
+                isDragging = true;
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+                lastImageOffsetX = imageOffsetX;
+                lastImageOffsetY = imageOffsetY;
+                
+                e.preventDefault();
+                document.body.style.userSelect = 'none';
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const deltaX = e.clientX - dragStartX;
+                const deltaY = e.clientY - dragStartY;
+                
+                imageOffsetX = lastImageOffsetX + deltaX;
+                imageOffsetY = lastImageOffsetY + deltaY;
+                
+                applyImageTransform();
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.userSelect = '';
+                applyImageTransform();
+            }
+        });
+
+        // Event listeners para mobile (touch)
+        document.addEventListener('touchstart', function(e) {
+            const viewer = document.getElementById('imageViewer');
+            const viewerImage = document.getElementById('viewerImage');
+            
+            if (viewer.style.display === 'flex') {
+                if (e.touches.length === 1 && e.target === viewerImage && viewerZoom > 1) {
+                    // Arrastar com um dedo quando há zoom
+                    isDragging = true;
+                    dragStartX = e.touches[0].clientX;
+                    dragStartY = e.touches[0].clientY;
+                    lastImageOffsetX = imageOffsetX;
+                    lastImageOffsetY = imageOffsetY;
+                    
+                    e.preventDefault();
+                } else if (e.touches.length === 1) {
+                    // Navegação normal com um dedo quando não há zoom
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                } else if (e.touches.length === 2) {
+                    // Zoom com dois dedos
+                    lastTouchDistance = getTouchDistance(e.touches);
+                    
+                    // Salvar posição inicial para o zoom focal
+                    const rect = viewerImage.getBoundingClientRect();
+                    const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    
+                    // Converter para coordenadas relativas à imagem
+                    const relativeX = (centerX - rect.left - rect.width / 2) / viewerZoom;
+                    const relativeY = (centerY - rect.top - rect.height / 2) / viewerZoom;
+                    
+                    // Armazenar para uso no zoom
+                    e.focalPointX = relativeX;
+                    e.focalPointY = relativeY;
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            const viewer = document.getElementById('imageViewer');
+            
+            if (viewer.style.display === 'flex') {
+                if (e.touches.length === 1 && isDragging) {
+                    // Arrastar
+                    const deltaX = e.touches[0].clientX - dragStartX;
+                    const deltaY = e.touches[0].clientY - dragStartY;
+                    
+                    imageOffsetX = lastImageOffsetX + deltaX;
+                    imageOffsetY = lastImageOffsetY + deltaY;
+                    
+                    applyImageTransform();
+                    e.preventDefault();
+                } else if (e.touches.length === 2) {
+                    // Zoom com dois dedos
+                    e.preventDefault();
+                    const currentDistance = getTouchDistance(e.touches);
+                    const zoomFactor = currentDistance / lastTouchDistance;
+                    
+                    const newZoom = Math.max(0.1, Math.min(5, viewerZoom * zoomFactor));
+                    
+                    // Aplicar zoom focal (manter o ponto entre os dedos fixo)
+                    if (e.focalPointX !== undefined && e.focalPointY !== undefined) {
+                        const zoomChange = newZoom / viewerZoom;
+                        imageOffsetX -= e.focalPointX * (zoomChange - 1) * newZoom;
+                        imageOffsetY -= e.focalPointY * (zoomChange - 1) * newZoom;
+                    }
+                    
+                    viewerZoom = newZoom;
+                    applyImageTransform();
+                    
+                    lastTouchDistance = currentDistance;
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', function(e) {
+            const viewer = document.getElementById('imageViewer');
+            
+            if (viewer.style.display === 'flex') {
+                if (isDragging) {
+                    isDragging = false;
+                    applyImageTransform();
+                } else if (e.changedTouches.length === 1 && !isDragging) {
+                    // Navegação por swipe (apenas se não estava arrastando)
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaX = touchEndX - touchStartX;
+                    const deltaY = touchEndY - touchStartY;
+                    
+                    // Swipe horizontal para navegar (apenas se não há zoom significativo)
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50 && viewerZoom <= 1.1) {
+                        if (deltaX > 0) {
+                            prevImage();
+                        } else {
+                            nextImage();
+                        }
+                    }
+                    
+                    // Swipe vertical para fechar (apenas se não há zoom)
+                    if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 100 && viewerZoom <= 1.1) {
+                        closeViewer();
+                    }
+                }
+            }
+        });
 
         // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', function() {
