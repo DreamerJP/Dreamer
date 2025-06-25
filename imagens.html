@@ -662,15 +662,18 @@
 
     <script>
 
-        // ESTADO DA APLICAÇÃO
-        let currentFolder = '/';
-        let currentImages = [];
-        let currentPage = 1;
-        let itemsPerPage = 24;
-        let imageSize = 'medium';
-        let currentImageIndex = 0;
-        let viewerZoom = 1;
-        let viewerRotation = 0;
+    // ESTADO DA APLICAÇÃO
+    let currentFolder = '/';
+    let currentImages = [];
+    let currentPage = 1;
+    let itemsPerPage = 24;
+    let imageSize = 'medium';
+    let currentImageIndex = 0;
+    let viewerZoom = 1;
+    let viewerRotation = 0;
+
+    // DADOS DA GALERIA
+    let galleryData = {};
 
         // FUNÇÕES DE NAVEGAÇÃO
         function toggleMenu() {
@@ -685,6 +688,7 @@
                 navLinks.classList.remove('active');
             }
         });
+
 
 async function loadImagesData() {
         try {
