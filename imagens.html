@@ -237,11 +237,12 @@
         .folder-item {
             background: rgba(255, 255, 255, 0.8);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            overflow: hidden;
         }
 
         .folder-item:hover {
@@ -250,21 +251,90 @@
             border-color: var(--primary-coral);
         }
 
-        .folder-icon {
+        .folder-preview {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .folder-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .folder-item:hover .folder-preview img {
+            transform: scale(1.1);
+        }
+
+        .folder-icon-fallback {
             font-size: 3rem;
-            margin-bottom: 10px;
             color: var(--primary-turquoise);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
         }
 
         .folder-name {
             font-weight: bold;
             color: var(--dark-text);
             margin-bottom: 5px;
+            font-size: 1rem;
         }
 
         .folder-count {
             color: var(--light-text);
             font-size: 0.9rem;
+        }
+
+        /* RESPONSIVIDADE PARA PASTAS */
+        @media (max-width: 768px) {
+            .folder-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .folder-preview {
+                height: 100px;
+            }
+            
+            .folder-item {
+                padding: 12px;
+            }
+            
+            .folder-name {
+                font-size: 0.9rem;
+            }
+            
+            .folder-count {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .folder-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            
+            .folder-preview {
+                height: 80px;
+                margin-bottom: 10px;
+            }
+            
+            .folder-item {
+                padding: 10px;
+            }
         }
 
         /* GALERIA DE IMAGENS */
@@ -580,6 +650,81 @@
             60% { content: '..'; }
             80%, 100% { content: '...'; }
         }
+
+        /* MODO LISTA */
+        .image-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .image-list-item {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-height: 120px;
+        }
+
+        .image-list-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .image-list-thumbnail {
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .image-list-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .image-list-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .image-list-details {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .image-list-path {
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* RESPONSIVIDADE PARA MODO LISTA */
+        @media (max-width: 768px) {
+            .image-list-item {
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            .image-list-thumbnail {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .image-list-content {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -612,7 +757,7 @@
                 <div class="control-group">
                     <label>Tamanho:</label>
                     <input type="range" class="size-slider" id="sizeSlider" 
-                           min="1" max="4" value="2" oninput="changeImageSize(this.value)">
+                            min="1" max="4" value="2" oninput="changeImageSize(this.value)">
                 </div>
 
                 <div class="control-group">
@@ -671,6 +816,7 @@
     let currentImageIndex = 0;
     let viewerZoom = 1;
     let viewerRotation = 0;
+    let viewMode = 'grid';
 
     // DADOS DA GALERIA
     let galleryData = {};
@@ -690,7 +836,7 @@
         });
 
 
-async function loadImagesData() {
+    async function loadImagesData() {
         try {
             console.log('Iniciando carregamento do índice de imagens...');
             
@@ -712,17 +858,32 @@ async function loadImagesData() {
             galleryData['/'].folders = [];
             galleryData['/'].images = [];
             
-            // Gera a estrutura de pastas
-            galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => ({
-                name: folderName,
-                icon: getFolderIcon(folderName),
-                count: `${imagesIndex[folderName].length} imagens`,
-                path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`
-            }));
+            // Definir imagens de preview para cada pasta (personalizadas)
+            const folderPreviews = {
+                'Alessa': 'SilentHill__1_.gif', // substitua pelo nome da imagem desejada
+                'Aurora': 'Aurora__9_.jpg',
+                'Avril Lavigne': 'Avril_Lavigne__1224_.jpg',
+                'Emily Browning': 'Emily_Browning__95_.jpg',
+                'Luna Lovegood': 'Luna_Lovegood__1_.jpg',
+                'Nier Automata': 'NierAutomata__7_.jpg',
+                't.A.T.u': 't.A.T.u.__3_.png'
+            };
+            
+            // Gera a estrutura de pastas com preview
+            galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
+                const previewImage = folderPreviews[folderName] || imagesIndex[folderName][0]; // usar primeira imagem se não tiver preview definido
+                return {
+                    name: folderName,
+                    icon: getFolderIcon(folderName),
+                    count: `${imagesIndex[folderName].length} imagens`,
+                    path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
+                    preview: `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`
+                };
+            });
             
             console.log('Pastas criadas:', galleryData['/'].folders);
             
-            // Gera dados para cada pasta
+            // Gera dados para cada pasta (resto permanece igual)
             Object.entries(imagesIndex).forEach(([folderName, images]) => {
                 const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
                 galleryData[path] = {
@@ -771,7 +932,7 @@ async function loadImagesData() {
     // Função para definir ícones baseado no nome da pasta
     function getFolderIcon(folderName) {
         const icons = {
-            'Alessa': '❤',
+            'Alessa': '🎭',
             'Aurora': '✨',
             'Avril Lavigne': '🎤',
             'Emily Browning': '🌟',
@@ -786,9 +947,16 @@ async function loadImagesData() {
         function navigateToFolder(path) {
             currentFolder = path;
             currentPage = 1;
-            updateBreadcrumb();
-            loadGalleryContent();
+        
+        // Limpar campo de busca se existir
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = '';
         }
+        
+        updateBreadcrumb();
+        loadGalleryContent();
+    }
 
         function updateBreadcrumb() {
             const breadcrumb = document.getElementById('breadcrumb');
@@ -809,10 +977,12 @@ async function loadImagesData() {
         // CARREGAR CONTEÚDO DA GALERIA
         function loadGalleryContent() {
             const content = document.getElementById('galleryContent');
+            const galleryControls = document.querySelector('.gallery-controls');
             const data = galleryData[currentFolder];
             
             if (!data) {
                 content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
+                galleryControls.style.display = 'none'; // Esconder controles
                 return;
             }
             
@@ -820,14 +990,27 @@ async function loadImagesData() {
             
             setTimeout(() => {
                 let html = '';
+                let hasImages = data.images && data.images.length > 0;
                 
-                // Exibir pastas
+                // Controlar visibilidade da barra de controles
+                if (hasImages) {
+                    galleryControls.style.display = 'flex';
+                } else {
+                    galleryControls.style.display = 'none';
+                }
+                
+                // Exibir pastas com PREVIEW
                 if (data.folders && data.folders.length > 0) {
                     html += '<div class="folder-grid fade-in">';
                     data.folders.forEach(folder => {
                         html += `
                             <div class="folder-item" onclick="navigateToFolder('${folder.path}')">
-                                <div class="folder-icon">${folder.icon}</div>
+                                <div class="folder-preview">
+                                    <img src="${folder.preview}" alt="${folder.name}" 
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                                        loading="lazy">
+                                    <div class="folder-icon-fallback" style="display: none;">${folder.icon}</div>
+                                </div>
                                 <div class="folder-name">${folder.name}</div>
                                 <div class="folder-count">${folder.count}</div>
                             </div>
@@ -837,27 +1020,49 @@ async function loadImagesData() {
                 }
                 
                 // Exibir imagens
-                if (data.images && data.images.length > 0) {
+                if (hasImages) {
                     currentImages = data.images;
                     const startIndex = (currentPage - 1) * itemsPerPage;
                     const endIndex = startIndex + itemsPerPage;
                     const pageImages = currentImages.slice(startIndex, endIndex);
                     
-                    html += `<div class="image-grid grid-${imageSize} fade-in">`;
-                    pageImages.forEach((image, index) => {
-                        const globalIndex = startIndex + index;
-                        html += `
-                            <div class="image-item" onclick="openViewer(${globalIndex})">
-                                <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
-                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
-                                <div class="image-info">
-                                    <div class="image-name">${image.name}</div>
-                                    <div class="image-details">${image.size} • ${image.type} • ${image.date}</div>
+                    if (viewMode === 'grid') {
+                        // Modo Grade (atual)
+                        html += `<div class="image-grid grid-${imageSize} fade-in">`;
+                        pageImages.forEach((image, index) => {
+                            const globalIndex = startIndex + index;
+                            html += `
+                                <div class="image-item" onclick="openViewer(${globalIndex})">
+                                    <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+                                    <div class="image-info">
+                                        <div class="image-name">${image.name}</div>
+                                        <div class="image-details">${image.size} • ${image.type} • ${image.date}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
-                    });
-                    html += '</div>';
+                            `;
+                        });
+                        html += '</div>';
+                    } else {
+                        // Modo Lista (novo)
+                        html += `<div class="image-list fade-in">`;
+                        pageImages.forEach((image, index) => {
+                            const globalIndex = startIndex + index;
+                            html += `
+                                <div class="image-list-item" onclick="openViewer(${globalIndex})">
+                                    <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+                                    <div class="image-list-content">
+                                        <div class="image-list-name">${image.name}</div>
+                                        <div class="image-list-details">Tamanho: ${image.size} • Tipo: ${image.type}</div>
+                                        <div class="image-list-details">Data: ${image.date}</div>
+                                        <div class="image-list-path">Pasta: ${currentFolder}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    }
                     
                     updatePagination();
                 } else if (!data.folders || data.folders.length === 0) {
@@ -891,12 +1096,20 @@ async function loadImagesData() {
         }
 
         function setViewMode(mode) {
+            viewMode = mode;
+            
+            // Atualizar botões ativos
             const buttons = document.querySelectorAll('.view-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
             
-            // Implementar mudança de modo de visualização se necessário
-            console.log('Modo de visualização:', mode);
+            // Encontrar e ativar o botão correto
+            const activeButton = document.querySelector(`[onclick="setViewMode('${mode}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Recarregar conteúdo com novo modo de visualização
+            loadGalleryContent();
         }
 
         // PAGINAÇÃO
@@ -971,10 +1184,17 @@ async function loadImagesData() {
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            resetZoom();
+            // Aguardar a imagem carregar para calcular o zoom inicial
+            viewerImage.onload = function() {
+                fitImageToScreen();
+                preloadAdjacentImages();
+            };
             
-            // Precarregar imagens adjacentes
-            preloadAdjacentImages();
+            // Se a imagem já estiver carregada (cache), calcular imediatamente
+            if (viewerImage.complete) {
+                fitImageToScreen();
+                preloadAdjacentImages();
+            }
         }
 
         function closeViewer() {
@@ -1005,10 +1225,68 @@ async function loadImagesData() {
             setTimeout(() => {
                 viewerImage.src = currentImages[currentImageIndex].url;
                 viewerImage.alt = currentImages[currentImageIndex].name;
-                viewerImage.style.opacity = '1';
-                resetZoom();
-                preloadAdjacentImages();
+                
+                // Aguardar a nova imagem carregar para ajustar à tela
+                viewerImage.onload = function() {
+                    viewerImage.style.opacity = '1';
+                    fitImageToScreen();
+                    preloadAdjacentImages();
+                };
+                
+                // Se a imagem já estiver carregada (cache)
+                if (viewerImage.complete) {
+                    viewerImage.style.opacity = '1';
+                    fitImageToScreen();
+                    preloadAdjacentImages();
+                }
             }, 150);
+        }
+
+        function fitImageToScreen() {
+            const viewerImage = document.getElementById('viewerImage');
+            const viewerContent = document.querySelector('.viewer-content');
+            
+            // Obter dimensões da tela/container
+            const containerWidth = viewerContent.clientWidth;
+            const containerHeight = viewerContent.clientHeight;
+            
+            // Obter dimensões naturais da imagem
+            const imageWidth = viewerImage.naturalWidth;
+            const imageHeight = viewerImage.naturalHeight;
+            
+            if (imageWidth === 0 || imageHeight === 0) {
+                // Imagem ainda não carregou completamente
+                viewerZoom = 1;
+                viewerRotation = 0;
+                applyImageTransform();
+                return;
+            }
+            
+            // Calcular proporções
+            const containerRatio = containerWidth / containerHeight;
+            const imageRatio = imageWidth / imageHeight;
+            
+            let scale;
+            
+            // Determinar qual dimensão deve ser limitante
+            if (imageRatio > containerRatio) {
+                // Imagem é mais larga proporcionalmente - limitar pela largura
+                scale = (containerWidth * 0.9) / imageWidth;
+            } else {
+                // Imagem é mais alta proporcionalmente - limitar pela altura  
+                scale = (containerHeight * 0.9) / imageHeight;
+            }
+            
+            // Garantir que não amplie imagens muito pequenas desnecessariamente
+            if (scale > 1 && imageWidth < containerWidth * 0.5 && imageHeight < containerHeight * 0.5) {
+                scale = 1;
+            }
+            
+            // Definir zoom inicial e resetar rotação
+            viewerZoom = Math.max(0.1, Math.min(1, scale));
+            viewerRotation = 0;
+            
+            applyImageTransform();
         }
 
         function preloadAdjacentImages() {
@@ -1037,9 +1315,7 @@ async function loadImagesData() {
         }
 
         function resetZoom() {
-            viewerZoom = 1;
-            viewerRotation = 0;
-            applyImageTransform();
+            fitImageToScreen(); // Usar o ajuste à tela como "reset"
         }
 
         function rotateImage() {
@@ -1176,9 +1452,9 @@ async function loadImagesData() {
                 <div class="control-group">
                     <label>🔍 Buscar:</label>
                     <input type="text" id="searchInput" placeholder="Nome da imagem..." 
-                           oninput="searchImages(this.value)" 
-                           style="padding: 8px 12px; border: 2px solid rgba(255, 107, 107, 0.3); 
-                                  border-radius: 10px; background: white; color: var(--dark-text);">
+                            oninput="searchImages(this.value)" 
+                            style="padding: 8px 12px; border: 2px solid rgba(255, 107, 107, 0.3); 
+                                    border-radius: 10px; background: white; color: var(--dark-text);">
                 </div>
             `;
             
@@ -1188,6 +1464,8 @@ async function loadImagesData() {
         }
 
         function searchImages(query) {
+            const galleryControls = document.querySelector('.gallery-controls');
+            
             if (!query.trim()) {
                 loadGalleryContent();
                 return;
@@ -1198,39 +1476,72 @@ async function loadImagesData() {
                 image.name.toLowerCase().includes(query.toLowerCase())
             );
             
+            // Controlar visibilidade da barra de controles baseado nos resultados
+            if (filteredImages.length > 0) {
+                galleryControls.style.display = 'flex';
+            } else {
+                galleryControls.style.display = 'none';
+            }
+            
             displayFilteredImages(filteredImages);
         }
 
         function displayFilteredImages(images) {
             const content = document.getElementById('galleryContent');
+            const galleryControls = document.querySelector('.gallery-controls');
             currentImages = images;
             currentPage = 1;
             
             if (images.length === 0) {
                 content.innerHTML = '<div class="loading">Nenhuma imagem encontrada</div>';
+                galleryControls.style.display = 'none';
                 updatePagination(0);
                 return;
             }
+            
+            galleryControls.style.display = 'flex';
             
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const pageImages = images.slice(startIndex, endIndex);
             
-            let html = `<div class="image-grid grid-${imageSize} fade-in">`;
-            pageImages.forEach((image, index) => {
-                const globalIndex = startIndex + index;
-                html += `
-                    <div class="image-item" onclick="openViewer(${globalIndex})">
-                        <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
-                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
-                        <div class="image-info">
-                            <div class="image-name">${image.name}</div>
-                            <div class="image-details">${image.size} • ${image.type} • ${image.date}</div>
+            let html = '';
+            
+            if (viewMode === 'grid') {
+                html = `<div class="image-grid grid-${imageSize} fade-in">`;
+                pageImages.forEach((image, index) => {
+                    const globalIndex = startIndex + index;
+                    html += `
+                        <div class="image-item" onclick="openViewer(${globalIndex})">
+                            <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+                            <div class="image-info">
+                                <div class="image-name">${image.name}</div>
+                                <div class="image-details">${image.size} • ${image.type} • ${image.date}</div>
+                            </div>
                         </div>
-                    </div>
-                `;
-            });
-            html += '</div>';
+                    `;
+                });
+                html += '</div>';
+            } else {
+                html = `<div class="image-list fade-in">`;
+                pageImages.forEach((image, index) => {
+                    const globalIndex = startIndex + index;
+                    html += `
+                        <div class="image-list-item" onclick="openViewer(${globalIndex})">
+                            <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+                            <div class="image-list-content">
+                                <div class="image-list-name">${image.name}</div>
+                                <div class="image-list-details">Tamanho: ${image.size} • Tipo: ${image.type}</div>
+                                <div class="image-list-details">Data: ${image.date}</div>
+                                <div class="image-list-path">Pasta: ${currentFolder}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
             
             content.innerHTML = html;
             updatePagination(images.length);
