@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎥 Vídeos - Galeria Musical</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-coral: #ff6b6b;
+            --primary-turquoise: #4ecdc4;
+            --dark-text: #2c3e50;
+            --light-text: #7f8c8d;
+            --secondary-text: #566573;
+            --main-gradient: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            --button-gradient: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            --background-white: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--main-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navegação */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 107, 107, 0.3);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-home {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-coral);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-home:hover {
+            transform: scale(1.1);
+            color: var(--primary-turquoise);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--button-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-coral);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            margin-top: 120px;
+            padding: 0 20px 60px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            background: var(--background-white);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--main-gradient);
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary-text);
+            margin-bottom: 30px;
+        }
+
+        /* Filtros */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--background-white);
+            color: var(--dark-text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--button-gradient);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Player Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: modalSlideIn 0.5s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--primary-coral);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--primary-turquoise);
+        }
+
+        #videoPlayer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Grade de Vídeos */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Efeitos Especiais para Cards */
+        .video-card {
+            background: var(--background-white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .video-card:hover::before {
+            left: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 35px 70px rgba(255, 107, 107, 0.25);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .video-card:hover .video-thumbnail {
+            transform: scale(1.05);
+        }
+
+        .video-card:hover .video-title {
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.3), rgba(78, 205, 196, 0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-card:hover .video-thumbnail::after {
+            opacity: 1;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: var(--button-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0.9;
+            z-index: 2;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .video-card:hover .play-overlay {
+            transform: translate(-50%, -50%) scale(1.3) rotate(360deg);
+            opacity: 1;
+            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.6);
+        }
+
+        .play-overlay::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--button-gradient);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .video-artist {
+            color: var(--primary-coral);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .video-artist::before {
+            content: '🎵';
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+
+        .video-description {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .video-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--button-gradient);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-category {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Estatísticas do Card */
+        .video-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        /* Partículas Interativas */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 107, 107, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 12s linear infinite;
+        }
+
+        .particle:nth-child(even) {
+            background: rgba(78, 205, 196, 0.6);
+            animation-duration: 15s;
+        }
+
+        /* Contador de Visualizações */
+        .view-counter {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            background: var(--background-white);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .view-counter:hover {
+            transform: scale(1.05);
+        }
+
+        .counter-title {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .counter-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid rgba(255, 107, 107, 0.2);
+            border-radius: 25px;
+            background: var(--background-white);
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-coral);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--button-gradient);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-note {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.15;
+            animation: float 12s ease-in-out infinite;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .floating-note:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
+        .floating-note:nth-child(2) { top: 70%; right: 12%; animation-delay: 3s; }
+        .floating-note:nth-child(3) { top: 85%; left: 25%; animation-delay: 6s; }
+        .floating-note:nth-child(4) { top: 25%; right: 20%; animation-delay: 9s; }
+        .floating-note:nth-child(5) { top: 45%; left: 5%; animation-delay: 1s; }
+        .floating-note:nth-child(6) { top: 55%; right: 35%; animation-delay: 4s; }
+
+        /* Animações Avançadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+            75% { transform: translateY(-25px) rotate(8deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        /* Loading Animation */
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--background-white);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: none;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filter-section {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        /* Delay de animação para cards */
+        .video-card:nth-child(1) { animation-delay: 0.1s; }
+        .video-card:nth-child(2) { animation-delay: 0.2s; }
+        .video-card:nth-child(3) { animation-delay: 0.3s; }
+        .video-card:nth-child(4) { animation-delay: 0.4s; }
+        .video-card:nth-child(5) { animation-delay: 0.5s; }
+        .video-card:nth-child(6) { animation-delay: 0.6s; }
+        .video-card:nth-child(7) { animation-delay: 0.7s; }
+        .video-card:nth-child(8) { animation-delay: 0.8s; }
+        .video-card:nth-child(9) { animation-delay: 0.9s; }
+    </style>
+</head>
+<body>
+    <!-- Partículas Animadas -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Elementos Flutuantes -->
+    <div class="floating-elements">
+        <div class="floating-note">🎵</div>
+        <div class="floating-note">🎤</div>
+        <div class="floating-note">🎸</div>
+        <div class="floating-note">🎹</div>
+        <div class="floating-note">🎺</div>
+        <div class="floating-note">🥁</div>
+    </div>
+
+    <!-- Contador de Visualizações -->
+    <div class="view-counter">
+        <div class="counter-title">Total de Vídeos</div>
+        <div class="counter-number" id="videoCounter">9</div>
+    </div>
+
+    <!-- Navegação -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="nav-home">🏠 Home</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="animes.html">🎌 Animes</a></li>
+                <li><a href="filmes.html">🎬 Filmes</a></li>
+                <li><a href="jogos.html">🎮 Jogos</a></li>
+                <li><a href="musicas.html">🎵 Músicas</a></li>
+                <li><a href="videos.html" class="active">🎥 Vídeos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Modal do Player -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVideo()">&times;</button>
+            <iframe id="videoPlayer" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <!-- Cabeçalho -->
+        <div class="header-section">
+            <h1 class="page-title">🎥 Galeria de Vídeos</h1>
+            <p class="page-subtitle">Descubra os melhores clipes musicais e performances ao vivo dos seus artistas favoritos</p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filter-section">
+            <button class="filter-btn" onclick="filterVideos('Aurora')">Aurora</button>
+            <button class="filter-btn" onclick="filterVideos('Emily Browning')">Emily Browning</button>
+            <button class="filter-btn" onclick="filterVideos('Chvrches')">Chvrches</button>
+            <button class="filter-btn" onclick="filterVideos('t.A.T.u.')">t.A.T.u.</button>
+            <button class="filter-btn" onclick="filterVideos('Variado')">Variado</button>
+        </div>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="🔍 Pesquisar vídeos..." onkeyup="searchVideos(this.value)">
+            <button class="search-btn">🔍</button>
+        </div>
+
+        <!-- Grade de Vídeos -->
+        <div class="videos-grid" id="videosGrid">
+            <!-- Os vídeos serão inseridos aqui pelo JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Dados dos vídeos com mais informações
+        const videosData = [
+            // Aurora
+            {
+                id: 'wULeXeQkqd0',
+                title: 'Queendom',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/wULeXeQkqd0/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'PYdm_Z1wnQ0',
+                title: 'Winter Bird',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/PYdm_Z1wnQ0/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'SYKU7DfEJT4',
+                title: 'Half The World Away',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/SYKU7DfEJT4/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'jTwdGRHl5Mw',
+                title: 'Murder Song (5, 4, 3, 2, 1)',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/jTwdGRHl5Mw/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'eT6dLJd3rYk',
+                title: 'I Went Too Far',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/eT6dLJd3rYk/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: '06ht9MyJLT4',
+                title: 'Running With The Wolves',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/06ht9MyJLT4/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'd_HlPboLRL8',
+                title: 'Runaway',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/d_HlPboLRL8/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'dmVAmlpbnD4',
+                title: 'Conqueror',
+                artist: 'Aurora',
+                description: '',
+                category: 'Aurora',
+                thumbnail: 'https://img.youtube.com/vi/dmVAmlpbnD4/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            // Emily Browning / God Help the Girl
+            {
+                id: 'aeH2cfNRMiw',
+                title: 'Act of the Apostle',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/aeH2cfNRMiw/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'n0aOSIgOsRE',
+                title: 'Come Monday Night',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/n0aOSIgOsRE/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: '5m6JYEJmRIk',
+                title: 'Down and Dusky Blonde',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/5m6JYEJmRIk/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'VNGvzu51zsw',
+                title: 'God Help the Girl',
+                artist: 'Emily Browning',
+                description: '',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/VNGvzu51zsw/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'VcSeUHScWWk',
+                title: 'I Just Want Your Jeans Hannah Murray',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/VcSeUHScWWk/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'cNzjkm3agq0',
+                title: "I'll Have to Dance with Cassie",
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/cNzjkm3agq0/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'aacAT1i2SnY',
+                title: 'Musician, Please Take Heed',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'mVeW2_t4gRg',
+                title: 'Pretty Eve in the Tub',
+                artist: 'Olly Alexander',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/mVeW2_t4gRg/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'InGXbmScabQ',
+                title: 'The Psychiatrist Is In',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/InGXbmScabQ/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            // Chvrches
+            {
+                id: '2vNeBRMVCoU',
+                title: 'Empty Threat',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/2vNeBRMVCoU/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'A2LtxHS9p44',
+                title: 'Leave A Trace',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/A2LtxHS9p44/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'rUEmoxoOt9A',
+                title: 'Miracle',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/rUEmoxoOt9A/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'gk4kbLYdg8U',
+                title: 'The Mother We Share - Live',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/gk4kbLYdg8U/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'BeyA8si0tyI',
+                title: 'Now is Not The Time',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/BeyA8si0tyI/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'G_eWRlXFvAk',
+                title: 'Clearest Blue',
+                artist: 'Chvrches',
+                description: '',
+                category: 'Chvrches',
+                thumbnail: 'https://img.youtube.com/vi/G_eWRlXFvAk/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            // Variado
+            {
+                id: '1TO48Cnl66w',
+                title: 'Thank You',
+                artist: 'Dido',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/1TO48Cnl66w/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'oofSnsGkops',
+                title: 'You\'re Beautiful',
+                artist: 'James Blunt',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/oofSnsGkops/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'smKf_cQCdeo',
+                title: 'With Every Heartbeat',
+                artist: 'Robyn',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/smKf_cQCdeo/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'ADBKdSCbmiM',
+                title: 'What Else Is There ?',
+                artist: 'Röyksopp',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/ADBKdSCbmiM/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'hPC2Fp7IT7o',
+                title: 'Broken ft. Amy Lee',
+                artist: 'Seether',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/hPC2Fp7IT7o/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: '8N-qO3sPMjc',
+                title: 'Kiss Me',
+                artist: 'Sixpence None The Richer',
+                description: '',
+                category: 'Variado',
+                thumbnail: 'https://img.youtube.com/vi/8N-qO3sPMjc/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            // t.A.T.u.
+            {
+                id: 'haYYbQSLa8o',
+                title: 'Golden Leaves',
+                artist: 'Noemi Smorra ft Lena Katina',
+                description: '',
+                category: 't.A.T.u.',
+                thumbnail: 'https://img.youtube.com/vi/haYYbQSLa8o/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'OcwZKz46Jb4',
+                title: 'Lift Me Up',
+                artist: 'Lena Katina',
+                description: '',
+                category: 't.A.T.u.',
+                thumbnail: 'https://img.youtube.com/vi/OcwZKz46Jb4/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'L2Lmt_2ksNU',
+                title: 'Not gonna get us',
+                artist: 't.A.T.u.',
+                description: '',
+                category: 't.A.T.u.',
+                thumbnail: 'https://img.youtube.com/vi/L2Lmt_2ksNU/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'KtD_gVNy_rA',
+                title: 'All about us',
+                artist: 't.A.T.u.',
+                description: '',
+                category: 't.A.T.u.',
+                thumbnail: 'https://img.youtube.com/vi/KtD_gVNy_rA/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            },
+            {
+                id: 'EpM8EuizLAw',
+                title: 'Gomenasai animated',
+                artist: 't.A.T.u.',
+                description: '',
+                category: 't.A.T.u.',
+                thumbnail: 'https://img.youtube.com/vi/EpM8EuizLAw/maxresdefault.jpg',
+                duration: '',
+                views: ''
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // Função para renderizar vídeos
+        function renderVideos(videos = videosData) {
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = '';
+
+            videos.forEach((video, index) => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.dataset.category = video.category;
+                videoCard.onclick = () => playVideo(video.id);
+
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail" style="background-image: url('${video.thumbnail}')">
+                        <div class="play-overlay">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <p class="video-artist">${video.artist}</p>
+                        <p class="video-description">${video.description}</p>
+                        <div class="video-stats">
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(videoCard);
+
+                // Animação de entrada com delay
+                setTimeout(() => {
+                    videoCard.style.opacity = '1';
+                    videoCard.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // Função para filtrar vídeos
+        function filterVideos(category) {
+            currentFilter = category;
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Aplicar filtros combinados
+            searchVideos(currentSearch);
+        }
+
+        // Função para pesquisar vídeos
+        function searchVideos(query) {
+            currentSearch = query.toLowerCase();
+            
+            let filteredVideos = videosData;
+            
+            // Aplicar filtro de categoria se não for 'all'
+            if (currentFilter !== 'all') {
+                filteredVideos = filteredVideos.filter(video => video.category === currentFilter);
+            }
+            
+            // Aplicar filtro de pesquisa
+            if (currentSearch) {
+                filteredVideos = filteredVideos.filter(video => 
+                    video.title.toLowerCase().includes(currentSearch) ||
+                    video.artist.toLowerCase().includes(currentSearch) ||
+                    video.description.toLowerCase().includes(currentSearch)
+                );
+            }
+            
+            renderVideos(filteredVideos);
+            updateVideoCounter(filteredVideos.length);
+        }
+
+        // Função para tocar vídeo
+        function playVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            modal.style.display = 'flex';
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Função para fechar vídeo
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            
+            player.src = '';
+            modal.style.display = 'none';
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideo();
+            }
+        });
+
+        // Função para obter ícone da categoria
+        function getCategoryIcon(category) {
+            const icons = {
+                'pop': '🎤',
+                'rock': '🎸',
+                'eletronica': '🎧',
+                'live': '🎪',
+                'indie': '🌟'
+            };
+            return icons[category] || '🎵';
+        }
+
+        // Função para obter nome da categoria
+        function getCategoryName(category) {
+            const names = {
+                'pop': 'Pop',
+                'rock': 'Rock',
+                'eletronica': 'Eletrônica',
+                'live': 'Ao Vivo',
+                'indie': 'Indie'
+            };
+            return names[category] || 'Música';
+        }
+
+        // Criar partículas animadas
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Atualizar contador de vídeos
+        function updateVideoCounter(count) {
+            document.getElementById('videoCounter').textContent = count;
+        }
+
+        // Menu mobile toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.navigation');
+            const navLinks = document.getElementById('navLinks');
+            if (!nav.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            renderVideos();
+            updateVideoCounter(videosData.length);
+        });
+    </script>
+</body>
+</html>
