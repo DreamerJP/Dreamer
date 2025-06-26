@@ -156,24 +156,27 @@
         }
 
         .filter-btn {
-            padding: 12px 25px;
+            padding: 16px 36px;
             border: none;
             border-radius: 25px;
             background: var(--background-white);
             color: var(--dark-text);
-            font-weight: 500;
+            font-weight: bold;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            margin: 0 4px;
+            letter-spacing: 0.5px;
         }
 
         .filter-btn:hover,
         .filter-btn.active {
-            background: var(--button-gradient);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 100%);
+            color: #fff;
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 12px 32px rgba(255, 107, 107, 0.25);
         }
 
         /* Player Modal */
@@ -439,108 +442,6 @@
             animation-duration: 15s;
         }
 
-        /* Contador de Visualizações */
-        .view-counter {
-            position: fixed;
-            top: 120px;
-            right: 30px;
-            background: var(--background-white);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255, 107, 107, 0.2);
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        .view-counter:hover {
-            transform: scale(1.05);
-        }
-
-        .counter-title {
-            font-size: 0.9rem;
-            color: var(--light-text);
-            margin-bottom: 5px;
-        }
-
-        .counter-number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: var(--main-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Search Bar */
-        .search-container {
-            max-width: 500px;
-            margin: 0 auto 30px;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: 2px solid rgba(255, 107, 107, 0.2);
-            border-radius: 25px;
-            background: var(--background-white);
-            backdrop-filter: blur(10px);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: var(--primary-coral);
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--button-gradient);
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-note {
-            position: absolute;
-            font-size: 2.5rem;
-            opacity: 0.15;
-            animation: float 12s ease-in-out infinite;
-            color: white;
-            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
-        }
-
-        .floating-note:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
-        .floating-note:nth-child(2) { top: 70%; right: 12%; animation-delay: 3s; }
-        .floating-note:nth-child(3) { top: 85%; left: 25%; animation-delay: 6s; }
-        .floating-note:nth-child(4) { top: 25%; right: 20%; animation-delay: 9s; }
-        .floating-note:nth-child(5) { top: 45%; left: 5%; animation-delay: 1s; }
-        .floating-note:nth-child(6) { top: 55%; right: 35%; animation-delay: 4s; }
-
         /* Animações Avançadas */
         @keyframes fadeInUp {
             from {
@@ -692,6 +593,30 @@
         .video-card:nth-child(7) { animation-delay: 0.7s; }
         .video-card:nth-child(8) { animation-delay: 0.8s; }
         .video-card:nth-child(9) { animation-delay: 0.9s; }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .floating-note {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.15;
+            animation: float 12s ease-in-out infinite;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+        .floating-note:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
+        .floating-note:nth-child(2) { top: 70%; right: 12%; left: auto; animation-delay: 3s; }
+        .floating-note:nth-child(3) { top: 85%; left: 25%; animation-delay: 6s; }
+        .floating-note:nth-child(4) { top: 25%; right: 20%; left: auto; animation-delay: 9s; }
+        .floating-note:nth-child(5) { top: 45%; left: 5%; animation-delay: 1s; }
+        .floating-note:nth-child(6) { top: 55%; right: 35%; left: auto; animation-delay: 4s; }
     </style>
 </head>
 <body>
@@ -706,12 +631,6 @@
         <div class="floating-note">🎹</div>
         <div class="floating-note">🎺</div>
         <div class="floating-note">🥁</div>
-    </div>
-
-    <!-- Contador de Visualizações -->
-    <div class="view-counter">
-        <div class="counter-title">Total de Vídeos</div>
-        <div class="counter-number" id="videoCounter">9</div>
     </div>
 
     <!-- Navegação -->
@@ -741,8 +660,8 @@
     <div class="main-content">
         <!-- Cabeçalho -->
         <div class="header-section">
-            <h1 class="page-title">🎥 Galeria de Vídeos</h1>
-            <p class="page-subtitle">Descubra os melhores clipes musicais e performances ao vivo dos seus artistas favoritos</p>
+            <h1 class="page-title"> Galeria de Vídeos</h1>
+            <p class="page-subtitle">Clipes musicais favoritos</p>
         </div>
 
         <!-- Filtros -->
@@ -752,12 +671,6 @@
             <button class="filter-btn" onclick="filterVideos('Chvrches')">Chvrches</button>
             <button class="filter-btn" onclick="filterVideos('t.A.T.u.')">t.A.T.u.</button>
             <button class="filter-btn" onclick="filterVideos('Variado')">Variado</button>
-        </div>
-
-        <!-- Barra de Pesquisa -->
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="🔍 Pesquisar vídeos..." onkeyup="searchVideos(this.value)">
-            <button class="search-btn">🔍</button>
         </div>
 
         <!-- Grade de Vídeos -->
@@ -1116,8 +1029,7 @@
             }
         ];
 
-        let currentFilter = 'all';
-        let currentSearch = '';
+        let currentFilter = 'Aurora';
 
         // Função para renderizar vídeos
         function renderVideos(videos = videosData) {
@@ -1156,39 +1068,13 @@
         // Função para filtrar vídeos
         function filterVideos(category) {
             currentFilter = category;
-            
-            // Atualizar botões ativos
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-
-            // Aplicar filtros combinados
-            searchVideos(currentSearch);
-        }
-
-        // Função para pesquisar vídeos
-        function searchVideos(query) {
-            currentSearch = query.toLowerCase();
-            
-            let filteredVideos = videosData;
-            
-            // Aplicar filtro de categoria se não for 'all'
-            if (currentFilter !== 'all') {
-                filteredVideos = filteredVideos.filter(video => video.category === currentFilter);
-            }
-            
-            // Aplicar filtro de pesquisa
-            if (currentSearch) {
-                filteredVideos = filteredVideos.filter(video => 
-                    video.title.toLowerCase().includes(currentSearch) ||
-                    video.artist.toLowerCase().includes(currentSearch) ||
-                    video.description.toLowerCase().includes(currentSearch)
-                );
-            }
-            
+            // Exibir apenas vídeos da categoria selecionada
+            const filteredVideos = videosData.filter(video => video.category === currentFilter);
             renderVideos(filteredVideos);
-            updateVideoCounter(filteredVideos.length);
         }
 
         // Função para tocar vídeo
@@ -1268,11 +1154,6 @@
             }
         }
 
-        // Atualizar contador de vídeos
-        function updateVideoCounter(count) {
-            document.getElementById('videoCounter').textContent = count;
-        }
-
         // Menu mobile toggle
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
@@ -1291,8 +1172,8 @@
         // Inicializar página
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
-            renderVideos();
-            updateVideoCounter(videosData.length);
+            currentFilter = 'Aurora';
+            renderVideos(videosData.filter(v => v.category === 'Aurora'));
         });
     </script>
 </body>
