@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=10">
     <title> Galeria de Imagens</title>
     <style>
         :root {
@@ -559,11 +559,6 @@
             -moz-user-select: none;
             -ms-user-select: none;
             pointer-events: auto;
-            touch-action: none;
-        }
-
-        .image-viewer {
-            touch-action: none;
         }
 
         /* PAGINAÇÃO */
@@ -790,6 +785,10 @@
             align-items: center;
             justify-content: center;
         }
+
+        .nav-arrows {
+            transition: opacity 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -820,7 +819,7 @@
 
             <div class="view-controls">
                 <div class="control-group">
-                    <label>Tamanho:</label>
+                    <label>Resolução:</label>
                     <input type="range" class="size-slider" id="sizeSlider" 
                             min="1" max="4" value="2" oninput="changeImageSize(this.value)">
                 </div>
@@ -890,6 +889,10 @@
     let imageOffsetY = 0;
     let lastImageOffsetX = 0;
     let lastImageOffsetY = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let lastTouchDistance = 0;
+    let wasPinch = false; // Flag para detectar gesto de pinça
 
     // DADOS DA GALERIA
     let galleryData = {};
@@ -968,7 +971,8 @@
                         thumbnail: `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(filename)}`,
                         size: 'Desconhecido',
                         type: filename.split('.').pop().toUpperCase(),
-                        date: new Date().toLocaleDateString('pt-BR')
+                        date: new Date().toLocaleDateString('pt-BR'),
+                        resolution: ''
                     }))
                 };
                 console.log(`Pasta ${path} criada com ${images.length} imagens`);
@@ -1130,7 +1134,7 @@
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                     <div class="image-list-content">
                                         <div class="image-list-name">${image.name}</div>
-                                        <div class="image-list-details">Tamanho: ${image.size} • Tipo: ${image.type}</div>
+                                        <div class="image-list-details resolution">Resolução: <span class="image-resolution">Carregando...</span> • Tipo: ${image.type}</div>
                                         <div class="image-list-details">Data: ${image.date}</div>
                                         <div class="image-list-path">Pasta: ${currentFolder}</div>
                                     </div>
@@ -1157,6 +1161,7 @@
                 }
                 
                 content.innerHTML = html;
+                fillImageResolutions();
             }, 300);
         }
 
@@ -1277,6 +1282,7 @@
                 fitImageToScreen();
                 preloadAdjacentImages();
             }
+            showNavArrows();
         }
 
         function closeViewer() {
@@ -1284,6 +1290,7 @@
             viewer.style.display = 'none';
             document.body.style.overflow = 'auto';
             resetZoom();
+            hideNavArrows();
         }
 
         function prevImage() {
@@ -1389,149 +1396,112 @@
             document.body.removeChild(link);
         }
 
-        // EVENTOS DE TECLADO
-                document.addEventListener('keydown', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            
-            if (viewer.style.display === 'flex') {
-                switch(e.key) {
-                    case 'Escape':
-                        closeViewer();
-                        break;
-                    case 'ArrowLeft':
-                        prevImage();
-                        break;
-                    case 'ArrowRight':
-                        nextImage();
-                        break;
-                    case '0':
-                        resetZoom();
-                        break;
-                    case 'r':
-                    case 'R':
-                        rotateImage();
-                        break;
-                }
-            }
-        });
+        // Função para detectar se é mobile
+        function isMobile() {
+            return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+        }
 
-        document.addEventListener('wheel', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            
-            if (viewer.style.display === 'flex') {
-                e.preventDefault();
-                
-                // Obter posição do mouse relativa à imagem
-                const rect = viewerImage.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left - rect.width / 2;
-                const mouseY = e.clientY - rect.top - rect.height / 2;
-                
-                // Converter para coordenadas da imagem (considerando transformações atuais)
-                const relativeX = (mouseX - imageOffsetX) / viewerZoom;
-                const relativeY = (mouseY - imageOffsetY) / viewerZoom;
-                
-                const oldZoom = viewerZoom;
-                
-                if (e.deltaY < 0) {
-                    // Scroll para cima = Zoom in
-                    viewerZoom = Math.min(viewerZoom * 1.1, 5);
-                } else {
-                    // Scroll para baixo = Zoom out
-                    viewerZoom = Math.max(viewerZoom / 1.1, 0.1);
-                    
-                    // Se zoom for muito pequeno, centralizar
-                    if (viewerZoom <= 1) {
-                        imageOffsetX = 0;
-                        imageOffsetY = 0;
-                        lastImageOffsetX = 0;
-                        lastImageOffsetY = 0;
-                        applyImageTransform();
-                        return;
+        // EVENTOS DE TECLADO E ZOOM CUSTOMIZADO
+        if (!isMobile()) {
+            // Só adiciona eventos de zoom customizado no desktop
+            document.addEventListener('keydown', function(e) {
+                const viewer = document.getElementById('imageViewer');
+                if (viewer.style.display === 'flex') {
+                    switch(e.key) {
+                        case 'Escape':
+                            closeViewer();
+                            break;
+                        case 'ArrowLeft':
+                            prevImage();
+                            break;
+                        case 'ArrowRight':
+                            nextImage();
+                            break;
+                        case '0':
+                            resetZoom();
+                            break;
+                        case 'r':
+                        case 'R':
+                            rotateImage();
+                            break;
                     }
                 }
-                
-                // Aplicar zoom focal (manter ponto do mouse fixo)
-                const zoomChange = viewerZoom / oldZoom;
-                imageOffsetX -= relativeX * (zoomChange - 1) * viewerZoom;
-                imageOffsetY -= relativeY * (zoomChange - 1) * viewerZoom;
-                
-                applyImageTransform();
-            }
-        }, { passive: false });
+            });
+            document.addEventListener('wheel', function(e) {
+                const viewer = document.getElementById('imageViewer');
+                const viewerImage = document.getElementById('viewerImage');
+                if (viewer.style.display === 'flex') {
+                    e.preventDefault();
+                    // Obter posição do mouse relativa à imagem
+                    const rect = viewerImage.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left - rect.width / 2;
+                    const mouseY = e.clientY - rect.top - rect.height / 2;
+                    // Converter para coordenadas da imagem (considerando transformações atuais)
+                    const relativeX = (mouseX - imageOffsetX) / viewerZoom;
+                    const relativeY = (mouseY - imageOffsetY) / viewerZoom;
+                    const oldZoom = viewerZoom;
+                    if (e.deltaY < 0) {
+                        // Scroll para cima = Zoom in
+                        viewerZoom = Math.min(viewerZoom * 1.1, 5);
+                    } else {
+                        // Scroll para baixo = Zoom out
+                        viewerZoom = Math.max(viewerZoom / 1.1, 0.1);
+                        // Se zoom for muito pequeno, centralizar
+                        if (viewerZoom <= 1) {
+                            imageOffsetX = 0;
+                            imageOffsetY = 0;
+                            lastImageOffsetX = 0;
+                            lastImageOffsetY = 0;
+                            applyImageTransform();
+                            return;
+                        }
+                    }
+                    // Aplicar zoom focal (manter ponto do mouse fixo)
+                    const zoomChange = viewerZoom / oldZoom;
+                    imageOffsetX -= relativeX * (zoomChange - 1) * viewerZoom;
+                    imageOffsetY -= relativeY * (zoomChange - 1) * viewerZoom;
+                    applyImageTransform();
+                }
+            }, { passive: false });
+            // Suporte para duplo clique para reset zoom
+            document.addEventListener('dblclick', function(e) {
+                const viewer = document.getElementById('imageViewer');
+                const viewerImage = document.getElementById('viewerImage');
+                if (viewer.style.display === 'flex' && e.target === viewerImage) {
+                    resetZoom();
+                    e.preventDefault();
+                }
+            });
+        }
 
-        // ADICIONAR suporte para duplo clique para reset zoom:
-        document.addEventListener('dblclick', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            
-            if (viewer.style.display === 'flex' && e.target === viewerImage) {
-                resetZoom();
-                e.preventDefault();
-            }
-        });
-
-        // GESTOS TOUCH PARA MOBILE
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let lastTouchDistance = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            if (viewer.style.display === 'flex') {
-                if (e.touches.length === 1) {
+        // GESTOS TOUCH PARA MOBILE (apenas swipe, sem zoom customizado)
+        if (isMobile()) {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            document.addEventListener('touchstart', function(e) {
+                const viewer = document.getElementById('imageViewer');
+                if (viewer.style.display === 'flex' && e.touches.length === 1) {
                     touchStartX = e.touches[0].clientX;
                     touchStartY = e.touches[0].clientY;
-                } else if (e.touches.length === 2) {
-                    lastTouchDistance = getTouchDistance(e.touches);
                 }
-            }
-        });
-
-        document.addEventListener('touchend', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            if (viewer.style.display === 'flex' && e.changedTouches.length === 1) {
-                const touchEndX = e.changedTouches[0].clientX;
-                const touchEndY = e.changedTouches[0].clientY;
-                const deltaX = touchEndX - touchStartX;
-                const deltaY = touchEndY - touchStartY;
-                
-                // Swipe horizontal para navegar
-                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-                    if (deltaX > 0) {
-                        prevImage();
-                    } else {
-                        nextImage();
+            });
+            document.addEventListener('touchend', function(e) {
+                const viewer = document.getElementById('imageViewer');
+                if (viewer.style.display === 'flex' && e.changedTouches.length === 1) {
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaX = touchEndX - touchStartX;
+                    const deltaY = touchEndY - touchStartY;
+                    // Swipe horizontal para navegar
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                        if (deltaX > 0) {
+                            prevImage();
+                        } else {
+                            nextImage();
+                        }
                     }
                 }
-                
-                // Swipe vertical para fechar
-                if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 100) {
-                    closeViewer();
-                }
-            }
-        });
-
-        document.addEventListener('touchmove', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            if (viewer.style.display === 'flex') {
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                    const currentDistance = getTouchDistance(e.touches);
-                    const zoomFactor = currentDistance / lastTouchDistance;
-                    
-                    viewerZoom = Math.max(0.1, Math.min(5, viewerZoom * zoomFactor));
-                    applyImageTransform();
-                    
-                    lastTouchDistance = currentDistance;
-                }
-            }
-        }, { passive: false });
-
-        function getTouchDistance(touches) {
-            const dx = touches[0].clientX - touches[1].clientX;
-            const dy = touches[0].clientY - touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
+            });
         }
 
         // BUSCA E FILTROS (FUNCIONALIDADE ADICIONAL)
@@ -1623,7 +1593,7 @@
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                             <div class="image-list-content">
                                 <div class="image-list-name">${image.name}</div>
-                                <div class="image-list-details">Tamanho: ${image.size} • Tipo: ${image.type}</div>
+                                <div class="image-list-details resolution">Resolução: <span class="image-resolution">Carregando...</span> • Tipo: ${image.type}</div>
                                 <div class="image-list-details">Data: ${image.date}</div>
                                 <div class="image-list-path">Pasta: ${currentFolder}</div>
                             </div>
@@ -1635,6 +1605,7 @@
             
             content.innerHTML = html;
             updatePagination(images.length);
+            fillImageResolutions();
         }
 
         // LAZY LOADING AVANÇADO
@@ -1739,43 +1710,6 @@
             }
         }, { passive: false });
 
-        document.addEventListener('touchmove', function(e) {
-            const viewer = document.getElementById('imageViewer');
-            
-            if (viewer.style.display === 'flex') {
-                if (e.touches.length === 1 && isDragging) {
-                    // Arrastar
-                    const deltaX = e.touches[0].clientX - dragStartX;
-                    const deltaY = e.touches[0].clientY - dragStartY;
-                    
-                    imageOffsetX = lastImageOffsetX + deltaX;
-                    imageOffsetY = lastImageOffsetY + deltaY;
-                    
-                    applyImageTransform();
-                    e.preventDefault();
-                } else if (e.touches.length === 2) {
-                    // Zoom com dois dedos
-                    e.preventDefault();
-                    const currentDistance = getTouchDistance(e.touches);
-                    const zoomFactor = currentDistance / lastTouchDistance;
-                    
-                    const newZoom = Math.max(0.1, Math.min(5, viewerZoom * zoomFactor));
-                    
-                    // Aplicar zoom focal (manter o ponto entre os dedos fixo)
-                    if (e.focalPointX !== undefined && e.focalPointY !== undefined) {
-                        const zoomChange = newZoom / viewerZoom;
-                        imageOffsetX -= e.focalPointX * (zoomChange - 1) * newZoom;
-                        imageOffsetY -= e.focalPointY * (zoomChange - 1) * newZoom;
-                    }
-                    
-                    viewerZoom = newZoom;
-                    applyImageTransform();
-                    
-                    lastTouchDistance = currentDistance;
-                }
-            }
-        }, { passive: false });
-
         document.addEventListener('touchend', function(e) {
             const viewer = document.getElementById('imageViewer');
             
@@ -1798,11 +1732,6 @@
                             nextImage();
                         }
                     }
-                    
-                    // Swipe vertical para fechar (apenas se não há zoom)
-                    if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 100 && viewerZoom <= 1.1) {
-                        closeViewer();
-                    }
                 }
             }
         });
@@ -1823,11 +1752,23 @@
     // Mostrar ao clicar ou mover a imagem
     document.getElementById('viewerImage').addEventListener('click', showViewerControls);
     document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
-    document.getElementById('viewerImage').addEventListener('mousemove', showViewerControls);
-    // Esconder ao abrir o visualizador
-    document.getElementById('imageViewer').addEventListener('show', function() {
-        if (window.innerWidth > 768) {
-            document.querySelector('.viewer-controls').style.display = 'none';
+    document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+            
+            imageOffsetX = lastImageOffsetX + deltaX;
+            imageOffsetY = lastImageOffsetY + deltaY;
+            
+            applyImageTransform();
+            e.preventDefault();
+        }
+    });
+    document.addEventListener('mouseup', function(e) {
+        if (isDragging) {
+            isDragging = false;
+            document.body.style.userSelect = '';
+            applyImageTransform();
         }
     });
         // INICIALIZAÇÃO
@@ -1840,6 +1781,7 @@
             if (currentLink) {
                 currentLink.classList.add('active');
             }
+            addNavArrowsInteractionListeners();
         });
 
         // FUNÇÕES DE UTILIDADE
@@ -1860,7 +1802,7 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(later, wait);
             };
-        }
+        };
 
         // CONFIGURAÇÕES PERSISTENTES (usando variáveis em memória)
         function saveSettings() {
@@ -1909,6 +1851,69 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             // Implementar estilos do modo escuro conforme necessário
+        }
+
+        // Função para mostrar/ocultar setas de navegação
+        let navArrowsTimeout;
+        function showNavArrows() {
+            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
+            const nextArrow = document.querySelector('.nav-arrows.nav-next');
+            if (prevArrow) prevArrow.style.opacity = '1';
+            if (nextArrow) nextArrow.style.opacity = '1';
+            clearTimeout(navArrowsTimeout);
+            navArrowsTimeout = setTimeout(hideNavArrows, 1000);
+        }
+
+        function hideNavArrows() {
+            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
+            const nextArrow = document.querySelector('.nav-arrows.nav-next');
+            if (prevArrow) prevArrow.style.opacity = '0';
+            if (nextArrow) nextArrow.style.opacity = '0';
+        }
+
+        // Mostrar setas ao interagir com a imagem/visualizador
+        function addNavArrowsInteractionListeners() {
+            const viewerImage = document.getElementById('viewerImage');
+            const viewer = document.getElementById('imageViewer');
+            if (viewerImage) {
+                viewerImage.addEventListener('click', showNavArrows);
+                viewerImage.addEventListener('touchstart', showNavArrows);
+                viewerImage.addEventListener('mousemove', showNavArrows);
+            }
+            if (viewer) {
+                viewer.addEventListener('click', showNavArrows);
+                viewer.addEventListener('touchstart', showNavArrows);
+                viewer.addEventListener('mousemove', showNavArrows);
+            }
+        }
+
+        // Função para preencher resolução das imagens exibidas
+        function fillImageResolutions() {
+            // Para cada imagem visível na galeria
+            document.querySelectorAll('.image-item img, .image-list-thumbnail').forEach(img => {
+                if (!img.dataset.resChecked) {
+                    img.addEventListener('load', function() {
+                        const parent = img.closest('.image-item, .image-list-item');
+                        if (parent) {
+                            const resElem = parent.querySelector('.image-details, .image-list-details.resolution');
+                            if (resElem) {
+                                resElem.textContent = `Resolução: ${img.naturalWidth}x${img.naturalHeight}`;
+                            }
+                        }
+                    });
+                    // Se já carregada
+                    if (img.complete) {
+                        const parent = img.closest('.image-item, .image-list-item');
+                        if (parent) {
+                            const resElem = parent.querySelector('.image-details, .image-list-details.resolution');
+                            if (resElem) {
+                                resElem.textContent = `Resolução: ${img.naturalWidth}x${img.naturalHeight}`;
+                            }
+                        }
+                    }
+                    img.dataset.resChecked = '1';
+                }
+            });
         }
 
     </script>
