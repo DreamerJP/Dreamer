@@ -202,6 +202,65 @@
 
         .size-slider {
             width: 150px;
+            accent-color: var(--primary-coral);
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-coral) 50%, #eee 50%);
+            border-radius: 10px;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-coral);
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .size-slider::-webkit-slider-thumb:hover {
+            background: var(--primary-turquoise);
+        }
+
+        .size-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-coral);
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .size-slider::-ms-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-coral);
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .size-slider::-moz-range-track {
+            background: transparent;
+        }
+
+        .size-slider::-ms-fill-lower {
+            background: transparent;
+        }
+
+        .size-slider::-ms-fill-upper {
+            background: transparent;
         }
 
         .view-mode-buttons {
@@ -819,7 +878,7 @@
 
             <div class="view-controls">
                 <div class="control-group">
-                    <label>Resolução:</label>
+                    <label for="sizeSlider">Tamanho das Miniaturas:</label>
                     <input type="range" class="size-slider" id="sizeSlider" 
                             min="1" max="4" value="2" oninput="changeImageSize(this.value)">
                 </div>
@@ -1915,6 +1974,24 @@
                 }
             });
         }
+
+        function updateSliderBackground(slider) {
+            const min = slider.min ? slider.min : 1;
+            const max = slider.max ? slider.max : 4;
+            const val = slider.value;
+            const percent = ((val - min) / (max - min)) * 100;
+            slider.style.background = `linear-gradient(90deg, var(--primary-coral) ${percent}%, #eee ${percent}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeSlider = document.getElementById('sizeSlider');
+            if (sizeSlider) {
+                updateSliderBackground(sizeSlider);
+                sizeSlider.addEventListener('input', function() {
+                    updateSliderBackground(this);
+                });
+            }
+        });
 
     </script>
 </body>
