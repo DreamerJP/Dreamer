@@ -445,6 +445,16 @@
             backdrop-filter: blur(10px);
         }
 
+        /* ESCONDER CONTROLES DO VISUALIZADOR EM MOBILE */
+        @media (max-width: 768px) {
+            .viewer-controls {
+                display: none !important;
+            }
+        }
+
+        /* ESCONDER CONTROLES DO VISUALIZADOR NO DESKTOP POR PADRÃO */
+        .viewer-controls { display: none; }
+
         .viewer-btn {
             width: 50px;
             height: 50px;
@@ -1792,6 +1802,29 @@
             }
         });
 
+        // --- CONTROLES DO VISUALIZADOR: MOSTRAR/ESCONDER NO DESKTOP ---
+    let viewerControlsTimeout;
+    function showViewerControls() {
+        if (window.innerWidth <= 768) return; // Não faz nada no mobile
+        const controls = document.querySelector('.viewer-controls');
+        if (controls) {
+            controls.style.display = 'flex';
+            clearTimeout(viewerControlsTimeout);
+            viewerControlsTimeout = setTimeout(() => {
+                controls.style.display = 'none';
+            }, 2500);
+        }
+    }
+    // Mostrar ao clicar ou mover a imagem
+    document.getElementById('viewerImage').addEventListener('click', showViewerControls);
+    document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
+    document.getElementById('viewerImage').addEventListener('mousemove', showViewerControls);
+    // Esconder ao abrir o visualizador
+    document.getElementById('imageViewer').addEventListener('show', function() {
+        if (window.innerWidth > 768) {
+            document.querySelector('.viewer-controls').style.display = 'none';
+        }
+    });
         // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM carregado, iniciando aplicação...');
