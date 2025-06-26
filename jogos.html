@@ -1092,6 +1092,8 @@
             color: #2c3e50;
             font-size: 1.1em;
             transition: color 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 25px;
         }
 
         .nav-links a:hover {
@@ -1101,12 +1103,11 @@
         .nav-links .active {
             font-weight: bold;
             color: white !important;
-            background: linear-gradient(135deg, #f0b4b4, #e8a0a0);
-            box-shadow: 0 4px 15px rgba(240, 180, 180, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 25px;
         }
         .nav-links .active:hover {
-            background: linear-gradient(135deg, #e8a0a0, #dc9090);
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
             color: white !important;
         }
 
@@ -1887,15 +1888,15 @@
 
         // Menu mobile toggle
         function toggleMenu() {
-            var navLinks = document.getElementById('navLinks');
+            const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
         }
 
         // Fechar menu ao clicar fora
         document.addEventListener('click', function(e) {
-            var navLinks = document.getElementById('navLinks');
-            var menuToggle = document.querySelector('.menu-toggle');
-            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+            const nav = document.querySelector('.navigation');
+            const navLinks = document.getElementById('navLinks');
+            if (!nav.contains(e.target)) {
                 navLinks.classList.remove('active');
             }
         });
