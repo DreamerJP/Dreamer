@@ -459,6 +459,20 @@
                 }, 150);
             });
         });
+
+        // Menu mobile toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.navigation');
+            const navLinks = document.getElementById('navLinks');
+            if (!nav.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
