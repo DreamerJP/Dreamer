@@ -1067,11 +1067,16 @@
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
                 videoCard.dataset.category = video.category;
-                videoCard.onclick = () => {
+                videoCard.onclick = (event) => {
                     if (video.videoUrl && video.audioUrl) {
                         playVideo(null, video.videoUrl, video.audioUrl);
                     } else {
-                        playVideo(video.id);
+                        // Pega o src do iframe oculto e adiciona autoplay=1
+                        const hiddenIframe = videoCard.querySelector('.hidden-youtube-iframe');
+                        let videoSrc = hiddenIframe.src;
+                        videoSrc = videoSrc.replace(/[?&]autoplay=1/, '');
+                        const autoplayUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+                        playYoutubeModal(autoplayUrl);
                     }
                 };
 
@@ -1086,6 +1091,7 @@
                         <div class="video-stats">
                         </div>
                     </div>
+                    <iframe class="hidden-youtube-iframe" src="https://www.youtube.com/embed/${video.id}?rel=0" style="display:none"></iframe>
                 `;
 
                 grid.appendChild(videoCard);
@@ -1096,6 +1102,35 @@
                     videoCard.style.transform = 'translateY(0)';
                 }, index * 100);
             });
+        }
+
+        // Nova função para abrir o modal do YouTube igual ao jogos.html
+        function playYoutubeModal(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('videoPlayer');
+            const audio = document.getElementById('audioPlayer');
+            const iframe = document.getElementById('videoPlayerIframe');
+            video.style.display = 'none';
+            audio.style.display = 'none';
+            iframe.style.display = '';
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            iframe.src = videoUrl;
+        }
+
+        // Ajustar função closeVideo para limpar src do iframe
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('videoPlayer');
+            const audio = document.getElementById('audioPlayer');
+            const iframe = document.getElementById('videoPlayerIframe');
+            video.pause();
+            audio.pause();
+            video.src = '';
+            audio.src = '';
+            iframe.src = '';
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         // Função para filtrar vídeos
@@ -1148,21 +1183,6 @@
                 // Definir o src do iframe APÓS exibir o modal/iframe
                 iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             }
-        }
-
-        // Função para fechar vídeo
-        function closeVideo() {
-            const modal = document.getElementById('videoModal');
-            const video = document.getElementById('videoPlayer');
-            const audio = document.getElementById('audioPlayer');
-            const iframe = document.getElementById('videoPlayerIframe');
-            video.pause();
-            audio.pause();
-            video.src = '';
-            audio.src = '';
-            iframe.src = '';
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
         }
 
         // Fechar modal ao clicar fora
