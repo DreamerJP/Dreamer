@@ -676,8 +676,8 @@
 
         <!-- Filtros -->
         <div class="filter-section">
-            <button class="filter-btn" onclick="filterVideos('Aurora')">Aurora</button>
             <button class="filter-btn" onclick="filterVideos('Emily Browning')">Emily Browning</button>
+            <button class="filter-btn" onclick="filterVideos('Aurora')">Aurora</button>
             <button class="filter-btn" onclick="filterVideos('Chvrches')">Chvrches</button>
             <button class="filter-btn" onclick="filterVideos('t.A.T.u.')">t.A.T.u.</button>
             <button class="filter-btn" onclick="filterVideos('Variado')">Variado</button>
@@ -1055,7 +1055,7 @@
             }
         ];
 
-        let currentFilter = 'Aurora';
+        let currentFilter = 'Emily Browning';
 
         // Função para renderizar vídeos
         function renderVideos(videos = videosData) {
@@ -1237,8 +1237,8 @@
         // Inicializar página
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
-            currentFilter = 'Aurora';
-            renderVideos(videosData.filter(v => v.category === 'Aurora'));
+            currentFilter = 'Emily Browning';
+            renderVideos(videosData.filter(v => v.category === 'Emily Browning'));
         });
     </script>
 </body>
