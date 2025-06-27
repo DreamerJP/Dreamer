@@ -1142,12 +1142,10 @@
                 video.style.display = 'none';
                 audio.style.display = 'none';
                 iframe.style.display = '';
-
-                video.src = '';
-                audio.src = '';
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
+                // Definir o src do iframe APÓS exibir o modal/iframe
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             }
         }
 
