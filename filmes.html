@@ -1855,22 +1855,35 @@
                     child.style.position = 'relative';
                     child.style.zIndex = 2;
                 });
-                // Forçar overlay ::before
-                if (!header.querySelector('.header-overlay-fix')) {
-                    const overlay = document.createElement('div');
-                    overlay.className = 'header-overlay-fix';
-                    overlay.style.position = 'absolute';
-                    overlay.style.inset = 0;
-                    overlay.style.background = 'rgba(255,255,255,0.75)';
+                // Remover overlay antigo se existir
+                const oldOverlay = header.querySelector('.header-overlay-fix');
+                if (oldOverlay) oldOverlay.remove();
+                // Criar overlay novo
+                const overlay = document.createElement('div');
+                overlay.className = 'header-overlay-fix';
+                overlay.style.position = 'absolute';
+                overlay.style.inset = 0;
+                overlay.style.background = 'rgba(255,255,255,0.75)';
+                overlay.style.zIndex = 1;
+                overlay.style.pointerEvents = 'none';
+                // Mobile: cobrir toda a largura da tela
+                if (window.innerWidth <= 600) {
+                    overlay.style.borderRadius = '0';
+                    overlay.style.width = '100vw';
+                    overlay.style.left = '0';
+                    overlay.style.right = '0';
+                } else {
                     overlay.style.borderRadius = '20px';
-                    overlay.style.zIndex = 1;
-                    overlay.style.pointerEvents = 'none';
-                    header.prepend(overlay);
+                    overlay.style.width = '';
                 }
+                header.prepend(overlay);
             }
         }
         document.addEventListener('DOMContentLoaded', forceHeaderWhiteOverlay);
-        window.addEventListener('resize', forceHeaderWhiteOverlay);
+        window.addEventListener('resize', () => {
+            forceHeaderWhiteOverlay();
+            setTimeout(forceHeaderWhiteOverlay, 200); // Garante após layout responsivo
+        });
     </script>
 </body>
 </html>
