@@ -1039,7 +1039,7 @@
             }
         }
 
-        // Carregar filmes favoritos - SUBSTITUIR FUNÇÃO COMPLETA
+        // Carregar filmes favoritos
         async function loadFavorites() {
             const favorites = allMovies.slice(0, 10);
             displayedMovies = favorites;
@@ -1119,7 +1119,7 @@
             }).join('');
         }
 
-        // Carregar detalhes em background - ADICIONAR FUNÇÃO
+        // Carregar detalhes em background
         async function loadMovieDetailsBackground(movies) {
             const BATCH_SIZE = 8; // Máximo simultâneo
             
@@ -1156,7 +1156,7 @@
             updateStats();
         }
 
-        // Buscar detalhes no TMDb em português - SUBSTITUIR fetchMovieDetails
+        // Buscar detalhes no TMDb em português
         async function fetchMovieDetailsTMDb(title) {
             try {
                 // Extrair ano do título se existir
@@ -1246,7 +1246,7 @@
             return stars;
         }
 
-        // Filtrar por categoria - SUBSTITUIR FUNÇÃO
+        // Filtrar por categoria
         async function filterByCategory(category) {
             currentCategory = category;
             
@@ -1426,7 +1426,7 @@
             document.getElementById('currentMovies').textContent = count;
         }
 
-        // Abrir modal do filme (versão atualizada)
+        // Abrir modal do filme
         function openMovieModal(slug) {
             const details = moviesWithDetails.get(slug);
             if (!details) return;
@@ -1593,7 +1593,7 @@
             isLoadingMore = false;
         }
 
-        // Atualizar card individual - ADICIONAR FUNÇÃO
+        // Atualizar card individual
         function updateMovieCard(slug, details) {
             const card = document.querySelector(`[data-slug="${slug}"]`);
             if (!card) return;
