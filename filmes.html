@@ -217,8 +217,8 @@
         /* Grid de filmes */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
             margin-bottom: 40px;
         }
 
@@ -240,9 +240,11 @@
 
         .movie-poster {
             width: 100%;
-            height: 380px;
+            height: 280px;
             object-fit: cover;
             background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            background-size: cover;
+            background-position: center;
             position: relative;
         }
 
@@ -255,21 +257,21 @@
         }
 
         .movie-info {
-            padding: 20px;
+            padding: 10px;
         }
 
         .movie-title {
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 10px;
-            line-height: 1.3;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
 
         .movie-meta {
             display: flex;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             font-size: 0.9em;
             color: #7f8c8d;
         }
@@ -282,25 +284,30 @@
 
         .movie-genres {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            gap: 2px;
+            margin-bottom: 8px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow-x: auto;
+            scrollbar-width: thin;
         }
 
         .genre-tag {
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.75em;
             font-weight: 500;
+            margin-right: 2px;
+            margin-bottom: 2px;
         }
 
         .movie-rating {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .rating-stars {
@@ -320,13 +327,11 @@
         .movie-plot {
             color: #555;
             font-size: 0.9em;
-            line-height: 1.4;
-            max-height: 60px;
+            line-height: 1.3;
+            max-height: 22px;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+            white-space: nowrap;
         }
 
         /* Modal */
@@ -370,7 +375,23 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.3), rgba(78, 205, 196, 0.3));
+            z-index: 1;
+        }
+
+        .modal-title, .close {
+            position: relative;
+            z-index: 2;
         }
 
         .modal-title {
@@ -516,8 +537,8 @@
                 min-width: 100%;
             }
             .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 15px;
             }
             .modal-info {
                 grid-template-columns: 1fr;
@@ -536,10 +557,71 @@
                 font-size: 1.8em;
             }
             .movies-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
             .modal-content {
                 width: 95%;
+            }
+        }
+
+        /* Unificar header, filtros e estatísticas */
+        .unified-header {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+            padding: 40px 40px 30px 40px;
+            margin-bottom: 30px;
+        }
+        .filters-stats-flex {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .filters {
+            flex: 2;
+            min-width: 320px;
+        }
+        .stats-compact {
+            flex: 1;
+            min-width: 220px;
+            background: rgba(245, 245, 245, 0.95);
+            border-radius: 16px;
+            padding: 18px 18px 10px 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .stats-compact .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 10px 0 6px 0;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        @media (max-width: 900px) {
+            .filters-stats-flex {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .stats-compact {
+                width: 100%;
+                min-width: unset;
+                margin-top: 20px;
             }
         }
     </style>
@@ -562,88 +644,77 @@
     </nav>
 
     <div class="main-container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🎬 Meu Catálogo de Filmes</h1>
-            <p>Explore minha coleção pessoal com mais de 400 filmes</p>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats" id="stats">
-            <h3>📊 Estatísticas da Coleção</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalMovies">0</div>
-                    <div class="stat-label">Total de Filmes</div>
+        <div class="header unified-header">
+            <h1><span style="font-size:1.2em;">🎬</span> Meu Catálogo de Filmes</h1>
+            <p>ABSOLUTE CINEMA</p>
+            <div class="filters-stats-flex">
+                <div class="filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Categoria:</label>
+                            <div class="filter-tags">
+                                <button class="filter-tag active" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
+                                <button class="filter-tag" onclick="filterByCategory('all')">🎬 Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('recent')">🆕 Recentes</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>🔍 Buscar:</label>
+                            <input type="text" id="searchInput" placeholder="Digite o nome do filme..." oninput="searchMovies()">
+                        </div>
+                        <div class="filter-group">
+                            <label>🎭 Gênero:</label>
+                            <select id="genreFilter" onchange="filterMovies()">
+                                <option value="">Todos os gêneros</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>📅 Ano:</label>
+                            <select id="yearFilter" onchange="filterMovies()">
+                                <option value="">Todos os anos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>⭐ Nota:</label>
+                            <select id="ratingFilter" onchange="filterMovies()">
+                                <option value="">Todas as notas</option>
+                                <option value="9">9+ estrelas</option>
+                                <option value="8">8+ estrelas</option>
+                                <option value="7">7+ estrelas</option>
+                                <option value="6">6+ estrelas</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="currentMovies">0</div>
-                    <div class="stat-label">Exibindo</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="genresCount">0</div>
-                    <div class="stat-label">Gêneros</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="avgRating">0</div>
-                    <div class="stat-label">Nota Média</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filtros -->
-        <div class="filters">
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label>🎯 Categoria:</label>
-                    <div class="filter-tags">
-                        <button class="filter-tag active" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
-                        <button class="filter-tag" onclick="filterByCategory('all')">🎬 Todos</button>
-                        <button class="filter-tag" onclick="filterByCategory('recent')">🆕 Recentes</button>
+                <div class="stats stats-compact">
+                    <h3 style="font-size:1.1em; margin-bottom:10px; text-align:center;">📊 Estatísticas da Coleção</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalMovies">0</div>
+                            <div class="stat-label">Total de Filmes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="currentMovies">0</div>
+                            <div class="stat-label">Exibindo</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="genresCount">0</div>
+                            <div class="stat-label">Gêneros</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgRating">0</div>
+                            <div class="stat-label">Nota Média</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label>🔍 Buscar:</label>
-                    <input type="text" id="searchInput" placeholder="Digite o nome do filme..." oninput="searchMovies()">
-                </div>
-                
-                <div class="filter-group">
-                    <label>🎭 Gênero:</label>
-                    <select id="genreFilter" onchange="filterMovies()">
-                        <option value="">Todos os gêneros</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>📅 Ano:</label>
-                    <select id="yearFilter" onchange="filterMovies()">
-                        <option value="">Todos os anos</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>⭐ Nota:</label>
-                    <select id="ratingFilter" onchange="filterMovies()">
-                        <option value="">Todas as notas</option>
-                        <option value="9">9+ estrelas</option>
-                        <option value="8">8+ estrelas</option>
-                        <option value="7">7+ estrelas</option>
-                        <option value="6">6+ estrelas</option>
-                    </select>
-                </div>
-            </div>
         </div>
-
-        <!-- Loading -->
         <div class="loading" id="loading">
             <div class="loading-spinner"></div>
             <p>Carregando filmes favoritos...</p>
         </div>
-
-        <!-- Grid de filmes -->
         <div class="movies-grid" id="moviesGrid"></div>
     </div>
 
@@ -672,9 +743,16 @@
         let moviesWithDetails = new Map();
         
         // Configuração da API
-        const OMDB_API_KEY = 'ba0d5cc0'; // Chave gratuita do OMDb
+        const OMDB_API_KEY = 'ba0d5cc0';
         const OMDB_BASE_URL = 'https://www.omdbapi.com/';
-        
+        const TMDB_API_KEY = '4e44d9029b1270a757cddc766a1bcb63';
+        const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+        const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
+        const TMDB_BACKDROP_BASE = 'https://image.tmdb.org/t/p/original';
+
+        // Priorizar TMDb em português
+        const TMDB_LANGUAGE = 'pt-BR';
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             loadMovies();
@@ -701,79 +779,176 @@
             }
         }
 
-        // Carregar filmes favoritos
+        // Carregar filmes favoritos - SUBSTITUIR FUNÇÃO COMPLETA
         async function loadFavorites() {
             const favorites = allMovies.slice(0, 10);
             displayedMovies = favorites;
             
-            await loadMovieDetails(favorites);
-            renderMovies(displayedMovies);
+            // Renderizar imediatamente com dados básicos
+            renderMoviesSmart(displayedMovies);
+            
+            // Carregar detalhes em paralelo
+            await loadMovieDetailsBackground(favorites);
+            // Após carregar favoritos, iniciar carregamento de todos os filmes em background
+            if (allMovies.length > 0) {
+                loadMovieDetailsBackground(allMovies);
+            }
         }
 
-        // Carregar detalhes dos filmes
-        async function loadMovieDetails(movies) {
-            const loadingElement = document.getElementById('loading');
-            loadingElement.style.display = 'block';
+        // Renderizar filmes inteligentes (completo se já carregado, senão loading)
+        function renderMoviesSmart(movies) {
+            const grid = document.getElementById('moviesGrid');
+            document.getElementById('loading').style.display = 'none';
+
+            if (movies.length === 0) {
+                grid.innerHTML = '<div class="loading"><p>🎬 Nenhum filme encontrado com os filtros aplicados.</p></div>';
+                return;
+            }
+
+            grid.innerHTML = movies.map(movie => {
+                const details = moviesWithDetails.get(movie.slug);
+                if (details) {
+                    const rating = parseFloat(details.imdbRating) || 0;
+                    const stars = generateStars(rating);
+                    return `
+                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
+                            <div class="movie-poster${details.poster ? '' : ' loading'}" style="background-image: ${details.poster ? `url(${details.poster})` : 'none'}">
+                                ${!details.poster ? '🎬' : ''}
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">${details.title}</h3>
+                                <div class="movie-meta">
+                                    <span>📅 ${details.year}</span>
+                                    <span>⏱️ ${details.runtime}</span>
+                                </div>
+                                <div class="movie-genres">
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g => 
+                                        `<span class=\"genre-tag\">${g.trim()}</span>`
+                                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
+                                </div>
+                                <div class="movie-rating">
+                                    <div class="rating-stars">${stars}</div>
+                                    <span>${details.imdbRating}/10</span>
+                                </div>
+                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
+                            <div class="movie-poster loading">🎬</div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">${movie.title}</h3>
+                                <div class="movie-meta">
+                                    <span>📅 Carregando...</span>
+                                    <span>⏱️ Carregando...</span>
+                                </div>
+                                <div class="movie-genres">
+                                    <span class="genre-tag">Carregando gêneros...</span>
+                                </div>
+                                <div class="movie-rating">
+                                    <div class="rating-stars">☆☆☆☆☆</div>
+                                    <span>-/10</span>
+                                </div>
+                                <p class="movie-plot">Carregando informações...</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Carregar detalhes em background - ADICIONAR FUNÇÃO
+        async function loadMovieDetailsBackground(movies) {
+            const BATCH_SIZE = 8; // Máximo simultâneo
             
-            for (let i = 0; i < movies.length; i++) {
-                const movie = movies[i];
+            for (let i = 0; i < movies.length; i += BATCH_SIZE) {
+                const batch = movies.slice(i, i + BATCH_SIZE);
                 
-                if (!moviesWithDetails.has(movie.slug)) {
-                    try {
-                        loadingElement.innerHTML = `
-                            <div class="loading-spinner"></div>
-                            <p>Carregando detalhes... (${i + 1}/${movies.length})</p>
-                        `;
-                        
-                        const details = await fetchMovieDetails(movie.title);
-                        if (details) {
+                // Processar lote em paralelo
+                const promises = batch.map(async (movie) => {
+                    if (!moviesWithDetails.has(movie.slug)) {
+                        try {
+                            const details = await fetchMovieDetailsTMDb(movie.title);
                             moviesWithDetails.set(movie.slug, { ...movie, ...details });
-                        } else {
-                            moviesWithDetails.set(movie.slug, { ...movie, ...getDefaultMovieData() });
+                            
+                            // Atualizar card individual
+                            updateMovieCard(movie.slug, details);
+                            
+                        } catch (error) {
+                            console.error('Erro ao carregar detalhes:', movie.title, error);
+                            const defaultData = getDefaultMovieData();
+                            moviesWithDetails.set(movie.slug, { ...movie, ...defaultData });
+                            updateMovieCard(movie.slug, { ...movie, ...defaultData });
                         }
-                        
-                        // Pequeno delay para não sobrecarregar a API
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                        
-                    } catch (error) {
-                        console.error('Erro ao carregar detalhes do filme:', movie.title, error);
-                        moviesWithDetails.set(movie.slug, { ...movie, ...getDefaultMovieData() });
                     }
+                });
+                
+                await Promise.all(promises);
+                
+                // Delay mínimo apenas entre lotes
+                if (i + BATCH_SIZE < movies.length) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
             
-            loadingElement.style.display = 'none';
+            updateStats();
         }
 
-        // Buscar detalhes do filme na API OMDb
-        async function fetchMovieDetails(title) {
+        // Buscar detalhes no TMDb em português - SUBSTITUIR fetchMovieDetails
+        async function fetchMovieDetailsTMDb(title) {
             try {
-                const cleanTitle = title.replace(/[^\w\s]/gi, '').trim();
-                const response = await fetch(`${OMDB_BASE_URL}?apikey=${OMDB_API_KEY}&t=${encodeURIComponent(cleanTitle)}`);
-                const data = await response.json();
+                // Extrair ano do título se existir
+                const yearMatch = title.match(/\((\d{4})\)/);
+                const cleanTitle = title.replace(/\(.*?\)/g, '').trim();
+                const year = yearMatch ? yearMatch[1] : null;
                 
-                if (data.Response === 'True') {
+                // Buscar filme no TMDb em português
+                let searchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle)}`;
+                if (year) {
+                    searchUrl += `&year=${year}`;
+                }
+                
+                const searchResponse = await fetch(searchUrl);
+                const searchData = await searchResponse.json();
+                
+                if (searchData.results && searchData.results.length > 0) {
+                    const movie = searchData.results[0];
+                    
+                    // Buscar detalhes completos
+                    const detailsUrl = `${TMDB_BASE_URL}/movie/${movie.id}?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&append_to_response=credits`;
+                    const detailsResponse = await fetch(detailsUrl);
+                    const details = await detailsResponse.json();
+                    
                     return {
-                        poster: data.Poster !== 'N/A' ? data.Poster : null,
-                        year: data.Year,
-                        genre: data.Genre,
-                        director: data.Director,
-                        actors: data.Actors,
-                        plot: data.Plot,
-                        runtime: data.Runtime,
-                        imdbRating: data.imdbRating,
-                        imdbVotes: data.imdbVotes,
-                        country: data.Country,
-                        language: data.Language,
-                        awards: data.Awards,
-                        boxOffice: data.BoxOffice,
-                        production: data.Production
+                        poster: movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : null,
+                        backdrop: movie.backdrop_path ? `${TMDB_BACKDROP_BASE}${movie.backdrop_path}` : null,
+                        year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
+                        genre: details.genres ? details.genres.map(g => g.name).join(', ') : 'N/A',
+                        director: details.credits?.crew?.find(c => c.job === 'Director')?.name || 'N/A',
+                        actors: details.credits?.cast?.slice(0, 5).map(a => a.name).join(', ') || 'N/A',
+                        plot: details.overview || 'Sinopse não disponível.',
+                        runtime: details.runtime ? `${details.runtime} min` : 'N/A',
+                        imdbRating: details.vote_average ? details.vote_average.toFixed(1) : 'N/A',
+                        imdbVotes: details.vote_count ? details.vote_count.toLocaleString('pt-BR') : 'N/A',
+                        country: details.production_countries?.map(c => c.name).join(', ') || 'N/A',
+                        language: details.spoken_languages?.map(l => l.name).join(', ') || 'N/A',
+                        awards: 'N/A',
+                        boxOffice: details.revenue ? `$${details.revenue.toLocaleString('en-US')}` : 'N/A',
+                        production: details.production_companies?.map(c => c.name).join(', ') || 'N/A',
+                        rated: 'N/A',
+                        released: details.release_date ? new Date(details.release_date).toLocaleDateString('pt-BR') : 'N/A',
+                        writer: details.credits?.crew?.filter(c => c.job === 'Writer' || c.job === 'Screenplay').map(w => w.name).join(', ') || 'N/A'
                     };
                 }
-                return null;
+                
+                // Fallback para dados padrão
+                return getDefaultMovieData();
+                
             } catch (error) {
-                console.error('Erro na API OMDb:', error);
-                return null;
+                console.error('Erro ao buscar no TMDb:', error);
+                return getDefaultMovieData();
             }
         }
 
@@ -797,48 +972,6 @@
             };
         }
 
-        // Renderizar filmes
-        function renderMovies(movies) {
-            const grid = document.getElementById('moviesGrid');
-            
-            if (movies.length === 0) {
-                grid.innerHTML = '<div class="loading"><p>🎬 Nenhum filme encontrado com os filtros aplicados.</p></div>';
-                return;
-            }
-            
-            grid.innerHTML = movies.map(movie => {
-                const details = moviesWithDetails.get(movie.slug) || { ...movie, ...getDefaultMovieData() };
-                const rating = parseFloat(details.imdbRating) || 0;
-                const stars = generateStars(rating);
-                
-                return `
-                    <div class="movie-card" onclick="openMovieModal('${movie.slug}')">
-                        <div class="movie-poster ${!details.poster ? 'loading' : ''}" 
-                             style="background-image: ${details.poster ? `url(${details.poster})` : 'none'}">
-                            ${!details.poster ? '🎬' : ''}
-                        </div>
-                        <div class="movie-info">
-                            <h3 class="movie-title">${details.title}</h3>
-                            <div class="movie-meta">
-                                <span>📅 ${details.year}</span>
-                                <span>⏱️ ${details.runtime}</span>
-                            </div>
-                            <div class="movie-genres">
-                                ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 3).map(g => 
-                                    `<span class="genre-tag">${g.trim()}</span>`
-                                ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
-                            </div>
-                            <div class="movie-rating">
-                                <div class="rating-stars">${stars}</div>
-                                <span>${details.imdbRating}/10</span>
-                            </div>
-                            <p class="movie-plot">${details.plot}</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
         // Gerar estrelas para avaliação
         function generateStars(rating) {
             const fullStars = Math.floor(rating / 2);
@@ -853,7 +986,7 @@
             return stars;
         }
 
-        // Filtrar por categoria
+        // Filtrar por categoria - SUBSTITUIR FUNÇÃO
         async function filterByCategory(category) {
             currentCategory = category;
             
@@ -885,63 +1018,62 @@
             
             displayedMovies = moviesToShow;
             
-            // Carregar detalhes se necessário
-            await loadMovieDetails(moviesToShow);
-            renderMovies(displayedMovies);
-            updateStats();
+            // Renderizar básico primeiro
+            renderMoviesSmart(displayedMovies);
+            
+            // Carregar detalhes em background
+            loadMovieDetailsBackground(moviesToShow);
         }
 
-        // Buscar filmes
+        // Buscar filmes (agora busca em todos os filmes)
         function searchMovies() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
+            let baseList = allMovies;
             if (searchTerm === '') {
-                renderMovies(displayedMovies);
+                renderMoviesSmart(baseList);
+                updateCurrentCount(baseList.length);
                 return;
             }
             
-            const filteredMovies = displayedMovies.filter(movie => {
+            const filteredMovies = baseList.filter(movie => {
                 const details = moviesWithDetails.get(movie.slug) || movie;
                 return details.title.toLowerCase().includes(searchTerm) ||
                        (details.director && details.director.toLowerCase().includes(searchTerm)) ||
                        (details.actors && details.actors.toLowerCase().includes(searchTerm));
             });
             
-            renderMovies(filteredMovies);
+            renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
 
-        // Filtrar filmes por gênero, ano e nota
+        // Filtrar filmes por gênero, ano e nota (agora filtra em todos os filmes)
         function filterMovies() {
             const genreFilter = document.getElementById('genreFilter').value;
             const yearFilter = document.getElementById('yearFilter').value;
             const ratingFilter = document.getElementById('ratingFilter').value;
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
-            let filteredMovies = displayedMovies.filter(movie => {
+            let baseList = allMovies;
+            let filteredMovies = baseList.filter(movie => {
                 const details = moviesWithDetails.get(movie.slug) || movie;
-                
                 // Filtro de busca
                 const matchesSearch = searchTerm === '' || 
                     details.title.toLowerCase().includes(searchTerm) ||
                     (details.director && details.director.toLowerCase().includes(searchTerm)) ||
                     (details.actors && details.actors.toLowerCase().includes(searchTerm));
-                
                 // Filtro de gênero
                 const matchesGenre = genreFilter === '' || 
                     (details.genre && details.genre.toLowerCase().includes(genreFilter.toLowerCase()));
-                
                 // Filtro de ano
                 const matchesYear = yearFilter === '' || details.year === yearFilter;
-                
                 // Filtro de nota
                 const movieRating = parseFloat(details.imdbRating) || 0;
                 const matchesRating = ratingFilter === '' || movieRating >= parseFloat(ratingFilter);
-                
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
             
-            renderMovies(filteredMovies);
+            renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
 
@@ -959,8 +1091,9 @@
                 }
             });
             
-            // Popular select de gêneros
+            // Limpar selects
             const genreSelect = document.getElementById('genreFilter');
+            genreSelect.innerHTML = '<option value="">Todos os gêneros</option>';
             [...genres].sort().forEach(genre => {
                 const option = document.createElement('option');
                 option.value = genre;
@@ -968,8 +1101,8 @@
                 genreSelect.appendChild(option);
             });
             
-            // Popular select de anos
             const yearSelect = document.getElementById('yearFilter');
+            yearSelect.innerHTML = '<option value="">Todos os anos</option>';
             [...years].sort((a, b) => b - a).forEach(year => {
                 const option = document.createElement('option');
                 option.value = year;
@@ -1015,7 +1148,7 @@
             document.getElementById('currentMovies').textContent = count;
         }
 
-        // Abrir modal do filme
+        // Abrir modal do filme (versão atualizada)
         function openMovieModal(slug) {
             const details = moviesWithDetails.get(slug);
             if (!details) return;
@@ -1028,7 +1161,20 @@
             
             modalTitle.textContent = details.title;
             modalPoster.src = details.poster || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
-            modalBackdrop.src = details.poster || '';
+            
+            // Configurar backdrop
+            if (details.backdrop) {
+                modalBackdrop.src = details.backdrop;
+                modalBackdrop.style.opacity = '0.4';
+                modalBackdrop.style.filter = 'blur(2px)';
+            } else if (details.poster) {
+                // Usar poster como backdrop se não houver backdrop
+                modalBackdrop.src = details.poster;
+                modalBackdrop.style.opacity = '0.2';
+                modalBackdrop.style.filter = 'blur(10px) brightness(0.5)';
+            } else {
+                modalBackdrop.src = '';
+            }
             
             const rating = parseFloat(details.imdbRating) || 0;
             const stars = generateStars(rating);
@@ -1039,12 +1185,16 @@
                 <p><strong>⏱️ Duração:</strong> ${details.runtime}</p>
                 <p><strong>🎭 Gênero:</strong> ${details.genre}</p>
                 <p><strong>🎬 Diretor:</strong> ${details.director}</p>
+                <p><strong>✍️ Roteirista:</strong> ${details.writer}</p>
                 <p><strong>🎭 Elenco:</strong> ${details.actors}</p>
                 <p><strong>🌍 País:</strong> ${details.country}</p>
                 <p><strong>🗣️ Idioma:</strong> ${details.language}</p>
-                <p><strong>⭐ Avaliação IMDb:</strong> ${stars} ${details.imdbRating}/10 (${details.imdbVotes} votos)</p>
+                <p><strong>📅 Lançamento:</strong> ${details.released}</p>
+                ${details.rated !== 'N/A' ? `<p><strong>🔞 Classificação:</strong> ${details.rated}</p>` : ''}
+                <p><strong>⭐ Avaliação:</strong> ${stars} ${details.imdbRating}/10 (${details.imdbVotes} votos)</p>
                 ${details.awards !== 'N/A' ? `<p><strong>🏆 Prêmios:</strong> ${details.awards}</p>` : ''}
                 ${details.boxOffice !== 'N/A' ? `<p><strong>💰 Bilheteria:</strong> ${details.boxOffice}</p>` : ''}
+                ${details.production !== 'N/A' ? `<p><strong>🏭 Produção:</strong> ${details.production}</p>` : ''}
                 <p><strong>📖 Sinopse:</strong></p>
                 <p style="text-align: justify; margin-top: 10px; padding: 15px; background: #f8f9fa; border-radius: 8px; line-height: 1.6;">${details.plot}</p>
                 <div style="margin-top: 20px; text-align: center;">
@@ -1130,18 +1280,63 @@
             loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Carregando mais filmes...</p>';
             grid.appendChild(loadingDiv);
             
-            // Carregar detalhes
-            await loadMovieDetails(nextBatch);
-            
             // Adicionar à lista exibida
             displayedMovies = displayedMovies.concat(nextBatch);
             
-            // Remover indicador e renderizar
+            // Remover indicador e renderizar básico
             loadingDiv.remove();
-            renderMovies(displayedMovies);
-            updateStats();
+            renderMoviesSmart(displayedMovies);
+            
+            // Carregar detalhes em background
+            loadMovieDetailsBackground(nextBatch);
             
             isLoadingMore = false;
+        }
+
+        // Atualizar card individual - ADICIONAR FUNÇÃO
+        function updateMovieCard(slug, details) {
+            const card = document.querySelector(`[data-slug="${slug}"]`);
+            if (!card) return;
+            
+            const rating = parseFloat(details.imdbRating) || 0;
+            const stars = generateStars(rating);
+            
+            // Atualizar poster
+            const poster = card.querySelector('.movie-poster');
+            if (details.poster) {
+                poster.style.backgroundImage = `url(${details.poster})`;
+                poster.classList.remove('loading');
+                poster.textContent = '';
+            }
+            
+            // Atualizar meta informações
+            const meta = card.querySelector('.movie-meta');
+            meta.innerHTML = `
+                <span>📅 ${details.year}</span>
+                <span>⏱️ ${details.runtime}</span>
+            `;
+            
+            // Atualizar gêneros
+            const genres = card.querySelector('.movie-genres');
+            genres.innerHTML = details.genre !== 'N/A' ? 
+                details.genre.split(',').slice(0, 2).map(g => 
+                    `<span class="genre-tag">${g.trim()}</span>`
+                ).join('') : 
+                '<span class="genre-tag">Gênero não disponível</span>';
+            
+            // Atualizar avaliação
+            const ratingDiv = card.querySelector('.movie-rating');
+            ratingDiv.innerHTML = `
+                <div class="rating-stars">${stars}</div>
+                <span>${details.imdbRating}/10</span>
+            `;
+            
+            // Atualizar sinopse
+            const plot = card.querySelector('.movie-plot');
+            plot.textContent = details.plot;
+            
+            // Atualizar filtros dinamicamente
+            populateFilters();
         }
     </script>
 </body>
