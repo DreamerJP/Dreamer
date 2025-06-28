@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmes</title>
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --accent-color: #cf6679;
+            --text-primary: #e1e1e1;
+            --text-secondary: #b3b3b3;
+            --bg-main: rgba(18, 18, 35, 0.98);
+            --bg-nav: rgba(18, 18, 35, 0.98);
+            --shadow-color: rgba(0,0,0,0.4);
+            --shadow-color-strong: rgba(0,0,0,0.6);
+            --transition-speed: 0.8s;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,10 +27,90 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
+        }
+
+        /* Campo de Estrelas */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: star-travel linear infinite;
+        }
+
+        .star.distant {
+            width: 1px;
+            height: 1px;
+            animation-duration: 25s;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .star.medium {
+            width: 1.5px;
+            height: 1.5px;
+            animation-duration: 15s;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .star.close {
+            width: 2px;
+            height: 2px;
+            animation-duration: 8s;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        .star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        }
+
+        .star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        }
+
+        @keyframes star-travel {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+            10% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.5);
+            }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
         }
 
         /* Navegação */
@@ -25,12 +119,12 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-nav);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 107, 107, 0.3);
+            border-bottom: 2px solid var(--primary-color);
             z-index: 1000;
             padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px var(--shadow-color-strong);
         }
         .nav-container {
             max-width: 1200px;
@@ -43,12 +137,12 @@
         .nav-home {
             font-size: 1.5em;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
             text-decoration: none;
             transition: all 0.3s ease;
         }
         .nav-home:hover {
-            color: #ff6b6b;
+            color: var(--primary-color);
             transform: scale(1.05);
         }
         .nav-links {
@@ -57,7 +151,7 @@
             list-style: none;
         }
         .nav-links a {
-            color: #2c3e50;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             padding: 8px 16px;
@@ -65,15 +159,12 @@
             transition: all 0.3s ease;
             position: relative;
         }
-        .nav-links a:hover {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .nav-links a:hover,
         .nav-links a.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
         .menu-toggle {
             display: none;
@@ -81,7 +172,7 @@
             border: none;
             font-size: 1.5em;
             cursor: pointer;
-            color: #2c3e50;
+            color: var(--text-primary);
         }
 
         /* Container principal */
@@ -95,33 +186,48 @@
         .header {
             text-align: center;
             margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-main);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
         .header h1 {
-            color: #2c3e50;
+            color: #111 !important;
             font-size: 3em;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 
+                0 0 20px var(--primary-color),
+                2px 2px 4px var(--shadow-color);
         }
 
         .header p {
-            color: #7f8c8d;
+            color: #111 !important;
             font-size: 1.2em;
             margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
         }
 
         /* Filtros */
         .filters {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-main);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
             backdrop-filter: blur(10px);
         }
 
@@ -142,22 +248,24 @@
 
         .filter-group label {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text-primary);
             font-size: 0.9em;
         }
 
         .filter-group select, .filter-group input {
             padding: 10px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid rgba(187, 134, 252, 0.3);
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
+            background: rgba(18, 18, 35, 0.8);
+            color: var(--text-primary);
         }
 
         .filter-group select:focus, .filter-group input:focus {
             outline: none;
-            border-color: #ff6b6b;
-            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
         }
 
         .filter-tags {
@@ -167,7 +275,7 @@
         }
 
         .filter-tag {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -182,19 +290,19 @@
 
         .filter-tag:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
         .filter-tag.active {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            box-shadow: 0 5px 15px rgba(207, 102, 121, 0.4);
         }
 
         /* Loading */
         .loading {
             text-align: center;
             padding: 60px;
-            color: #7f8c8d;
+            color: var(--text-secondary);
             font-size: 1.2em;
         }
 
@@ -202,8 +310,8 @@
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #ff6b6b;
+            border: 4px solid rgba(187, 134, 252, 0.2);
+            border-top: 4px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -223,10 +331,10 @@
         }
 
         .movie-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-main);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
@@ -235,14 +343,14 @@
 
         .movie-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
         }
 
         .movie-poster {
             width: 100%;
             height: 280px;
             object-fit: cover;
-            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            background: linear-gradient(45deg, rgba(18, 18, 35, 0.8), rgba(22, 33, 62, 0.8));
             background-size: cover;
             background-position: center;
             position: relative;
@@ -252,7 +360,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6c757d;
+            color: var(--text-secondary);
             font-size: 3em;
         }
 
@@ -263,7 +371,7 @@
         .movie-title {
             font-size: 1em;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
             margin-bottom: 6px;
             line-height: 1.2;
         }
@@ -273,7 +381,7 @@
             gap: 15px;
             margin-bottom: 8px;
             font-size: 0.9em;
-            color: #7f8c8d;
+            color: var(--text-secondary);
         }
 
         .movie-meta span {
@@ -293,7 +401,7 @@
         }
 
         .genre-tag {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 2px 6px;
             border-radius: 10px;
@@ -321,11 +429,11 @@
         }
 
         .star.empty {
-            color: #e0e0e0;
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .movie-plot {
-            color: #555;
+            color: var(--text-secondary);
             font-size: 0.9em;
             line-height: 1.3;
             max-height: 22px;
@@ -357,7 +465,7 @@
             max-height: 96vh;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 60px var(--shadow-color-strong);
         }
 
         /* Backdrop como fundo completo */
@@ -446,7 +554,7 @@
             height: 480px;
             object-fit: cover;
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
             transition: transform 0.3s ease;
         }
 
@@ -456,11 +564,11 @@
 
         /* Container das informações */
         .modal-details {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(18, 18, 35, 0.8);
             backdrop-filter: blur(20px);
             padding: 30px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(187, 134, 252, 0.2);
             color: white;
         }
 
@@ -468,7 +576,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin: 0 0 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            text-shadow: 2px 2px 4px var(--shadow-color-strong);
             line-height: 1.2;
         }
 
@@ -487,7 +595,7 @@
         }
 
         .info-item strong {
-            color: #ffd700;
+            color: var(--primary-color);
             margin-right: 8px;
             min-width: 100px;
             font-weight: 600;
@@ -497,11 +605,11 @@
         .modal-plot-section {
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(187, 134, 252, 0.2);
         }
 
         .modal-plot-section h4 {
-            color: #ffd700;
+            color: var(--primary-color);
             font-size: 1.3rem;
             margin: 0 0 15px 0;
             font-weight: 600;
@@ -518,7 +626,7 @@
         .modal-actions {
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(187, 134, 252, 0.2);
         }
 
         .modal-actions a {
@@ -526,18 +634,18 @@
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
             border-radius: 25px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px var(--shadow-color);
         }
 
         .modal-actions a:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 25px var(--shadow-color-strong);
         }
 
         /* Estrelas de avaliação */
@@ -553,31 +661,31 @@
         }
 
         .modal-body::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(187, 134, 252, 0.1);
             border-radius: 4px;
         }
 
         .modal-body::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(187, 134, 252, 0.3);
             border-radius: 4px;
         }
 
         .modal-body::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(187, 134, 252, 0.5);
         }
 
         /* Stats */
         .stats {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-main);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
             backdrop-filter: blur(10px);
         }
 
         .stats h3 {
-            color: #2c3e50;
+            color: var(--text-primary);
             margin-bottom: 20px;
             text-align: center;
         }
@@ -591,10 +699,10 @@
         .stat-item {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
         .stat-number {
@@ -616,10 +724,10 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(255, 255, 255, 0.98);
+                background: var(--bg-nav);
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                box-shadow: 0 5px 20px var(--shadow-color-strong);
                 border-radius: 0 0 15px 15px;
             }
             .nav-links.active {
@@ -719,7 +827,7 @@
 
         /* Unificar header, filtros e estatísticas */
         .unified-header {
-            background: url('https://github.com/DreamerJP/site-images/blob/main/Filmes/AbsoluteCinema.jpg?raw=true') center center/cover no-repeat, rgba(255,255,255,0.97);
+            background: url('https://github.com/DreamerJP/site-images/blob/main/Filmes/AbsoluteCinema.jpg?raw=true') center center/cover no-repeat, #fff !important;
             position: relative;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.10);
@@ -730,13 +838,14 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(255,255,255,0.90);
+            background: rgba(255,255,255,0.75) !important;
             border-radius: 20px;
-            z-index: 0;
+            z-index: 1;
+            pointer-events: none;
         }
         .unified-header > * {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         .filters-stats-flex {
             display: flex;
@@ -753,10 +862,10 @@
         .stats-compact {
             flex: 1;
             min-width: 220px;
-            background: rgba(245, 245, 245, 0.95);
+            background: rgba(18, 18, 35, 0.95);
             border-radius: 16px;
             padding: 18px 18px 10px 18px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 10px var(--shadow-color);
         }
         .stats-compact .stats-grid {
             display: grid;
@@ -764,20 +873,20 @@
             gap: 10px;
         }
         .stat-card {
-            background: #fff;
+            background: rgba(187, 134, 252, 0.1);
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px var(--shadow-color);
             padding: 10px 0 6px 0;
             text-align: center;
         }
         .stat-value {
             font-size: 1.3em;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
         }
         .stat-label {
             font-size: 0.9em;
-            color: #7f8c8d;
+            color: var(--text-secondary);
         }
         @media (max-width: 900px) {
             .filters-stats-flex {
@@ -878,6 +987,9 @@
     </style>
 </head>
 <body>
+    <!-- Campo de Estrelas -->
+    <div class="starfield" id="starfield"></div>
+
     <!-- Navegação -->
     <nav class="navigation">
         <div class="nav-container">
@@ -996,6 +1108,69 @@
     </div>
 
     <script>
+        // Função para criar campo de estrelas
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            starfield.innerHTML = '';
+            
+            // Estrelas em movimento
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const angle = Math.random() * 2 * Math.PI;
+                const initialRadius = Math.random() * 50 + 10;
+                const startX = centerX + Math.cos(angle) * initialRadius;
+                const startY = centerY + Math.sin(angle) * initialRadius;
+                
+                const directionX = Math.cos(angle);
+                const directionY = Math.sin(angle);
+                
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+                const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
+                
+                const starType = Math.random();
+                if (starType < 0.6) {
+                    star.classList.add('distant');
+                } else if (starType < 0.85) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('close');
+                }
+                
+                const colorType = Math.random();
+                if (colorType < 0.1) {
+                    star.classList.add('blue');
+                } else if (colorType < 0.2) {
+                    star.classList.add('yellow');
+                }
+                
+                star.style.left = startX + 'px';
+                star.style.top = startY + 'px';
+                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+                star.style.animationDelay = Math.random() * 20 + 's';
+                
+                starfield.appendChild(star);
+            }
+            
+            // Estrelas estacionárias
+            for (let i = 0; i < 50; i++) {
+                const staticStar = document.createElement('div');
+                staticStar.className = 'star distant';
+                staticStar.style.position = 'absolute';
+                staticStar.style.left = Math.random() * window.innerWidth + 'px';
+                staticStar.style.top = Math.random() * window.innerHeight + 'px';
+                staticStar.style.opacity = Math.random() * 0.3 + 0.1;
+                staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
+                
+                starfield.appendChild(staticStar);
+            }
+        }
+
         // Dados globais
         let allMovies = [];
         let displayedMovies = [];
@@ -1015,6 +1190,11 @@
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
+            createStarfield();
+            
+            // Recriar estrelas no resize
+            window.addEventListener('resize', createStarfield);
+            
             loadMovies();
         });
 
@@ -1646,6 +1826,34 @@
             }
             populateFilters();
         }
+
+        // Forçar o topo esbranquiçado após o carregamento
+        function forceHeaderWhiteOverlay() {
+            const header = document.querySelector('.unified-header');
+            if (header) {
+                header.style.background = "url('https://github.com/DreamerJP/site-images/blob/main/Filmes/AbsoluteCinema.jpg?raw=true') center center/cover no-repeat, #fff";
+                header.style.setProperty('background-color', '#fff', 'important');
+                // Forçar z-index dos filhos
+                Array.from(header.children).forEach(child => {
+                    child.style.position = 'relative';
+                    child.style.zIndex = 2;
+                });
+                // Forçar overlay ::before
+                if (!header.querySelector('.header-overlay-fix')) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'header-overlay-fix';
+                    overlay.style.position = 'absolute';
+                    overlay.style.inset = 0;
+                    overlay.style.background = 'rgba(255,255,255,0.75)';
+                    overlay.style.borderRadius = '20px';
+                    overlay.style.zIndex = 1;
+                    overlay.style.pointerEvents = 'none';
+                    header.prepend(overlay);
+                }
+            }
+        }
+        document.addEventListener('DOMContentLoaded', forceHeaderWhiteOverlay);
+        window.addEventListener('resize', forceHeaderWhiteOverlay);
     </script>
 </body>
 </html>
