@@ -1106,7 +1106,7 @@
             
             // Verificar se é um vídeo do Google Drive
             if (googleDriveVideos[videoId]) {
-                player.src = googleDriveVideos[videoId];
+                player.src = googleDriveVideos[videoId] + '?autoplay=1';
             } else {
                 // Vídeo do YouTube (padrão)
                 player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
