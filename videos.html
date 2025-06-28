@@ -661,9 +661,7 @@
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeVideo()">&times;</button>
-            <video id="videoPlayer" width="100%" controls style="background:#000; border-radius: 12px; display:none"></video>
-            <audio id="audioPlayer" style="display:none"></audio>
-            <iframe id="videoPlayerIframe" width="100%" height="100%" style="border:none; display:none" allowfullscreen></iframe>
+            <iframe id="videoPlayer" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -677,8 +675,8 @@
 
         <!-- Filtros -->
         <div class="filter-section">
-            <button class="filter-btn" onclick="filterVideos('Emily Browning')">Emily Browning</button>
             <button class="filter-btn" onclick="filterVideos('Aurora')">Aurora</button>
+            <button class="filter-btn" onclick="filterVideos('Emily Browning')">Emily Browning</button>
             <button class="filter-btn" onclick="filterVideos('Chvrches')">Chvrches</button>
             <button class="filter-btn" onclick="filterVideos('t.A.T.u.')">t.A.T.u.</button>
             <button class="filter-btn" onclick="filterVideos('Variado')">Variado</button>
@@ -783,9 +781,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://raw.githubusercontent.com/DreamerJP/site-images/main/Videos/Act_of_the_Apostle_Emily_Browning.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751054409&ei=6aNeaMP8B_Wd9cYPicjzkA0&ip=45.178.19.1&id=o-AIfLDRNsY0DqfSWXh6qFzUb-e2aclk3_wsK1S3sTrpcI&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751032809%2C&mh=pj&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0r&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2406250&bui=AY1jyLMw2C7krJY6cdIn8r3JNyM1obXw5tc2I4kNFSVG5B0-zahsz_RQ0PjbnluJ8WvqB6t36Deq3uQF&spc=l3OVKbHxZkwZ36rB_0_qcNb0mQJw1yJhGHDbXK3KmaSB3kw5gUxOmGMw2ZIlkCA&vprv=1&svpuc=1&mime=video%2Fmp4&ns=QqfN2-FJTdJT6haGv4EM1CwQ&rqh=1&gir=yes&clen=33318609&dur=160.958&lmt=1687998597825801&mt=1751032382&fvip=16&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6216224&n=gmT2IDk_ZfmUhQ&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAIXbO_pCBCOcd4VuFYXPVAccUi5LzJxKQRUljz4SLiwAAiAIAxcTCP7NjLSb0rpHOSF7zkm5NwUy8sUZGsji-_Ka-Q%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhAKhoYai8TR8ujwyze2d7QUe6fm9qeHbjqb7gA_XBIwfrAiAlGpWToJoSh_TmgzUloqKsJSSNlqu5ZHpU-C6-Evm-8A%3D%3D',
-                audioUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751054409&ei=6aNeaMP8B_Wd9cYPicjzkA0&ip=45.178.19.1&id=o-AIfLDRNsY0DqfSWXh6qFzUb-e2aclk3_wsK1S3sTrpcI&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751032809%2C&mh=pj&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0r&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2406250&bui=AY1jyLMw2C7krJY6cdIn8r3JNyM1obXw5tc2I4kNFSVG5B0-zahsz_RQ0PjbnluJ8WvqB6t36Deq3uQF&spc=l3OVKbHxZkwZ36rB_0_qcNb0mQJw1yJhGHDbXK3KmaSB3kw5gUxOmGMw2ZIlkCA&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=QqfN2-FJTdJT6haGv4EM1CwQ&rqh=1&gir=yes&clen=2607613&dur=161.076&lmt=1687998708458039&mt=1751032382&fvip=16&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6211224&n=gmT2IDk_ZfmUhQ&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgAsqnptESpJBc98bhhRmo5tD9eeKcK9HEjmJaeNxDRKMCIHIF6zqC31KX5pfm--3cQgdbTxyzY0G9lYzXmFC6IXRA&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhAKhoYai8TR8ujwyze2d7QUe6fm9qeHbjqb7gA_XBIwfrAiAlGpWToJoSh_TmgzUloqKsJSSNlqu5ZHpU-C6-Evm-8A%3D%3D'
+                views: ''
             },
             {
                 id: 'n0aOSIgOsRE',
@@ -795,9 +791,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/n0aOSIgOsRE/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055381&ei=tadeaLfsC7Sq9cYP9b32iA0&ip=45.178.19.1&id=o-AMW2i7TufLBhU_qCRFNusH-7CmeKV4uaRTnv1G33h8QM&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033781%2C&mh=6j&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0k&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2286250&bui=AY1jyLNQ7BCA0xQCZuOZ-iIpFwljWtJ19AeXQjyRT5_DSAtstKEiv3Uu1KEnvpf6PufLDbd4AURj2_S5&spc=l3OVKfPis-SDTLb2kFO1hWEXPyXZERDidXGHhvP8fVrCDwKZe9wrAJUXazM5ZH0&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-Mlt6j_fnBDESTHBcE5l59kQ&rqh=1&gir=yes&clen=33459110&dur=159.999&lmt=1721508944185761&mt=1751033353&fvip=5&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6219224&n=1_qB9yYeMc2K4A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhANyhlMQKgvfcLgwPzZPVoGwgcRvyw7M-6FTOz3P3tIm_AiEAiTbZCxAVKqQuDxg_ogOfRXr6f-SDU_9YBagCTIC7Ro0%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIgXTJqLiLK966YmM32_zio5hBKN3bjoKNBbHg4xuC0FksCIQD9HE2jfT0pBrBzfB7TH_v9BvUkqel1R7xr5zI9R9_QUA%3D%3D',
-                audioUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055381&ei=tadeaLfsC7Sq9cYP9b32iA0&ip=45.178.19.1&id=o-AMW2i7TufLBhU_qCRFNusH-7CmeKV4uaRTnv1G33h8QM&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033781%2C&mh=6j&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0k&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2286250&bui=AY1jyLNQ7BCA0xQCZuOZ-iIpFwljWtJ19AeXQjyRT5_DSAtstKEiv3Uu1KEnvpf6PufLDbd4AURj2_S5&spc=l3OVKfPis-SDTLb2kFO1hWEXPyXZERDidXGHhvP8fVrCDwKZe9wrAJUXazM5ZH0&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=-Mlt6j_fnBDESTHBcE5l59kQ&rqh=1&gir=yes&clen=2591707&dur=160.078&lmt=1721508993468420&mt=1751033353&fvip=5&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6218224&n=1_qB9yYeMc2K4A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAOtL4h7unt1amXyBW9Js3gjFUz0CKLZFRtEDXCsKhdhRAiAdAC67UE51Ux3fN_oN3vOKqvlvxbZlNmpFwqpfAxVsIA%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIgXTJqLiLK966YmM32_zio5hBKN3bjoKNBbHg4xuC0FksCIQD9HE2jfT0pBrBzfB7TH_v9BvUkqel1R7xr5zI9R9_QUA%3D%3D'
+                views: ''
             },
             {
                 id: '5m6JYEJmRIk',
@@ -807,21 +801,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/5m6JYEJmRIk/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055456&ei=AKheaPbpJ6Oo9cYP4q3jiQM&ip=45.178.19.1&id=o-APYx1k_3gbqKTXj-1hAy7D5Z76ZytpAtMp1TrmAWKv3o&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033856%2C&mh=CW&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0k&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2286250&bui=AY1jyLPxSw9Bwrjd2ysY43dczlTjdJ4DFTJOhD7t5SwCwfT-DJyYigFBlhjfqxWAM5EQrd8UbE6cOSrW&spc=l3OVKWb-fLtQcSsigMHw1_3hcheoqe9ErvnAVmP8oFxWducdLmrLm5MBfcOKkv8&vprv=1&svpuc=1&mime=video%2Fmp4&ns=ndTJDsPkHMtzj4aOrFLKhicQ&rqh=1&gir=yes&clen=52398843&dur=235.999&lmt=1674761996630161&mt=1751033353&fvip=6&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6216224&n=0JbdF__0teHfoQ&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhAOJr-QMxiZhyftUz0wQZr9qRc0rd58et001vGofbpouCAiEA-5eYpgD-Y7a6aKktNaLUjgGk7x5kn2NyFGsxoD8c-Q0%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRAIgMRADPyBz_oqdewHTeNlKJLHAkyK-Cnai2aipr6OHueoCIHzL8AkXu-F8FEn-y3-jR0KPM7_k0yYm4rFoZhn-Jutm',
-                audioUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055456&ei=AKheaPbpJ6Oo9cYP4q3jiQM&ip=45.178.19.1&id=o-APYx1k_3gbqKTXj-1hAy7D5Z76ZytpAtMp1TrmAWKv3o&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033856%2C&mh=CW&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0k&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2286250&bui=AY1jyLPxSw9Bwrjd2ysY43dczlTjdJ4DFTJOhD7t5SwCwfT-DJyYigFBlhjfqxWAM5EQrd8UbE6cOSrW&spc=l3OVKWb-fLtQcSsigMHw1_3hcheoqe9ErvnAVmP8oFxWducdLmrLm5MBfcOKkv8&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=ndTJDsPkHMtzj4aOrFLKhicQ&rqh=1&gir=yes&clen=3821352&dur=236.077&lmt=1674761232898570&mt=1751033353&fvip=6&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6211224&n=0JbdF__0teHfoQ&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhAP71JUNcOgKGwVa6tT4VrBImi1Nm6rq62QtitG76F30aAiEAu7J1su5KnuxgIAVroU9Ny0fyF4gK23_ipIatDiyJB0c%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRAIgMRADPyBz_oqdewHTeNlKJLHAkyK-Cnai2aipr6OHueoCIHzL8AkXu-F8FEn-y3-jR0KPM7_k0yYm4rFoZhn-Jutm'
-            },
-            {
-                id: 'aacAT1i2SnY',
-                title: 'Musician, Please Take Heed',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg',
-                duration: '',
-                views: '',
-                videoUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055590&ei=hqheaLmwB7GtobIPkezDsAE&ip=45.178.19.1&id=o-AEpfRHVgoOLDcIwEET-pMXIDgKMu0s3QBD8oEIw0yTxH&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033990%2C&mh=r9&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0s&ms=au%2Crdu&mv=m&mvi=1&pl=24&rms=au%2Cau&ctier=L&pcm2=yes&initcwndbps=1747500&bui=AY1jyLPiiX8XT2qJbnVSUohJsL2_xASRiJcCCSEGF0iq7K1_RMBvPQpboJeRqOukbKM5Y_Bm5TvXbFz8&spc=l3OVKTS4sBZWAUx8QHn-2rYiV_4gcoXUbc8MnMAihlljTvnJjph_qqpdq_z7qzw&vprv=1&svpuc=1&mime=video%2Fmp4&ns=XM8An_mTiKxfyomCFeY86gYQ&rqh=1&gir=yes&clen=49566494&dur=238.999&lmt=1708024982658223&mt=1751033597&fvip=1&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6219224&n=UYIcb5KjBOkgXw&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cpcm2%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhAMkPOfZw6WKCVhsI_sxxKPN2E9o8pQpnZQFIqpk51IFEAiEAvsrRGobfTqWYTOwtRzhtJwhfBEbQEqUMlliK8RNnRHg%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhANlJ0l3YTlYv_QbIKVa6837Eb6aa2zWl8_oQV1pgZjYDAiBVbsfjh1VL9YRg6xGJ1cveqpdJJoOqGKgV03g_WaxNOQ%3D%3D',
-                audioUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055590&ei=hqheaLmwB7GtobIPkezDsAE&ip=45.178.19.1&id=o-AEpfRHVgoOLDcIwEET-pMXIDgKMu0s3QBD8oEIw0yTxH&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033990%2C&mh=r9&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0s&ms=au%2Crdu&mv=m&mvi=1&pl=24&rms=au%2Cau&ctier=L&pcm2=yes&initcwndbps=1747500&bui=AY1jyLPiiX8XT2qJbnVSUohJsL2_xASRiJcCCSEGF0iq7K1_RMBvPQpboJeRqOukbKM5Y_Bm5TvXbFz8&spc=l3OVKTS4sBZWAUx8QHn-2rYiV_4gcoXUbc8MnMAihlljTvnJjph_qqpdq_z7qzw&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=XM8An_mTiKxfyomCFeY86gYQ&rqh=1&gir=yes&clen=3869794&dur=239.072&lmt=1708025104485832&mt=1751033597&fvip=1&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6218224&n=UYIcb5KjBOkgXw&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cpcm2%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAPAVWRAztLv77IuVa6AfTC7b26wAaQ8yeX0dvJIHumyKAiBIKuIqow0m2vZ92c-PHg1AamR7_bq0rD0dxHdHFOOS7A%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhANlJ0l3YTlYv_QbIKVa6837Eb6aa2zWl8_oQV1pgZjYDAiBVbsfjh1VL9YRg6xGJ1cveqpdJJoOqGKgV03g_WaxNOQ%3D%3D'
+                views: ''
             },
             {
                 id: 'VNGvzu51zsw',
@@ -841,9 +821,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/VcSeUHScWWk/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055523&ei=Q6heaN-jE8atobIP-abIwA0&ip=45.178.19.1&id=o-AB3G6W7gjwXzRJEX9nAcecm7Y1PTIt7suGteXt5Tpc8I&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033923%2C&mh=5D&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0r&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=1747500&bui=AY1jyLMsHNS_n9wjx887HFb_C3zaNzWQMlsCmdkDFgN7T2MtskXiWDHxJtOdyxKubIvfE92QhhpDpsFL&spc=l3OVKbr3rgPX2DVwgACMeosa-_odHu_nT8lis0dgzvU3G6Imdvhdo7BkPTHjz7g&vprv=1&svpuc=1&mime=video%2Fmp4&ns=1APFBtv0V5PetrUoOS_WAdMQ&rqh=1&gir=yes&clen=38829394&dur=210.958&lmt=1677784030388166&mt=1751033597&fvip=16&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6216224&n=haT38IbMXh8r8A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhANY4tpxKNY4PybuIGEHA2H6v1l2AddQ6LbaNsDHvl8ABAiEAnRG2EYPtjGPrucbmow41d6W0cmDXumJgsBjrn8Zq2B8%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhALTVZf8tK-1VZjzJv9fob-BvueSoNUaDSQRHACt-mFNxAiAwBil5kE0pfwl-TPlQEE9VSPkzjmbT19mZEpffBdB8ZA%3D%3D',
-                audioUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055523&ei=Q6heaN-jE8atobIP-abIwA0&ip=45.178.19.1&id=o-AB3G6W7gjwXzRJEX9nAcecm7Y1PTIt7suGteXt5Tpc8I&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033923%2C&mh=5D&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0r&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=1747500&bui=AY1jyLMsHNS_n9wjx887HFb_C3zaNzWQMlsCmdkDFgN7T2MtskXiWDHxJtOdyxKubIvfE92QhhpDpsFL&spc=l3OVKbr3rgPX2DVwgACMeosa-_odHu_nT8lis0dgzvU3G6Imdvhdo7BkPTHjz7g&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=1APFBtv0V5PetrUoOS_WAdMQ&rqh=1&gir=yes&clen=3417061&dur=211.092&lmt=1677783996329916&mt=1751033597&fvip=16&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6211224&n=haT38IbMXh8r8A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAN0U6-j469lyQd6SOYTN-VthfFqW2xCWpkhH5YbEI7P5AiBDHSMrh9OV5cRwqkAj58yJiwmw__yyYS6J0sz8VxourQ%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhALTVZf8tK-1VZjzJv9fob-BvueSoNUaDSQRHACt-mFNxAiAwBil5kE0pfwl-TPlQEE9VSPkzjmbT19mZEpffBdB8ZA%3D%3D'
+                views: ''
             },
             {
                 id: 'cNzjkm3agq0',
@@ -853,9 +831,17 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/cNzjkm3agq0/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055565&ei=baheaJrHHfmeobIPiM6z8Qg&ip=45.178.19.1&id=o-AIFolyTLqreAY2jEYpnm2AhWx59UGEaAkb22t8VkD7HL&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751033965%2C&mh=bg&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0s&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=1747500&bui=AY1jyLMNyhjeCDqxOWIf1vD5mAOftIXBhnQw54-hT6QHgoCeC89L4jN6bQLTbl6_jYBqfNdl_En1UCTw&spc=l3OVKf9ega15t4-f7511-jrU1M4BYWmaPCoM5Y5GnSxfauH12O5jgqCaWseum4Y&vprv=1&svpuc=1&mime=video%2Fmp4&ns=PIKeVhI7Cvz-Hc6XmgpiDKkQ&rqh=1&gir=yes&clen=61955774&dur=219.999&lmt=1724810358894478&mt=1751033597&fvip=10&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6208224&n=3ZS19d7STvT_yg&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIgLv1kVw6zqnsPM5jIRZPK-H-QtrgUfFAgnebmu4oKA9gCIQCDXGvgc78iaKwGYrQqX17g1VBcvoVgiGV8KsqJBlAFmw%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRAIgKV1OH16cJxuUO2jOStkQWIxaPxmH-bkML4yrFDsh0_ECIBB50DGpV0smuzwcacAiIKwpReTNOJ4w-ma2_xl80d08',
-                audioUrl: 'https://rr2---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751056899&ei=o61eaL-4LNCJ9cYP3_Pl0Qk&ip=45.178.19.1&id=o-AI0gULl0ACQsdNsLQ_1GkrIX-xKh2WuJgAsDSzPXcYM2&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751035299%2C&mh=bg&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0s&ms=au%2Crdu&mv=m&mvi=2&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2697500&bui=AY1jyLPNlfsOGRW-lKeBJduEfN-x-gVANcVLZwfT7NCRJBQ4AlaH0rQLgK9fSF8EFvwx28pWAPfs8QRZ&spc=l3OVKXNWlGhuWGtucUmDLrGlM0TfRMphPsgR07qISo4wNju7c9sqxPdHbRMK0TY&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=zaNrSet3spYD-IUTs40KG_YQ&rqh=1&gir=yes&clen=3562722&dur=220.055&lmt=1724809385671649&mt=1751034793&fvip=10&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6208224&n=TTEFNFhbjgg86Q&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAIVzBJuDIR4V6mNqK8e0hwgixFhoi13qqs0yX9KYstxKAiBpmC8WfS_aNfKwZ588N4mc0l4hXVumrbcIVnqvXYP3zg%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRgIhANotAsK0GYC1lfsYRyoYRcHYz6fSt4KFKYbOHodDGsIzAiEAi0_-aV-GMRw2jCK8UcPVYI3h2FEBFyZQAWrAxT_E87A%3D'
+                views: ''
+            },
+            {
+                id: 'aacAT1i2SnY',
+                title: 'Musician, Please Take Heed',
+                artist: 'Emily Browning',
+                description: 'God Help the Girl',
+                category: 'Emily Browning',
+                thumbnail: 'https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg',
+                duration: '',
+                views: ''
             },
             {
                 id: 'mVeW2_t4gRg',
@@ -865,9 +851,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/mVeW2_t4gRg/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751057168&ei=sK5eaObJC4iD9cYPuc6omAk&ip=45.178.19.1&id=o-AEm9llsPQcQdfBOVK3zfwWWw8HEMsedLbMnXiLFzSAvd&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751035568%2C&mh=wL&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0z&ms=au%2Crdu&mv=m&mvi=1&pcm2cms=yes&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2381250&bui=AY1jyLMSwRsU9eZpJ9vGN3NdByqIIi8SfUVLdv335WeMBCPSe-VCaduyiXF4VKXEBR7F392aiA246hdQ&spc=l3OVKTY0hezUrvRmv6W8AXPUU9t24grjHRopG3x9L5yicF7ez4t4m2NuC1Yho0I&vprv=1&svpuc=1&mime=video%2Fmp4&ns=rEXVdFSqgbSgbG1Zy8a8NlQQ&rqh=1&gir=yes&clen=25725380&dur=149.999&lmt=1721429870337105&mt=1751035034&fvip=10&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6219224&n=qJ6d7T-jbkuwdw&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRgIhAPmxlDf7i_N6uGPiTA9-i7aKysMKItLY6M7ctF-WAHF6AiEAp3vXo5F0EY8X81E6uYDA4K-05gRmDsTUSO-dxWUODOY%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhAOKEdWedy-mazHq4VjL2e0tQvZOi0nNXferQ56KyQ4qwAiBXLvH2RLbfds2nTlYKYQeUi7JEjRLshkgZpy05UjM8OQ%3D%3D',
-                audioUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751057168&ei=sK5eaObJC4iD9cYPuc6omAk&ip=45.178.19.1&id=o-AEm9llsPQcQdfBOVK3zfwWWw8HEMsedLbMnXiLFzSAvd&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751035568%2C&mh=wL&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0z&ms=au%2Crdu&mv=m&mvi=1&pcm2cms=yes&pl=24&rms=au%2Cau&ctier=L&initcwndbps=2381250&bui=AY1jyLMSwRsU9eZpJ9vGN3NdByqIIi8SfUVLdv335WeMBCPSe-VCaduyiXF4VKXEBR7F392aiA246hdQ&spc=l3OVKTY0hezUrvRmv6W8AXPUU9t24grjHRopG3x9L5yicF7ez4t4m2NuC1Yho0I&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=rEXVdFSqgbSgbG1Zy8a8NlQQ&rqh=1&gir=yes&clen=2429592&dur=150.070&lmt=1721429864749925&mt=1751035034&fvip=10&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6218224&n=qJ6d7T-jbkuwdw&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAN7_0MW6BdOQL-w7kXzv_a2n9fCEXZkLy1VlhViReWIDAiACtEPUu6F7dJvBdrAgJ6tS2MjVD2xYP2-Z1G1I8xXpFA%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIhAOKEdWedy-mazHq4VjL2e0tQvZOi0nNXferQ56KyQ4qwAiBXLvH2RLbfds2nTlYKYQeUi7JEjRLshkgZpy05UjM8OQ%3D%3D'
+                views: ''
             },
             {
                 id: 'InGXbmScabQ',
@@ -877,9 +861,7 @@
                 category: 'Emily Browning',
                 thumbnail: 'https://img.youtube.com/vi/InGXbmScabQ/maxresdefault.jpg',
                 duration: '',
-                views: '',
-                videoUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055654&ei=xqheaLCsN_ad9cYPztjzoQo&ip=45.178.19.1&id=o-ALvbaOaopCuIWG6HYBkDUXVFIuuGL9rqCS7GDl-_sipq&itag=136&aitags=134%2C136%2C160%2C243&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751034054%2C&mh=s7&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0z&ms=au%2Crdu&mv=m&mvi=1&pl=24&rms=au%2Cau&ctier=L&initcwndbps=1747500&bui=AY1jyLOOObmkGLrXJt2srkR2s3Mgc8spJo71G1vN0bzridHVqDeRtNTPYE2P2CaUwtHrtZDD_0mgLGRE&spc=l3OVKRh0c_nFV8iyICtGIaXIXYQUoofbhojiv-Mls9hirYpPvBlIh6E-KZAhyY8&vprv=1&svpuc=1&mime=video%2Fmp4&ns=LlFgpNMn-QqzLauRjOHTi_8Q&rqh=1&gir=yes&clen=39894494&dur=164.999&lmt=1712133079091637&mt=1751033597&fvip=13&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6219224&n=fztU7WwSgaNSEg&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIgJTET2slewbPTj_WemJnloeMZYEfFkqruNgKrETCWPQ8CIQDQdAqWF8mJUW_vhIt9L9xFcCc4fGQOosFMUlQfW71BJw%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRAIgN0R_ZXpK13-VGGYxJm2AaNxzwZwFvaRRBieOBdSlx1oCID0sqSRfHfchA8lLC2W5jqM_oYSOSl1wW5ypACA9Mv1U',
-                audioUrl: 'https://rr1---sn-25ah5noxucg-jfce.googlevideo.com/videoplayback?expire=1751055654&ei=xqheaLCsN_ad9cYPztjzoQo&ip=45.178.19.1&id=o-ALvbaOaopCuIWG6HYBkDUXVFIuuGL9rqCS7GDl-_sipq&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1751034054%2C&mh=s7&mm=31%2C29&mn=sn-25ah5noxucg-jfce%2Csn-pmcg-bg0z&ms=au%2Crdu&mv=m&mvi=1&pl=24&rms=au%2Cau&ctier=L&initcwndbps=1747500&bui=AY1jyLOOObmkGLrXJt2srkR2s3Mgc8spJo71G1vN0bzridHVqDeRtNTPYE2P2CaUwtHrtZDD_0mgLGRE&spc=l3OVKRh0c_nFV8iyICtGIaXIXYQUoofbhojiv-Mls9hirYpPvBlIh6E-KZAhyY8&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=LlFgpNMn-QqzLauRjOHTi_8Q&rqh=1&gir=yes&clen=2672202&dur=165.070&lmt=1712132940722189&mt=1751033597&fvip=13&keepalive=yes&lmw=1&c=TVHTML5&sefc=1&txp=6218224&n=fztU7WwSgaNSEg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cctier%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgPPG4Pp-bRhkLK-yIxUi-iyBqoWbqbqHPqX1gLm8Eis4CIAhoLLcEe0L_tZcmk2R9Yvr_pGOkMDkNl3TsfOL_Ky1F&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRAIgN0R_ZXpK13-VGGYxJm2AaNxzwZwFvaRRBieOBdSlx1oCID0sqSRfHfchA8lLC2W5jqM_oYSOSl1wW5ypACA9Mv1U'
+                views: ''
             },
             // Chvrches
             {
@@ -1056,7 +1038,7 @@
             }
         ];
 
-        let currentFilter = 'Emily Browning';
+        let currentFilter = 'Aurora';
 
         // Função para renderizar vídeos
         function renderVideos(videos = videosData) {
@@ -1067,13 +1049,7 @@
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
                 videoCard.dataset.category = video.category;
-                videoCard.onclick = () => {
-                    if (video.videoUrl && video.audioUrl) {
-                        playVideo(null, video.videoUrl, video.audioUrl);
-                    } else {
-                        playVideo(video.id);
-                    }
-                };
+                videoCard.onclick = () => playVideo(video.id);
 
                 videoCard.innerHTML = `
                     <div class="video-thumbnail" style="background-image: url('${video.thumbnail}')">
@@ -1111,57 +1087,46 @@
         }
 
         // Função para tocar vídeo
-        function playVideo(videoId, videoUrl = null, audioUrl = null) {
+        function playVideo(videoId) {
             const modal = document.getElementById('videoModal');
-            const video = document.getElementById('videoPlayer');
-            const audio = document.getElementById('audioPlayer');
-            const iframe = document.getElementById('videoPlayerIframe');
-
-            if (videoUrl && audioUrl) {
-                // Mostrar video/audio, esconder iframe
-                video.style.display = '';
-                audio.style.display = '';
-                iframe.style.display = 'none';
-
-                video.src = videoUrl;
-                audio.src = audioUrl;
-                video.load();
-                audio.load();
-                video.onplay = () => audio.play();
-                video.onpause = () => audio.pause();
-                video.onseeking = () => { audio.currentTime = video.currentTime; };
-                video.ontimeupdate = () => {
-                    if (Math.abs(audio.currentTime - video.currentTime) > 0.3) {
-                        audio.currentTime = video.currentTime;
-                    }
-                };
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                video.play();
+            const player = document.getElementById('videoPlayer');
+            
+            // Mapeamento de vídeos do Google Drive
+            const googleDriveVideos = {
+                'n0aOSIgOsRE': 'https://drive.google.com/file/d/1cwwgkOKutAOSn7x8ncGOzpgnQd_aBfjS/preview',
+                '5m6JYEJmRIk': 'https://drive.google.com/file/d/1cxGnKR0acL59vXk8Xijtp6jrDy8txx8U/preview',
+                'VNGvzu51zsw': 'https://drive.google.com/file/d/1d3s6MVbu6Wkc-QNvjyGqUra9m4A1SD3i/preview',
+                'VcSeUHScWWk': 'https://drive.google.com/file/d/1cyA_smqZJLGacjv4p04PTj34LtUAgf9N/preview',
+                'cNzjkm3agq0': 'https://drive.google.com/file/d/1cySwaUlN1TDyV2OLzulJXLk1c7V2ueMp/preview',
+                'aacAT1i2SnY': 'https://drive.google.com/file/d/1cyWc0xQh80APGup6qrhD6s5UTjJjj-o6/preview',
+                'mVeW2_t4gRg': 'https://drive.google.com/file/d/1d-7lGdmdfaLpLfwrWq6ifcEAsJ4emf69/preview',
+                'InGXbmScabQ': 'https://drive.google.com/file/d/1d1kC_WMJ7Vo_cgw4F9hzbD1fwfn1DbKB/preview',
+                'aeH2cfNRMiw': 'https://drive.google.com/file/d/1d2wAW6StAgl0UI4aRoBXJ4mbmJH8b3OR/preview'
+            };
+            
+            // Verificar se é um vídeo do Google Drive
+            if (googleDriveVideos[videoId]) {
+                player.src = googleDriveVideos[videoId];
             } else {
-                // Mostrar iframe, esconder video/audio
-                video.style.display = 'none';
-                audio.style.display = 'none';
-                iframe.style.display = '';
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                // Definir o src do iframe APÓS exibir o modal/iframe
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                // Vídeo do YouTube (padrão)
+                player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             }
+            
+            modal.style.display = 'flex';
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
         }
 
         // Função para fechar vídeo
         function closeVideo() {
             const modal = document.getElementById('videoModal');
-            const video = document.getElementById('videoPlayer');
-            const audio = document.getElementById('audioPlayer');
-            const iframe = document.getElementById('videoPlayerIframe');
-            video.pause();
-            audio.pause();
-            video.src = '';
-            audio.src = '';
-            iframe.src = '';
+            const player = document.getElementById('videoPlayer');
+            
+            player.src = '';
             modal.style.display = 'none';
+            
+            // Restore body scroll
             document.body.style.overflow = 'auto';
         }
 
@@ -1236,8 +1201,8 @@
         // Inicializar página
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
-            currentFilter = 'Emily Browning';
-            renderVideos(videosData.filter(v => v.category === 'Emily Browning'));
+            currentFilter = 'Aurora';
+            renderVideos(videosData.filter(v => v.category === 'Aurora'));
         });
     </script>
 </body>
