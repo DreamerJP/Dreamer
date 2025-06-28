@@ -661,7 +661,7 @@
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeVideo()">&times;</button>
-            <iframe id="videoPlayer" allowfullscreen></iframe>
+            <iframe id="videoPlayer" allowfullscreen allow="autoplay; fullscreen"></iframe>
         </div>
     </div>
 
@@ -1106,7 +1106,7 @@
             
             // Verificar se é um vídeo do Google Drive
             if (googleDriveVideos[videoId]) {
-                player.src = googleDriveVideos[videoId] + '?autoplay=1';
+                player.src = googleDriveVideos[videoId];
             } else {
                 // Vídeo do YouTube (padrão)
                 player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
