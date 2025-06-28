@@ -984,6 +984,23 @@
                 padding: 0 20px 20px;
             }
         }
+
+        .header-overlay-fix {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.75);
+            border-radius: 20px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @media (max-width: 600px) {
+            .header-overlay-fix {
+                border-radius: 0 !important;
+            }
+            .unified-header {
+                border-radius: 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
