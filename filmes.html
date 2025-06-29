@@ -233,23 +233,24 @@
 
         .filter-row {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            align-items: center;
+            align-items: flex-end;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            min-width: 150px;
+            min-width: 120px;
         }
 
         .filter-group label {
             font-weight: 600;
             color: var(--text-primary);
             font-size: 0.9em;
+            text-align: left;
         }
 
         .filter-group select, .filter-group input {
@@ -1124,6 +1125,43 @@
                 border-radius: 0 !important;
             }
         }
+
+        /* Campo de busca específico */
+        #searchInput {
+            min-width: 250px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        /* Campo de ano específico */
+        #yearFilter {
+            min-width: 80px;
+            width: 100%;
+            max-width: 100px;
+        }
+
+        /* Responsividade para o campo de busca */
+        @media (max-width: 768px) {
+            #searchInput {
+                min-width: 200px;
+                max-width: 100%;
+            }
+            #yearFilter {
+                min-width: 100px;
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #searchInput {
+                min-width: 180px;
+                max-width: 100%;
+            }
+            #yearFilter {
+                min-width: 80px;
+                max-width: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1165,7 +1203,7 @@
                     <div class="filter-row">
                         <div class="filter-group">
                             <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Digite o nome do filme..." oninput="searchMovies()">
+                            <input type="text" id="searchInput" placeholder="Digite o Título, Ator, ou Diretor" oninput="searchMovies()">
                         </div>
                         <div class="filter-group">
                             <label>🎭 Gênero:</label>
@@ -1182,7 +1220,7 @@
                         <div class="filter-group">
                             <label>⭐ Nota:</label>
                             <select id="ratingFilter" onchange="filterMovies()">
-                                <option value="">Todas as notas</option>
+                                <option value="">Notas</option>
                                 <option value="9">9+ estrelas</option>
                                 <option value="8">8+ estrelas</option>
                                 <option value="7">7+ estrelas</option>
@@ -1636,18 +1674,67 @@
                 const cleanTitle = title.replace(/\(.*?\)/g, '').trim();
                 const year = yearMatch ? yearMatch[1] : null;
                 
-                // Buscar filme no TMDb em português
+                // Primeira tentativa: busca com ano como parâmetro separado
                 let searchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle)}`;
                 if (year) {
                     searchUrl += `&year=${year}`;
                 }
                 
-                const searchResponse = await fetch(searchUrl);
-                const searchData = await searchResponse.json();
+                let searchResponse = await fetch(searchUrl);
+                let searchData = await searchResponse.json();
+                
+                let movie = null;
                 
                 if (searchData.results && searchData.results.length > 0) {
-                    const movie = searchData.results[0];
-                    
+                    // Se temos um ano específico, tentar encontrar o filme correto
+                    if (year) {
+                        // Procurar por um filme que corresponda ao ano
+                        const matchingMovie = searchData.results.find(result => {
+                            const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
+                            return resultYear === year;
+                        });
+                        
+                        if (matchingMovie) {
+                            movie = matchingMovie;
+                        } else {
+                            // Se não encontrar o ano exato, verificar se o primeiro resultado tem um ano próximo
+                            const firstResultYear = searchData.results[0].release_date ? searchData.results[0].release_date.split('-')[0] : null;
+                            if (firstResultYear && Math.abs(parseInt(firstResultYear) - parseInt(year)) > 2) {
+                                // Se a diferença for maior que 2 anos, tentar uma busca mais específica
+                                console.warn(`Possível confusão de filmes: buscando "${cleanTitle} (${year})" mas encontrou ano ${firstResultYear}`);
+                                
+                                // Segunda tentativa: incluir o ano na query de busca
+                                const specificSearchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle + ' ' + year)}`;
+                                const specificResponse = await fetch(specificSearchUrl);
+                                const specificData = await specificResponse.json();
+                                
+                                if (specificData.results && specificData.results.length > 0) {
+                                    // Procurar por um filme que corresponda ao ano na busca específica
+                                    const specificMatchingMovie = specificData.results.find(result => {
+                                        const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
+                                        return resultYear === year;
+                                    });
+                                    
+                                    if (specificMatchingMovie) {
+                                        movie = specificMatchingMovie;
+                                    } else {
+                                        // Se ainda não encontrar, usar o primeiro resultado da busca específica
+                                        movie = specificData.results[0];
+                                    }
+                                } else {
+                                    // Se a busca específica não retornar nada, usar o primeiro da busca original
+                                    movie = searchData.results[0];
+                                }
+                            } else {
+                                movie = searchData.results[0];
+                            }
+                        }
+                    } else {
+                        movie = searchData.results[0];
+                    }
+                }
+                
+                if (movie) {
                     // Buscar detalhes completos
                     const detailsUrl = `${TMDB_BASE_URL}/movie/${movie.id}?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&append_to_response=credits`;
                     const detailsResponse = await fetch(detailsUrl);
@@ -1771,8 +1858,8 @@
             const filteredMovies = baseList.filter(movie => {
                 const details = moviesWithDetails.get(movie.slug) || movie;
                 return details.title.toLowerCase().includes(searchTerm) ||
-                       (details.director && details.director.toLowerCase().includes(searchTerm)) ||
-                       (details.actors && details.actors.toLowerCase().includes(searchTerm));
+                        (details.director && details.director.toLowerCase().includes(searchTerm)) ||
+                        (details.actors && details.actors.toLowerCase().includes(searchTerm));
             });
             
             renderMoviesSmart(filteredMovies);
@@ -1840,7 +1927,7 @@
             // Atualizar selects
             const genreSelect = document.getElementById('genreFilter');
             const currentGenre = genreSelect.value;
-            genreSelect.innerHTML = '<option value="">Todos os gêneros</option>';
+            genreSelect.innerHTML = '<option value="">Gêneros</option>';
             [...genres].sort().forEach(genre => {
                 const option = document.createElement('option');
                 option.value = genre;
@@ -1851,7 +1938,7 @@
 
             const yearSelect = document.getElementById('yearFilter');
             const currentYear = yearSelect.value;
-            yearSelect.innerHTML = '<option value="">Todos os anos</option>';
+            yearSelect.innerHTML = '<option value="">Anos</option>';
             [...years].sort((a, b) => b - a).forEach(year => {
                 const option = document.createElement('option');
                 option.value = year;
