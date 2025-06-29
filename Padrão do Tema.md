@@ -784,5 +784,5 @@ document.addEventListener('DOMContentLoaded', function() {
 - **Animes**: 🎌 🌸 ⚡ 🗾
 - **Jogos**: 🎮 🕹️ 👾 🏆
 - **Músicas**: 🎵 🎶 🎧 🎤
-- **Imagens**: 🖼️ 📸 🎨 🌈
+- **Imagens**: 🖼️ 📸 🎨 🌸
 - **Vídeos**: 📹 🎥 📺 🎞️

@@ -7,14 +7,26 @@
     <title> Galeria de Imagens</title>
     <style>
         :root {
-            --primary-coral: #ff6b6b;
-            --primary-turquoise: #4ecdc4;
-            --dark-text: #2c3e50;
-            --light-text: #7f8c8d;
-            --secondary-text: #566573;
-            --main-gradient: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
-            --button-gradient: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            --background-white: rgba(255, 255, 255, 0.95);
+            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --primary-color: #bb86fc;          /* Roxo vibrante */
+            --secondary-color: #03dac6;        /* Ciano/turquesa */
+            --accent-color: #cf6679;           /* Rosa coral */
+            --text-primary: #e1e1e1;          /* Texto principal claro */
+            --text-secondary: #b3b3b3;        /* Texto secundário */
+            --bg-main: rgba(18, 18, 35, 0.98); /* Fundo principal translúcido */
+            --bg-nav: rgba(18, 18, 35, 0.98);  /* Fundo navegação */
+            --shadow-color: rgba(0,0,0,0.4);
+            --shadow-color-strong: rgba(0,0,0,0.6);
+            --transition-speed: 0.3s;          /* Mantém rápido */
+            --border-radius: 15px;
+            
+            /* Variáveis específicas para a galeria */
+            --main-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --button-gradient: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            --background-white: var(--bg-main);
+            --dark-text: var(--text-primary);
+            --light-text: var(--text-secondary);
+            --secondary-text: var(--text-secondary);
         }
 
         * {
@@ -25,9 +37,89 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--main-gradient);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
-            color: var(--dark-text);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* CAMPO DE ESTRELAS */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: star-travel linear infinite;
+        }
+
+        .star.distant {
+            width: 1px;
+            height: 1px;
+            animation-duration: 25s;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .star.medium {
+            width: 1.5px;
+            height: 1.5px;
+            animation-duration: 15s;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .star.close {
+            width: 2px;
+            height: 2px;
+            animation-duration: 8s;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        .star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        }
+
+        .star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        }
+
+        @keyframes star-travel {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+            10% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
         /* NAVEGAÇÃO */
@@ -36,12 +128,13 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--background-white);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 107, 107, 0.3);
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--primary-color);
             z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 12px 0;
+            box-shadow: 0 4px 20px var(--shadow-color-strong);
+            transition: all var(--transition-speed) ease;
         }
 
         .nav-container {
@@ -54,48 +147,59 @@
         }
 
         .nav-home {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-primary);
             text-decoration: none;
-            color: var(--primary-coral);
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .nav-home:hover {
-            transform: scale(1.1);
-            color: var(--primary-turquoise);
+            color: var(--primary-color);
+            transform: scale(1.05);
         }
 
         .menu-toggle {
             display: none;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.8em;
             cursor: pointer;
-            color: var(--primary-coral);
+            color: var(--text-primary);
+            transition: color var(--transition-speed) ease;
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary-color);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 20px;
         }
 
         .nav-links a {
+            color: var(--text-primary);
             text-decoration: none;
-            color: var(--secondary-text);
             font-weight: 500;
-            padding: 10px 15px;
+            padding: 10px 18px;
             border-radius: 25px;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            background: var(--button-gradient);
             color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 6px 20px var(--shadow-color);
         }
 
         /* CONTEÚDO PRINCIPAL */
@@ -104,13 +208,14 @@
             max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
-            background: var(--background-white);
-            border-radius: 20px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
+            backdrop-filter: blur(15px);
             position: relative;
             min-height: calc(100vh - 140px);
+            border: 1px solid rgba(187, 134, 252, 0.1);
         }
 
         .main-content::before {
@@ -119,18 +224,19 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
         .page-title {
             text-align: center;
             font-size: 3rem;
             margin-bottom: 30px;
-            background: var(--main-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
+            text-shadow: 
+                0 0 20px var(--primary-color),
+                2px 2px 8px var(--shadow-color);
+            animation: fadeInUp 0.8s ease-out;
         }
 
         /* CONTROLES DA GALERIA */
@@ -142,9 +248,12 @@
             flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.1), 
+                rgba(3, 218, 198, 0.1));
+            border-radius: var(--border-radius);
             backdrop-filter: blur(5px);
+            border-left: 4px solid var(--primary-color);
         }
 
         .breadcrumb {
@@ -152,7 +261,7 @@
             align-items: center;
             gap: 10px;
             font-weight: 500;
-            color: var(--secondary-text);
+            color: var(--text-secondary);
         }
 
         .breadcrumb span {
@@ -163,7 +272,7 @@
         }
 
         .breadcrumb span:hover {
-            background: var(--primary-coral);
+            background: var(--primary-color);
             color: white;
         }
 
@@ -182,32 +291,37 @@
 
         .control-group label {
             font-weight: 500;
-            color: var(--secondary-text);
+            color: var(--text-secondary);
         }
 
-        select, input[type="range"] {
+        select, input[type="range"], input[type="text"] {
             padding: 8px 12px;
-            border: 2px solid rgba(255, 107, 107, 0.3);
+            border: 2px solid rgba(187, 134, 252, 0.3);
             border-radius: 10px;
-            background: white;
-            color: var(--dark-text);
+            background: var(--bg-main);
+            color: var(--text-primary);
             font-size: 14px;
             transition: all 0.3s ease;
+        }
+        
+        input[type="text"]::placeholder {
+            color: var(--text-secondary);
+            opacity: 1;
         }
 
         select:focus, input:focus {
             outline: none;
-            border-color: var(--primary-coral);
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
         }
 
         .size-slider {
             width: 150px;
-            accent-color: var(--primary-coral);
+            accent-color: var(--primary-color);
             -webkit-appearance: none;
             appearance: none;
             height: 6px;
-            background: linear-gradient(90deg, var(--primary-coral) 50%, #eee 50%);
+            background: linear-gradient(90deg, var(--primary-color) 50%, #333 50%);
             border-radius: 10px;
             outline: none;
             transition: background 0.3s;
@@ -219,24 +333,24 @@
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            background: var(--primary-coral);
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            background: var(--primary-color);
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 2px 6px var(--shadow-color);
             cursor: pointer;
             transition: background 0.3s;
         }
 
         .size-slider::-webkit-slider-thumb:hover {
-            background: var(--primary-turquoise);
+            background: var(--secondary-color);
         }
 
         .size-slider::-moz-range-thumb {
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            background: var(--primary-coral);
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            background: var(--primary-color);
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 2px 6px var(--shadow-color);
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -245,9 +359,9 @@
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            background: var(--primary-coral);
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            background: var(--primary-color);
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 2px 6px var(--shadow-color);
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -273,15 +387,15 @@
             padding: 8px 12px;
             border: none;
             border-radius: 8px;
-            background: rgba(255, 107, 107, 0.1);
-            color: var(--primary-coral);
+            background: rgba(187, 134, 252, 0.1);
+            color: var(--primary-color);
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 16px;
         }
 
         .view-btn.active, .view-btn:hover {
-            background: var(--primary-coral);
+            background: var(--primary-color);
             color: white;
             transform: translateY(-2px);
         }
@@ -295,20 +409,23 @@
         }
 
         .folder-item {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.1), 
+                rgba(3, 218, 198, 0.1));
+            border-radius: var(--border-radius);
             padding: 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .folder-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: var(--primary-coral);
+            box-shadow: 0 15px 30px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .folder-preview {
@@ -318,7 +435,7 @@
             overflow: hidden;
             margin-bottom: 15px;
             position: relative;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--bg-main);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -338,7 +455,7 @@
 
         .folder-icon-fallback {
             font-size: 3rem;
-            color: var(--primary-turquoise);
+            color: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -348,13 +465,13 @@
 
         .folder-name {
             font-weight: bold;
-            color: var(--dark-text);
+            color: var(--text-primary);
             margin-bottom: 5px;
             font-size: 1rem;
         }
 
         .folder-count {
-            color: var(--light-text);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
@@ -411,17 +528,19 @@
 
         .image-item {
             position: relative;
-            border-radius: 15px;
+            border-radius: var(--border-radius);
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--bg-main);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid rgba(187, 134, 252, 0.1);
         }
 
         .image-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .image-item img {
@@ -497,9 +616,11 @@
             margin: 0;
             padding: 0;
             background: #000;
-            /* Estilos antigos comentados para o teste */
-            /* border-radius: 10px; */
-            /* box-shadow: 0 20px 60px rgba(0,0,0,0.5); */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            pointer-events: auto;
         }
 
         .viewer-controls {
@@ -507,7 +628,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
+            display: none;
             gap: 15px;
             background: rgba(255, 255, 255, 0.1);
             padding: 15px;
@@ -517,30 +638,6 @@
             max-width: 95vw;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-
-        /* ESCONDER CONTROLES DO VISUALIZADOR EM MOBILE */
-        @media (max-width: 768px) {
-            .viewer-controls {
-                bottom: 10px;
-                padding: 10px;
-                max-width: 98vw;
-            }
-            .close-viewer {
-                top: 10px;
-                right: 10px;
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-            .nav-arrows {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* ESCONDER CONTROLES DO VISUALIZADOR NO DESKTOP POR PADRÃO */
-        .viewer-controls { display: none; }
 
         .viewer-btn {
             width: 50px;
@@ -559,7 +656,7 @@
 
         .viewer-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.5);
+            box-shadow: 0 5px 15px rgba(187, 134, 252, 0.5);
         }
 
         .close-viewer {
@@ -570,7 +667,7 @@
             height: 60px;
             border-radius: 50%;
             border: none;
-            background: rgba(0,0,0,0.5); /* Mais escuro para contraste */
+            background: rgba(0,0,0,0.5);
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
@@ -582,7 +679,7 @@
         }
 
         .close-viewer:hover {
-            background: var(--primary-coral);
+            background: var(--primary-color);
             transform: scale(1.1);
         }
 
@@ -594,7 +691,7 @@
             height: 60px;
             border-radius: 50%;
             border: none;
-            background: rgba(0,0,0,0.5); /* Mais escuro para contraste */
+            background: rgba(0,0,0,0.5);
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
@@ -606,20 +703,12 @@
         }
 
         .nav-arrows:hover {
-            background: var(--primary-turquoise);
+            background: var(--secondary-color);
             transform: translateY(-50%) scale(1.1);
         }
 
         .nav-prev { left: 20px; }
         .nav-next { right: 20px; }
-
-        .viewer-image {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            pointer-events: auto;
-        }
 
         /* PAGINAÇÃO */
         .pagination {
@@ -635,21 +724,21 @@
             padding: 10px 15px;
             border: none;
             border-radius: 10px;
-            background: rgba(255, 107, 107, 0.1);
-            color: var(--primary-coral);
+            background: rgba(187, 134, 252, 0.1);
+            color: var(--primary-color);
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
         }
 
         .page-btn:hover, .page-btn.active {
-            background: var(--primary-coral);
+            background: var(--primary-color);
             color: white;
             transform: translateY(-2px);
         }
 
         .page-info {
-            color: var(--secondary-text);
+            color: var(--text-secondary);
             font-weight: 500;
             margin: 0 15px;
         }
@@ -665,14 +754,16 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
+                background: var(--bg-nav);
+                backdrop-filter: blur(15px);
                 flex-direction: column;
                 padding: 20px;
                 transform: translateY(-100%);
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
+                box-shadow: 0 8px 25px var(--shadow-color-strong);
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
             }
 
             .nav-links.active {
@@ -707,6 +798,24 @@
             .grid-medium { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
             .grid-large { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
             .grid-xlarge { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+            .viewer-controls {
+                bottom: 10px;
+                padding: 10px;
+                max-width: 98vw;
+            }
+            .close-viewer {
+                top: 10px;
+                right: 10px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+            }
+            .nav-arrows {
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -747,7 +856,7 @@
             text-align: center;
             padding: 40px;
             font-size: 1.2rem;
-            color: var(--secondary-text);
+            color: var(--text-secondary);
         }
 
         .loading::after {
@@ -772,18 +881,20 @@
 
         .image-list-item {
             display: flex;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px var(--shadow-color);
             min-height: 120px;
+            border: 1px solid rgba(187, 134, 252, 0.1);
         }
 
         .image-list-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .image-list-thumbnail {
@@ -804,18 +915,18 @@
         .image-list-name {
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--dark-text);
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         .image-list-details {
-            color: var(--light-text);
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 5px;
         }
 
         .image-list-path {
-            color: var(--secondary-text);
+            color: var(--text-secondary);
             font-size: 0.8rem;
             opacity: 0.7;
         }
@@ -849,9 +960,22 @@
         .nav-arrows {
             transition: opacity 0.3s;
         }
+
+        .gallery-controls input[type="text"] {
+            background: var(--bg-main) !important;
+            color: var(--text-primary) !important;
+            border: 2px solid rgba(187, 134, 252, 0.3);
+        }
+        .gallery-controls input[type="text"]::placeholder {
+            color: var(--text-secondary);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
+    <!-- CAMPO DE ESTRELAS -->
+    <div class="starfield" id="starfield" aria-hidden="true"></div>
+
     <!-- NAVEGAÇÃO -->
     <nav class="navigation">
         <div class="nav-container">
@@ -870,6 +994,7 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
+
         <h1 class="page-title"> Galeria de Imagens</h1>
 
         <!-- CONTROLES DA GALERIA -->
@@ -932,6 +1057,80 @@
     </div>
 
     <script>
+    // Configuração de performance para estrelas
+    const performanceConfig = {
+        maxStars: window.innerWidth > 768 ? 150 : 80,
+        staticStars: window.innerWidth > 768 ? 40 : 20
+    };
+
+    // Função para criar campo de estrelas
+    function createStarfield() {
+        const starfield = document.getElementById('starfield');
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        starfield.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+        
+        // Estrelas em movimento
+        for (let i = 0; i < performanceConfig.maxStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const angle = Math.random() * 2 * Math.PI;
+            const initialRadius = Math.random() * 50 + 10;
+            const startX = centerX + Math.cos(angle) * initialRadius;
+            const startY = centerY + Math.sin(angle) * initialRadius;
+            
+            const directionX = Math.cos(angle);
+            const directionY = Math.sin(angle);
+            
+            const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+            const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+            
+            // Tipos com probabilidades
+            const starType = Math.random();
+            if (starType < 0.7) {
+                star.classList.add('distant');
+            } else if (starType < 0.9) {
+                star.classList.add('medium');
+            } else {
+                star.classList.add('close');
+            }
+            
+            // Cores especiais
+            const colorType = Math.random();
+            if (colorType < 0.1) {
+                star.classList.add('blue');
+            } else if (colorType < 0.2) {
+                star.classList.add('yellow');
+            }
+            
+            star.style.left = startX + 'px';
+            star.style.top = startY + 'px';
+            star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+            star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+            star.style.animationDelay = Math.random() * 25 + 's';
+            
+            fragment.appendChild(star);
+        }
+        
+        // Estrelas estacionárias com twinkle
+        for (let i = 0; i < performanceConfig.staticStars; i++) {
+            const staticStar = document.createElement('div');
+            staticStar.className = 'star distant';
+            staticStar.style.position = 'absolute';
+            staticStar.style.left = Math.random() * window.innerWidth + 'px';
+            staticStar.style.top = Math.random() * window.innerHeight + 'px';
+            staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+            staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+            staticStar.style.animationDelay = Math.random() * 2 + 's';
+            
+            fragment.appendChild(staticStar);
+        }
+        
+        starfield.appendChild(fragment);
+    }
 
     // ESTADO DA APLICAÇÃO
     let currentFolder = '/';
@@ -953,7 +1152,7 @@
     let touchStartX = 0;
     let touchStartY = 0;
     let lastTouchDistance = 0;
-    let wasPinch = false; // Flag para detectar gesto de pinça
+    let wasPinch = false;
 
     // DADOS DA GALERIA
     let galleryData = {};
@@ -961,17 +1160,30 @@
         // FUNÇÕES DE NAVEGAÇÃO
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isActive = navLinks.classList.toggle('active');
+            
+            menuToggle.setAttribute('aria-expanded', isActive);
+            menuToggle.setAttribute('aria-label', isActive ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
         }
 
         document.addEventListener('click', function(e) {
             const nav = document.querySelector('.navigation');
             const navLinks = document.getElementById('navLinks');
-            if (!nav.contains(e.target)) {
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Abrir menu de navegação');
             }
         });
 
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('navLinks').classList.contains('active')) {
+                toggleMenu();
+            }
+        });
 
     async function loadImagesData() {
         try {
@@ -1597,12 +1809,7 @@
                 image.name.toLowerCase().includes(query.toLowerCase())
             );
             
-            // Controlar visibilidade da barra de controles baseado nos resultados
-            if (filteredImages.length > 0) {
-                galleryControls.style.display = 'flex';
-            } else {
-                galleryControls.style.display = 'none';
-            }
+            galleryControls.style.display = 'flex';
             
             displayFilteredImages(filteredImages);
         }
@@ -1615,7 +1822,7 @@
             
             if (images.length === 0) {
                 content.innerHTML = '<div class="loading">Nenhuma imagem encontrada</div>';
-                galleryControls.style.display = 'none';
+                galleryControls.style.display = 'flex';
                 updatePagination(0);
                 return;
             }
@@ -1810,31 +2017,20 @@
             }, 2500);
         }
     }
-    // Mostrar ao clicar ou mover a imagem
+    
+    // Mostrar ao passar o mouse sobre a imagem OU clicar
+    document.getElementById('viewerImage').addEventListener('mouseenter', showViewerControls);
     document.getElementById('viewerImage').addEventListener('click', showViewerControls);
     document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
-    document.addEventListener('mousemove', function(e) {
-        if (isDragging) {
-            const deltaX = e.clientX - dragStartX;
-            const deltaY = e.clientY - dragStartY;
-            
-            imageOffsetX = lastImageOffsetX + deltaX;
-            imageOffsetY = lastImageOffsetY + deltaY;
-            
-            applyImageTransform();
-            e.preventDefault();
-        }
-    });
-    document.addEventListener('mouseup', function(e) {
-        if (isDragging) {
-            isDragging = false;
-            document.body.style.userSelect = '';
-            applyImageTransform();
-        }
-    });
+
         // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM carregado, iniciando aplicação...');
+            
+            // Inicializar tema escuro
+            createStarfield();
+            
+            // Inicializar galeria
             loadImagesData(); // Carrega dados do JSON primeiro
             initSearchAndFilters();
             
@@ -1843,6 +2039,48 @@
                 currentLink.classList.add('active');
             }
             addNavArrowsInteractionListeners();
+            
+            // Event listeners para arrastar a imagem
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    const deltaX = e.clientX - dragStartX;
+                    const deltaY = e.clientY - dragStartY;
+                    
+                    imageOffsetX = lastImageOffsetX + deltaX;
+                    imageOffsetY = lastImageOffsetY + deltaY;
+                    
+                    applyImageTransform();
+                    e.preventDefault();
+                }
+            });
+            
+            document.addEventListener('mouseup', function(e) {
+                if (isDragging) {
+                    isDragging = false;
+                    document.body.style.userSelect = '';
+                    applyImageTransform();
+                }
+            });
+            
+            // Resize otimizado para estrelas
+            window.addEventListener('resize', debounce(() => {
+                performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
+                performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
+                createStarfield();
+            }, 250));
+            
+            // Animação de entrada
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.style.opacity = '0';
+                mainContent.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    mainContent.style.transition = 'all 0.8s ease-out';
+                    mainContent.style.opacity = '1';
+                    mainContent.style.transform = 'translateY(0)';
+                }, 100);
+            }
         });
 
         // FUNÇÕES DE UTILIDADE
@@ -1982,7 +2220,7 @@
             const max = slider.max ? slider.max : 4;
             const val = slider.value;
             const percent = ((val - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(90deg, var(--primary-coral) ${percent}%, #eee ${percent}%)`;
+            slider.style.background = `linear-gradient(90deg, var(--primary-color) ${percent}%, #333 ${percent}%)`;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
