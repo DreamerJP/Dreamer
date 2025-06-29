@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Músicas</title>
+    <meta name="description" content="Minha seleção especial de músicas - Uma curadoria musical pessoal">
+    <title>Músicas - Dreamer Collection</title>
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --accent-color: #cf6679;
+            --text-primary: #e1e1e1;
+            --text-secondary: #b3b3b3;
+            --bg-main: rgba(18, 18, 35, 0.98);
+            --bg-nav: rgba(18, 18, 35, 0.98);
+            --shadow-color: rgba(0,0,0,0.4);
+            --shadow-color-strong: rgba(0,0,0,0.6);
+            --transition-speed: 0.3s;
+            --border-radius: 15px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,27 +29,97 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
+            color: var(--text-primary);
             overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
         }
 
-        /* Navegação */
+        /* Melhor organização do campo de estrelas */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: star-travel linear infinite;
+        }
+
+        .star.distant {
+            width: 1px;
+            height: 1px;
+            animation-duration: 25s;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .star.medium {
+            width: 1.5px;
+            height: 1.5px;
+            animation-duration: 15s;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .star.close {
+            width: 2px;
+            height: 2px;
+            animation-duration: 8s;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes star-travel {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+            10% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Navegação melhorada */
         .navigation {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 107, 107, 0.3);
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--primary-color);
             z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 12px 0;
+            box-shadow: 0 4px 20px var(--shadow-color-strong);
+            transition: all var(--transition-speed) ease;
         }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -42,114 +128,80 @@
             align-items: center;
             padding: 0 20px;
         }
+
         .nav-home {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
         .nav-home:hover {
-            color: #ff6b6b;
+            color: var(--primary-color);
             transform: scale(1.05);
         }
+
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             list-style: none;
         }
+
         .nav-links a {
-            color: #2c3e50;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 25px;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .nav-links a:hover {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+
+        .nav-links a:hover,
         .nav-links a.active {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
         }
+
         .menu-toggle {
             display: none;
             background: none;
             border: none;
-            font-size: 1.5em;
+            font-size: 1.8em;
             cursor: pointer;
-            color: #2c3e50;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-                border-radius: 0 0 15px 15px;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .container {
-                margin-top: 120px;
-            }
-        }
-        @media (max-width: 480px) {
-            .nav-container {
-                padding: 0 15px;
-            }
+            color: var(--text-primary);
+            transition: color var(--transition-speed) ease;
         }
 
-        .audio-waves {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.1;
+        .menu-toggle:hover {
+            color: var(--primary-color);
         }
 
-        .wave {
-            position: absolute;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to top, #4ecdc4, #ff6b6b);
-            animation: wave-animation 2s ease-in-out infinite;
-            border-radius: 2px;
-        }
-
-        @keyframes wave-animation {
-            0%, 100% { height: 20px; }
-            50% { height: var(--wave-height, 100px); }
+        /* Container principal aprimorado */
+        .main-content {
+            padding: 120px 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .container {
-            max-width: 900px;
-            margin: 100px auto 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
+            backdrop-filter: blur(15px);
             position: relative;
-            z-index: 2;
             overflow: hidden;
+            border: 1px solid rgba(187, 134, 252, 0.1);
         }
 
         .container::before {
@@ -158,10 +210,11 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
+        /* Header melhorado */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -169,72 +222,132 @@
         }
 
         .header h1 {
-            color: #2c3e50;
-            font-size: 3em;
+            color: var(--text-primary);
+            font-size: 2.8em;
+            font-weight: 700;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 
+                0 0 20px var(--primary-color),
+                2px 2px 8px var(--shadow-color);
             animation: fadeInUp 0.8s ease-out;
-            position: relative;
-        }
-
-        .musical-notes {
-            position: absolute;
-            font-size: 1.5em;
-            opacity: 0.3;
-            animation: float-notes 4s ease-in-out infinite;
-        }
-
-        .note-1 { top: -10px; left: -30px; animation-delay: 0s; }
-        .note-2 { top: 10px; right: -30px; animation-delay: 1s; }
-        .note-3 { bottom: -10px; left: 50%; animation-delay: 2s; }
-
-        @keyframes float-notes {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(10deg); }
         }
 
         .header p {
-            color: #7f8c8d;
+            color: var(--text-secondary);
             font-size: 1.2em;
-            line-height: 1.6;
             margin-bottom: 30px;
             animation: fadeInUp 0.8s ease-out 0.2s both;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
+        /* Elementos flutuantes otimizados */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+            color: var(--secondary-color);
+            filter: blur(0.5px);
+        }
+
+        .floating-element:nth-child(1) { 
+            top: 15%; 
+            left: 10%; 
+            animation-delay: 0s; 
+        }
+        .floating-element:nth-child(2) { 
+            top: 25%; 
+            right: 15%; 
+            animation-delay: 2s; 
+        }
+        .floating-element:nth-child(3) { 
+            bottom: 25%; 
+            left: 20%; 
+            animation-delay: 4s; 
+        }
+        .floating-element:nth-child(4) { 
+            bottom: 35%; 
+            right: 25%; 
+            animation-delay: 1s; 
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-15px) rotate(3deg) scale(1.05); 
+            }
+            50% { 
+                transform: translateY(-25px) rotate(-2deg) scale(0.95); 
+            }
+            75% { 
+                transform: translateY(-10px) rotate(4deg) scale(1.02); 
+            }
+        }
+
+        /* Informações da playlist */
         .playlist-info {
-            background: linear-gradient(45deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 4px solid #3498db;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.1), 
+                rgba(3, 218, 198, 0.1));
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--primary-color);
             animation: fadeInUp 0.8s ease-out 0.4s both;
+            position: relative;
+            z-index: 2;
         }
 
         .playlist-info h3 {
-            color: #2c3e50;
-            font-size: 1.3em;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .playlist-info p {
-            color: #566573;
-            font-size: 1em;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            line-height: 1.6;
         }
 
+        /* Player do YouTube melhorado */
         .youtube-embed {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            margin-bottom: 30px;
-            border-radius: 15px;
+            padding-bottom: 56.25%;
+            margin-bottom: 35px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 40px var(--shadow-color-strong);
             animation: fadeInUp 0.8s ease-out 0.6s both;
+            border: 2px solid rgba(187, 134, 252, 0.2);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .youtube-embed:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .youtube-embed iframe {
@@ -244,67 +357,58 @@
             width: 100%;
             height: 100%;
             border: none;
+            border-radius: inherit;
         }
 
+        /* Link do YouTube aprimorado */
         .youtube-link {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
             animation: fadeInUp 0.8s ease-out 0.8s both;
         }
 
         .youtube-link a {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 15px 30px;
+            padding: 16px 32px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.1em;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 6px 20px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-link a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .youtube-link a:hover::before {
+            left: 100%;
         }
 
         .youtube-link a:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
         }
 
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            font-size: 1.5em;
-            opacity: 0.1;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-        .floating-element:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
-        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
-        .floating-element:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 6s; }
-        .floating-element:nth-child(5) { top: 50%; left: 5%; animation-delay: 1s; }
-        .floating-element:nth-child(6) { top: 60%; right: 5%; animation-delay: 3s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-20px) rotate(5deg); }
-            50% { transform: translateY(-10px) rotate(-3deg); }
-            75% { transform: translateY(-30px) rotate(7deg); }
-        }
-
+        /* Animações melhoradas */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -312,10 +416,36 @@
             }
         }
 
+        /* Responsividade aprimorada */
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-nav);
+                flex-direction: column;
+                padding: 25px 20px;
+                box-shadow: 0 8px 25px var(--shadow-color-strong);
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
+                backdrop-filter: blur(15px);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                padding: 100px 15px 30px;
+            }
+            
             .container {
-                padding: 30px 20px;
-                margin: 120px 10px 0 10px;
+                padding: 30px 25px;
             }
             
             .header h1 {
@@ -325,96 +455,198 @@
             .header p {
                 font-size: 1.1em;
             }
+            
+            .floating-element {
+                font-size: 1.6em;
+            }
         }
 
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.8em;
+                font-size: 1.9em;
             }
+            
+            .container {
+                padding: 25px 20px;
+            }
+            
+            .playlist-info {
+                padding: 25px;
+            }
+            
+            .youtube-link a {
+                padding: 14px 28px;
+                font-size: 1em;
+            }
+        }
+
+        /* Estados de carregamento */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Melhor acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states para acessibilidade */
+        .nav-links a:focus,
+        .youtube-link a:focus,
+        .menu-toggle:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-<!-- Navegação -->
-<nav class="navigation">
-    <div class="nav-container">
-        <a href="index.html" class="nav-home">🏠 Home</a>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="animes.html">🎌 Animes</a></li>
-            <li><a href="filmes.html">🎬 Filmes</a></li>
-            <li><a href="jogos.html">🎮 Jogos</a></li>
-            <li><a href="musicas.html" class="active">🎵 Músicas</a></li>
-			<li><a href="imagens.html">🖼️ Imagens</a></li>
-            <li><a href="videos.html">📹 Vídeos</a></li>
-        </ul>
-    </div>
-</nav>
+    <!-- Campo de Estrelas -->
+    <div class="starfield" id="starfield" aria-hidden="true"></div>
 
-    <div class="audio-waves" id="audioWaves"></div>
-
-    <div class="container">
-        <div class="floating-elements">
-            <div class="floating-element">🎵</div>
-            <div class="floating-element">🎶</div>
-            <div class="floating-element">🎧</div>
-            <div class="floating-element">🎤</div>
-            <div class="floating-element">🎼</div>
-            <div class="floating-element">🎹</div>
-        </div>
-
-        <div class="header">
-            <div class="musical-notes note-1">♪</div>
-            <div class="musical-notes note-2">♫</div>
-            <div class="musical-notes note-3">♪</div>
-            
-            <h1>🎵 Músicas</h1>
-            <p>Minha seleção especial de músicas</p>
-        </div>
-
-        <div class="playlist-info">
-            <h3>🎧 Lista de Reprodução Pessoal</h3>
-            <p>Uma curadoria cuidadosa de faixas que marcaram momentos especiais, desde clássicos atemporais até descobertas recentes.</p>
-        </div>
-
-        <div class="youtube-embed">
-            <iframe 
-                src="https://www.youtube.com/embed/videoseries?list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO"
-                allowfullscreen>
-            </iframe>
-        </div>
-
-        <div class="youtube-link">
-            <a href="https://www.youtube.com/watch?v=bpNwakXj-E4&list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO" target="_blank">
-                🎬 Abrir Playlist no YouTube
+    <!-- Navegação -->
+    <nav class="navigation" role="navigation" aria-label="Menu principal">
+        <div class="nav-container">
+            <a href="index.html" class="nav-home" aria-label="Ir para página inicial">
+                🏠 <span>Home</span>
             </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="animes.html">🎌 <span>Animes</span></a></li>
+                <li><a href="filmes.html">🎬 <span>Filmes</span></a></li>
+                <li><a href="jogos.html">🎮 <span>Jogos</span></a></li>
+                <li><a href="musicas.html" class="active" aria-current="page">🎵 <span>Músicas</span></a></li>
+                <li><a href="imagens.html">🖼️ <span>Imagens</span></a></li>
+                <li><a href="videos.html">📹 <span>Vídeos</span></a></li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menu de navegação" aria-expanded="false">
+                ☰
+            </button>
         </div>
-    </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Elementos Flutuantes -->
+            <div class="floating-elements" aria-hidden="true">
+                <div class="floating-element">🎵</div>
+                <div class="floating-element">🎶</div>
+                <div class="floating-element">🎧</div>
+                <div class="floating-element">🎤</div>
+            </div>
+
+            <header class="header">
+                <h1>🎵 Músicas</h1>
+                <p>Minha seleção especial de músicas que tocam a alma e inspiram momentos únicos</p>
+            </header>
+
+            <section class="playlist-info">
+                <h3>🎧 Lista de Reprodução Pessoal</h3>
+                <p>Uma curadoria cuidadosa de faixas que marcaram momentos especiais, desde clássicos atemporais até descobertas recentes que despertam emoções e memórias.</p>
+            </section>
+
+            <div class="youtube-embed">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO"
+                    title="Playlist Musical Pessoal"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <div class="youtube-link">
+                <a href="https://www.youtube.com/watch?v=bpNwakXj-E4&list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   aria-label="Abrir playlist completa no YouTube (abre em nova aba)">
+                    🎬 <span>Abrir Playlist no YouTube</span>
+                </a>
+            </div>
+        </div>
+    </main>
 
     <script>
-        // Criar ondas de áudio animadas no fundo
-        function createAudioWaves() {
-            const wavesContainer = document.getElementById('audioWaves');
-            const numberOfWaves = 50;
+        // Configuração do desempenho
+        const performanceConfig = {
+            maxStars: window.innerWidth > 768 ? 150 : 80,
+            staticStars: window.innerWidth > 768 ? 40 : 20
+        };
+
+        // Criação otimizada do campo de estrelas
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
             
-            for (let i = 0; i < numberOfWaves; i++) {
-                const wave = document.createElement('div');
-                wave.className = 'wave';
-                wave.style.left = `${(i * 100) / numberOfWaves}%`;
-                wave.style.animationDelay = `${Math.random() * 2}s`;
-                wave.style.animationDuration = `${1.5 + Math.random() * 2}s`;
+            // Limpar stars existentes
+            starfield.innerHTML = '';
+            
+            // Fragment para melhor performance
+            const fragment = document.createDocumentFragment();
+            
+            // Estrelas em movimento
+            for (let i = 0; i < performanceConfig.maxStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
                 
-                // Variação na altura das ondas
-                const height = 20 + Math.random() * 80;
-                wave.style.setProperty('--wave-height', `${height}px`);
+                const angle = Math.random() * 2 * Math.PI;
+                const initialRadius = Math.random() * 50 + 10;
+                const startX = centerX + Math.cos(angle) * initialRadius;
+                const startY = centerY + Math.sin(angle) * initialRadius;
                 
-                wavesContainer.appendChild(wave);
+                const directionX = Math.cos(angle);
+                const directionY = Math.sin(angle);
+                
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+                
+                // Tipos de estrela com probabilidades otimizadas
+                const starType = Math.random();
+                if (starType < 0.7) {
+                    star.classList.add('distant');
+                } else if (starType < 0.9) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('close');
+                }
+                
+                star.style.left = startX + 'px';
+                star.style.top = startY + 'px';
+                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+                star.style.animationDelay = Math.random() * 25 + 's';
+                
+                fragment.appendChild(star);
             }
+            
+            // Estrelas estacionárias com twinkle
+            for (let i = 0; i < performanceConfig.staticStars; i++) {
+                const staticStar = document.createElement('div');
+                staticStar.className = 'star distant';
+                staticStar.style.position = 'absolute';
+                staticStar.style.left = Math.random() * window.innerWidth + 'px';
+                staticStar.style.top = Math.random() * window.innerHeight + 'px';
+                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+                staticStar.style.animationDelay = Math.random() * 2 + 's';
+                
+                fragment.appendChild(staticStar);
+            }
+            
+            starfield.appendChild(fragment);
         }
 
-        // Efeito de paralaxe nos elementos flutuantes
+        // Efeito de paralaxe otimizado com throttling
         function setupParallax() {
-            document.addEventListener('mousemove', function(e) {
+            let ticking = false;
+            
+            function updateParallax(e) {
                 const floatingElements = document.querySelectorAll('.floating-element');
                 const x = e.clientX / window.innerWidth;
                 const y = e.clientY / window.innerHeight;
@@ -426,60 +658,95 @@
                     
                     element.style.transform = `translate(${xPos}px, ${yPos}px)`;
                 });
+                
+                ticking = false;
+            }
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!ticking) {
+                    requestAnimationFrame(() => updateParallax(e));
+                    ticking = true;
+                }
             });
         }
 
-        // Animação das notas musicais
-        function animateMusicalNotes() {
-            const notes = document.querySelectorAll('.musical-notes');
-            notes.forEach((note, index) => {
-                setInterval(() => {
-                    note.style.transform = `translateY(${Math.sin(Date.now() / 1000 + index) * 5}px) rotate(${Math.sin(Date.now() / 800 + index) * 10}deg)`;
-                }, 50);
-            });
+        // Menu mobile melhorado
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isActive = navLinks.classList.toggle('active');
+            
+            // Atualizar aria-expanded
+            menuToggle.setAttribute('aria-expanded', isActive);
+            menuToggle.setAttribute('aria-label', isActive ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
         }
 
-        // Atualização dinâmica das ondas
-        function updateWaveAnimation() {
-            const waves = document.querySelectorAll('.wave');
-            waves.forEach(wave => {
-                const randomHeight = 20 + Math.random() * 120;
-                wave.style.setProperty('--wave-height', `${randomHeight}px`);
-            });
+        // Fechar menu ao clicar fora ou pressionar Escape
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.navigation');
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Abrir menu de navegação');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('navLinks').classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
+        // Otimização do resize com debounce
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
 
-        // Inicialização
+        // Inicialização otimizada
         document.addEventListener('DOMContentLoaded', function() {
-            createAudioWaves();
+            // Criar starfield inicial
+            createStarfield();
+            
+            // Setup de efeitos
             setupParallax();
-            animateMusicalNotes();
             
-            // Atualizar ondas periodicamente
-            setInterval(updateWaveAnimation, 3000);
+            // Otimizar resize
+            window.addEventListener('resize', debounce(() => {
+                // Atualizar configuração de performance
+                performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
+                performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
+                createStarfield();
+            }, 250));
             
-            // Efeito de entrada suave
+            // Animação de entrada
             const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(30px)';
+            
             setTimeout(() => {
+                container.style.transition = 'all 0.8s ease-out';
                 container.style.opacity = '1';
                 container.style.transform = 'translateY(0)';
             }, 100);
         });
-    </script>
 
-    <script>
-    // Menu mobile toggle
-    function toggleMenu() {
-        const navLinks = document.getElementById('navLinks');
-        navLinks.classList.toggle('active');
-    }
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', function(e) {
-        const nav = document.querySelector('.navigation');
-        const navLinks = document.getElementById('navLinks');
-        if (!nav.contains(e.target)) {
-            navLinks.classList.remove('active');
+        // Service Worker para cache (opcional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Registrar service worker se disponível
+            });
         }
-    });
     </script>
 </body>
 </html>
