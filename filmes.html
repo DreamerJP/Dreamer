@@ -1289,6 +1289,50 @@
         // Variável global para quantidade de filmes por página
         const moviesPerPage = 24;
 
+        // Variável global para debounce do resort dos recentes
+        let resortDebounceTimer;
+
+        // Função auxiliar para extrair o ano do filme
+        const getMovieYear = (movie) => {
+            const details = moviesWithDetails.get(movie.slug);
+            if (details && details.year && details.year !== 'N/A') {
+                return parseInt(details.year, 10);
+            }
+            // Regex robusta para diferentes formatos de título
+            const yearMatch = movie.title.match(/\((\d{4})\)$/) ||
+                              movie.title.match(/(\d{4})$/) ||
+                              movie.title.match(/\[(\d{4})\]/);
+            if (yearMatch) {
+                const year = parseInt(yearMatch[1], 10);
+                if (year >= 1888 && year <= new Date().getFullYear() + 5) {
+                    return year;
+                }
+            }
+            return 0; // Se não encontrar, joga para o fim da lista
+        };
+
+        // Função centralizada para ordenar e selecionar os filmes recentes
+        function getSortedRecentMovies() {
+            return [...allMovies]
+                .sort((a, b) => getMovieYear(b) - getMovieYear(a))
+                .slice(0, 24);
+        }
+
+        // Função debounce para reordenar e renderizar recentes dinamicamente
+        function debouncedResortAndRender() {
+            clearTimeout(resortDebounceTimer);
+            resortDebounceTimer = setTimeout(() => {
+                try {
+                    if (currentCategory === 'recent') {
+                        displayedMovies = getSortedRecentMovies();
+                        renderMoviesSmart(displayedMovies);
+                    }
+                } catch (error) {
+                    console.error('Erro ao reordenar filmes recentes dinamicamente:', error);
+                }
+            }, 500);
+        }
+
         // Função para criar campo de estrelas
         function createStarfield() {
             const starfield = document.getElementById('starfield');
@@ -1646,11 +1690,14 @@
                             // Atualizar card individual
                             updateMovieCard(movie.slug, details);
                             
+                            // Atualização dinâmica dos recentes
+                            debouncedResortAndRender();
                         } catch (error) {
                             console.error('Erro ao carregar detalhes:', movie.title, error);
                             const defaultData = getDefaultMovieData();
                             moviesWithDetails.set(movie.slug, { ...movie, ...defaultData });
                             updateMovieCard(movie.slug, { ...movie, ...defaultData });
+                            debouncedResortAndRender();
                         }
                     }
                 });
@@ -1823,16 +1870,16 @@
             
             switch(category) {
                 case 'favorites':
-                    moviesToShow = allMovies.slice(0, 10);
+                    moviesToShow = allMovies.slice(0, 24);
                     break;
                 case 'recent':
-                    moviesToShow = allMovies.slice(0, 50);
+                    moviesToShow = getSortedRecentMovies();
                     break;
                 case 'all':
                     moviesToShow = allMovies;
                     break;
                 default:
-                    moviesToShow = allMovies.slice(0, 10);
+                    moviesToShow = allMovies.slice(0, 24);
             }
             
             displayedMovies = moviesToShow;
