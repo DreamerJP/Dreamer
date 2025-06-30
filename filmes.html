@@ -1387,7 +1387,7 @@
                 
                 allMovies = data.films || [];
                 
-                // Iniciar com favoritos (primeiros 10)
+                // Iniciar com favoritos (primeiros 24)
                 await loadFavorites();
                 
                 // Carregar filtros
@@ -1402,7 +1402,7 @@
 
         // Carregar filmes favoritos
         async function loadFavorites() {
-            const favorites = allMovies.slice(0, 10);
+            const favorites = allMovies.slice(0, 24);
             displayedMovies = favorites;
             
             // Renderizar imediatamente com dados básicos
