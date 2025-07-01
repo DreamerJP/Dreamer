@@ -382,6 +382,10 @@
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            /* Alinhamento para o botão na base */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .anime-card:hover {
@@ -521,6 +525,13 @@
             color: var(--text-primary);
             margin-bottom: 12px;
             line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: calc(1.3em * 2);
         }
 
         .anime-category {
@@ -532,6 +543,7 @@
             font-size: 0.8em;
             margin-bottom: 12px;
             text-transform: capitalize;
+            align-self: flex-start;
         }
 
         .anime-rating {
@@ -611,7 +623,7 @@
         .anime-actions {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: auto;
         }
 
         .action-btn {
@@ -629,13 +641,32 @@
         }
 
         .action-btn.watch {
-            background: var(--primary-color);
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
             color: white;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
-
+        .action-btn.watch::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .action-btn.watch:hover::before {
+            left: 100%;
+        }
         .action-btn.watch:hover {
-            background: #a66ff0;
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
         }
 
         .action-btn.info {
@@ -682,6 +713,16 @@
                 padding: 8px 16px;
                 font-size: 0.9em;
             }
+        }
+
+        .star-special {
+            color: #ffd700;
+            text-shadow: 0 0 8px #fff700, 0 0 16px #ffec80;
+            animation: star-glow 1.2s infinite alternate;
+        }
+        @keyframes star-glow {
+            0% { filter: brightness(1.2) drop-shadow(0 0 2px #fff700); }
+            100% { filter: brightness(2) drop-shadow(0 0 8px #fff700); }
         }
     </style>
 </head>
@@ -736,7 +777,7 @@
 
     <script>
         // Dados dos animes expandidos
-		        const animes = [
+		const animes = [
 				{
 					id: "55",
 					title: "Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita",
@@ -746,14 +787,14 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no2.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no4.jpg"
-                			],
-					rating: 2,
+                ],
+					rating: 1,
 					synopsis: "Ivy é considerada a domadora mais fraca de sua vila, mas após ser expulsa de seu grupo de aventureiros, ela descobre que seus verdadeiros talentos estão em encontrar e domar criaturas únicas. Sua jornada solitária se torna uma aventura de autodescoberta e crescimento.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/pesquisar/saijaku-tamer-wa-gomi-hiroi-no"
 				},
 				{
-                			id: "54",
+					id: "54",
 					title: "Seirei Gensouki",
 					category: "aventura",
 					images: [
@@ -761,7 +802,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Seirei%20Gensouki/SeireiGensouki2.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Seirei%20Gensouki/SeireiGensouki3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Seirei%20Gensouki/SeireiGensouki4.jpg"
-                			],
+                ],
 					rating: 2,
 					synopsis: "Rio é um órfão que vive nas favelas mas possui memórias de sua vida passada no Japão. Após salvar uma princesa, ele embarca em uma jornada épica através de um mundo de fantasia, buscando respostas sobre sua identidade enquanto desenvolve poderes mágicos extraordinários.",
 					episodes: "",
@@ -777,12 +818,12 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mononogatari/Mononogatari3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mononogatari/Mononogatari4.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Mononogatari/Mononogatari5.jpg"
-                			],
+                ],
 					rating: 2,
 					synopsis: "Hyoma é um jovem que pode ver tsukumogami (espíritos de objetos antigos) e inicialmente os odeia. Ele é enviado para morar com uma família que convive pacificamente com esses espíritos, forçando-o a reconsiderar seus preconceitos enquanto enfrenta ameaças sobrenaturais.",
 					episodes: "Episódios 24",
 					watchUrl: "https://animefire.plus/animes/mononogatari-todos-os-episodios"
-                		},
+                },
 				{
 					id: "52",
 					title: "No Game, No Life",
@@ -794,11 +835,11 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife4.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/No_Game_No_Life/nogamenolife5.jpg"
 					],
-					rating: 3,
+					rating: 4,
 					synopsis: "A história de No Game, No Life se passa ao redor de Sora e Shiro, irmãos cuja a reputação como NEETs brilhantes, gamers reclusos, espalhou várias lendas urbanas pela internet, Esses dois gamers até mesmo consideram o mundo real como um jogo com péssimos gráficos. Certo dia, eles são evocados por um garoto chamado Deus para um mundo nativo. Lá, Deus proibiu a guerra e declarou este um mundo onde tudo é decidido com jogos, até fronteiras de países. A humanidade foi conduzida de volta à única cidade restante pelas outras raças. Sora e Shiro, os irmãos inúteis se tornarão os Salvadores da Humanidade neste mundo nativo? Que os jogos comecem!",
 					episodes: "Episódios 12",
 					watchUrl: "https://animefire.plus/pesquisar/no-game-no-life"
-                		},
+                },
 				{
 					id: "51",
 					title: "Chiyu Mahou no Machigatta Tsukaikata",
@@ -814,7 +855,7 @@
 					synopsis: "Usato é transportado para outro mundo junto com dois colegas de classe e descobre que possui magia de cura. É recrutado pelo brutal pelotão de resgate do reino, onde aprende que magia de cura pode ser usada de formas muito mais violentas e criativas do que imaginava.",
 					episodes: "Episódios 10",
 					watchUrl: "https://animefire.plus/pesquisar/chiyu-mahou-no-machigatta-tsuk"
-                		},
+                },
 				{
 					id: "50",
 					title: "Kuro no Shoukanshi",
@@ -830,7 +871,7 @@
 					synopsis: "Acordando em um novo lugar estranho sem memória de sua vida passada, Kelvin descobre que ele trocou essas mesmas memórias em troca de novas habilidades poderosas durante sua recente transmigração. Indo para um mundo totalmente novo como um Summoner—com seu primeiro seguidor sendo a própria deusa que o trouxe!—Kelvin começa sua nova vida como um aventureiro, e não demora muito para que ele descubra sua disposição oculta como um viciado em batalhas. . Do Cavaleiro Negro do Antigo Castelo dos Espíritos Malignos ao demônio dentro da Caverna Oculta do Sábio, ele se diverte na luta contra um inimigo formidável após o outro. Junte-se a este aventureiro poderoso em uma saga emocionante e épica enquanto ele e seus aliados abrem caminho para os anais da história!",
 					episodes: "Episódios 12",
 					watchUrl: "https://animefire.plus/animes/kuro-no-shoukanshi-dublado-todos-os-episodios"
-                		},
+                },
 				{
 					id: "49",
 					title: "No Game, No Life Zero",
@@ -939,7 +980,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill6.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UniqueSkill/uniqueskill7.jpg"
 					],
-					rating: 3,
+					rating: 1,
 					synopsis: "Ryota Sato, um assalariado, é transportado para uma masmorra em um mundo onde monstros soltam loots. Ele descobre que seus atributos são péssimos e seu nível está travado no 1. No entanto, ele possui a \"Habilidade de Drop: S Geral\", a mais poderosa existente. Com a ajuda de Emily, ele tenta sobreviver neste mundo bizarro.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/level-1-dakedo-unique-skill-de-saikyou-desu-todos-os-episodios"
@@ -954,7 +995,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/DefenseMax/defensemax4.jpg"
 					],
-					rating: 4,
+					rating: 2,
 					synopsis: "Uma garota é convidada para um VRMMORPG e, preocupada em sentir dor, cria uma personagem totalmente focada em defesa. Ao colocar todos os pontos em Vitalidade, ela ganha a habilidade \"Absolute Defense\", que a impede de sofrer dano ou sentir dor. Mesmo sem velocidade, magia ou força, Maple se aventura com seus amigos no mundo do jogo.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu-todos-os-episodios"
@@ -969,7 +1010,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/HerbivorousDragon/herbivorousdragon4.jpg"
 					],
-					rating: 3,
+					rating: 1,
 					synopsis: "Reiko se oferece a um dragão de 5.000 anos para defender sua vila do rei demônio. Contudo, o dragão é vegetariano e fraco. Juntos, eles embarcam em uma jornada para derrotar o rei demônio. Reiko afirma ser discípula do dragão, capaz de extrair seus poderes infinitos, mas a verdade por trás disso ainda será revelada.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/yowai-5000-nen-no-soushoku-dragon-iwarenaki-jaryuu-nintei-todos-os-episodios"
@@ -983,7 +1024,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Isekai_Shikkaku/isekaishikkaku2.png",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Isekai_Shikkaku/isekaishikkaku3.jpg"
 					],
-					rating: 4,
+					rating: 3,
 					synopsis: "Para o melancólico autor Osamu Dazai, uma aventura em outro mundo com garotas fofas e poderes de videojogos não é um sonho. Puxado para outro mundo em 1948, ele não está interessado em aventuras, mas sim em encontrar o lugar perfeito para morrer. Apesar de arriscar a vida, tudo parece dar certo para ele nesta comédia isekai alegremente sombria.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/isekai-shikkaku-todos-os-episodios"
@@ -997,7 +1038,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TheOssan/TheOssan2.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/TheOssan/TheOssan3.png"
 					],
-					rating: 4,
+					rating: 3,
 					synopsis: "Geralmente, é melhor se tornar um aventureiro jovem para treinar o poder mágico. No entanto, Rick Gladiador, que se tornou aventureiro com mais de trinta anos, possui o poder de combate de um aventureiro rank S. Rick viveu uma vida inimaginável com os membros do lendário Orihalcon Fist, um grupo dos aventureiros mais fortes. Treinado por mentores \"monstros\", Rick derrota aventureiros de elite que o subestimam.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/shinmai-ossan-boukensha-saikyou-party-ni-shinu-hodo-kitaerarete-muteki-ni-naru-todos-os-episodios"
@@ -1042,7 +1083,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Goblin_Slayer/goblinslayer4.jpg"
 					],
-					rating: 4,
+					rating: 2,
 					synopsis: "Uma jovem sacerdotisa, em sua primeira aventura, encontra-se em perigo e é resgatada pelo Goblin Slayer, um homem que dedicou sua vida a exterminar goblins por todos os meios. Conforme os rumores de seus feitos se espalham, a sacerdotisa descobre o que virá a seguir.",
 					episodes: "",
 					watchUrl: "https://anitube.site/79293/"
@@ -1058,7 +1099,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi4.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi5.jpg"
 					],
-					rating: 3,
+					rating: 1,
 					synopsis: "A vida de um talentoso jovem cozinheiro muda quando uma garota faminta, Dora (um espírito convocado e deusa), aparece em sua cozinha e o chama de mestre. Ele não está interessado e tenta fugir dela. No entanto, ele se torna um invocador por acidente, sem ter como voltar atrás em sua vida.",
 					episodes: "",
 					watchUrl: "https://goyabu.com/assistir/zuihou-de-zhaohuan-shi/"
@@ -1125,7 +1166,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko4.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/UchiNoKo/uchinoko5.jpg"
 					],
-					rating: 2,
+					rating: 1,
 					synopsis: "Dale, um aventureiro habilidoso, encontra uma garota demoníaca em péssimas condições na floresta. Ele a adota, tornando-se seu pai. Latina é adorável, mas Dale enfrenta as responsabilidades da paternidade e o mistério em torno da marca criminosa da garota.",
 					episodes: "",
 					watchUrl: "https://animesonline.cc/anime/uchi-no-ko-no-tame-naraba-ore-wa-moshikashitara-maou-mo-taoseru-kamo-shirenai/"
@@ -1181,7 +1222,7 @@
 				},
 				{
 					id: "27",
-					title: "I’ve Been Killing Slimes for 300 Years and Maxed Out My Level",
+					title: "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
 					category: "aventura",
 					images: [
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/KillingSlimes300/killingslimes3001.jpg",
@@ -1269,7 +1310,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko3.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko4.jpg"
 					],
-					rating: 3,
+					rating: 2,
 					synopsis: "Tomo Aizawa, uma garota com aparência e personalidade de menino, decide confessar seu amor a seu melhor amigo de infância, Junichirou Kubota. No entanto, Junichirou, que sempre a viu como um \"irmão\", não percebe a confissão. A história acompanha as tentativas de Tomo para convencer Jun de que ela é uma garota e conquistar seu coração.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/tomo-chan-wa-onnanoko-todos-os-episodios"
@@ -1320,7 +1361,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan5.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Uzaki-chan/uzakichan6.jpg"
 					],
-					rating: 3,
+					rating: 4,
 					synopsis: "Shinichi Sakurai, um estudante universitário introvertido, é incomodado pela extrovertida Hana Uzaki, que decide torná-lo mais social. Apesar das provocações constantes de Uzaki, Shinichi começa a gostar da companhia dela e eles se tornam amigos. A série explora se é possível se divertir tanto com outra pessoa quanto sozinho, e como essa relação pode evoluir.",
 					episodes: "",
 					watchUrl: "https://animesbr.biz/anime/uzaki-chan-wa-asobitai/"
@@ -1337,7 +1378,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll5.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Sono_Bisque_Doll/sonobisquedoll6.jpg"
 					],
-					rating: 3,
+					rating: 4,
 					synopsis: "Wakana Gojo, um jovem que sonha em ser um artesão de bonecas tradicionais, é alheio às tendências sociais e tem dificuldade em se enturmar. Sua vida muda quando Marin Kitagawa, uma garota popular, compartilha um segredo inesperado, fazendo seus mundos colidirem. A história acompanha o desenvolvimento de um relacionamento através do cosplay.",
 					episodes: "",
 					watchUrl: "https://animesbr.biz/anime/sono-bisque-doll-wa-koi-wo-suru/"
@@ -1432,7 +1473,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame5.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Otome_Game/otomegame6.jpg"
 					],
-					rating: 2,
+					rating: 1,
 					synopsis: "Katarina, uma filha de nobre, se lembra de sua vida passada e percebe que reencarnou como a vilã de um jogo otome que havia jogado. O problema, no entanto, é que magia naquela época é bem fraca, e ninguém consegue medir o quão poderoso Anoth realmente é.",
 					episodes: "",
 					watchUrl: "https://animesonline.cc/anime/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta/"
@@ -1567,7 +1608,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a5.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/NieR_Automata_Ver1_1a/nierautomataver11a6.jpg"
 					],
-					rating: 3,
+					rating: 4,
 					synopsis: "Em um futuro distante, 5012. A súbita invasão aérea da Terra por Aliens e suas criações Machine Lifeforms levou a humanidade à beira da extinção. O número sobrevivente de humanos se refugiou na lua para organizar um contra-ataque usando soldados androides para recapturar a Terra. No entanto, a guerra chega a um impasse, pois as formas de vida das máquinas continuam a se multiplicar infinitamente. Por sua vez, a humanidade implanta uma nova unidade de soldados androides como uma arma definitiva: YoRHa.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/pesquisar/nier-automata"
@@ -1614,7 +1655,7 @@
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate4.jpg",
 						"https://cdn.jsdelivr.net/gh/DreamerJP/site-images@main/Animes/Gate/gate5.jpg"
 					],
-					rating: 3,
+					rating: 4,
 					synopsis: "Um portal misterioso se abre em Tóquio, conectando o mundo moderno a um reino de fantasia medieval. As Forças de Autodefesa do Japão são enviadas para explorar este novo mundo, levando tecnologia moderna para um lugar de magia, dragões e política complexa.",
 					episodes: "",
 					watchUrl: "https://animefire.plus/animes/gate-jieitai-kanochi-nite-kaku-tatakaeri-todos-os-episodios"
@@ -1650,6 +1691,8 @@
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentFilter = this.dataset.category;
+                    // Cancela qualquer pré-carregamento anterior
+                    if (window._cancelPreloadTabs) window._cancelPreloadTabs();
                     renderAnimes();
                 });
             });
@@ -1703,19 +1746,31 @@
 
             const slides = slider.querySelectorAll('.slide');
             const indicators = slider.querySelectorAll('.indicator');
-            
             if (slides.length === 0) return;
-            
-            slides[currentSlides[animeId]].classList.remove('active');
-            if (indicators.length > 0) {
-                indicators[currentSlides[animeId]].classList.remove('active');
-            }
-            
-            currentSlides[animeId] = (currentSlides[animeId] + 1) % anime.images.length;
-            
-            slides[currentSlides[animeId]].classList.add('active');
-            if (indicators.length > 0) {
-                indicators[currentSlides[animeId]].classList.add('active');
+
+            // Calcula o próximo índice
+            let nextIndex = (currentSlides[animeId] + 1) % anime.images.length;
+            const nextImg = slides[nextIndex].querySelector('img');
+            // Se a imagem já está carregada (complete e naturalWidth > 0), troca normalmente
+            if (nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
+                slides[currentSlides[animeId]].classList.remove('active');
+                if (indicators.length > 0) {
+                    indicators[currentSlides[animeId]].classList.remove('active');
+                }
+                currentSlides[animeId] = nextIndex;
+                slides[currentSlides[animeId]].classList.add('active');
+                if (indicators.length > 0) {
+                    indicators[currentSlides[animeId]].classList.add('active');
+                }
+            } else if (nextImg) {
+                // Se não está carregada, aguarda o carregamento e só então troca
+                const onImgLoad = function() {
+                    nextImg.removeEventListener('load', onImgLoad);
+                    // Chama novamente para garantir a troca
+                    nextSlide(animeId);
+                };
+                nextImg.addEventListener('load', onImgLoad);
+                // Opcional: pode mostrar um loader ou feedback visual aqui
             }
         }
 
@@ -1748,13 +1803,10 @@
         // Renderizar animes
         function renderAnimes() {
             const grid = document.getElementById('animesGrid');
-            
             Object.values(sliderIntervals).forEach(interval => clearInterval(interval));
             sliderIntervals = {};
-            
+
             let filteredAnimes = animes;
-            
-            // Se houver busca, ignora o filtro de categoria
             if (searchQuery) {
                 filteredAnimes = filteredAnimes.filter(anime =>
                     anime.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -1776,53 +1828,44 @@
                 return;
             }
 
+            // Renderiza apenas a primeira imagem de cada anime
             grid.innerHTML = filteredAnimes.map(anime => {
                 const images = anime.images || [];
                 const hasImages = images.length > 0;
-                
                 let imageContent = '';
                 if (hasImages) {
-                    const slides = images.map((img, index) => `
-                        <div class="slide ${index === 0 ? 'active' : ''}">
-                            <img src="${img}" 
-                                alt="${anime.title}" 
-                                onload="this.style.opacity='1';" 
-                                onerror="this.style.display='none';"
-                                style="opacity: 0; transition: opacity 0.3s ease;">
-                        </div>
-                    `).join('');
-                    
-                    const controls = images.length > 1 ? `
-                        <button class="slide-controls prev" onclick="prevSlide('${anime.id}')">‹</button>
-                        <button class="slide-controls next" onclick="nextSlide('${anime.id}')">›</button>
-                    ` : '';
-                    
-                    const indicators = images.length > 1 ? `
-                        <div class="slide-indicators">
-                            ${images.map((_, index) => `<div class="indicator ${index === 0 ? 'active' : ''}" onclick="changeSlide('${anime.id}', ${index})"></div>`).join('')}
-                        </div>
-                    ` : '';
-                    
+                    // Apenas a primeira imagem é renderizada inicialmente
                     imageContent = `
                         <div class="image-slider">
-                            ${slides}
-                            ${controls}
-                            ${indicators}
+                            <div class="slide active">
+                                <img src="${images[0]}" alt="${anime.title}" data-anime-id="${anime.id}" data-slide-index="0" style="opacity: 0; transition: opacity 0.3s ease;" onload="this.style.opacity='1';window.lazyLoadAnimeSlides && window.lazyLoadAnimeSlides('${anime.id}')" onerror="this.style.display='none';">
+                            </div>
                         </div>
                     `;
                 } else {
                     imageContent = '<div class="slide-placeholder">🎌</div>';
                 }
-
                 return `
                     <div class="anime-card" data-anime-id="${anime.id}">
                         <div class="anime-images ${hasImages ? 'has-images' : ''}">
                             ${imageContent}
                         </div>
                         <div class="anime-title">${anime.title}</div>
-                        <div class="anime-category">${anime.category}</div>
+                        <!--<div class="anime-category">${anime.category}</div>-->
                         <div class="anime-rating">
-                            <span class="stars">${'⭐'.repeat(anime.rating)}</span>
+                            <span class="stars">
+                                ${[1,2,3,4,5].map(i => {
+                                    if (i <= anime.rating) {
+                                        if (anime.rating === 5 && i === 5) {
+                                            return '<span class="star-special">⭐</span>';
+                                        } else {
+                                            return '⭐';
+                                        }
+                                    } else {
+                                        return '';
+                                    }
+                                }).join('')}
+                            </span>
                             <span>(${anime.rating}/5)</span>
                         </div>
                         <div class="anime-synopsis">${anime.synopsis}</div>
@@ -1834,13 +1877,102 @@
                 `;
             }).join('');
 
-            setTimeout(() => {
-                filteredAnimes.forEach(anime => {
-                    if (anime.images && anime.images.length > 1) {
-                        initSlider(anime.id, anime.images);
+            // Lazy load dos slides restantes após a primeira imagem carregar
+            window.lazyLoadAnimeSlides = function(animeId) {
+                const anime = animes.find(a => a.id === animeId);
+                if (!anime || !anime.images || anime.images.length <= 1) return;
+                const card = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
+                if (!card) return;
+                // Evita duplicar slides
+                if (card.querySelectorAll('.slide').length > 1) return;
+                // Adiciona os slides restantes
+                for (let i = 1; i < anime.images.length; i++) {
+                    const slide = document.createElement('div');
+                    slide.className = 'slide';
+                    slide.innerHTML = `<img src="${anime.images[i]}" alt="${anime.title}" style="opacity: 0; transition: opacity 0.3s ease;" onload=\"this.style.opacity='1';\" onerror=\"this.style.display='none';\">`;
+                    card.appendChild(slide);
+                }
+                // Adiciona controles e indicadores se necessário
+                if (anime.images.length > 1 && !card.querySelector('.slide-controls')) {
+                    const prevBtn = document.createElement('button');
+                    prevBtn.className = 'slide-controls prev';
+                    prevBtn.innerHTML = '‹';
+                    prevBtn.onclick = function() { prevSlide(animeId); };
+                    card.appendChild(prevBtn);
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = 'slide-controls next';
+                    nextBtn.innerHTML = '›';
+                    nextBtn.onclick = function() { nextSlide(animeId); };
+                    card.appendChild(nextBtn);
+                    // Indicadores
+                    const indicators = document.createElement('div');
+                    indicators.className = 'slide-indicators';
+                    for (let i = 0; i < anime.images.length; i++) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+                        indicator.onclick = function() { changeSlide(animeId, i); };
+                        indicators.appendChild(indicator);
                     }
+                    card.appendChild(indicators);
+                }
+                // Inicializa o slider automático
+                setTimeout(() => {
+                    initSlider(animeId, anime.images);
+                }, 100);
+                // Após carregar todos os slides da aba, dispara o pré-carregamento das outras abas
+                lazyLoadOtherTabs();
+            };
+        }
+
+        // Pré-carregar imagens das outras abas
+        function lazyLoadOtherTabs() {
+            // Só executa se não estiver carregando outra aba
+            if (window._preloadingTabs) return;
+            window._preloadingTabs = true;
+            let cancelled = false;
+            window._cancelPreloadTabs = function() {
+                cancelled = true;
+                window._preloadingTabs = false;
+            };
+            const categories = [...new Set(animes.map(a => a.category))];
+            const current = currentFilter;
+            let idx = 0;
+            function preloadNextCategory() {
+                if (cancelled) { window._preloadingTabs = false; return; }
+                if (idx >= categories.length) { window._preloadingTabs = false; return; }
+                const cat = categories[idx++];
+                if (cat === current || cat === 'todos') { preloadNextCategory(); return; }
+                const animesCat = animes.filter(a => a.category === cat);
+                let loaded = 0;
+                if (animesCat.length === 0) { preloadNextCategory(); return; }
+                animesCat.forEach(anime => {
+                    if (cancelled) return;
+                    const img = new window.Image();
+                    img.src = anime.images[0];
+                    img.onload = img.onerror = function() {
+                        if (cancelled) return;
+                        loaded++;
+                        if (loaded === animesCat.length) {
+                            let loadedSlides = 0;
+                            if (!anime.images || anime.images.length <= 1) { loadedSlides++; }
+                            for (let i = 1; i < anime.images.length; i++) {
+                                if (cancelled) return;
+                                const slideImg = new window.Image();
+                                slideImg.src = anime.images[i];
+                                slideImg.onload = slideImg.onerror = function() {
+                                    if (cancelled) return;
+                                    loadedSlides++;
+                                    if (loadedSlides === anime.images.length - 1) {
+                                        preloadNextCategory();
+                                    }
+                                };
+                            }
+                            if (anime.images.length <= 1) preloadNextCategory();
+                        }
+                    };
                 });
-            }, 100);
+            }
+            preloadNextCategory();
         }
 
         // Mudar slide manualmente
