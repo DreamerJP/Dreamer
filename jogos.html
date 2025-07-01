@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogos</title>
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --primary-color: #bb86fc;          /* Roxo vibrante */
+            --secondary-color: #03dac6;        /* Ciano/turquesa */
+            --accent-color: #cf6679;           /* Rosa coral */
+            --text-primary: #e1e1e1;          /* Texto principal claro */
+            --text-secondary: #b3b3b3;        /* Texto secundário */
+            --bg-main: rgba(18, 18, 35, 0.98); /* Fundo principal translúcido */
+            --bg-nav: rgba(18, 18, 35, 0.98);  /* Fundo navegação */
+            --shadow-color: rgba(0,0,0,0.4);
+            --shadow-color-strong: rgba(0,0,0,0.6);
+            --transition-speed: 0.3s;          /* Mantém rápido */
+            --border-radius: 15px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,12 +29,92 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
+            color: var(--text-primary);
             overflow-x: hidden;
             transition: all 3s ease;
+        }
+
+        /* Sistema de Campo de Estrelas */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: star-travel linear infinite;
+        }
+
+        /* Tipos de estrelas */
+        .star.distant {
+            width: 1px;
+            height: 1px;
+            animation-duration: 25s;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .star.medium {
+            width: 1.5px;
+            height: 1.5px;
+            animation-duration: 15s;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .star.close {
+            width: 2px;
+            height: 2px;
+            animation-duration: 8s;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Cores especiais */
+        .star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        }
+
+        .star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        }
+
+        /* Animação das estrelas */
+        @keyframes star-travel {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+            10% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
         /* Efeito Otherworld */
@@ -156,7 +251,7 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             animation: particle-float 6s ease-in-out infinite;
             transition: all 2s ease;
@@ -181,17 +276,21 @@
             75% { transform: translateY(-40px) translateX(10px); opacity: 0.9; }
         }
 
+        .main-content {
+            padding: 120px 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
         .container {
-            max-width: 1200px;
-            margin: 100px auto 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px var(--shadow-color-strong);
+            backdrop-filter: blur(15px);
             position: relative;
-            z-index: 2;
             overflow: hidden;
+            border: 1px solid rgba(187, 134, 252, 0.1);
             transition: all 3s ease;
         }
 
@@ -212,8 +311,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             transition: all 2s ease;
         }
 
@@ -228,10 +327,13 @@
         }
 
         .header h1 {
-            color: #2c3e50;
-            font-size: 3.5em;
+            color: var(--text-primary);
+            font-size: 2.8em;
+            font-weight: 700;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 
+                0 0 20px var(--primary-color),
+                2px 2px 8px var(--shadow-color);
             animation: fadeInUp 0.8s ease-out;
             position: relative;
             transition: all 2s ease;
@@ -271,20 +373,26 @@
         }
 
         .header p {
-            color: #7f8c8d;
-            font-size: 1.3em;
-            line-height: 1.6;
+            color: var(--text-secondary);
+            font-size: 1.2em;
             margin-bottom: 30px;
             animation: fadeInUp 0.8s ease-out 0.2s both;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .games-intro {
-            background: linear-gradient(45deg, rgba(155, 89, 182, 0.1), rgba(52, 152, 219, 0.1));
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 40px;
-            border-left: 4px solid #9b59b6;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.1), 
+                rgba(3, 218, 198, 0.1));
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--primary-color);
             animation: fadeInUp 0.8s ease-out 0.4s both;
+            position: relative;
+            z-index: 2;
             transition: all 2s ease;
         }
 
@@ -294,24 +402,27 @@
         }
 
         .games-intro h3 {
-            color: #2c3e50;
+            color: var(--text-primary);
             font-size: 1.4em;
-            margin-bottom: 10px;
+            font-weight: 600;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .games-intro p {
-            color: #566573;
-            font-size: 1.1em;
+            color: var(--text-secondary);
+            font-size: 1.05em;
             line-height: 1.6;
         }
 
         .special-mention {
-            background: linear-gradient(45deg, rgba(231, 76, 60, 0.15), rgba(192, 57, 43, 0.15));
-            border: 2px solid rgba(231, 76, 60, 0.3);
-            border-radius: 15px;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.1), 
+                rgba(3, 218, 198, 0.1));
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
@@ -324,7 +435,7 @@
 
         .special-mention:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 10px 30px var(--shadow-color-strong);
         }
 
         .special-mention.otherworld {
@@ -340,7 +451,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(231, 76, 60, 0.05), transparent);
+            background: linear-gradient(45deg, transparent, rgba(187, 134, 252, 0.05), transparent);
             animation: special-shine 4s ease-in-out infinite;
         }
 
@@ -355,15 +466,15 @@
         }
 
         .special-mention h3 {
-            color: #e74c3c;
+            color: var(--primary-color);
             font-size: 1.8em;
             margin-bottom: 15px;
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px var(--shadow-color);
         }
 
         .special-mention p {
-            color: #c0392b;
+            color: var(--text-secondary);
             font-size: 1.2em;
             font-style: italic;
             margin-bottom: 20px;
@@ -391,23 +502,38 @@
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 30px;
             margin-top: 40px;
             align-items: start;
         }
 
+        .franchise-videos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .franchise-title {
+            color: var(--text-primary);
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
         .game-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9));
-            border-radius: 20px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
             padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px var(--shadow-color-strong);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.8s ease-out both;
-            border: 2px solid transparent;
-            /* min-height removido para cards ficarem do tamanho do conteúdo */
+            border: 2px solid rgba(187, 134, 252, 0.1);
             height: auto;
             display: flex;
             flex-direction: column;
@@ -422,8 +548,8 @@
 
         .game-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-            border-color: rgba(78, 205, 196, 0.3);
+            box-shadow: 0 25px 50px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .game-card.otherworld:hover {
@@ -438,7 +564,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -452,11 +578,11 @@
         }
 
         .game-title {
-            color: #2c3e50;
+            color: var(--text-primary);
             font-size: 1.6em;
             font-weight: bold;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            text-shadow: 1px 1px 2px var(--shadow-color);
         }
 
         .game-franchise {
@@ -464,12 +590,12 @@
         }
 
         .franchise-title {
-            color: #34495e;
+            color: var(--text-primary);
             font-size: 1.3em;
             font-weight: 600;
             margin-bottom: 15px;
             padding-bottom: 8px;
-            border-bottom: 2px solid rgba(78, 205, 196, 0.3);
+            border-bottom: 2px solid var(--primary-color);
             transition: all 2s ease;
         }
 
@@ -480,9 +606,9 @@
         .game-item {
             margin-bottom: 25px;
             padding: 15px;
-            background: rgba(78, 205, 196, 0.05);
+            background: rgba(187, 134, 252, 0.05);
             border-radius: 12px;
-            border-left: 4px solid #4ecdc4;
+            border-left: 4px solid var(--primary-color);
             transition: all 0.3s ease;
         }
 
@@ -492,7 +618,7 @@
         }
 
         .game-item:hover {
-            background: rgba(78, 205, 196, 0.1);
+            background: rgba(187, 134, 252, 0.1);
             transform: translateX(5px);
         }
 
@@ -501,7 +627,7 @@
         }
 
         .game-name {
-            color: #2c3e50;
+            color: var(--text-primary);
             font-size: 1.1em;
             font-weight: 600;
             margin-bottom: 12px;
@@ -509,18 +635,22 @@
 
         .video-container {
             position: relative;
+            max-width: 600px;
+            margin: 0 auto 35px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 15px 40px var(--shadow-color-strong);
+            transition: all var(--transition-speed) ease;
+            border: 2px solid rgba(187, 134, 252, 0.2);
             width: 100%;
             height: 0;
             padding-bottom: 56.25%;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
         }
 
         .video-container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px var(--shadow-color-strong);
+            border-color: var(--primary-color);
         }
 
         .video-container.otherworld {
@@ -535,6 +665,7 @@
             width: 100%;
             height: 100%;
             border: none;
+            border-radius: inherit;
         }
 
         .floating-elements {
@@ -545,13 +676,16 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
+            z-index: 1;
         }
 
         .floating-element {
             position: absolute;
             font-size: 2em;
-            opacity: 0.08;
-            animation: float 10s ease-in-out infinite;
+            opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+            color: var(--secondary-color);
+            filter: blur(0.5px);
             transition: all 2s ease;
         }
 
@@ -560,19 +694,27 @@
             filter: hue-rotate(180deg);
         }
 
-        .floating-element:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .floating-element:nth-child(2) { top: 25%; right: 10%; animation-delay: 2s; }
-        .floating-element:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 4s; }
-        .floating-element:nth-child(4) { bottom: 15%; right: 8%; animation-delay: 6s; }
+        .floating-element:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 25%; right: 15%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { bottom: 35%; right: 25%; animation-delay: 1s; }
         .floating-element:nth-child(5) { top: 60%; left: 8%; animation-delay: 1s; }
         .floating-element:nth-child(6) { top: 45%; right: 12%; animation-delay: 3s; }
         .floating-element:nth-child(7) { bottom: 50%; left: 50%; animation-delay: 5s; }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-25px) rotate(8deg); }
-            50% { transform: translateY(-15px) rotate(-5deg); }
-            75% { transform: translateY(-35px) rotate(12deg); }
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-15px) rotate(3deg) scale(1.05); 
+            }
+            50% { 
+                transform: translateY(-25px) rotate(-2deg) scale(0.95); 
+            }
+            75% { 
+                transform: translateY(-10px) rotate(4deg) scale(1.02); 
+            }
         }
 
         @keyframes fadeInUp {
@@ -706,19 +848,21 @@
         }
 
         .enter-btn:hover::before {
-            -webkit-text-stroke: 2px #4ecdc4;
-            text-shadow: 0 0 12px #4ecdc4, 0 0 2px #fff;
+            -webkit-text-stroke: 2px var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color), 0 0 2px #fff;
         }
 
         @media (max-width: 768px) {
+            .main-content {
+                padding: 100px 15px 30px;
+            }
+            
             .container {
-                padding: 30px 20px;
-                margin: 10px;
-                margin-top: 120px;
+                padding: 30px 25px;
             }
             
             .header h1 {
-                font-size: 2.5em;
+                font-size: 2.2em;
             }
             
             .header p {
@@ -743,31 +887,34 @@
 
             .video-modal-content {
                 width: 95%;
-                padding-bottom: 56.25%; /* Mantém responsivo no mobile */
+                padding-bottom: 56.25%;
             }
 
-            .menu-toggle {
-                display: block;
+            .floating-element {
+                font-size: 1.6em;
             }
-            
+
+            /* --- Mobile: sobrescreve o padrão --- */
             .nav-links {
-                display: none;
+                display: none !important;      /* Inicia fechado no mobile */
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(255, 255, 255, 0.98);
+                background: var(--bg-nav);
                 flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
                 padding: 20px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                box-shadow: 0 5px 20px var(--shadow-color-strong);
                 border-radius: 0 0 15px 15px;
-                z-index: 1000;
+                backdrop-filter: blur(15px);
             }
             
             .nav-links.active {
-                display: flex;
+                display: flex !important;      /* Mostra quando ativo */
+            }
+            
+            .menu-toggle {
+                display: block !important;     /* Botão visível no mobile */
             }
             
             .nav-links a {
@@ -777,31 +924,35 @@
                 width: auto;
                 margin: 2px 0;
                 text-align: left;
-                color: #2c3e50;
+                color: var(--text-primary);
                 background: none;
                 font-weight: 500;
                 transition: background 0.2s, color 0.2s, box-shadow 0.2s;
             }
             
             .nav-links a:hover {
-                color: #4ecdc4;
+                color: var(--primary-color);
             }
             
             .nav-links .active {
                 font-weight: bold;
                 color: white !important;
-                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
                 border-radius: 25px;
             }
             .nav-links .active:hover {
-                background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+                background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
                 color: white !important;
             }
         }
 
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 2em;
+                font-size: 1.9em;
+            }
+            
+            .container {
+                padding: 25px 20px;
             }
             
             .games-grid {
@@ -961,6 +1112,24 @@
             }
         }
 
+        /* Estados de Acessibilidade */
+        .nav-links a:focus,
+        .menu-toggle:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         /* Adiciona shake-effect ao CSS */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -1053,129 +1222,140 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            right: 0;
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--primary-color);
             z-index: 10000;
-            transition: all 0.3s ease;
+            padding: 12px 0;
+            box-shadow: 0 4px 20px var(--shadow-color-strong);
+            transition: all var(--transition-speed) ease;
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
 
         .nav-home {
             font-size: 1.5em;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-home:hover {
-            color: #4ecdc4;
+            color: var(--primary-color);
+            transform: scale(1.05);
         }
 
         .menu-toggle {
             display: none;
-            font-size: 1.5em;
             background: none;
             border: none;
+            font-size: 1.5em;
             cursor: pointer;
-            color: #2c3e50;
+            color: var(--text-primary);
+            -webkit-text-stroke: initial !important;
+            text-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary-color);
         }
 
         .nav-links {
-            list-style: none;
             display: flex;
-            gap: 20px;
-        }
-
-        .nav-links li {
-            position: relative;
+            gap: 8px;
+            list-style: none;
         }
 
         .nav-links a {
+            color: var(--text-primary);
             text-decoration: none;
-            color: #2c3e50;
-            font-size: 1.1em;
-            transition: color 0.3s ease;
+            font-weight: 500;
             padding: 8px 16px;
             border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #4ecdc4;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
-        .nav-links .active {
-            font-weight: bold;
-            color: white !important;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border-radius: 25px;
-        }
-        .nav-links .active:hover {
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
-            color: white !important;
+        .menu-toggle:focus,
+        .menu-toggle:active {
+            outline: none;
+            color: var(--text-primary);
+            background: none;
+            box-shadow: none;
         }
 
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            padding: 20px 0;
+        }
+        @media (max-width: 900px) {
+            .cards-container {
+                grid-template-columns: 1fr;
             }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
-                padding: 20px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-                border-radius: 0 0 15px 15px;
-                z-index: 1000;
+        }
+        @media (min-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links a {
-                display: inline-block;
-                padding: 8px 16px;
-                border-radius: 25px;
-                width: auto;
-                margin: 2px 0;
-                text-align: left;
-                color: #2c3e50;
-                background: none;
-                font-weight: 500;
-                transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-            }
-            .nav-links a:hover {
-                color: #4ecdc4;
-            }
-            .nav-links .active {
-                font-weight: bold;
-                color: white !important;
-                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-                border-radius: 25px;
-            }
-            .nav-links .active:hover {
-                background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
-                color: white !important;
-            }
+        }
+        .video-card {
+            width: 100%;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px var(--shadow-color-strong);
+            padding: 18px 18px 12px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .video-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            background: #111;
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
     </style>
 </head>
 <body>
+    <!-- Campo de Estrelas -->
+    <div class="starfield" id="starfield" aria-hidden="true"></div>
+
     <!-- Navegação -->
     <nav class="navigation">
         <div class="nav-container">
@@ -1205,7 +1385,8 @@
     <div class="cracks-overlay" id="cracksOverlay"></div>
     <div class="screen-distortion" id="screenDistortion"></div>
 
-    <div class="container">
+    <div class="main-content">
+        <div class="container">
         <div class="floating-elements">
             <div class="floating-element">🎮</div>
             <div class="floating-element">🕹️</div>
@@ -1219,7 +1400,6 @@
         <div class="header">
             <div class="gaming-icons icon-1">🎮</div>
             <div class="gaming-icons icon-2">🕹️</div>
-            <div class="gaming-icons icon-3">🎯</div>
             
             <h1>🎮 Jogos</h1>
             <p>Uma jornada através dos melhores jogos que já experienciei</p>
@@ -1239,88 +1419,69 @@
             </div>
         </div>
 
-        <div class="games-grid">
-            <div class="game-card">
-                <div class="game-name">🤖 Nier Automata</div>
+        <div class="cards-container">
+            <div class="video-card">
+                <div class="video-title">🤖 Nier Automata</div>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/wJxNhJ8fjFk" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-name">🏠 What Remains of Edith Finch</div>
+            <div class="video-card">
+                <div class="video-title">🏠 What Remains of Edith Finch</div>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/DhH5bfoZJFo" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-name">👻 Beyond Two Souls</div>
+            <div class="video-card">
+                <div class="video-title">👻 Beyond Two Souls</div>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/b7AuSnCM8Uo" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-franchise">
-                    <div class="franchise-title">🦋 Franquia Life is Strange</div>
-                    <div class="game-item">
-                        <div class="game-name">Life is Strange</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/bSE5FbT38dY" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="game-item">
-                        <div class="game-name">Life is Strange: Before the Storm</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/OunUnpKLEGQ" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="game-item">
-                        <div class="game-name">Life is Strange: True Colors</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/b6CkzwVAr0M" allowfullscreen></iframe>
-                        </div>
-                    </div>
+            <div class="video-card">
+                <div class="video-title">🦋 Life is Strange</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/bSE5FbT38dY" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-franchise">
-                    <div class="franchise-title">🚀 Franquia Mass Effect</div>
-                    <div class="game-item">
-                        <div class="game-name">Mass Effect Trilogy</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/n8i53TtQ6IQ" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="game-item">
-                        <div class="game-name">Mass Effect: Andromeda</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/X6PJEmEHIaY" allowfullscreen></iframe>
-                        </div>
-                    </div>
+            <div class="video-card">
+                <div class="video-title">🦋 Life is Strange: Before the Storm</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/OunUnpKLEGQ" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-franchise">
-                    <div class="franchise-title">⚔️ Franquia Hellblade</div>
-                    <div class="game-item">
-                        <div class="game-name">Hellblade: Senua's Sacrifice</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/fBJ0ifVtK5c" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="game-item">
-                        <div class="game-name">Senua's Saga: Hellblade II</div>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/9ywWqKhujeI" allowfullscreen></iframe>
-                        </div>
-                    </div>
+            <div class="video-card">
+                <div class="video-title">🦋 Life is Strange: True Colors</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/b6CkzwVAr0M" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-title">🚀 Mass Effect Trilogy</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/n8i53TtQ6IQ" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-title">🚀 Mass Effect: Andromeda</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/X6PJEmEHIaY" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-title">⚔️ Hellblade: Senua's Sacrifice</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/fBJ0ifVtK5c" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-title">⚔️ Senua's Saga: Hellblade II</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/9ywWqKhujeI" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Modal de vídeo -->
@@ -1332,6 +1493,12 @@
     </div>
 
     <script>
+        // Configuração de performance para estrelas
+        const performanceConfig = {
+            maxStars: window.innerWidth > 768 ? 150 : 80,
+            staticStars: window.innerWidth > 768 ? 40 : 20
+        };
+
         let isOtherworldActive = false;
         let sirenAudio = null;
         let fallbackAudioContext = null;
@@ -1339,6 +1506,75 @@
         let fallbackGainNode = null;
         let otherworldTimeout = null;
         let glitchIntervals = [];
+
+        // Função para criar campo de estrelas
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            starfield.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            
+            // Estrelas em movimento
+            for (let i = 0; i < performanceConfig.maxStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const angle = Math.random() * 2 * Math.PI;
+                const initialRadius = Math.random() * 50 + 10;
+                const startX = centerX + Math.cos(angle) * initialRadius;
+                const startY = centerY + Math.sin(angle) * initialRadius;
+                
+                const directionX = Math.cos(angle);
+                const directionY = Math.sin(angle);
+                
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+                
+                // Tipos com probabilidades
+                const starType = Math.random();
+                if (starType < 0.7) {
+                    star.classList.add('distant');
+                } else if (starType < 0.9) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('close');
+                }
+                
+                // Cores especiais
+                const colorType = Math.random();
+                if (colorType < 0.1) {
+                    star.classList.add('blue');
+                } else if (colorType < 0.2) {
+                    star.classList.add('yellow');
+                }
+                
+                star.style.left = startX + 'px';
+                star.style.top = startY + 'px';
+                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+                star.style.animationDelay = Math.random() * 25 + 's';
+                
+                fragment.appendChild(star);
+            }
+            
+            // Estrelas estacionárias com twinkle
+            for (let i = 0; i < performanceConfig.staticStars; i++) {
+                const staticStar = document.createElement('div');
+                staticStar.className = 'star distant';
+                staticStar.style.position = 'absolute';
+                staticStar.style.left = Math.random() * window.innerWidth + 'px';
+                staticStar.style.top = Math.random() * window.innerHeight + 'px';
+                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+                staticStar.style.animationDelay = Math.random() * 2 + 's';
+                
+                fragment.appendChild(staticStar);
+            }
+            
+            starfield.appendChild(fragment);
+        }
 
         // Função de limpeza robusta para áudio
         function cleanupAudio() {
@@ -1364,6 +1600,19 @@
                 fallbackOscillator = null;
                 fallbackGainNode = null;
             }
+        }
+
+        // Função debounce
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
 
         // Função para criar partículas flutuantes no fundo
@@ -1925,8 +2174,17 @@
             }
         });
 
+        // Fechar menu ao redimensionar para desktop
+        window.addEventListener('resize', function() {
+            const navLinks = document.getElementById('navLinks');
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+            }
+        });
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
+            createStarfield();
             createGamingParticles();
             createBloodDrops();
             setupParallax();
@@ -1953,7 +2211,7 @@
                     silentHillEnterBtn.classList.add('selected');
                 } else {
                     silentHillEnterBtn.classList.remove('selected');
-                               }
+                                }
             }
 
             silentHillEnterBtn.addEventListener('click', function(e) {
@@ -1999,6 +2257,13 @@
                     particle.style.animationDelay = `${randomDelay}s`;
                 });
             }, 8000);
+            
+            // Resize otimizado para estrelas
+            window.addEventListener('resize', debounce(() => {
+                performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
+                performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
+                createStarfield();
+            }, 250));
             
             // Easter egg: Ativar Otherworld com tecla especial
             document.addEventListener('keydown', function(e) {
