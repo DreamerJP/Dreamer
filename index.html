@@ -8,16 +8,42 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
         
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --accent-color: #cf6679;
+            --text-primary: #e1e1e1;
+            --text-secondary: #b3b3b3;
+            --bg-main: rgba(18, 18, 35, 0.98);
+            --bg-nav: rgba(18, 18, 35, 0.98);
+            --shadow-color: rgba(0,0,0,0.4);
+            --shadow-color-strong: rgba(0,0,0,0.6);
+            --transition-speed: 0.3s;
+            --border-radius: 15px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* Novo fundo de estrelas */
+        .stars-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -3;
+            background: url('https://www.solarsystemscope.com/textures/download/2k_stars_milky_way.jpg') center center/cover no-repeat;
+        }
+
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            background: #000;
+            color: var(--text-primary);
             overflow-x: hidden;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'), auto;
         }
@@ -34,60 +60,76 @@
             }
         }
 
-        /* Background animado */
-        .animated-background {
+        /* Campo de estrelas do tema padrão */
+        .starfield {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Partículas flutuantes */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
+            z-index: -2;
+            opacity: 0.8; /* Mais visível */
+            overflow: hidden;
         }
 
-        .particle {
+        .star {
             position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: star-travel linear infinite;
+        }
+
+        .star.distant {
+            width: 1px;
+            height: 1px;
+            animation-duration: 25s;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+        .star.medium {
+            width: 1.5px;
+            height: 1.5px;
+            animation-duration: 15s;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .star.close {
             width: 2px;
             height: 2px;
-            background: rgba(78, 205, 196, 0.8);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
+            animation-duration: 8s;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
         }
-
-        @keyframes float {
+        .star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        }
+        .star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        }
+        @keyframes star-travel {
             0% {
-                transform: translateY(100vh) translateX(0px);
                 opacity: 0;
+                transform: translate(0, 0) scale(0.5);
             }
             10% {
+                opacity: 0.4;
+            }
+            50% {
                 opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1);
             }
             90% {
-                opacity: 1;
+                opacity: 0.6;
             }
             100% {
-                transform: translateY(-100vh) translateX(100px);
                 opacity: 0;
+                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
             }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
         /* Hero Section */
@@ -174,46 +216,6 @@
             transform: translateY(-3px);
         }
 
-        /* Geometric shapes */
-        .geometric-shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: rotate 20s linear infinite;
-        }
-
-        .shape-1 {
-            top: 10%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
-            border: 2px solid #4ecdc4;
-            transform: rotate(45deg);
-        }
-
-        .shape-2 {
-            top: 20%;
-            right: 15%;
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-bottom: 80px solid #ff6b6b;
-        }
-
-        .shape-3 {
-            bottom: 20%;
-            left: 20%;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid #4ecdc4;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Seções de conteúdo */
         .content-section {
             padding: 100px 0;
@@ -252,9 +254,20 @@
             background: rgba(255, 255, 255, 0.02);
             position: relative;
             overflow: hidden;
+            z-index: 2;
+        }
+
+        .quote-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 20, 0.55); /* fundo escuro translúcido mais suave */
+            z-index: 0;
+            pointer-events: none;
         }
 
         .quote-video-bg {
+            z-index: 1;
             position: absolute;
             top: 0;
             left: 0;
@@ -263,7 +276,6 @@
             object-fit: cover;
             opacity: 0.15;
             filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
-            z-index: -1;
         }
 
         .quote-container {
@@ -271,6 +283,8 @@
             margin: 0 auto;
             padding: 0 20px;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .quote-text {
@@ -380,7 +394,7 @@
             font-weight: 700;
             border: none;
             border-radius: 40px;
-            background: linear-gradient(90deg, #4ecdc4 0%, #ff6b6b 100%);
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: #fff;
             text-decoration: none;
             box-shadow: 0 6px 24px rgba(78,205,196,0.18), 0 1.5px 4px rgba(255,107,107,0.10);
@@ -391,7 +405,7 @@
         }
 
         .portfolio-link:hover, .portfolio-link:focus {
-            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
             color: #fff;
             transform: translateY(-3px) scale(1.04);
             box-shadow: 0 12px 32px rgba(255,107,107,0.18), 0 2px 8px rgba(78,205,196,0.10);
@@ -613,7 +627,7 @@
             object-fit: cover;
             opacity: 0.15;
             filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
-            z-index: -1;
+            z-index: 1;
         }
 
         /* Controle de áudio */
@@ -689,18 +703,39 @@
                 font-size: 1rem;
             }
         }
+
+        .twinkle-star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            box-shadow: 0 0 8px 2px #fff, 0 0 16px 4px #fff2;
+            animation: twinkle-intense 2.5s infinite alternate;
+        }
+
+        @keyframes twinkle-intense {
+            0% { opacity: 0.2; }
+            30% { opacity: 0.7; }
+            60% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        /* Variações para diferentes intensidades */
+        .twinkle-star.weak { opacity: 0.3; animation-duration: 3.5s; }
+        .twinkle-star.medium { opacity: 0.6; animation-duration: 2.2s; }
+        .twinkle-star.strong { opacity: 1; animation-duration: 1.3s; }
+        .twinkle-star.yellow { background: #fff8e1; box-shadow: 0 0 8px 2px #fff8e1, 0 0 16px 4px #fff8e155; }
+        .twinkle-star.blue { background: #e6f3ff; box-shadow: 0 0 8px 2px #e6f3ff, 0 0 16px 4px #e6f3ff55; }
     </style>
 </head>
 <body>
-    <div class="animated-background"></div>
-    <div class="particles" id="particles"></div>
+    <div class="stars-background"></div>
+    <div class="starfield" id="starfield" aria-hidden="true"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="geometric-shape shape-1"></div>
-        <div class="geometric-shape shape-2"></div>
-        <div class="geometric-shape shape-3"></div>
-        
         <div class="hero-content">
             <h1 class="hero-title glitch" data-text="DREAMER"><span class="progress-text">DREAMER</span><span class="progress-bar"></span></h1>
             <div class="cta-buttons">
@@ -827,24 +862,108 @@
     </div>
 
     <script>
-        // Partículas animadas
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const numberOfParticles = 50;
+        // Campo de estrelas do tema padrão
+        const performanceConfig = {
+            maxStars: window.innerWidth > 768 ? 60 : 24, // Mais estrelas
+            staticStars: window.innerWidth > 768 ? 20 : 8 // Mais estrelas estáticas
+        };
 
-            for (let i = 0; i < numberOfParticles; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            starfield.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            
+            // Estrelas em movimento
+            for (let i = 0; i < performanceConfig.maxStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
                 
-                // Cores alternadas
-                if (Math.random() > 0.5) {
-                    particle.style.background = 'rgba(255, 107, 107, 0.8)';
+                const angle = Math.random() * 2 * Math.PI;
+                const initialRadius = Math.random() * 50 + 10;
+                const startX = centerX + Math.cos(angle) * initialRadius;
+                const startY = centerY + Math.sin(angle) * initialRadius;
+                
+                const directionX = Math.cos(angle);
+                const directionY = Math.sin(angle);
+                
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+                
+                // Tipos com probabilidades
+                const starType = Math.random();
+                if (starType < 0.7) {
+                    star.classList.add('distant');
+                } else if (starType < 0.9) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('close');
                 }
                 
-                particlesContainer.appendChild(particle);
+                // Cores especiais
+                const colorType = Math.random();
+                if (colorType < 0.1) {
+                    star.classList.add('blue');
+                } else if (colorType < 0.2) {
+                    star.classList.add('yellow');
+                }
+                
+                star.style.left = startX + 'px';
+                star.style.top = startY + 'px';
+                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+                star.style.animationDelay = Math.random() * 25 + 's';
+                
+                fragment.appendChild(star);
+            }
+            
+            // Estrelas estacionárias com twinkle
+            for (let i = 0; i < performanceConfig.staticStars; i++) {
+                const staticStar = document.createElement('div');
+                staticStar.className = 'star distant';
+                staticStar.style.position = 'absolute';
+                staticStar.style.left = Math.random() * window.innerWidth + 'px';
+                staticStar.style.top = Math.random() * window.innerHeight + 'px';
+                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+                staticStar.style.animationDelay = Math.random() * 2 + 's';
+                
+                fragment.appendChild(staticStar);
+            }
+            
+            starfield.appendChild(fragment);
+        }
+
+        // Adiciona estrelas piscando em diferentes intensidades
+        function createTwinkleStars() {
+            const starfield = document.getElementById('starfield');
+            // Remove antigas
+            Array.from(starfield.querySelectorAll('.twinkle-star')).forEach(e => e.remove());
+            const twinkleCount = window.innerWidth > 768 ? 10 : 4;
+            for (let i = 0; i < twinkleCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('twinkle-star');
+                // Intensidade aleatória
+                const intensity = Math.random();
+                if (intensity < 0.33) star.classList.add('weak');
+                else if (intensity < 0.66) star.classList.add('medium');
+                else star.classList.add('strong');
+                // Cor aleatória
+                const color = Math.random();
+                if (color < 0.15) star.classList.add('yellow');
+                else if (color > 0.85) star.classList.add('blue');
+                // Tamanho aleatório (menor)
+                const size = 1.2 + Math.random() * 1.8;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                // Posição aleatória
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                star.style.top = Math.random() * window.innerHeight + 'px';
+                // Delay aleatório
+                star.style.animationDelay = (Math.random() * 2) + 's';
+                starfield.appendChild(star);
             }
         }
 
@@ -856,9 +975,12 @@
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    // Offset especial para o botão 'Explorar' (portfolio)
+                    const offset = targetId === '#portfolio' ? -90 : 0;
+                    const elementTop = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({
+                        top: elementTop,
+                        behavior: 'smooth'
                     });
                 }
             });
@@ -889,26 +1011,18 @@
             dot.addEventListener('click', () => {
                 const targetSection = sections[index];
                 if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    let offset = 0;
+                    if (index === 1) {
+                        offset = -30; // segundo ponto: 10px acima
+                    } else if (index === 2) {
+                        offset = 100; // terceiro ponto: 20px abaixo
+                    }
+                    const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY + offset;
+                    window.scrollTo({
+                        top: sectionTop,
+                        behavior: 'smooth'
                     });
                 }
-            });
-        });
-
-        // Efeito de paralaxe nas formas geométricas
-        document.addEventListener('mousemove', (e) => {
-            const shapes = document.querySelectorAll('.geometric-shape');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            shapes.forEach((shape, index) => {
-                const speed = (index + 1) * 0.5;
-                const xPos = (x - 0.5) * speed * 50;
-                const yPos = (y - 0.5) * speed * 50;
-                
-                shape.style.transform += ` translate(${xPos}px, ${yPos}px)`;
             });
         });
 
@@ -943,7 +1057,8 @@
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
+            createStarfield();
+            createTwinkleStars();
             
             // Efeito de digitação no título
             const title = document.querySelector('.hero-title');
@@ -1006,18 +1121,17 @@
             heroTitle.addEventListener('touchcancel', cancelProgress);
         }
 
-        // Controle de áudio do vídeo
+        // Detectar mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+        // Controle de áudio do vídeo (simplificado)
         function toggleAudio() {
             const video = document.querySelector('.quote-video-bg');
             const btn = document.getElementById('audioControl');
-            const tooltip = btn.querySelector('.audio-tooltip');
-
             if (video.muted) {
                 video.muted = false;
                 btn.classList.add('active');
                 btn.innerHTML = '🔊<div class="audio-tooltip">Clique para silenciar</div>';
-
-                // Garantir que o vídeo está tocando
                 video.play().catch(e => console.log('Erro ao reproduzir:', e));
             } else {
                 video.muted = true;
@@ -1029,18 +1143,26 @@
         // Garantir que o vídeo carregue corretamente
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.querySelector('.quote-video-bg');
-
             if (video) {
                 video.addEventListener('loadeddata', () => {
                     console.log('Vídeo carregado com sucesso');
                 });
-
                 video.addEventListener('error', (e) => {
                     console.log('Erro ao carregar vídeo:', e);
                     // Fallback: ocultar vídeo se não carregar
                     video.style.display = 'none';
                 });
             }
+        });
+
+        // Debounce no resize para o campo de estrelas
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createStarfield();
+                createTwinkleStars();
+            }, 250);
         });
     </script>
 </body>
