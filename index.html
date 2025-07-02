@@ -1164,6 +1164,20 @@
                 createTwinkleStars();
             }, 250);
         });
+
+        // Corrigir vídeo congelado ao voltar do histórico (bfcache)
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                const video = document.querySelector('.quote-video-bg');
+                if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.load();
+                    video.muted = true; // ou false, conforme seu padrão
+                    video.play().catch(() => {});
+                }
+            }
+        });
     </script>
 </body>
 </html>
