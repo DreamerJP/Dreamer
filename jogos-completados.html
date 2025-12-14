@@ -1414,6 +1414,7 @@
         let displayedGames = [];
         let currentCategory = 'favorites';
         let gamesWithDetails = new Map();
+        let resortDebounceTimer;
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
