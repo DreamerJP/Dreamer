@@ -1959,10 +1959,16 @@
 
             modalPoster.src = details.cover || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
 
-            // Fundo do modal com gradiente sutil
-            modalBackdrop.src = '';
-            modalBackdrop.style.background = 'linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 50%, rgba(15, 52, 96, 0.9) 100%)';
-            modalBackdrop.style.opacity = '1';
+            // Fundo do modal - usar imagem de fundo de alta resolução se disponível, senão gradiente
+            if (details.background && details.background !== 'N/A') {
+                modalBackdrop.src = details.background;
+                modalBackdrop.style.background = 'none';
+                modalBackdrop.style.opacity = '0.8'; // Reduzir opacidade para melhor legibilidade
+            } else {
+                modalBackdrop.src = '';
+                modalBackdrop.style.background = 'linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 50%, rgba(15, 52, 96, 0.9) 100%)';
+                modalBackdrop.style.opacity = '1';
+            }
 
             const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
