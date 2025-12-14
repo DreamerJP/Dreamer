@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmes</title>
+    <title>Jogos Completados</title>
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -209,7 +209,7 @@
             color: #111 !important;
             font-size: 3em;
             margin-bottom: 15px;
-            text-shadow: 
+            text-shadow:
                 0 0 20px var(--primary-color),
                 2px 2px 4px var(--shadow-color);
         }
@@ -324,8 +324,8 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Grid de filmes */
-        .movies-grid {
+        /* Grid de jogos */
+        .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
@@ -346,11 +346,11 @@
         .separator-line {
             flex: 1;
             height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--primary-color) 20%, 
-                var(--secondary-color) 50%, 
-                var(--primary-color) 80%, 
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--primary-color) 20%,
+                var(--secondary-color) 50%,
+                var(--primary-color) 80%,
                 transparent 100%
             );
             border-radius: 1px;
@@ -372,11 +372,11 @@
         }
 
         @keyframes separator-pulse {
-            0%, 100% { 
+            0%, 100% {
                 transform: scale(1);
                 box-shadow: 0 5px 15px var(--shadow-color);
             }
-            50% { 
+            50% {
                 transform: scale(1.05);
                 box-shadow: 0 8px 25px var(--shadow-color-strong);
             }
@@ -460,7 +460,7 @@
             padding: 0 10px;
         }
 
-        .movie-card {
+        .game-card {
             background: var(--bg-main);
             border-radius: 15px;
             overflow: hidden;
@@ -471,12 +471,12 @@
             backdrop-filter: blur(10px);
         }
 
-        .movie-card:hover {
+        .game-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px var(--shadow-color-strong);
         }
 
-        .movie-poster {
+        .game-poster {
             width: 100%;
             height: 280px;
             object-fit: cover;
@@ -486,7 +486,7 @@
             position: relative;
         }
 
-        .movie-poster.loading {
+        .game-poster.loading {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -494,11 +494,11 @@
             font-size: 3em;
         }
 
-        .movie-info {
+        .game-info {
             padding: 10px;
         }
 
-        .movie-title {
+        .game-title {
             font-size: 1em;
             font-weight: bold;
             color: var(--text-primary);
@@ -506,7 +506,7 @@
             line-height: 1.2;
         }
 
-        .movie-meta {
+        .game-meta {
             display: flex;
             gap: 15px;
             margin-bottom: 8px;
@@ -514,13 +514,13 @@
             color: var(--text-secondary);
         }
 
-        .movie-meta span {
+        .game-meta span {
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        .movie-genres {
+        .game-genres {
             display: flex;
             gap: 2px;
             margin-bottom: 8px;
@@ -541,7 +541,7 @@
             margin-bottom: 2px;
         }
 
-        .movie-rating {
+        .game-rating {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -562,7 +562,7 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        .movie-plot {
+        .game-plot {
             color: var(--text-secondary);
             font-size: 0.9em;
             line-height: 1.3;
@@ -618,10 +618,10 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(
-                135deg, 
-                rgba(0,0,0,0.8) 0%, 
-                rgba(0,0,0,0.3) 30%, 
-                rgba(0,0,0,0.1) 50%, 
+                135deg,
+                rgba(0,0,0,0.8) 0%,
+                rgba(0,0,0,0.3) 30%,
+                rgba(0,0,0,0.1) 50%,
                 rgba(0,0,0,0.4) 70%,
                 rgba(0,0,0,0.9) 100%
             );
@@ -880,11 +880,11 @@
             .filter-group {
                 min-width: 100%;
             }
-            .movies-grid {
+            .games-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
-            .movie-card {
+            .game-card {
                 margin: 0;
                 border-radius: 10px;
             }
@@ -916,11 +916,11 @@
                 max-width: 100vw;
                 padding: 0;
             }
-            .movies-grid {
+            .games-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
-            .movie-card {
+            .game-card {
                 margin: 0;
                 border-radius: 8px;
             }
@@ -952,7 +952,7 @@
 
         /* Unificar header, filtros e estatísticas */
         .unified-header {
-            background: url('https://github.com/DreamerJP/site-images/blob/main/Filmes/AbsoluteCinema.jpg?raw=true') center center/cover no-repeat;
+            background: url('https://github.com/DreamerJP/site-images/blob/main/Jogos/GameCollection.jpg?raw=true') center center/cover no-repeat;
             position: relative;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.10);
@@ -1044,11 +1044,11 @@
                 grid-template-columns: 280px 1fr;
                 gap: 25px;
             }
-            
+
             .modal-poster {
                 height: 420px;
             }
-            
+
             .info-grid {
                 grid-template-columns: 1fr;
             }
@@ -1059,30 +1059,30 @@
                 max-width: 100vw;
                 padding: 0;
             }
-            .movies-grid {
+            .games-grid {
                 padding: 0;
             }
-            
+
             .modal-content {
                 width: 95%;
                 margin: 5% auto;
             }
-            
+
             .modal-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .modal-poster {
                 height: 400px;
                 max-width: 280px;
                 justify-self: center;
             }
-            
+
             .modal-title {
                 font-size: 2rem;
             }
-            
+
             .modal-body {
                 padding: 0 20px 20px;
             }
@@ -1093,31 +1093,31 @@
                 max-width: 100vw;
                 padding: 0;
             }
-            .movies-grid {
+            .games-grid {
                 padding: 0;
             }
-            
+
             .modal-content {
                 width: 100%;
                 margin: 0;
                 border-radius: 0;
             }
-            
+
             .modal-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .modal-poster {
                 height: 300px;
                 max-width: 100%;
                 justify-self: center;
             }
-            
+
             .modal-title {
                 font-size: 1.8rem;
             }
-            
+
             .modal-body {
                 padding: 0 20px 20px;
             }
@@ -1189,8 +1189,8 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="animes.html">🎌 Animes</a></li>
-                <li><a href="filmes.html" class="active">🎬 Filmes</a></li>
-                <li><a href="jogos-completados.html">🎮 Jogos Completados</a></li>
+                <li><a href="filmes.html">🎬 Filmes</a></li>
+                <li><a href="jogos-completados.html" class="active">🎮 Jogos Completados</a></li>
                 <li><a href="jogos.html">🎮 Jogos</a></li>
                 <li><a href="musicas.html">🎵 Músicas</a></li>
                 <li><a href="imagens.html">🖼️ Imagens</a></li>
@@ -1201,8 +1201,9 @@
 
     <div class="main-container">
         <div class="header unified-header">
-            <h1><span style="font-size:1.2em;">🎬</span> Meu Catálogo de Filmes</h1>
-            <p>ABSOLUTE CINEMA</p>
+            <div class="header-overlay-fix"></div>
+            <h1><span style="font-size:1.2em;">🎮</span> Jogos Completados</h1>
+            <p>MINHA COLEÇÃO DE JOGOS ZERADOS</p>
             <div class="filters-stats-flex">
                 <div class="filters">
                     <div class="filter-row">
@@ -1210,7 +1211,7 @@
                             <label>Categoria:</label>
                             <div class="filter-tags">
                                 <button class="filter-tag active" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
-                                <button class="filter-tag" onclick="filterByCategory('all')">🎬 Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('all')">🎮 Todos</button>
                                 <button class="filter-tag" onclick="filterByCategory('recent')">🆕 Recentes</button>
                             </div>
                         </div>
@@ -1218,23 +1219,23 @@
                     <div class="filter-row">
                         <div class="filter-group">
                             <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Digite o Título, Ator, ou Diretor" oninput="searchMovies()">
+                            <input type="text" id="searchInput" placeholder="Digite o Título, Desenvolvedora, ou Gênero" oninput="searchGames()">
                         </div>
                         <div class="filter-group">
                             <label>🎭 Gênero:</label>
-                            <select id="genreFilter" onchange="filterMovies()">
+                            <select id="genreFilter" onchange="filterGames()">
                                 <option value="">Todos os gêneros</option>
                             </select>
                         </div>
                         <div class="filter-group">
                             <label>📅 Ano:</label>
-                            <select id="yearFilter" onchange="filterMovies()">
+                            <select id="yearFilter" onchange="filterGames()">
                                 <option value="">Todos os anos</option>
                             </select>
                         </div>
                         <div class="filter-group">
                             <label>⭐ Nota:</label>
-                            <select id="ratingFilter" onchange="filterMovies()">
+                            <select id="ratingFilter" onchange="filterGames()">
                                 <option value="">Notas</option>
                                 <option value="9">9+ estrelas</option>
                                 <option value="8">8+ estrelas</option>
@@ -1248,11 +1249,11 @@
                     <h3 style="font-size:1.1em; margin-bottom:10px; text-align:center;">📊 Estatísticas da Coleção</h3>
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-value" id="totalMovies">0</div>
-                            <div class="stat-label">Total de Filmes</div>
+                            <div class="stat-value" id="totalGames">0</div>
+                            <div class="stat-label">Total de Jogos</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="currentMovies">0</div>
+                            <div class="stat-value" id="currentGames">0</div>
                             <div class="stat-label">Exibindo</div>
                         </div>
                         <div class="stat-card">
@@ -1269,29 +1270,29 @@
         </div>
         <div class="loading" id="loading">
             <div class="loading-spinner"></div>
-            <p>Carregando filmes favoritos...</p>
+            <p>Carregando jogos completados...</p>
         </div>
-        <div class="movies-grid" id="moviesGrid"></div>
+        <div class="games-grid" id="gamesGrid"></div>
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="movieModal">
+    <div class="modal" id="gameModal">
         <div class="modal-content">
             <!-- Backdrop como fundo completo -->
             <img class="modal-backdrop" id="modalBackdrop" src="" alt="">
-            
+
             <!-- Header apenas com botão fechar -->
             <div class="modal-header">
                 <span class="close" onclick="closeModal()">&times;</span>
             </div>
-            
+
             <!-- Corpo do modal -->
             <div class="modal-body">
                 <div class="modal-info">
-                    <!-- Poster do filme -->
+                    <!-- Poster do jogo -->
                     <img class="modal-poster" id="modalPoster" src="" alt="">
-                    
-                    <!-- Detalhes do filme -->
+
+                    <!-- Detalhes do jogo -->
                     <div class="modal-details" id="modalDetails">
                         <!-- Conteúdo será inserido pelo JavaScript -->
                     </div>
@@ -1301,35 +1302,32 @@
     </div>
 
     <script>
-        // Variável global para quantidade de filmes por página
-        const moviesPerPage = 24;
+        // Variável global para quantidade de jogos por página
+        const gamesPerPage = 24;
 
-        // Variável global para debounce do resort dos recentes
-        let resortDebounceTimer;
-
-        // Função auxiliar para extrair o ano do filme
-        const getMovieYear = (movie) => {
-            const details = moviesWithDetails.get(movie.slug);
+        // Função auxiliar para extrair o ano do jogo
+        const getGameYear = (game) => {
+            const details = gamesWithDetails.get(game.slug);
             if (details && details.year && details.year !== 'N/A') {
                 return parseInt(details.year, 10);
             }
             // Regex robusta para diferentes formatos de título
-            const yearMatch = movie.title.match(/\((\d{4})\)$/) ||
-                              movie.title.match(/(\d{4})$/) ||
-                              movie.title.match(/\[(\d{4})\]/);
+            const yearMatch = game.title.match(/\((\d{4})\)$/) ||
+                              game.title.match(/(\d{4})$/) ||
+                              game.title.match(/\[(\d{4})\]/);
             if (yearMatch) {
                 const year = parseInt(yearMatch[1], 10);
-                if (year >= 1888 && year <= new Date().getFullYear() + 5) {
+                if (year >= 1970 && year <= new Date().getFullYear() + 5) {
                     return year;
                 }
             }
             return 0; // Se não encontrar, joga para o fim da lista
         };
 
-        // Função centralizada para ordenar e selecionar os filmes recentes
-        function getSortedRecentMovies() {
-            return [...allMovies]
-                .sort((a, b) => getMovieYear(b) - getMovieYear(a))
+        // Função centralizada para ordenar e selecionar os jogos recentes
+        function getSortedRecentGames() {
+            return [...allGames]
+                .sort((a, b) => getGameYear(b) - getGameYear(a))
                 .slice(0, 24);
         }
 
@@ -1339,11 +1337,11 @@
             resortDebounceTimer = setTimeout(() => {
                 try {
                     if (currentCategory === 'recent') {
-                        displayedMovies = getSortedRecentMovies();
-                        renderMoviesSmart(displayedMovies);
+                        displayedGames = getSortedRecentGames();
+                        renderGamesSmart(displayedGames);
                     }
                 } catch (error) {
-                    console.error('Erro ao reordenar filmes recentes dinamicamente:', error);
+                    console.error('Erro ao reordenar jogos recentes dinamicamente:', error);
                 }
             }, 500);
         }
@@ -1353,25 +1351,25 @@
             const starfield = document.getElementById('starfield');
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
+
             starfield.innerHTML = '';
-            
+
             // Estrelas em movimento
             for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
+
                 const angle = Math.random() * 2 * Math.PI;
                 const initialRadius = Math.random() * 50 + 10;
                 const startX = centerX + Math.cos(angle) * initialRadius;
                 const startY = centerY + Math.sin(angle) * initialRadius;
-                
+
                 const directionX = Math.cos(angle);
                 const directionY = Math.sin(angle);
-                
+
                 const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
                 const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
-                
+
                 const starType = Math.random();
                 if (starType < 0.6) {
                     star.classList.add('distant');
@@ -1380,23 +1378,23 @@
                 } else {
                     star.classList.add('close');
                 }
-                
+
                 const colorType = Math.random();
                 if (colorType < 0.1) {
                     star.classList.add('blue');
                 } else if (colorType < 0.2) {
                     star.classList.add('yellow');
                 }
-                
+
                 star.style.left = startX + 'px';
                 star.style.top = startY + 'px';
                 star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
                 star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
                 star.style.animationDelay = Math.random() * 20 + 's';
-                
+
                 starfield.appendChild(star);
             }
-            
+
             // Estrelas estacionárias
             for (let i = 0; i < 50; i++) {
                 const staticStar = document.createElement('div');
@@ -1406,141 +1404,130 @@
                 staticStar.style.top = Math.random() * window.innerHeight + 'px';
                 staticStar.style.opacity = Math.random() * 0.3 + 0.1;
                 staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
-                
+
                 starfield.appendChild(staticStar);
             }
         }
 
         // Dados globais
-        let allMovies = [];
-        let displayedMovies = [];
+        let allGames = [];
+        let displayedGames = [];
         let currentCategory = 'favorites';
-        let moviesWithDetails = new Map();
-        
-        // Configuração da API
-        const OMDB_API_KEY = 'ba0d5cc0';
-        const OMDB_BASE_URL = 'https://www.omdbapi.com/';
-        const TMDB_API_KEY = '4e44d9029b1270a757cddc766a1bcb63';
-        const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-        const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
-        const TMDB_BACKDROP_BASE = 'https://image.tmdb.org/t/p/original';
-
-        // Priorizar TMDb em português
-        const TMDB_LANGUAGE = 'pt-BR';
+        let gamesWithDetails = new Map();
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             createStarfield();
-            
+
             // Recriar estrelas no resize
             window.addEventListener('resize', createStarfield);
-            
-            loadMovies();
+
+            loadGames();
         });
 
-        // Carregar filmes do JSON
-        async function loadMovies() {
+        // Carregar jogos do JSON
+        async function loadGames() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Filmes/minha_lista_filmes.json');
+                const response = await fetch('minha_lista_jogos.json');
                 const data = await response.json();
-                
-                allMovies = data.films || [];
-                
+
+                allGames = data.games || [];
+
                 // Iniciar com favoritos (primeiros 24)
                 await loadFavorites();
-                
+
                 // Carregar filtros
                 await waitForAllDetailsAndPopulateFilters();
                 updateStats();
-                
+
             } catch (error) {
-                console.error('Erro ao carregar filmes:', error);
-                document.getElementById('loading').innerHTML = '<p>❌ Erro ao carregar filmes. Tente novamente mais tarde.</p>';
+                console.error('Erro ao carregar jogos:', error);
+                document.getElementById('loading').innerHTML = '<p>❌ Erro ao carregar jogos. Tente novamente mais tarde.</p>';
             }
         }
 
-        // Carregar filmes favoritos
+        // Carregar jogos favoritos
         async function loadFavorites() {
-            const favorites = allMovies.slice(0, 24);
-            displayedMovies = favorites;
-            
+            const favorites = allGames.slice(0, 24);
+            displayedGames = favorites;
+
             // Renderizar imediatamente com dados básicos
-            renderMoviesSmart(displayedMovies);
-            
+            renderGamesSmart(displayedGames);
+
             // Carregar detalhes em paralelo
-            await loadMovieDetailsBackground(favorites);
-            // Após carregar favoritos, iniciar carregamento de todos os filmes em background
-            if (allMovies.length > 0) {
-                loadMovieDetailsBackground(allMovies);
+            await loadGameDetailsBackground(favorites);
+            // Após carregar favoritos, iniciar carregamento de todos os jogos em background
+            if (allGames.length > 0) {
+                loadGameDetailsBackground(allGames);
             }
         }
 
-        // Renderizar filmes inteligentes (completo se já carregado, senão loading)
-        function renderMoviesSmart(movies) {
-            const grid = document.getElementById('moviesGrid');
+        // Renderizar jogos inteligentes (completo se já carregado, senão loading)
+        function renderGamesSmart(games) {
+            const grid = document.getElementById('gamesGrid');
             document.getElementById('loading').style.display = 'none';
 
-            if (movies.length === 0) {
-                grid.innerHTML = '<div class="loading"><p>🎬 Nenhum filme encontrado com os filtros aplicados.</p></div>';
+            if (games.length === 0) {
+                grid.innerHTML = '<div class="loading"><p>🎮 Nenhum jogo encontrado com os filtros aplicados.</p></div>';
                 return;
             }
 
-            const totalPages = Math.ceil(movies.length / moviesPerPage);
+            const totalPages = Math.ceil(games.length / gamesPerPage);
             const currentPage = 1; // Sempre começa na página 1
-            
-            // Calcular filmes da página atual
-            const startIndex = (currentPage - 1) * moviesPerPage;
-            const endIndex = startIndex + moviesPerPage;
-            const currentMovies = movies.slice(startIndex, endIndex);
 
-            // Renderizar filmes da página atual
-            let html = currentMovies.map(movie => {
-                const details = moviesWithDetails.get(movie.slug);
+            // Calcular jogos da página atual
+            const startIndex = (currentPage - 1) * gamesPerPage;
+            const endIndex = startIndex + gamesPerPage;
+            const currentGames = games.slice(startIndex, endIndex);
+
+            // Renderizar jogos da página atual
+            let html = currentGames.map(game => {
+                const details = gamesWithDetails.get(game.slug);
                 if (details) {
-                    const rating = parseFloat(details.imdbRating) || 0;
+                    const rating = parseFloat(details.rating) || 0;
                     const stars = generateStars(rating);
                     return `
-                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
-                            <div class="movie-poster${details.poster ? '' : ' loading'}" style="background-image: ${details.poster ? `url(${details.poster})` : 'none'}">
-                                ${!details.poster ? '🎬' : ''}
+                        <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
+                            <div class="game-poster${details.cover ? '' : ' loading'}" style="background-image: ${details.cover ? `url(${details.cover})` : 'none'}">
+                                ${!details.cover ? '🎮' : ''}
                             </div>
-                            <div class="movie-info">
-                                <h3 class="movie-title">${details.title}</h3>
-                                <div class="movie-meta">
+                            <div class="game-info">
+                                <h3 class="game-title">${details.title}</h3>
+                                <div class="game-meta">
                                     <span>📅 ${details.year}</span>
-                                    <span>⏱️ ${details.runtime}</span>
+                                    <span>🎮 ${details.developer}</span>
                                 </div>
-                                <div class="movie-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g => 
-                                        `<span class=\"genre-tag\">${g.trim()}</span>`
+                                <div class="game-genres">
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                                        `<span class="genre-tag">${g.trim()}</span>`
                                     ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
-                                <div class="movie-rating">
+                                <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
-                                    <span>${details.imdbRating}/10</span>
+                                    <span>${details.rating}/10</span>
                                 </div>
-                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse: ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
                 } else {
                     return `
-                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
-                            <div class="movie-poster loading">🎬</div>
-                            <div class="movie-info">
-                                <h3 class="movie-title">${movie.title}</h3>
-                                <div class="movie-meta">
+                        <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
+                            <div class="game-poster loading">🎮</div>
+                            <div class="game-info">
+                                <h3 class="game-title">${game.title}</h3>
+                                <div class="game-meta">
                                     <span>📅 Carregando...</span>
-                                    <span>⏱️ Carregando...</span>
+                                    <span>🎮 Carregando...</span>
                                 </div>
-                                <div class="movie-genres">
+                                <div class="game-genres">
                                     <span class="genre-tag">Carregando gêneros...</span>
                                 </div>
-                                <div class="movie-rating">
+                                <div class="game-rating">
                                     <div class="rating-stars">☆☆☆☆☆</div>
                                     <span>-/10</span>
                                 </div>
-                                <p class="movie-plot">Carregando informações...</p>
+                                <p class="game-plot">Carregando informações...</p>
                             </div>
                         </div>
                     `;
@@ -1549,21 +1536,21 @@
 
             // Adicionar paginação se houver mais de uma página
             if (totalPages > 1) {
-                html += createPaginationHTML(currentPage, totalPages, movies.length);
+                html += createPaginationHTML(currentPage, totalPages, games.length);
             }
-            
+
             grid.innerHTML = html;
         }
 
         // Criar HTML da paginação
-        function createPaginationHTML(currentPage, totalPages, totalMovies) {
-            const startMovie = (currentPage - 1) * moviesPerPage + 1;
-            const endMovie = Math.min(currentPage * moviesPerPage, totalMovies);
-            
+        function createPaginationHTML(currentPage, totalPages, totalGames) {
+            const startGame = (currentPage - 1) * gamesPerPage + 1;
+            const endGame = Math.min(currentPage * gamesPerPage, totalGames);
+
             let paginationHTML = `
                 <div class="pagination-container">
                     <div class="pagination-info">
-                        <span>Mostrando ${startMovie}-${endMovie} de ${totalMovies} filmes</span>
+                        <span>Mostrando ${startGame}-${endGame} de ${totalGames} jogos</span>
                     </div>
                     <div class="pagination-controls">
             `;
@@ -1577,7 +1564,7 @@
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            
+
             if (endPage - startPage + 1 < maxVisiblePages) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
@@ -1619,59 +1606,59 @@
 
         // Função para mudar de página
         function changePage(pageNumber) {
-            const startIndex = (pageNumber - 1) * moviesPerPage;
-            const endIndex = startIndex + moviesPerPage;
-            const currentMovies = displayedMovies.slice(startIndex, endIndex);
+            const startIndex = (pageNumber - 1) * gamesPerPage;
+            const endIndex = startIndex + gamesPerPage;
+            const currentGames = displayedGames.slice(startIndex, endIndex);
 
-            // Renderizar filmes da nova página
-            const grid = document.getElementById('moviesGrid');
-            let html = currentMovies.map(movie => {
-                const details = moviesWithDetails.get(movie.slug);
+            // Renderizar jogos da nova página
+            const grid = document.getElementById('gamesGrid');
+            let html = currentGames.map(game => {
+                const details = gamesWithDetails.get(game.slug);
                 if (details) {
-                    const rating = parseFloat(details.imdbRating) || 0;
+                    const rating = parseFloat(details.rating) || 0;
                     const stars = generateStars(rating);
                     return `
-                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
-                            <div class="movie-poster${details.poster ? '' : ' loading'}" style="background-image: ${details.poster ? `url(${details.poster})` : 'none'}">
-                                ${!details.poster ? '🎬' : ''}
+                        <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
+                            <div class="game-poster${details.cover ? '' : ' loading'}" style="background-image: ${details.cover ? `url(${details.cover})` : 'none'}">
+                                ${!details.cover ? '🎮' : ''}
                             </div>
-                            <div class="movie-info">
-                                <h3 class="movie-title">${details.title}</h3>
-                                <div class="movie-meta">
+                            <div class="game-info">
+                                <h3 class="game-title">${details.title}</h3>
+                                <div class="game-meta">
                                     <span>📅 ${details.year}</span>
-                                    <span>⏱️ ${details.runtime}</span>
+                                    <span>🎮 ${details.developer}</span>
                                 </div>
-                                <div class="movie-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g => 
-                                        `<span class=\"genre-tag\">${g.trim()}</span>`
+                                <div class="game-genres">
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                                        `<span class="genre-tag">${g.trim()}</span>`
                                     ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
-                                <div class="movie-rating">
+                                <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
-                                    <span>${details.imdbRating}/10</span>
+                                    <span>${details.rating}/10</span>
                                 </div>
-                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse: ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
                 } else {
                     return `
-                        <div class="movie-card" onclick="openMovieModal('${movie.slug}')" data-slug="${movie.slug}">
-                            <div class="movie-poster loading">🎬</div>
-                            <div class="movie-info">
-                                <h3 class="movie-title">${movie.title}</h3>
-                                <div class="movie-meta">
+                        <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
+                            <div class="game-poster loading">🎮</div>
+                            <div class="game-info">
+                                <h3 class="game-title">${game.title}</h3>
+                                <div class="game-meta">
                                     <span>📅 Carregando...</span>
-                                    <span>⏱️ Carregando...</span>
+                                    <span>🎮 Carregando...</span>
                                 </div>
-                                <div class="movie-genres">
+                                <div class="game-genres">
                                     <span class="genre-tag">Carregando gêneros...</span>
                                 </div>
-                                <div class="movie-rating">
+                                <div class="game-rating">
                                     <div class="rating-stars">☆☆☆☆☆</div>
                                     <span>-/10</span>
                                 </div>
-                                <p class="movie-plot">Carregando informações...</p>
+                                <p class="game-plot">Carregando informações...</p>
                             </div>
                         </div>
                     `;
@@ -1679,9 +1666,9 @@
             }).join('');
 
             // Adicionar paginação atualizada
-            const totalPages = Math.ceil(displayedMovies.length / moviesPerPage);
-            html += createPaginationHTML(pageNumber, totalPages, displayedMovies.length);
-            
+            const totalPages = Math.ceil(displayedGames.length / gamesPerPage);
+            html += createPaginationHTML(pageNumber, totalPages, displayedGames.length);
+
             grid.innerHTML = html;
 
             // Scroll suave para o topo
@@ -1689,167 +1676,83 @@
         }
 
         // Carregar detalhes em background
-        async function loadMovieDetailsBackground(movies) {
+        async function loadGameDetailsBackground(games) {
             const BATCH_SIZE = 8; // Máximo simultâneo
-            
-            for (let i = 0; i < movies.length; i += BATCH_SIZE) {
-                const batch = movies.slice(i, i + BATCH_SIZE);
-                
+
+            for (let i = 0; i < games.length; i += BATCH_SIZE) {
+                const batch = games.slice(i, i + BATCH_SIZE);
+
                 // Processar lote em paralelo
-                const promises = batch.map(async (movie) => {
-                    if (!moviesWithDetails.has(movie.slug)) {
+                const promises = batch.map(async (game) => {
+                    if (!gamesWithDetails.has(game.slug)) {
                         try {
-                            const details = await fetchMovieDetailsTMDb(movie.title);
-                            moviesWithDetails.set(movie.slug, { ...movie, ...details });
-                            
+                            const details = await fetchGameDetailsIGDB(game.title);
+                            gamesWithDetails.set(game.slug, { ...game, ...details });
+
                             // Atualizar card individual
-                            updateMovieCard(movie.slug, details);
-                            
+                            updateGameCard(game.slug, details);
+
                             // Atualização dinâmica dos recentes
                             debouncedResortAndRender();
                         } catch (error) {
-                            console.error('Erro ao carregar detalhes:', movie.title, error);
-                            const defaultData = getDefaultMovieData();
-                            moviesWithDetails.set(movie.slug, { ...movie, ...defaultData });
-                            updateMovieCard(movie.slug, { ...movie, ...defaultData });
+                            console.error('Erro ao carregar detalhes:', game.title, error);
+                            const defaultData = getDefaultGameData();
+                            gamesWithDetails.set(game.slug, { ...game, ...defaultData });
+                            updateGameCard(game.slug, { ...game, ...defaultData });
                             debouncedResortAndRender();
                         }
                     }
                 });
-                
+
                 await Promise.all(promises);
-                
+
                 // Delay mínimo apenas entre lotes
-                if (i + BATCH_SIZE < movies.length) {
+                if (i + BATCH_SIZE < games.length) {
                     await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
-            
+
             updateStats();
         }
 
-        // Buscar detalhes no TMDb em português
-        async function fetchMovieDetailsTMDb(title) {
+        // Buscar detalhes no IGDB
+        async function fetchGameDetailsIGDB(title) {
             try {
                 // Extrair ano do título se existir
                 const yearMatch = title.match(/\((\d{4})\)/);
                 const cleanTitle = title.replace(/\(.*?\)/g, '').trim();
                 const year = yearMatch ? yearMatch[1] : null;
-                
-                // Primeira tentativa: busca com ano como parâmetro separado
-                let searchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle)}`;
-                if (year) {
-                    searchUrl += `&year=${year}`;
-                }
-                
-                let searchResponse = await fetch(searchUrl);
-                let searchData = await searchResponse.json();
-                
-                let movie = null;
-                
-                if (searchData.results && searchData.results.length > 0) {
-                    // Se temos um ano específico, tentar encontrar o filme correto
-                    if (year) {
-                        // Procurar por um filme que corresponda ao ano
-                        const matchingMovie = searchData.results.find(result => {
-                            const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
-                            return resultYear === year;
-                        });
-                        
-                        if (matchingMovie) {
-                            movie = matchingMovie;
-                        } else {
-                            // Se não encontrar o ano exato, verificar se o primeiro resultado tem um ano próximo
-                            const firstResultYear = searchData.results[0].release_date ? searchData.results[0].release_date.split('-')[0] : null;
-                            if (firstResultYear && Math.abs(parseInt(firstResultYear) - parseInt(year)) > 2) {
-                                // Se a diferença for maior que 2 anos, tentar uma busca mais específica
-                                console.warn(`Possível confusão de filmes: buscando "${cleanTitle} (${year})" mas encontrou ano ${firstResultYear}`);
-                                
-                                // Segunda tentativa: incluir o ano na query de busca
-                                const specificSearchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle + ' ' + year)}`;
-                                const specificResponse = await fetch(specificSearchUrl);
-                                const specificData = await specificResponse.json();
-                                
-                                if (specificData.results && specificData.results.length > 0) {
-                                    // Procurar por um filme que corresponda ao ano na busca específica
-                                    const specificMatchingMovie = specificData.results.find(result => {
-                                        const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
-                                        return resultYear === year;
-                                    });
-                                    
-                                    if (specificMatchingMovie) {
-                                        movie = specificMatchingMovie;
-                                    } else {
-                                        // Se ainda não encontrar, usar o primeiro resultado da busca específica
-                                        movie = specificData.results[0];
-                                    }
-                                } else {
-                                    // Se a busca específica não retornar nada, usar o primeiro da busca original
-                                    movie = searchData.results[0];
-                                }
-                            } else {
-                                movie = searchData.results[0];
-                            }
-                        }
-                    } else {
-                        movie = searchData.results[0];
-                    }
-                }
-                
-                if (movie) {
-                    // Buscar detalhes completos
-                    const detailsUrl = `${TMDB_BASE_URL}/movie/${movie.id}?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&append_to_response=credits`;
-                    const detailsResponse = await fetch(detailsUrl);
-                    const details = await detailsResponse.json();
-                    
-                    return {
-                        poster: movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : null,
-                        backdrop: movie.backdrop_path ? `${TMDB_BACKDROP_BASE}${movie.backdrop_path}` : null,
-                        year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
-                        genre: details.genres ? details.genres.map(g => g.name).join(', ') : 'N/A',
-                        director: details.credits?.crew?.find(c => c.job === 'Director')?.name || 'N/A',
-                        actors: details.credits?.cast?.slice(0, 5).map(a => a.name).join(', ') || 'N/A',
-                        plot: details.overview || 'Sinopse não disponível.',
-                        runtime: details.runtime ? `${details.runtime} min` : 'N/A',
-                        imdbRating: details.vote_average ? details.vote_average.toFixed(1) : 'N/A',
-                        imdbVotes: details.vote_count ? details.vote_count.toLocaleString('pt-BR') : 'N/A',
-                        country: details.production_countries?.map(c => c.name).join(', ') || 'N/A',
-                        language: details.spoken_languages?.map(l => l.name).join(', ') || 'N/A',
-                        awards: 'N/A',
-                        boxOffice: details.revenue ? `$${details.revenue.toLocaleString('en-US')}` : 'N/A',
-                        production: details.production_companies?.map(c => c.name).join(', ') || 'N/A',
-                        rated: 'N/A',
-                        released: details.release_date ? new Date(details.release_date).toLocaleDateString('pt-BR') : 'N/A',
-                        writer: details.credits?.crew?.filter(c => c.job === 'Writer' || c.job === 'Screenplay').map(w => w.name).join(', ') || 'N/A'
-                    };
-                }
-                
-                // Fallback para dados padrão
-                return getDefaultMovieData();
-                
+
+                // Usar IGDB API (simulado por enquanto - você precisará configurar uma API key real)
+                // Por enquanto, retornar dados padrão com algumas informações básicas
+                return {
+                    cover: null,
+                    year: year || 'N/A',
+                    genre: 'Ação, Aventura',
+                    developer: 'Desenvolvedora',
+                    publisher: 'Publicadora',
+                    summary: 'Sinopse não disponível.',
+                    rating: '8.5',
+                    platforms: 'PC, PlayStation, Xbox'
+                };
+
             } catch (error) {
-                console.error('Erro ao buscar no TMDb:', error);
-                return getDefaultMovieData();
+                console.error('Erro ao buscar no IGDB:', error);
+                return getDefaultGameData();
             }
         }
 
-        // Dados padrão para filmes sem detalhes
-        function getDefaultMovieData() {
+        // Dados padrão para jogos sem detalhes
+        function getDefaultGameData() {
             return {
-                poster: null,
+                cover: null,
                 year: 'N/A',
                 genre: 'N/A',
-                director: 'N/A',
-                actors: 'N/A',
-                plot: 'Informações não disponíveis.',
-                runtime: 'N/A',
-                imdbRating: 'N/A',
-                imdbVotes: 'N/A',
-                country: 'N/A',
-                language: 'N/A',
-                awards: 'N/A',
-                boxOffice: 'N/A',
-                production: 'N/A'
+                developer: 'N/A',
+                publisher: 'N/A',
+                summary: 'Informações não disponíveis.',
+                rating: 'N/A',
+                platforms: 'N/A'
             };
         }
 
@@ -1858,104 +1761,104 @@
             const fullStars = Math.floor(rating / 2);
             const halfStar = (rating % 2) >= 1;
             const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-            
+
             let stars = '';
             for (let i = 0; i < fullStars; i++) stars += '<span class="star">★</span>';
             if (halfStar) stars += '<span class="star">★</span>';
             for (let i = 0; i < emptyStars; i++) stars += '<span class="star empty">☆</span>';
-            
+
             return stars;
         }
 
         // Filtrar por categoria
         async function filterByCategory(category) {
             currentCategory = category;
-            
+
             // Atualizar botões ativos
             document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             // Resetar outros filtros
             document.getElementById('searchInput').value = '';
             document.getElementById('genreFilter').value = '';
             document.getElementById('yearFilter').value = '';
             document.getElementById('ratingFilter').value = '';
-            
-            let moviesToShow = [];
-            
+
+            let gamesToShow = [];
+
             switch(category) {
                 case 'favorites':
-                    moviesToShow = allMovies.slice(0, 24);
+                    gamesToShow = allGames.slice(0, 24);
                     break;
                 case 'recent':
-                    moviesToShow = getSortedRecentMovies();
+                    gamesToShow = getSortedRecentGames();
                     break;
                 case 'all':
-                    moviesToShow = allMovies;
+                    gamesToShow = allGames;
                     break;
                 default:
-                    moviesToShow = allMovies.slice(0, 24);
+                    gamesToShow = allGames.slice(0, 24);
             }
-            
-            displayedMovies = moviesToShow;
-            
+
+            displayedGames = gamesToShow;
+
             // Renderizar básico primeiro
-            renderMoviesSmart(displayedMovies);
-            
+            renderGamesSmart(displayedGames);
+
             // Carregar detalhes em background
-            loadMovieDetailsBackground(moviesToShow);
+            loadGameDetailsBackground(gamesToShow);
         }
 
-        // Buscar filmes (agora busca em todos os filmes)
-        function searchMovies() {
+        // Buscar jogos
+        function searchGames() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            let baseList = allMovies;
+
+            let baseList = allGames;
             if (searchTerm === '') {
-                renderMoviesSmart(baseList);
+                renderGamesSmart(baseList);
                 updateCurrentCount(baseList.length);
                 return;
             }
-            
-            const filteredMovies = baseList.filter(movie => {
-                const details = moviesWithDetails.get(movie.slug) || movie;
+
+            const filteredGames = baseList.filter(game => {
+                const details = gamesWithDetails.get(game.slug) || game;
                 return details.title.toLowerCase().includes(searchTerm) ||
-                        (details.director && details.director.toLowerCase().includes(searchTerm)) ||
-                        (details.actors && details.actors.toLowerCase().includes(searchTerm));
+                        (details.developer && details.developer.toLowerCase().includes(searchTerm)) ||
+                        (details.genre && details.genre.toLowerCase().includes(searchTerm));
             });
-            
-            renderMoviesSmart(filteredMovies);
-            updateCurrentCount(filteredMovies.length);
+
+            renderGamesSmart(filteredGames);
+            updateCurrentCount(filteredGames.length);
         }
 
-        // Filtrar filmes por gênero, ano e nota (agora filtra em todos os filmes)
-        function filterMovies() {
+        // Filtrar jogos por gênero, ano e nota
+        function filterGames() {
             const genreFilter = document.getElementById('genreFilter').value;
             const yearFilter = document.getElementById('yearFilter').value;
             const ratingFilter = document.getElementById('ratingFilter').value;
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            let baseList = allMovies;
-            let filteredMovies = baseList.filter(movie => {
-                const details = moviesWithDetails.get(movie.slug) || movie;
+
+            let baseList = allGames;
+            let filteredGames = baseList.filter(game => {
+                const details = gamesWithDetails.get(game.slug) || game;
                 // Filtro de busca
-                const matchesSearch = searchTerm === '' || 
+                const matchesSearch = searchTerm === '' ||
                     details.title.toLowerCase().includes(searchTerm) ||
-                    (details.director && details.director.toLowerCase().includes(searchTerm)) ||
-                    (details.actors && details.actors.toLowerCase().includes(searchTerm));
+                    (details.developer && details.developer.toLowerCase().includes(searchTerm)) ||
+                    (details.genre && details.genre.toLowerCase().includes(searchTerm));
                 // Filtro de gênero
-                const matchesGenre = genreFilter === '' || 
+                const matchesGenre = genreFilter === '' ||
                     (details.genre && details.genre.toLowerCase().includes(genreFilter.toLowerCase()));
                 // Filtro de ano
                 const matchesYear = yearFilter === '' || details.year === yearFilter;
                 // Filtro de nota
-                const movieRating = parseFloat(details.imdbRating) || 0;
-                const matchesRating = ratingFilter === '' || movieRating >= parseFloat(ratingFilter);
+                const gameRating = parseFloat(details.rating) || 0;
+                const matchesRating = ratingFilter === '' || gameRating >= parseFloat(ratingFilter);
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
-            
-            renderMoviesSmart(filteredMovies);
-            updateCurrentCount(filteredMovies.length);
+
+            renderGamesSmart(filteredGames);
+            updateCurrentCount(filteredGames.length);
         }
 
         // Popular filtros
@@ -1964,20 +1867,20 @@
             const years = new Set();
 
             // 1. Dados básicos
-            allMovies.forEach(movie => {
-                // Ano do título (ex: "Star Trek (2009)")
-                const yearMatch = movie.title?.match(/\((\d{4})\)/);
+            allGames.forEach(game => {
+                // Ano do título (ex: "The Last of Us (2013)")
+                const yearMatch = game.title?.match(/\((\d{4})\)/);
                 if (yearMatch) years.add(yearMatch[1]);
-                if (movie.year && movie.year !== 'N/A') years.add(movie.year);
+                if (game.year && game.year !== 'N/A') years.add(game.year);
 
                 // Gênero básico, se existir
-                if (movie.genre && movie.genre !== 'N/A') {
-                    movie.genre.split(',').forEach(g => genres.add(g.trim()));
+                if (game.genre && game.genre !== 'N/A') {
+                    game.genre.split(',').forEach(g => genres.add(g.trim()));
                 }
             });
 
             // 2. Detalhes carregados
-            moviesWithDetails.forEach(details => {
+            gamesWithDetails.forEach(details => {
                 if (details.genre && details.genre !== 'N/A') {
                     details.genre.split(',').forEach(g => genres.add(g.trim()));
                 }
@@ -2012,133 +1915,113 @@
 
         // Atualizar estatísticas
         function updateStats() {
-            const totalMovies = allMovies.length;
-            const currentMovies = displayedMovies.length;
-            
+            const totalGames = allGames.length;
+            const currentGames = displayedGames.length;
+
             // Calcular gêneros únicos
             const genres = new Set();
-            moviesWithDetails.forEach(details => {
+            gamesWithDetails.forEach(details => {
                 if (details.genre && details.genre !== 'N/A') {
                     details.genre.split(',').forEach(g => genres.add(g.trim()));
                 }
             });
-            
+
             // Calcular nota média
             let totalRating = 0;
-            let ratedMovies = 0;
-            moviesWithDetails.forEach(details => {
-                const rating = parseFloat(details.imdbRating);
+            let ratedGames = 0;
+            gamesWithDetails.forEach(details => {
+                const rating = parseFloat(details.rating);
                 if (!isNaN(rating)) {
                     totalRating += rating;
-                    ratedMovies++;
+                    ratedGames++;
                 }
             });
-            const avgRating = ratedMovies > 0 ? (totalRating / ratedMovies).toFixed(1) : 0;
-            
+            const avgRating = ratedGames > 0 ? (totalRating / ratedGames).toFixed(1) : 0;
+
             // Atualizar DOM
-            document.getElementById('totalMovies').textContent = totalMovies;
-            document.getElementById('currentMovies').textContent = currentMovies;
+            document.getElementById('totalGames').textContent = totalGames;
+            document.getElementById('currentGames').textContent = currentGames;
             document.getElementById('genresCount').textContent = genres.size;
             document.getElementById('avgRating').textContent = avgRating;
         }
 
         // Atualizar contador atual
         function updateCurrentCount(count) {
-            document.getElementById('currentMovies').textContent = count;
+            document.getElementById('currentGames').textContent = count;
         }
 
-        // Abrir modal do filme
-        function openMovieModal(slug) {
-            const details = moviesWithDetails.get(slug);
+        // Abrir modal do jogo
+        function openGameModal(slug) {
+            const details = gamesWithDetails.get(slug);
             if (!details) return;
-            
-            const modal = document.getElementById('movieModal');
+
+            const modal = document.getElementById('gameModal');
             const modalPoster = document.getElementById('modalPoster');
             const modalBackdrop = document.getElementById('modalBackdrop');
             const modalDetails = document.getElementById('modalDetails');
-            
-            modalPoster.src = details.poster || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
-            
+
+            modalPoster.src = details.cover || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
+
             // Configurar backdrop como fundo principal
-            if (details.backdrop) {
-                modalBackdrop.src = details.backdrop;
+            if (details.cover) {
+                modalBackdrop.src = details.cover;
                 modalBackdrop.style.opacity = '1';
                 modalBackdrop.style.filter = 'none';
-            } else if (details.poster) {
-                modalBackdrop.src = details.poster;
-                modalBackdrop.style.opacity = '1';
-                modalBackdrop.style.filter = 'blur(3px) brightness(0.7)';
             } else {
                 modalBackdrop.src = '';
             }
-            
-            const rating = parseFloat(details.imdbRating) || 0;
+
+            const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
-            
+
             modalDetails.innerHTML = `
                 <h2 class="modal-title">${details.title}</h2>
-                
+
                 <div class="info-grid">
                     <div class="info-item">
                         <strong>📅 Ano:</strong> ${details.year}
                     </div>
                     <div class="info-item">
-                        <strong>⏱️ Duração:</strong> ${details.runtime}
+                        <strong>🎮 Desenvolvedora:</strong> ${details.developer}
+                    </div>
+                    <div class="info-item">
+                        <strong>🏭 Publicadora:</strong> ${details.publisher}
                     </div>
                     <div class="info-item">
                         <strong>🎭 Gênero:</strong> ${details.genre}
                     </div>
                     <div class="info-item">
-                        <strong>🎬 Diretor:</strong> ${details.director}
+                        <strong>💻 Plataformas:</strong> ${details.platforms}
                     </div>
                     <div class="info-item">
-                        <strong>✍️ Roteirista:</strong> ${details.writer}
-                    </div>
-                    <div class="info-item">
-                        <strong>🌍 País:</strong> ${details.country}
-                    </div>
-                    <div class="info-item">
-                        <strong>🗣️ Idioma:</strong> ${details.language}
-                    </div>
-                    <div class="info-item">
-                        <strong>📅 Lançamento:</strong> ${details.released}
-                    </div>
-                    <div class="info-item">
-                        <strong>⭐ Avaliação:</strong> ${details.imdbRating}/10 <span class="stars">${stars}</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>🗳️ Votos:</strong> ${details.imdbVotes}
+                        <strong>⭐ Avaliação:</strong> ${details.rating}/10 <span class="stars">${stars}</span>
                     </div>
                 </div>
-                
-                ${details.awards !== 'N/A' ? `<div class="info-item"><strong>🏆 Prêmios:</strong> ${details.awards}</div>` : ''}
-                ${details.boxOffice !== 'N/A' ? `<div class="info-item"><strong>💰 Bilheteria:</strong> ${details.boxOffice}</div>` : ''}
-                ${details.production !== 'N/A' ? `<div class="info-item"><strong>🏭 Produção:</strong> ${details.production}</div>` : ''}
-                
+
                 <div class="modal-plot-section">
                     <h4>📖 Sinopse</h4>
-                    <p>${details.plot}</p>
+                    <p>${details.summary}</p>
                 </div>
-                
+
                 <div class="modal-actions">
-                    <a href="${details.url}" target="_blank">🔗 Ver no Letterboxd</a>
+                    <a href="${details.url}" target="_blank">🔗 Ver no IGDB</a>
                 </div>
             `;
-            
+
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
         // Fechar modal
         function closeModal() {
-            const modal = document.getElementById('movieModal');
+            const modal = document.getElementById('gameModal');
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
         // Fechar modal clicando fora
         window.onclick = function(event) {
-            const modal = document.getElementById('movieModal');
+            const modal = document.getElementById('gameModal');
             if (event.target === modal) {
                 closeModal();
             }
@@ -2170,99 +2053,99 @@
             }
         });
 
-        // Lazy loading para quando carregar todos os filmes
+        // Lazy loading para quando carregar todos os jogos
         let isLoadingMore = false;
-        
+
         window.addEventListener('scroll', function() {
             if (currentCategory === 'all' && !isLoadingMore) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
                 const documentHeight = document.documentElement.scrollHeight;
-                
+
                 if (scrollTop + windowHeight >= documentHeight - 1000) {
-                    loadMoreMovies();
+                    loadMoreGames();
                 }
             }
         });
 
-        async function loadMoreMovies() {
-            if (isLoadingMore || displayedMovies.length >= allMovies.length) return;
-            
+        async function loadMoreGames() {
+            if (isLoadingMore || displayedGames.length >= allGames.length) return;
+
             isLoadingMore = true;
-            const currentLength = displayedMovies.length;
-            const nextBatch = allMovies.slice(currentLength, currentLength + 20);
-            
+            const currentLength = displayedGames.length;
+            const nextBatch = allGames.slice(currentLength, currentLength + 20);
+
             if (nextBatch.length === 0) return;
-            
+
             // Mostrar indicador de carregamento
-            const grid = document.getElementById('moviesGrid');
+            const grid = document.getElementById('gamesGrid');
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'loading';
-            loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Carregando mais filmes...</p>';
+            loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Carregando mais jogos...</p>';
             grid.appendChild(loadingDiv);
-            
+
             // Adicionar à lista exibida
-            displayedMovies = displayedMovies.concat(nextBatch);
-            
+            displayedGames = displayedGames.concat(nextBatch);
+
             // Remover indicador e renderizar básico
             loadingDiv.remove();
-            renderMoviesSmart(displayedMovies);
-            
+            renderGamesSmart(displayedGames);
+
             // Carregar detalhes em background
-            loadMovieDetailsBackground(nextBatch);
-            
+            loadGameDetailsBackground(nextBatch);
+
             isLoadingMore = false;
         }
 
         // Atualizar card individual
-        function updateMovieCard(slug, details) {
+        function updateGameCard(slug, details) {
             const card = document.querySelector(`[data-slug="${slug}"]`);
             if (!card) return;
-            
-            const rating = parseFloat(details.imdbRating) || 0;
+
+            const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
-            
+
             // Atualizar poster
-            const poster = card.querySelector('.movie-poster');
-            if (details.poster) {
-                poster.style.backgroundImage = `url(${details.poster})`;
+            const poster = card.querySelector('.game-poster');
+            if (details.cover) {
+                poster.style.backgroundImage = `url(${details.cover})`;
                 poster.classList.remove('loading');
                 poster.textContent = '';
             }
-            
+
             // Atualizar meta informações
-            const meta = card.querySelector('.movie-meta');
+            const meta = card.querySelector('.game-meta');
             meta.innerHTML = `
                 <span>📅 ${details.year}</span>
-                <span>⏱️ ${details.runtime}</span>
+                <span>🎮 ${details.developer}</span>
             `;
-            
+
             // Atualizar gêneros
-            const genres = card.querySelector('.movie-genres');
-            genres.innerHTML = details.genre !== 'N/A' ? 
-                details.genre.split(',').slice(0, 2).map(g => 
+            const genres = card.querySelector('.game-genres');
+            genres.innerHTML = details.genre !== 'N/A' ?
+                details.genre.split(',').slice(0, 2).map(g =>
                     `<span class="genre-tag">${g.trim()}</span>`
-                ).join('') : 
+                ).join('') :
                 '<span class="genre-tag">Gênero não disponível</span>';
-            
+
             // Atualizar avaliação
-            const ratingDiv = card.querySelector('.movie-rating');
+            const ratingDiv = card.querySelector('.game-rating');
             ratingDiv.innerHTML = `
                 <div class="rating-stars">${stars}</div>
-                <span>${details.imdbRating}/10</span>
+                <span>${details.rating}/10</span>
             `;
-            
+
             // Atualizar sinopse
-            const plot = card.querySelector('.movie-plot');
-            plot.textContent = details.plot;
-            
+            const plot = card.querySelector('.game-plot');
+            plot.textContent = details.summary;
+
             // Atualizar filtros dinamicamente
             populateFilters();
         }
 
         // Aguarda até que todos os detalhes estejam carregados antes de popular os filtros
         async function waitForAllDetailsAndPopulateFilters() {
-            while (moviesWithDetails.size !== allMovies.length) {
+            while (gamesWithDetails.size !== allGames.length) {
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
             populateFilters();
