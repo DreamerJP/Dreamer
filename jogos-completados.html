@@ -1485,7 +1485,7 @@
             let html = currentGames.map(game => {
                 const details = gamesWithDetails.get(game.slug);
                 if (details) {
-                    const rating = parseFloat(details.rating) || 0;
+                    const rating = normalizeRating(details.rating);
                     const stars = generateStars(rating);
                     return `
                         <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
@@ -1505,9 +1505,9 @@
                                 </div>
                                 <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
-                                    <span>${details.rating}/10</span>
+                                    <span>${normalizeRating(details.rating)}/10</span>
                                 </div>
-                                <p class="game-plot">Sinopse: ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1616,7 +1616,7 @@
             let html = currentGames.map(game => {
                 const details = gamesWithDetails.get(game.slug);
                 if (details) {
-                    const rating = parseFloat(details.rating) || 0;
+                    const rating = normalizeRating(details.rating);
                     const stars = generateStars(rating);
                     return `
                         <div class="game-card" onclick="openGameModal('${game.slug}')" data-slug="${game.slug}">
@@ -1636,9 +1636,9 @@
                                 </div>
                                 <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
-                                    <span>${details.rating}/10</span>
+                                    <span>${normalizeRating(details.rating)}/10</span>
                                 </div>
-                                <p class="game-plot">Sinopse: ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1747,6 +1747,12 @@
             };
         }
 
+        // Função helper para normalizar rating (IGDB usa 0-100, converter para 0-10)
+        function normalizeRating(rating) {
+            const numRating = parseFloat(rating) || 0;
+            return Math.round((numRating / 10) * 10) / 10; // Divide por 10 e arredonda para 1 casa decimal
+        }
+
         // Gerar estrelas para avaliação
         function generateStars(rating) {
             const fullStars = Math.floor(rating / 2);
@@ -1843,7 +1849,7 @@
                 // Filtro de ano
                 const matchesYear = yearFilter === '' || details.year === yearFilter;
                 // Filtro de nota
-                const gameRating = parseFloat(details.rating) || 0;
+                const gameRating = normalizeRating(details.rating);
                 const matchesRating = ratingFilter === '' || gameRating >= parseFloat(ratingFilter);
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
@@ -1921,8 +1927,8 @@
             let totalRating = 0;
             let ratedGames = 0;
             gamesWithDetails.forEach(details => {
-                const rating = parseFloat(details.rating);
-                if (!isNaN(rating)) {
+                const rating = normalizeRating(details.rating);
+                if (!isNaN(rating) && rating > 0) {
                     totalRating += rating;
                     ratedGames++;
                 }
@@ -1953,14 +1959,10 @@
 
             modalPoster.src = details.cover || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
 
-            // Configurar backdrop como fundo principal
-            if (details.cover) {
-                modalBackdrop.src = details.cover;
-                modalBackdrop.style.opacity = '1';
-                modalBackdrop.style.filter = 'none';
-            } else {
-                modalBackdrop.src = '';
-            }
+            // Fundo do modal com gradiente sutil
+            modalBackdrop.src = '';
+            modalBackdrop.style.background = 'linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 50%, rgba(15, 52, 96, 0.9) 100%)';
+            modalBackdrop.style.opacity = '1';
 
             const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
@@ -1985,12 +1987,12 @@
                         <strong>💻 Plataformas:</strong> ${details.platforms}
                     </div>
                     <div class="info-item">
-                        <strong>⭐ Avaliação:</strong> ${details.rating}/10 <span class="stars">${stars}</span>
+                        <strong>⭐ Avaliação:</strong> ${normalizeRating(details.rating)}/10 <span class="stars">${stars}</span>
                     </div>
                 </div>
 
                 <div class="modal-plot-section">
-                    <h4>📖 Sinopse</h4>
+                    <h4>📖 Sinopse <small style="color: #888; font-size: 0.8em;">(em inglês)</small></h4>
                     <p>${details.summary}</p>
                 </div>
 
@@ -2123,7 +2125,7 @@
             const ratingDiv = card.querySelector('.game-rating');
             ratingDiv.innerHTML = `
                 <div class="rating-stars">${stars}</div>
-                <span>${details.rating}/10</span>
+                <span>${normalizeRating(details.rating)}/10</span>
             `;
 
             // Atualizar sinopse
