@@ -1499,7 +1499,7 @@
                                     <span>🎮 ${details.developer}</span>
                                 </div>
                                 <div class="game-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 1).map(g =>
                                         `<span class="genre-tag">${g.trim()}</span>`
                                     ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
@@ -1630,7 +1630,7 @@
                                     <span>🎮 ${details.developer}</span>
                                 </div>
                                 <div class="game-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 1).map(g =>
                                         `<span class="genre-tag">${g.trim()}</span>`
                                     ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
@@ -2116,7 +2116,7 @@
             // Atualizar gêneros
             const genres = card.querySelector('.game-genres');
             genres.innerHTML = details.genre !== 'N/A' ?
-                details.genre.split(',').slice(0, 2).map(g =>
+                details.genre.split(',').slice(0, 1).map(g =>
                     `<span class="genre-tag">${g.trim()}</span>`
                 ).join('') :
                 '<span class="genre-tag">Gênero não disponível</span>';
