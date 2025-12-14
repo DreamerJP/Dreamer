@@ -1428,7 +1428,7 @@
         // Carregar jogos do JSON
         async function loadGames() {
             try {
-                const response = await fetch('minha_lista_jogos.json');
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Jogos/minha_lista_jogos.json');
                 const data = await response.json();
 
                 allGames = data.games || [];
