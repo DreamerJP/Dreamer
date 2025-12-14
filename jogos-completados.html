@@ -1677,39 +1677,29 @@
         }
 
         // Carregar detalhes em background
-        async function loadGameDetailsBackground(games) {
+        function loadGameDetailsBackground(games) {
             const BATCH_SIZE = 8; // Máximo simultâneo
 
             for (let i = 0; i < games.length; i += BATCH_SIZE) {
                 const batch = games.slice(i, i + BATCH_SIZE);
 
-                // Processar lote em paralelo
-                const promises = batch.map(async (game) => {
+                // Processar lote (dados já estão completos no JSON)
+                batch.forEach((game) => {
                     if (!gamesWithDetails.has(game.slug)) {
-                        try {
-                            const details = await fetchGameDetailsIGDB(game.title);
-                            gamesWithDetails.set(game.slug, { ...game, ...details });
+                        // Os dados já estão completos no JSON, apenas armazenar
+                        gamesWithDetails.set(game.slug, game);
 
-                            // Atualizar card individual
-                            updateGameCard(game.slug, details);
+                        // Atualizar card individual
+                        updateGameCard(game.slug, game);
 
-                            // Atualização dinâmica dos recentes
-                            debouncedResortAndRender();
-                        } catch (error) {
-                            console.error('Erro ao carregar detalhes:', game.title, error);
-                            const defaultData = getDefaultGameData();
-                            gamesWithDetails.set(game.slug, { ...game, ...defaultData });
-                            updateGameCard(game.slug, { ...game, ...defaultData });
-                            debouncedResortAndRender();
-                        }
+                        // Atualização dinâmica dos recentes
+                        debouncedResortAndRender();
                     }
                 });
 
-                await Promise.all(promises);
-
-                // Delay mínimo apenas entre lotes
+                // Pequeno delay entre lotes para não travar a UI
                 if (i + BATCH_SIZE < games.length) {
-                    await new Promise(resolve => setTimeout(resolve, 50));
+                    setTimeout(() => {}, 10);
                 }
             }
 
