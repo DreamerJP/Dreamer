@@ -1294,9 +1294,9 @@
                         <div class="filter-group">
                             <label>Categoria:</label>
                             <div class="filter-tags">
-                                <button class="filter-tag" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
-                                <button class="filter-tag active" onclick="filterByCategory('all')">🎮 Todos</button>
-                                <button class="filter-tag" onclick="filterByCategory('recent')">🆕 Recentes</button>
+                                <button class="filter-tag" onclick="filterByCategory('favorites', this)">⭐ Favoritos</button>
+                                <button class="filter-tag active" onclick="filterByCategory('all', this)">🎮 Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('recent', this)">🆕 Recentes</button>
                             </div>
                         </div>
                     </div>
@@ -1867,12 +1867,27 @@
         }
 
         // Filtrar por categoria
-        async function filterByCategory(category) {
+        async function filterByCategory(category, clickedButton = null) {
             currentCategory = category;
 
             // Atualizar botões ativos
             document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+
+            // Se foi passado um botão clicado, ou se há um event.target, usar ele
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else if (typeof event !== 'undefined' && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Para inicialização, encontrar o botão correto pela categoria
+                const buttonSelector = category === 'favorites' ? '[onclick*="favorites"]' :
+                                     category === 'all' ? '[onclick*="all"]' :
+                                     category === 'recent' ? '[onclick*="recent"]' : '[onclick*="all"]';
+                const targetButton = document.querySelector(buttonSelector);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                }
+            }
 
             // Resetar outros filtros
             document.getElementById('searchInput').value = '';
