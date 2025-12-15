@@ -1209,8 +1209,8 @@
                         <div class="filter-group">
                             <label>Categoria:</label>
                             <div class="filter-tags">
-                                <button class="filter-tag active" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
-                                <button class="filter-tag" onclick="filterByCategory('all')">🎬 Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('favorites')">⭐ Favoritos</button>
+                                <button class="filter-tag active" onclick="filterByCategory('all')">🎬 Todos</button>
                                 <button class="filter-tag" onclick="filterByCategory('recent')">🆕 Recentes</button>
                             </div>
                         </div>
@@ -1446,8 +1446,8 @@
                 
                 allMovies = data.films || [];
                 
-                // Iniciar com favoritos (primeiros 24)
-                await loadFavorites();
+                // Iniciar com todos os filmes
+                await filterByCategory('all');
                 
                 // Carregar filtros
                 await waitForAllDetailsAndPopulateFilters();
