@@ -576,7 +576,7 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 3000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
@@ -785,63 +785,6 @@
 
         .trailer-btn:hover {
             background: linear-gradient(45deg, #f7931e, #ff6b35) !important;
-        }
-
-        /* Botão Já Jogou */
-        .played-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: linear-gradient(45deg, #4CAF50, #45a049) !important;
-            color: white !important;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .played-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(76, 175, 80, 0.6);
-            background: linear-gradient(45deg, #45a049, #4CAF50) !important;
-        }
-
-        .played-btn.played {
-            background: linear-gradient(45deg, #2196F3, #1976D2) !important;
-            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
-        }
-
-        .played-btn.played:hover {
-            background: linear-gradient(45deg, #1976D2, #2196F3) !important;
-            box-shadow: 0 12px 25px rgba(33, 150, 243, 0.6);
-        }
-
-        /* Sistema de Comentários */
-        .comments-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(187, 134, 252, 0.2);
-        }
-
-        .comments-section h4 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            margin: 0 0 20px 0;
-            font-weight: 600;
-        }
-
-        .giscus {
-            margin-top: 20px;
-        }
-
-        .giscus-frame {
-            border-radius: 12px;
-            border: 1px solid rgba(187, 134, 252, 0.2);
         }
 
         /* Estrelas de avaliação */
@@ -2174,26 +2117,13 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button id="playedBtn-${slug}" class="played-btn" onclick="togglePlayed('${slug}', '${details.title.replace(/'/g, "\\'")}')">
-                        <span id="playedCount-${slug}">Carregando...</span>
-                    </button>
                     ${details.trailer ? `<a href="#" onclick="openTrailerModal('${details.trailer}', '${details.title.replace(/'/g, "\\'")}')" class="trailer-btn">🎬 Ver Trailer</a>` : ''}
                     <a href="${details.url}" target="_blank">🔗 Ver no IGDB</a>
-                </div>
-
-                <div class="comments-section">
-                    <h4>💬 Comentários da Comunidade</h4>
-                    <p style="color: #666; font-style: italic;">Sistema de comentários temporariamente indisponível</p>
-                    <!-- <div id="giscus-container-${slug}" class="giscus-container"></div> -->
                 </div>
             `;
 
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
-
-            // Carregar contador e comentários
-            loadPlayedCount(slug, details.title);
-            loadGiscus(slug, details.title);
         }
 
         // Fechar modal
@@ -2262,19 +2192,6 @@
             navLinks.classList.toggle('active');
         }
 
-        // Garantir que os cards funcionem mesmo com Giscus carregado
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.game-card')) {
-                e.preventDefault();
-                e.stopPropagation();
-                const card = e.target.closest('.game-card');
-                const slug = card.getAttribute('data-slug');
-                if (slug) {
-                    openGameModal(slug);
-                }
-            }
-        });
-
         // Fechar menu ao clicar fora
         document.addEventListener('click', function(e) {
             const nav = document.querySelector('.navigation');
@@ -2283,69 +2200,6 @@
                 navLinks.classList.remove('active');
             }
         });
-
-        // Sistema de Contador "Já Jogou"
-        const playedGames = new Set(JSON.parse(localStorage.getItem('playedGames') || '[]'));
-
-        // Carregar contador do CountAPI
-        async function loadPlayedCount(slug, title) {
-            try {
-                const response = await fetch(`https://api.countapi.xyz/get/site-dreamer/${slug}`);
-                const data = await response.json();
-                const countElement = document.getElementById(`playedCount-${slug}`);
-                const btnElement = document.getElementById(`playedBtn-${slug}`);
-
-                if (countElement && btnElement) {
-                    countElement.textContent = `🎮 Já jogaram: ${data.value || 0}`;
-                    if (playedGames.has(slug)) {
-                        btnElement.classList.add('played');
-                        countElement.textContent = `✅ Você já jogou (${data.value || 0} total)`;
-                    }
-                }
-            } catch (error) {
-                console.error('Erro ao carregar contador:', error);
-                const countElement = document.getElementById(`playedCount-${slug}`);
-                const btnElement = document.getElementById(`playedBtn-${slug}`);
-                if (countElement && btnElement) {
-                    countElement.textContent = `🎮 Já jogaram: 0`;
-                    if (playedGames.has(slug)) {
-                        btnElement.classList.add('played');
-                        countElement.textContent = `✅ Você já jogou (0 total)`;
-                    }
-                }
-            }
-        }
-
-        // Alternar status "já jogou"
-        async function togglePlayed(slug, title) {
-            const btnElement = document.getElementById(`playedBtn-${slug}`);
-            const countElement = document.getElementById(`playedCount-${slug}`);
-
-            if (playedGames.has(slug)) {
-                // Remover do contador
-                try {
-                    await fetch(`https://api.countapi.xyz/set/site-dreamer/${slug}?value=-1`, { method: 'GET' });
-                } catch (error) {
-                    console.error('Erro ao decrementar contador:', error);
-                }
-                playedGames.delete(slug);
-                btnElement.classList.remove('played');
-                loadPlayedCount(slug, title);
-            } else {
-                // Adicionar ao contador
-                try {
-                    await fetch(`https://api.countapi.xyz/hit/site-dreamer/${slug}`);
-                } catch (error) {
-                    console.error('Erro ao incrementar contador:', error);
-                }
-                playedGames.add(slug);
-                btnElement.classList.add('played');
-                loadPlayedCount(slug, title);
-            }
-
-            // Salvar no localStorage
-            localStorage.setItem('playedGames', JSON.stringify([...playedGames]));
-        }
 
         // Atalhos do teclado
         document.addEventListener('keydown', function(e) {
@@ -2461,56 +2315,6 @@
             }
             populateFilters();
         }
-
-        // Sistema de Comentários com Giscus
-        function loadGiscus(slug, title) {
-            const container = document.getElementById(`giscus-container-${slug}`);
-            if (!container) return;
-
-            // Limpar container anterior
-            container.innerHTML = '';
-
-            // Criar iframe do Giscus
-            const giscusFrame = document.createElement('iframe');
-            giscusFrame.src = `https://giscus.app/widget?repo=DreamerJP/Dreamer&repo-id=R_kgDOO_eQtA&category=Game%20Comments&category-id=DIC_kwDOO_eQtM4Cz11d&mapping=pathname&term=${encodeURIComponent(title)}&theme=preferred_color_scheme&reactions-enabled=1&emit-metadata=0&input-position=bottom&loading=lazy&lang=pt`;
-            giscusFrame.width = '100%';
-            giscusFrame.height = '400';
-            giscusFrame.frameBorder = '0';
-            giscusFrame.scrolling = 'no';
-            giscusFrame.className = 'giscus-frame';
-
-            container.appendChild(giscusFrame);
-
-            // Ajustar altura dinamicamente
-            giscusFrame.onload = function() {
-                try {
-                    // Tentar ajustar altura baseada no conteúdo
-                    setTimeout(() => {
-                        giscusFrame.style.height = giscusFrame.contentWindow.document.body.scrollHeight + 'px';
-                    }, 1000);
-                } catch (e) {
-                    // Fallback para altura fixa se houver erro de CORS
-                    giscusFrame.style.height = '400px';
-                }
-            };
-        }
     </script>
-
-    <!-- Giscus Script - Temporariamente desabilitado para teste -->
-    <!-- <script src="https://giscus.app/client.js"
-        data-repo="DreamerJP/Dreamer"
-        data-repo-id="R_kgDOO_eQtA"
-        data-category="Game Comments"
-        data-category-id="DIC_kwDOO_eQtM4Cz11d"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="dark"
-        data-lang="pt"
-        crossorigin="anonymous"
-        async>
-    </script> -->
 </body>
 </html>
