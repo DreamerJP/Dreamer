@@ -2178,8 +2178,8 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button id="playedBtn-${game.slug}" class="played-btn" onclick="togglePlayed('${game.slug}', '${details.title.replace(/'/g, "\\'")}')">
-                        <span id="playedCount-${game.slug}">Carregando...</span>
+                    <button id="playedBtn-${slug}" class="played-btn" onclick="togglePlayed('${slug}', '${details.title.replace(/'/g, "\\'")}')">
+                        <span id="playedCount-${slug}">Carregando...</span>
                     </button>
                     ${details.trailer ? `<a href="#" onclick="openTrailerModal('${details.trailer}', '${details.title.replace(/'/g, "\\'")}')" class="trailer-btn">🎬 Ver Trailer</a>` : ''}
                     <a href="${details.url}" target="_blank">🔗 Ver no IGDB</a>
