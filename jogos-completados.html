@@ -2120,12 +2120,8 @@
 
         // Abrir modal do jogo
         function openGameModal(slug) {
-            console.log('Tentando abrir modal para:', slug);
             const details = gamesWithDetails.get(slug);
-            if (!details) {
-                console.log('Detalhes não encontrados para:', slug);
-                return;
-            }
+            if (!details) return;
 
             const modal = document.getElementById('gameModal');
             const modalPoster = document.getElementById('modalPoster');
@@ -2187,7 +2183,7 @@
 
                 <div class="comments-section">
                     <h4>💬 Comentários da Comunidade</h4>
-                    <div id="giscus-container-${game.slug}" class="giscus-container"></div>
+                    <div id="giscus-container-${slug}" class="giscus-container"></div>
                 </div>
             `;
 
@@ -2499,8 +2495,8 @@
         }
     </script>
 
-    <!-- Giscus Script - Temporariamente comentado para debug -->
-    <!-- <script src="https://giscus.app/client.js"
+    <!-- Giscus Script -->
+    <script src="https://giscus.app/client.js"
         data-repo="DreamerJP/Dreamer"
         data-repo-id="R_kgDOO_eQtA"
         data-category="Game Comments"
@@ -2514,6 +2510,6 @@
         data-lang="pt"
         crossorigin="anonymous"
         async>
-    </script> -->
+    </script>
 </body>
 </html>
