@@ -576,7 +576,7 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 2000;
+            z-index: 3000;
             left: 0;
             top: 0;
             width: 100%;
@@ -2120,8 +2120,12 @@
 
         // Abrir modal do jogo
         function openGameModal(slug) {
+            console.log('Tentando abrir modal para:', slug);
             const details = gamesWithDetails.get(slug);
-            if (!details) return;
+            if (!details) {
+                console.log('Detalhes não encontrados para:', slug);
+                return;
+            }
 
             const modal = document.getElementById('gameModal');
             const modalPoster = document.getElementById('modalPoster');
@@ -2260,6 +2264,19 @@
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
         }
+
+        // Garantir que os cards funcionem mesmo com Giscus carregado
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.game-card')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const card = e.target.closest('.game-card');
+                const slug = card.getAttribute('data-slug');
+                if (slug) {
+                    openGameModal(slug);
+                }
+            }
+        });
 
         // Fechar menu ao clicar fora
         document.addEventListener('click', function(e) {
@@ -2482,8 +2499,8 @@
         }
     </script>
 
-    <!-- Giscus Script -->
-    <script src="https://giscus.app/client.js"
+    <!-- Giscus Script - Temporariamente comentado para debug -->
+    <!-- <script src="https://giscus.app/client.js"
         data-repo="DreamerJP/Dreamer"
         data-repo-id="R_kgDOO_eQtA"
         data-category="Game Comments"
@@ -2497,6 +2514,6 @@
         data-lang="pt"
         crossorigin="anonymous"
         async>
-    </script>
+    </script> -->
 </body>
 </html>
