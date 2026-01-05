@@ -1008,6 +1008,14 @@
             font-size: 0.9em;
             color: var(--text-secondary);
         }
+
+        /* Indicador de progresso de carregamento */
+        .loading-progress {
+            background: rgba(187, 134, 252, 0.05);
+            border-radius: 8px;
+            padding: 4px 8px;
+            border: 1px solid rgba(187, 134, 252, 0.1);
+        }
         @media (max-width: 900px) {
             .filters-stats-flex {
                 flex-direction: column;
@@ -1263,6 +1271,10 @@
                             <div class="stat-label">Nota Média</div>
                         </div>
                     </div>
+                    <!-- Indicador de progresso de carregamento -->
+                    <div id="loadingProgress" class="loading-progress" style="display:none; text-align:center; margin-top:8px; font-size:0.85em; color:#b3b3b3;">
+                        <span id="progressText">Carregando detalhes dos filmes...</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1444,13 +1456,16 @@
                 const data = await response.json();
                 
                 allMovies = data.films || [];
-                
+
                 // Iniciar com todos os filmes
                 await filterByCategory('all');
-                
-                // Carregar filtros
-                await waitForAllDetailsAndPopulateFilters();
+
+                // Carregar filtros e estatísticas COM DADOS BÁSICOS primeiro
+                populateFilters();
                 updateStats();
+
+                // Carregar detalhes em background SEM bloquear a UI
+                loadMovieDetailsBackground(allMovies);
                 
             } catch (error) {
                 console.error('Erro ao carregar filmes:', error);
@@ -1462,10 +1477,10 @@
         async function loadFavorites() {
             const favorites = allMovies.slice(0, 24);
             displayedMovies = favorites;
-            
+
             // Renderizar imediatamente com dados básicos
             renderMoviesSmart(displayedMovies);
-            
+
             // Carregar detalhes em paralelo
             await loadMovieDetailsBackground(favorites);
             // Após carregar favoritos, iniciar carregamento de todos os filmes em background
@@ -1690,20 +1705,20 @@
         // Carregar detalhes em background
         async function loadMovieDetailsBackground(movies) {
             const BATCH_SIZE = 8; // Máximo simultâneo
-            
+
             for (let i = 0; i < movies.length; i += BATCH_SIZE) {
                 const batch = movies.slice(i, i + BATCH_SIZE);
-                
+
                 // Processar lote em paralelo
                 const promises = batch.map(async (movie) => {
                     if (!moviesWithDetails.has(movie.slug)) {
                         try {
                             const details = await fetchMovieDetailsTMDb(movie.title);
                             moviesWithDetails.set(movie.slug, { ...movie, ...details });
-                            
+
                             // Atualizar card individual
                             updateMovieCard(movie.slug, details);
-                            
+
                             // Atualização dinâmica dos recentes
                             debouncedResortAndRender();
                         } catch (error) {
@@ -1715,15 +1730,18 @@
                         }
                     }
                 });
-                
+
                 await Promise.all(promises);
-                
+
+                // ATUALIZAR PROGRESSO A CADA LOTE PROCESSADO
+                updateLoadingProgress();
+
                 // Delay mínimo apenas entre lotes
                 if (i + BATCH_SIZE < movies.length) {
                     await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
-            
+
             updateStats();
         }
 
@@ -2028,7 +2046,7 @@
         function updateStats() {
             const totalMovies = allMovies.length;
             const currentMovies = displayedMovies.length;
-            
+
             // Calcular gêneros únicos
             const genres = new Set();
             moviesWithDetails.forEach(details => {
@@ -2036,7 +2054,7 @@
                     details.genre.split(',').forEach(g => genres.add(g.trim()));
                 }
             });
-            
+
             // Calcular nota média
             let totalRating = 0;
             let ratedMovies = 0;
@@ -2048,17 +2066,36 @@
                 }
             });
             const avgRating = ratedMovies > 0 ? (totalRating / ratedMovies).toFixed(1) : 0;
-            
+
             // Atualizar DOM
             document.getElementById('totalMovies').textContent = totalMovies;
             document.getElementById('currentMovies').textContent = currentMovies;
             document.getElementById('genresCount').textContent = genres.size;
             document.getElementById('avgRating').textContent = avgRating;
+
+            // Atualizar progresso de carregamento
+            updateLoadingProgress();
         }
 
         // Atualizar contador atual
         function updateCurrentCount(count) {
             document.getElementById('currentMovies').textContent = count;
+        }
+
+        // Nova função para mostrar progresso do carregamento
+        function updateLoadingProgress() {
+            const progressElement = document.getElementById('loadingProgress');
+            const progressText = document.getElementById('progressText');
+
+            if (moviesWithDetails.size < allMovies.length) {
+                // Ainda carregando
+                progressElement.style.display = 'block';
+                const percent = Math.round((moviesWithDetails.size / allMovies.length) * 100);
+                progressText.textContent = `Carregando detalhes: ${moviesWithDetails.size}/${allMovies.length} filmes (${percent}%)`;
+            } else {
+                // Concluído
+                progressElement.style.display = 'none';
+            }
         }
 
         // Abrir modal do filme
@@ -2274,12 +2311,22 @@
             populateFilters();
         }
 
-        // Aguarda até que todos os detalhes estejam carregados antes de popular os filtros
+        // Aguarda até que uma amostra representativa esteja carregada antes de popular os filtros
         async function waitForAllDetailsAndPopulateFilters() {
-            while (moviesWithDetails.size !== allMovies.length) {
+            // Popular filtros com dados básicos primeiro
+            populateFilters();
+
+            // Esperar apenas uma amostra representativa (10% ou 50 itens, o que for menor)
+            const sampleSize = Math.min(50, Math.ceil(allMovies.length * 0.1));
+
+            // Aguardar até ter amostra suficiente para filtros ricos
+            while (moviesWithDetails.size < sampleSize) {
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
+
+            // Atualizar filtros com dados mais ricos
             populateFilters();
+            updateStats(); // Atualizar stats com dados parciais
         }
     </script>
 </body>
