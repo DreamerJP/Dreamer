@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=10">
     <title> Galeria de Imagens</title>
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --primary-color: #bb86fc;          /* Roxo vibrante */
-            --secondary-color: #03dac6;        /* Ciano/turquesa */
-            --accent-color: #cf6679;           /* Rosa coral */
-            --text-primary: #e1e1e1;          /* Texto principal claro */
-            --text-secondary: #b3b3b3;        /* Texto secundário */
-            --bg-main: rgba(18, 18, 35, 0.98); /* Fundo principal translúcido */
-            --bg-nav: rgba(18, 18, 35, 0.98);  /* Fundo navegação */
-            --shadow-color: rgba(0,0,0,0.4);
-            --shadow-color-strong: rgba(0,0,0,0.6);
-            --transition-speed: 0.3s;          /* Mantém rápido */
+            --primary-color: #bb86fc;
+            /* Roxo vibrante */
+            --secondary-color: #03dac6;
+            /* Ciano/turquesa */
+            --accent-color: #cf6679;
+            /* Rosa coral */
+            --text-primary: #e1e1e1;
+            /* Texto principal claro */
+            --text-secondary: #b3b3b3;
+            /* Texto secundário */
+            --bg-main: rgba(18, 18, 35, 0.98);
+            /* Fundo principal translúcido */
+            --bg-nav: rgba(18, 18, 35, 0.98);
+            /* Fundo navegação */
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-color-strong: rgba(0, 0, 0, 0.6);
+            --transition-speed: 0.3s;
+            /* Mantém rápido */
             --border-radius: 15px;
-            
+
             /* Variáveis específicas para a galeria */
             --main-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             --button-gradient: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
@@ -101,16 +111,20 @@
                 opacity: 0;
                 transform: translate(0, 0) scale(0.5);
             }
+
             10% {
                 opacity: 0.4;
             }
+
             50% {
                 opacity: 1;
                 transform: translate(var(--dx), var(--dy)) scale(1);
             }
+
             90% {
                 opacity: 0.6;
             }
+
             100% {
                 opacity: 0;
                 transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
@@ -118,8 +132,15 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         /* NAVEGAÇÃO */
@@ -192,7 +213,8 @@
             gap: 6px;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: white;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             transform: translateY(-2px);
@@ -230,7 +252,7 @@
             font-size: 3rem;
             margin-bottom: 30px;
             color: var(--text-primary);
-            text-shadow: 
+            text-shadow:
                 0 0 20px var(--primary-color),
                 2px 2px 8px var(--shadow-color);
             animation: fadeInUp 0.8s ease-out;
@@ -245,9 +267,9 @@
             flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
-            background: linear-gradient(135deg, 
-                rgba(187, 134, 252, 0.1), 
-                rgba(3, 218, 198, 0.1));
+            background: linear-gradient(135deg,
+                    rgba(187, 134, 252, 0.1),
+                    rgba(3, 218, 198, 0.1));
             border-radius: var(--border-radius);
             backdrop-filter: blur(5px);
             border-left: 4px solid var(--primary-color);
@@ -291,7 +313,9 @@
             color: var(--text-secondary);
         }
 
-        select, input[type="range"], input[type="text"] {
+        select,
+        input[type="range"],
+        input[type="text"] {
             padding: 8px 12px;
             border: 2px solid rgba(187, 134, 252, 0.3);
             border-radius: 10px;
@@ -300,13 +324,14 @@
             font-size: 14px;
             transition: all 0.3s ease;
         }
-        
+
         input[type="text"]::placeholder {
             color: var(--text-secondary);
             opacity: 1;
         }
 
-        select:focus, input:focus {
+        select:focus,
+        input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
@@ -391,7 +416,8 @@
             font-size: 16px;
         }
 
-        .view-btn.active, .view-btn:hover {
+        .view-btn.active,
+        .view-btn:hover {
             background: var(--primary-color);
             color: white;
             transform: translateY(-2px);
@@ -406,9 +432,9 @@
         }
 
         .folder-item {
-            background: linear-gradient(135deg, 
-                rgba(187, 134, 252, 0.1), 
-                rgba(3, 218, 198, 0.1));
+            background: linear-gradient(135deg,
+                    rgba(187, 134, 252, 0.1),
+                    rgba(3, 218, 198, 0.1));
             border-radius: var(--border-radius);
             padding: 15px;
             text-align: center;
@@ -477,19 +503,19 @@
             .folder-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-            
+
             .folder-preview {
                 height: 100px;
             }
-            
+
             .folder-item {
                 padding: 12px;
             }
-            
+
             .folder-name {
                 font-size: 0.9rem;
             }
-            
+
             .folder-count {
                 font-size: 0.8rem;
             }
@@ -500,12 +526,12 @@
                 grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
                 gap: 15px;
             }
-            
+
             .folder-preview {
                 height: 80px;
                 margin-bottom: 10px;
             }
-            
+
             .folder-item {
                 padding: 10px;
             }
@@ -518,10 +544,21 @@
             margin-bottom: 30px;
         }
 
-        .grid-small { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-        .grid-medium { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-        .grid-large { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); }
-        .grid-xlarge { grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); }
+        .grid-small {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .grid-medium {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .grid-large {
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .grid-xlarge {
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        }
 
         .image-item {
             position: relative;
@@ -556,7 +593,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
             color: white;
             padding: 20px 15px 15px;
             transform: translateY(100%);
@@ -585,7 +622,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0, 0, 0, 0.95);
             display: none;
             z-index: 2000;
             align-items: center;
@@ -633,7 +670,7 @@
             backdrop-filter: blur(10px);
             z-index: 2500;
             max-width: 95vw;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .viewer-btn {
@@ -664,14 +701,14 @@
             height: 60px;
             border-radius: 50%;
             border: none;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             z-index: 3000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             pointer-events: auto;
         }
 
@@ -688,14 +725,14 @@
             height: 60px;
             border-radius: 50%;
             border: none;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             z-index: 3000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             pointer-events: auto;
         }
 
@@ -704,8 +741,13 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        .nav-prev { left: 20px; }
-        .nav-next { right: 20px; }
+        .nav-prev {
+            left: 20px;
+        }
+
+        .nav-next {
+            right: 20px;
+        }
 
         /* PAGINAÇÃO */
         .pagination {
@@ -728,7 +770,8 @@
             font-weight: 500;
         }
 
-        .page-btn:hover, .page-btn.active {
+        .page-btn:hover,
+        .page-btn.active {
             background: var(--primary-color);
             color: white;
             transform: translateY(-2px);
@@ -791,16 +834,28 @@
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
 
-            .grid-small { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-            .grid-medium { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-            .grid-large { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-            .grid-xlarge { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+            .grid-small {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .grid-medium {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+
+            .grid-large {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .grid-xlarge {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
 
             .viewer-controls {
                 bottom: 10px;
                 padding: 10px;
                 max-width: 98vw;
             }
+
             .close-viewer {
                 top: 10px;
                 right: 10px;
@@ -808,6 +863,7 @@
                 height: 48px;
                 font-size: 1.2rem;
             }
+
             .nav-arrows {
                 width: 48px;
                 height: 48px;
@@ -838,6 +894,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -862,10 +919,24 @@
         }
 
         @keyframes dots {
-            0%, 20% { content: ''; }
-            40% { content: '.'; }
-            60% { content: '..'; }
-            80%, 100% { content: '...'; }
+
+            0%,
+            20% {
+                content: '';
+            }
+
+            40% {
+                content: '.';
+            }
+
+            60% {
+                content: '..';
+            }
+
+            80%,
+            100% {
+                content: '...';
+            }
         }
 
         /* MODO LISTA */
@@ -934,12 +1005,12 @@
                 flex-direction: column;
                 min-height: auto;
             }
-            
+
             .image-list-thumbnail {
                 width: 100%;
                 height: 150px;
             }
-            
+
             .image-list-content {
                 padding: 15px;
             }
@@ -949,6 +1020,7 @@
             max-width: 100vw !important;
             max-height: 100vh !important;
         }
+
         .image-viewer:fullscreen {
             align-items: center;
             justify-content: center;
@@ -963,12 +1035,14 @@
             color: var(--text-primary) !important;
             border: 2px solid rgba(187, 134, 252, 0.3);
         }
+
         .gallery-controls input[type="text"]::placeholder {
             color: var(--text-secondary);
             opacity: 1;
         }
     </style>
 </head>
+
 <body>
     <!-- CAMPO DE ESTRELAS -->
     <div class="starfield" id="starfield" aria-hidden="true"></div>
@@ -1003,8 +1077,8 @@
             <div class="view-controls">
                 <div class="control-group">
                     <label for="sizeSlider">Tamanho das Miniaturas:</label>
-                    <input type="range" class="size-slider" id="sizeSlider" 
-                            min="1" max="4" value="2" oninput="changeImageSize(this.value)">
+                    <input type="range" class="size-slider" id="sizeSlider" min="1" max="4" value="2"
+                        oninput="changeImageSize(this.value)">
                 </div>
 
                 <div class="control-group">
@@ -1054,121 +1128,121 @@
     </div>
 
     <script>
-    // Configuração de performance para estrelas
-    const performanceConfig = {
-        maxStars: window.innerWidth > 768 ? 150 : 80,
-        staticStars: window.innerWidth > 768 ? 40 : 20
-    };
+        // Configuração de performance para estrelas
+        const performanceConfig = {
+            maxStars: window.innerWidth > 768 ? 150 : 80,
+            staticStars: window.innerWidth > 768 ? 40 : 20
+        };
 
-    // Função para criar campo de estrelas
-    function createStarfield() {
-        const starfield = document.getElementById('starfield');
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        
-        starfield.innerHTML = '';
-        const fragment = document.createDocumentFragment();
-        
-        // Estrelas em movimento
-        for (let i = 0; i < performanceConfig.maxStars; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            
-            const angle = Math.random() * 2 * Math.PI;
-            const initialRadius = Math.random() * 50 + 10;
-            const startX = centerX + Math.cos(angle) * initialRadius;
-            const startY = centerY + Math.sin(angle) * initialRadius;
-            
-            const directionX = Math.cos(angle);
-            const directionY = Math.sin(angle);
-            
-            const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
-            const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
-            
-            // Tipos com probabilidades
-            const starType = Math.random();
-            if (starType < 0.7) {
-                star.classList.add('distant');
-            } else if (starType < 0.9) {
-                star.classList.add('medium');
-            } else {
-                star.classList.add('close');
+        // Função para criar campo de estrelas
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            starfield.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+
+            // Estrelas em movimento
+            for (let i = 0; i < performanceConfig.maxStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                const angle = Math.random() * 2 * Math.PI;
+                const initialRadius = Math.random() * 50 + 10;
+                const startX = centerX + Math.cos(angle) * initialRadius;
+                const startY = centerY + Math.sin(angle) * initialRadius;
+
+                const directionX = Math.cos(angle);
+                const directionY = Math.sin(angle);
+
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+
+                // Tipos com probabilidades
+                const starType = Math.random();
+                if (starType < 0.7) {
+                    star.classList.add('distant');
+                } else if (starType < 0.9) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('close');
+                }
+
+                // Cores especiais
+                const colorType = Math.random();
+                if (colorType < 0.1) {
+                    star.classList.add('blue');
+                } else if (colorType < 0.2) {
+                    star.classList.add('yellow');
+                }
+
+                star.style.left = startX + 'px';
+                star.style.top = startY + 'px';
+                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
+                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
+                star.style.animationDelay = Math.random() * 25 + 's';
+
+                fragment.appendChild(star);
             }
-            
-            // Cores especiais
-            const colorType = Math.random();
-            if (colorType < 0.1) {
-                star.classList.add('blue');
-            } else if (colorType < 0.2) {
-                star.classList.add('yellow');
+
+            // Estrelas estacionárias com twinkle
+            for (let i = 0; i < performanceConfig.staticStars; i++) {
+                const staticStar = document.createElement('div');
+                staticStar.className = 'star distant';
+                staticStar.style.position = 'absolute';
+                staticStar.style.left = Math.random() * window.innerWidth + 'px';
+                staticStar.style.top = Math.random() * window.innerHeight + 'px';
+                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+                staticStar.style.animationDelay = Math.random() * 2 + 's';
+
+                fragment.appendChild(staticStar);
             }
-            
-            star.style.left = startX + 'px';
-            star.style.top = startY + 'px';
-            star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
-            star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
-            star.style.animationDelay = Math.random() * 25 + 's';
-            
-            fragment.appendChild(star);
-        }
-        
-        // Estrelas estacionárias com twinkle
-        for (let i = 0; i < performanceConfig.staticStars; i++) {
-            const staticStar = document.createElement('div');
-            staticStar.className = 'star distant';
-            staticStar.style.position = 'absolute';
-            staticStar.style.left = Math.random() * window.innerWidth + 'px';
-            staticStar.style.top = Math.random() * window.innerHeight + 'px';
-            staticStar.style.opacity = Math.random() * 0.4 + 0.1;
-            staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
-            staticStar.style.animationDelay = Math.random() * 2 + 's';
-            
-            fragment.appendChild(staticStar);
-        }
-        
-        starfield.appendChild(fragment);
-    }
 
-    // ESTADO DA APLICAÇÃO
-    let currentFolder = '/';
-    let currentImages = [];
-    let currentPage = 1;
-    let itemsPerPage = 24;
-    let imageSize = 'medium';
-    let currentImageIndex = 0;
-    let viewerZoom = 1;
-    let viewerRotation = 0;
-    let viewMode = 'grid';
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let imageOffsetX = 0;
-    let imageOffsetY = 0;
-    let lastImageOffsetX = 0;
-    let lastImageOffsetY = 0;
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let lastTouchDistance = 0;
-    let wasPinch = false;
+            starfield.appendChild(fragment);
+        }
 
-    // DADOS DA GALERIA
-    let galleryData = {};
+        // ESTADO DA APLICAÇÃO
+        let currentFolder = '/';
+        let currentImages = [];
+        let currentPage = 1;
+        let itemsPerPage = 24;
+        let imageSize = 'medium';
+        let currentImageIndex = 0;
+        let viewerZoom = 1;
+        let viewerRotation = 0;
+        let viewMode = 'grid';
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let imageOffsetX = 0;
+        let imageOffsetY = 0;
+        let lastImageOffsetX = 0;
+        let lastImageOffsetY = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let lastTouchDistance = 0;
+        let wasPinch = false;
+
+        // DADOS DA GALERIA
+        let galleryData = {};
 
         // FUNÇÕES DE NAVEGAÇÃO
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             const menuToggle = document.querySelector('.menu-toggle');
             const isActive = navLinks.classList.toggle('active');
-            
+
             menuToggle.setAttribute('aria-expanded', isActive);
             menuToggle.setAttribute('aria-label', isActive ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
         }
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const nav = document.querySelector('.navigation');
             const navLinks = document.getElementById('navLinks');
             const menuToggle = document.querySelector('.menu-toggle');
-            
+
             if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 menuToggle.setAttribute('aria-expanded', 'false');
@@ -1176,186 +1250,187 @@
             }
         });
 
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && document.getElementById('navLinks').classList.contains('active')) {
                 toggleMenu();
             }
         });
 
-    async function loadImagesData() {
-        try {
-            console.log('Iniciando carregamento do índice de imagens...');
-            
-            const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Imagens/images-index.json');
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const imagesIndex = await response.json();
-            console.log('Índice carregado:', imagesIndex);
-            
-            // Inicializa a estrutura base se não existir
-            if (!galleryData['/']) {
-                galleryData['/'] = { folders: [], images: [] };
-            }
-            
-            // Limpa os dados simulados
-            galleryData['/'].folders = [];
-            galleryData['/'].images = [];
-            
-            // Definir imagens de preview para cada pasta (personalizadas)
-            const folderPreviews = {
-                'Alessa': 'SilentHill__1_.gif',
-                'Aurora': 'Aurora__9_.jpg',
-                'Avril Lavigne': 'Avril_Lavigne_10.jpg',
-                'Emily Browning': 'Emily_Browning__95_.jpg',
-                'Luna Lovegood': 'Luna_Lovegood__1_.jpg',
-                'Nier Automata': 'NierAutomata__7_.jpg',
-                't.A.T.u': 't.A.T.u._55.jpg'
-            };
+        async function loadImagesData() {
+            try {
+                console.log('Iniciando carregamento do índice de imagens...');
 
-            // Função auxiliar para converter link do Google Drive para URL direta
-            function convertGoogleDriveLink(driveLink) {
-                // Extrai o ID do arquivo do link (/d/ ou id=)
-                const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
-                if (match) {
-                    const fileId = match[1];
-                    // URL para visualização direta compatível com <img> (formato de download direto)
-                    return `https://drive.usercontent.google.com/download?id=${fileId}&authuser=0`;
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Imagens/images-index.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return driveLink; // fallback
-            }
 
-            // Função auxiliar para processar estrutura hierárquica
-            function processFolderStructure(folderData, basePath = '', folderName = '') {
-                const result = {
-                    folders: [],
-                    images: []
+                const imagesIndex = await response.json();
+                console.log('Índice carregado:', imagesIndex);
+
+                // Inicializa a estrutura base se não existir
+                if (!galleryData['/']) {
+                    galleryData['/'] = { folders: [], images: [] };
+                }
+
+                // Limpa os dados simulados
+                galleryData['/'].folders = [];
+                galleryData['/'].images = [];
+
+                // Definir imagens de preview para cada pasta (personalizadas)
+                const folderPreviews = {
+                    'Alessa': 'SilentHill__1_.gif',
+                    'Aurora': 'Aurora__9_.jpg',
+                    'Avril Lavigne': 'Avril_Lavigne_10.jpg',
+                    'Emily Browning': 'Emily_Browning__95_.jpg',
+                    'Luna Lovegood': 'Luna_Lovegood__1_.jpg',
+                    'Nier Automata': 'NierAutomata__7_.jpg',
+                    't.A.T.u': 't.A.T.u._55.jpg'
                 };
 
-                // Processa arquivos na pasta atual
-                if (folderData._files && folderData._files.length > 0) {
-                    result.images = folderData._files.map((linkOrFilename, index) => {
-                        let url, thumbnail, name, type;
-
-                        // Verifica se é um link do Google Drive ou nome de arquivo
-                        if (typeof linkOrFilename === 'string' && linkOrFilename.includes('drive.google.com')) {
-                            // É um link do Google Drive
-                            url = convertGoogleDriveLink(linkOrFilename);
-                            thumbnail = convertGoogleDriveLink(linkOrFilename); // Mesmo link para thumbnail
-                            name = `Imagem ${index + 1}`;
-                            type = 'JPG'; // Default para Google Drive
-                        } else {
-                            // Compatibilidade com nomes de arquivos antigos
-                            const fullPath = basePath ? `${basePath}/${linkOrFilename}` : linkOrFilename;
-                            url = `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(fullPath)}`;
-                            thumbnail = url;
-                            name = linkOrFilename;
-                            type = linkOrFilename.split('.').pop().toUpperCase();
-                        }
-
-                        return {
-                            id: `${folderName}_${index}`,
-                            name: name,
-                            url: url,
-                            thumbnail: thumbnail,
-                            size: 'Desconhecido',
-                            type: type,
-                            date: new Date().toLocaleDateString('pt-BR'),
-                            resolution: ''
-                        };
-                    });
+                // Função auxiliar para converter link do Google Drive para URL direta
+                function convertGoogleDriveLink(driveLink) {
+                    // Extrai o ID do arquivo do link (/d/ ou id=)
+                    const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+                    if (match) {
+                        const fileId = match[1];
+                        // URL de miniatura/preview que permite incorporação direta em sites externos
+                        // sz=w1200 solicita uma imagem de alta qualidade
+                        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+                    }
+                    return driveLink; // fallback
                 }
 
-                // Processa subpastas
-                Object.entries(folderData).forEach(([key, value]) => {
-                    if (key !== '_files' && typeof value === 'object') {
-                        const subPath = basePath ? `${basePath}/${key}` : key;
-                        const previewImage = getFirstImageFromFolder(value);
+                // Função auxiliar para processar estrutura hierárquica
+                function processFolderStructure(folderData, basePath = '', folderName = '') {
+                    const result = {
+                        folders: [],
+                        images: []
+                    };
 
-                        result.folders.push({
-                            name: key,
-                            icon: getFolderIcon(key),
-                            count: countItemsInFolder(value),
-                            path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
-                            preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
+                    // Processa arquivos na pasta atual
+                    if (folderData._files && folderData._files.length > 0) {
+                        result.images = folderData._files.map((linkOrFilename, index) => {
+                            let url, thumbnail, name, type;
+
+                            // Verifica se é um link do Google Drive ou nome de arquivo
+                            if (typeof linkOrFilename === 'string' && linkOrFilename.includes('drive.google.com')) {
+                                // É um link do Google Drive
+                                url = convertGoogleDriveLink(linkOrFilename);
+                                thumbnail = convertGoogleDriveLink(linkOrFilename); // Mesmo link para thumbnail
+                                name = `Imagem ${index + 1}`;
+                                type = 'JPG'; // Default para Google Drive
+                            } else {
+                                // Compatibilidade com nomes de arquivos antigos
+                                const fullPath = basePath ? `${basePath}/${linkOrFilename}` : linkOrFilename;
+                                url = `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(fullPath)}`;
+                                thumbnail = url;
+                                name = linkOrFilename;
+                                type = linkOrFilename.split('.').pop().toUpperCase();
+                            }
+
+                            return {
+                                id: `${folderName}_${index}`,
+                                name: name,
+                                url: url,
+                                thumbnail: thumbnail,
+                                size: 'Desconhecido',
+                                type: type,
+                                date: new Date().toLocaleDateString('pt-BR'),
+                                resolution: ''
+                            };
                         });
-
-                        // Processa recursivamente a subpasta
-                        const subFolderPath = `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`;
-                        galleryData[subFolderPath] = processFolderStructure(value, subPath, folderName);
                     }
-                });
 
-                return result;
-            }
+                    // Processa subpastas
+                    Object.entries(folderData).forEach(([key, value]) => {
+                        if (key !== '_files' && typeof value === 'object') {
+                            const subPath = basePath ? `${basePath}/${key}` : key;
+                            const previewImage = getFirstImageFromFolder(value);
 
-            // Função auxiliar para encontrar primeira imagem em uma pasta
-            function getFirstImageFromFolder(folderData) {
-                if (folderData._files && folderData._files.length > 0) {
-                    const firstItem = folderData._files[0];
-                    // Se for link do Google Drive, retorna diretamente
-                    if (typeof firstItem === 'string' && firstItem.includes('drive.google.com')) {
+                            result.folders.push({
+                                name: key,
+                                icon: getFolderIcon(key),
+                                count: countItemsInFolder(value),
+                                path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
+                                preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
+                            });
+
+                            // Processa recursivamente a subpasta
+                            const subFolderPath = `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`;
+                            galleryData[subFolderPath] = processFolderStructure(value, subPath, folderName);
+                        }
+                    });
+
+                    return result;
+                }
+
+                // Função auxiliar para encontrar primeira imagem em uma pasta
+                function getFirstImageFromFolder(folderData) {
+                    if (folderData._files && folderData._files.length > 0) {
+                        const firstItem = folderData._files[0];
+                        // Se for link do Google Drive, retorna diretamente
+                        if (typeof firstItem === 'string' && firstItem.includes('drive.google.com')) {
+                            return firstItem;
+                        }
+                        // Caso contrário, assume que é nome de arquivo
                         return firstItem;
                     }
-                    // Caso contrário, assume que é nome de arquivo
-                    return firstItem;
-                }
-                // Procura recursivamente nas subpastas
-                for (const [key, value] of Object.entries(folderData)) {
-                    if (key !== '_files' && typeof value === 'object') {
-                        const found = getFirstImageFromFolder(value);
-                        if (found) return found;
+                    // Procura recursivamente nas subpastas
+                    for (const [key, value] of Object.entries(folderData)) {
+                        if (key !== '_files' && typeof value === 'object') {
+                            const found = getFirstImageFromFolder(value);
+                            if (found) return found;
+                        }
                     }
+                    return null;
                 }
-                return null;
-            }
 
-            // Função auxiliar para contar itens em uma pasta
-            function countItemsInFolder(folderData) {
-                let count = folderData._files ? folderData._files.length : 0;
-                for (const [key, value] of Object.entries(folderData)) {
-                    if (key !== '_files' && typeof value === 'object') {
-                        count += countItemsInFolder(value);
+                // Função auxiliar para contar itens em uma pasta
+                function countItemsInFolder(folderData) {
+                    let count = folderData._files ? folderData._files.length : 0;
+                    for (const [key, value] of Object.entries(folderData)) {
+                        if (key !== '_files' && typeof value === 'object') {
+                            count += countItemsInFolder(value);
+                        }
                     }
+                    return count;
                 }
-                return count;
-            }
 
-            // Gera a estrutura de pastas principais com preview
-            galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
-                const folderData = imagesIndex[folderName];
-                const previewImage = folderPreviews[folderName] || getFirstImageFromFolder(folderData);
+                // Gera a estrutura de pastas principais com preview
+                galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
+                    const folderData = imagesIndex[folderName];
+                    const previewImage = folderPreviews[folderName] || getFirstImageFromFolder(folderData);
 
-                return {
-                    name: folderName,
-                    icon: getFolderIcon(folderName),
-                    count: `${countItemsInFolder(folderData)} imagens`,
-                    path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                    preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
-                };
-            });
+                    return {
+                        name: folderName,
+                        icon: getFolderIcon(folderName),
+                        count: `${countItemsInFolder(folderData)} imagens`,
+                        path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
+                        preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
+                    };
+                });
 
-            console.log('Pastas principais criadas:', galleryData['/'].folders);
+                console.log('Pastas principais criadas:', galleryData['/'].folders);
 
-            // Processa cada pasta principal e suas subpastas
-            Object.entries(imagesIndex).forEach(([folderName, folderData]) => {
-                const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-                galleryData[path] = processFolderStructure(folderData, '', folderName);
-                console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
-            });
-            
-            // Carrega o conteúdo inicial
-            console.log('Carregando conteúdo da galeria...');
-            loadGalleryContent();
-            
-        } catch (error) {
-            console.error('Erro ao carregar índice de imagens:', error);
-            
-            // Fallback: exibe uma mensagem de erro
-            const content = document.getElementById('galleryContent');
-            content.innerHTML = `
+                // Processa cada pasta principal e suas subpastas
+                Object.entries(imagesIndex).forEach(([folderName, folderData]) => {
+                    const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
+                    galleryData[path] = processFolderStructure(folderData, '', folderName);
+                    console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
+                });
+
+                // Carrega o conteúdo inicial
+                console.log('Carregando conteúdo da galeria...');
+                loadGalleryContent();
+
+            } catch (error) {
+                console.error('Erro ao carregar índice de imagens:', error);
+
+                // Fallback: exibe uma mensagem de erro
+                const content = document.getElementById('galleryContent');
+                content.innerHTML = `
                 <div class="loading" style="color: var(--primary-coral);">
                     ❌ Erro ao carregar imagens<br>
                     <small>Verifique a conexão com a internet e tente novamente</small>
@@ -1371,51 +1446,51 @@
                     ">🔄 Tentar Novamente</button>
                 </div>
             `;
+            }
         }
-    }
 
-    // Função para definir ícones baseado no nome da pasta
-    function getFolderIcon(folderName) {
-        const icons = {
-            'Alessa': '🎭',
-            'Aurora': '✨',
-            'Avril Lavigne': '🎤',
-            'Emily Browning': '🌟',
-            'Luna Lovegood': '🦅',
-            'Nier Automata': '🤖',
-            't.A.T.u': '🎵'
-        };
-        return icons[folderName] || '📁';
-    }
+        // Função para definir ícones baseado no nome da pasta
+        function getFolderIcon(folderName) {
+            const icons = {
+                'Alessa': '🎭',
+                'Aurora': '✨',
+                'Avril Lavigne': '🎤',
+                'Emily Browning': '🌟',
+                'Luna Lovegood': '🦅',
+                'Nier Automata': '🤖',
+                't.A.T.u': '🎵'
+            };
+            return icons[folderName] || '📁';
+        }
 
         // NAVEGAÇÃO DE PASTAS
         function navigateToFolder(path) {
             currentFolder = path;
             currentPage = 1;
-        
-        // Limpar campo de busca se existir
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.value = '';
+
+            // Limpar campo de busca se existir
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = '';
+            }
+
+            updateBreadcrumb();
+            loadGalleryContent();
         }
-        
-        updateBreadcrumb();
-        loadGalleryContent();
-    }
 
         function updateBreadcrumb() {
             const breadcrumb = document.getElementById('breadcrumb');
             const pathParts = currentFolder.split('/').filter(part => part);
-            
+
             let html = '<span onclick="navigateToFolder(\'/\')">🏠 Início</span>';
             let currentPath = '';
-            
+
             pathParts.forEach(part => {
                 currentPath += '/' + part;
                 const displayName = part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 html += ` › <span onclick="navigateToFolder('${currentPath}')">${displayName}</span>`;
             });
-            
+
             breadcrumb.innerHTML = html;
         }
 
@@ -1425,7 +1500,7 @@
             const galleryControls = document.querySelector('.gallery-controls');
             const data = galleryData[currentFolder];
             const pagination = document.getElementById('pagination');
-            
+
             if (!data) {
                 content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
                 galleryControls.style.display = 'none'; // Esconder controles
@@ -1433,20 +1508,20 @@
                 pagination.style.display = 'none';
                 return;
             }
-            
+
             content.innerHTML = '<div class="loading">Carregando galeria</div>';
-            
+
             setTimeout(() => {
                 let html = '';
                 let hasImages = data.images && data.images.length > 0;
-                
+
                 // Controlar visibilidade da barra de controles
                 if (hasImages) {
                     galleryControls.style.display = 'flex';
                 } else {
                     galleryControls.style.display = 'none';
                 }
-                
+
                 // Exibir pastas com PREVIEW
                 if (data.folders && data.folders.length > 0) {
                     html += '<div class="folder-grid fade-in">';
@@ -1466,14 +1541,14 @@
                     });
                     html += '</div>';
                 }
-                
+
                 // Exibir imagens
                 if (hasImages) {
                     currentImages = data.images;
                     const startIndex = (currentPage - 1) * itemsPerPage;
                     const endIndex = startIndex + itemsPerPage;
                     const pageImages = currentImages.slice(startIndex, endIndex);
-                    
+
                     if (viewMode === 'grid') {
                         // Modo Grade (atual)
                         html += `<div class="image-grid grid-${imageSize} fade-in">`;
@@ -1481,7 +1556,7 @@
                             const globalIndex = startIndex + index;
                             html += `
                                 <div class="image-item" onclick="openViewer(${globalIndex})">
-                                    <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                    <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                     <div class="image-info">
                                         <div class="image-name">${image.name}</div>
@@ -1498,7 +1573,7 @@
                             const globalIndex = startIndex + index;
                             html += `
                                 <div class="image-list-item" onclick="openViewer(${globalIndex})">
-                                    <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                                    <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                     <div class="image-list-content">
                                         <div class="image-list-name">${image.name}</div>
@@ -1523,11 +1598,11 @@
                     pagination.innerHTML = '';
                     pagination.style.display = 'none';
                 }
-                
+
                 if (html === '') {
                     html = '<div class="loading">Conteúdo não disponível</div>';
                 }
-                
+
                 content.innerHTML = html;
                 fillImageResolutions();
             }, 300);
@@ -1537,7 +1612,7 @@
         function changeImageSize(size) {
             const sizes = ['small', 'medium', 'large', 'xlarge'];
             imageSize = sizes[size - 1];
-            
+
             const imageGrid = document.querySelector('.image-grid');
             if (imageGrid) {
                 imageGrid.className = `image-grid grid-${imageSize} fade-in`;
@@ -1552,17 +1627,17 @@
 
         function setViewMode(mode) {
             viewMode = mode;
-            
+
             // Atualizar botões ativos
             const buttons = document.querySelectorAll('.view-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            
+
             // Encontrar e ativar o botão correto
             const activeButton = document.querySelector(`[onclick="setViewMode('${mode}')"]`);
             if (activeButton) {
                 activeButton.classList.add('active');
             }
-            
+
             // Recarregar conteúdo com novo modo de visualização
             loadGalleryContent();
         }
@@ -1571,53 +1646,53 @@
         function updatePagination(totalImages = currentImages.length) {
             const pagination = document.getElementById('pagination');
             const totalPages = Math.ceil(totalImages / itemsPerPage);
-            
+
             if (totalPages <= 1) {
                 pagination.innerHTML = '';
                 return;
             }
-            
+
             let html = '';
-            
+
             // Botão anterior
             if (currentPage > 1) {
                 html += `<button class="page-btn" onclick="changePage(${currentPage - 1})">‹ Anterior</button>`;
             }
-            
+
             // Páginas
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            
+
             if (endPage - startPage < maxVisiblePages - 1) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
-            
+
             if (startPage > 1) {
                 html += `<button class="page-btn" onclick="changePage(1)">1</button>`;
                 if (startPage > 2) html += '<span class="page-info">...</span>';
             }
-            
+
             for (let i = startPage; i <= endPage; i++) {
                 const activeClass = i === currentPage ? 'active' : '';
                 html += `<button class="page-btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
             }
-            
+
             if (endPage < totalPages) {
                 if (endPage < totalPages - 1) html += '<span class="page-info">...</span>';
                 html += `<button class="page-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
             }
-            
+
             // Botão próximo
             if (currentPage < totalPages) {
                 html += `<button class="page-btn" onclick="changePage(${currentPage + 1})">Próximo ›</button>`;
             }
-            
+
             // Informações da página
             const startItem = (currentPage - 1) * itemsPerPage + 1;
             const endItem = Math.min(currentPage * itemsPerPage, totalImages);
             html += `<span class="page-info">${startItem}-${endItem} de ${totalImages} imagens</span>`;
-            
+
             pagination.innerHTML = html;
         }
 
@@ -1632,19 +1707,20 @@
             currentImageIndex = imageIndex;
             const viewer = document.getElementById('imageViewer');
             const viewerImage = document.getElementById('viewerImage');
-            
+
             viewerImage.src = currentImages[imageIndex].url;
             viewerImage.alt = currentImages[imageIndex].name;
-            
+            viewerImage.referrerPolicy = "no-referrer";
+
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            
+
             // Aguardar a imagem carregar para calcular o zoom inicial
-            viewerImage.onload = function() {
+            viewerImage.onload = function () {
                 fitImageToScreen();
                 preloadAdjacentImages();
             };
-            
+
             // Se a imagem já estiver carregada (cache), calcular imediatamente
             if (viewerImage.complete) {
                 fitImageToScreen();
@@ -1678,7 +1754,7 @@
         function updateViewerImage() {
             const viewerImage = document.getElementById('viewerImage');
             viewerImage.style.opacity = '0.5';
-            
+
             setTimeout(() => {
                 viewerImage.src = currentImages[currentImageIndex].url;
                 viewerImage.alt = currentImages[currentImageIndex].name;
@@ -1710,7 +1786,7 @@
                 const prevImg = new Image();
                 prevImg.src = currentImages[currentImageIndex - 1].url;
             }
-            
+
             // Precarregar próxima imagem
             if (currentImageIndex < currentImages.length - 1) {
                 const nextImg = new Image();
@@ -1726,7 +1802,7 @@
 
         function zoomOut() {
             viewerZoom = Math.max(viewerZoom / 1.2, 0.1);
-            
+
             // Se o zoom for muito pequeno, centralizar a imagem
             if (viewerZoom <= 1) {
                 imageOffsetX = 0;
@@ -1734,7 +1810,7 @@
                 lastImageOffsetX = 0;
                 lastImageOffsetY = 0;
             }
-            
+
             applyImageTransform();
         }
 
@@ -1772,10 +1848,10 @@
         // EVENTOS DE TECLADO E ZOOM CUSTOMIZADO
         if (!isMobile()) {
             // Só adiciona eventos de zoom customizado no desktop
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 const viewer = document.getElementById('imageViewer');
                 if (viewer.style.display === 'flex') {
-                    switch(e.key) {
+                    switch (e.key) {
                         case 'Escape':
                             closeViewer();
                             break;
@@ -1795,7 +1871,7 @@
                     }
                 }
             });
-            document.addEventListener('wheel', function(e) {
+            document.addEventListener('wheel', function (e) {
                 const viewer = document.getElementById('imageViewer');
                 const viewerImage = document.getElementById('viewerImage');
                 if (viewer.style.display === 'flex') {
@@ -1832,7 +1908,7 @@
                 }
             }, { passive: false });
             // Suporte para duplo clique para reset zoom
-            document.addEventListener('dblclick', function(e) {
+            document.addEventListener('dblclick', function (e) {
                 const viewer = document.getElementById('imageViewer');
                 const viewerImage = document.getElementById('viewerImage');
                 if (viewer.style.display === 'flex' && e.target === viewerImage) {
@@ -1846,14 +1922,14 @@
         if (isMobile()) {
             let touchStartX = 0;
             let touchStartY = 0;
-            document.addEventListener('touchstart', function(e) {
+            document.addEventListener('touchstart', function (e) {
                 const viewer = document.getElementById('imageViewer');
                 if (viewer.style.display === 'flex' && e.touches.length === 1) {
                     touchStartX = e.touches[0].clientX;
                     touchStartY = e.touches[0].clientY;
                 }
             });
-            document.addEventListener('touchend', function(e) {
+            document.addEventListener('touchend', function (e) {
                 const viewer = document.getElementById('imageViewer');
                 if (viewer.style.display === 'flex' && e.changedTouches.length === 1) {
                     const touchEndX = e.changedTouches[0].clientX;
@@ -1885,7 +1961,7 @@
                                     border-radius: 10px; background: white; color: var(--dark-text);">
                 </div>
             `;
-            
+
             const searchDiv = document.createElement('div');
             searchDiv.innerHTML = searchHTML;
             controls.appendChild(searchDiv.firstElementChild);
@@ -1893,19 +1969,19 @@
 
         function searchImages(query) {
             const galleryControls = document.querySelector('.gallery-controls');
-            
+
             if (!query.trim()) {
                 loadGalleryContent();
                 return;
             }
-            
+
             const data = galleryData[currentFolder] || { folders: [], images: [] };
-            const filteredImages = data.images.filter(image => 
+            const filteredImages = data.images.filter(image =>
                 image.name.toLowerCase().includes(query.toLowerCase())
             );
-            
+
             galleryControls.style.display = 'flex';
-            
+
             displayFilteredImages(filteredImages);
         }
 
@@ -1914,29 +1990,29 @@
             const galleryControls = document.querySelector('.gallery-controls');
             currentImages = images;
             currentPage = 1;
-            
+
             if (images.length === 0) {
                 content.innerHTML = '<div class="loading">Nenhuma imagem encontrada</div>';
                 galleryControls.style.display = 'flex';
                 updatePagination(0);
                 return;
             }
-            
+
             galleryControls.style.display = 'flex';
-            
+
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const pageImages = images.slice(startIndex, endIndex);
-            
+
             let html = '';
-            
+
             if (viewMode === 'grid') {
                 html = `<div class="image-grid grid-${imageSize} fade-in">`;
                 pageImages.forEach((image, index) => {
                     const globalIndex = startIndex + index;
                     html += `
                         <div class="image-item" onclick="openViewer(${globalIndex})">
-                            <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                            <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                             <div class="image-info">
                                 <div class="image-name">${image.name}</div>
@@ -1952,7 +2028,7 @@
                     const globalIndex = startIndex + index;
                     html += `
                         <div class="image-list-item" onclick="openViewer(${globalIndex})">
-                            <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" 
+                            <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                             <div class="image-list-content">
                                 <div class="image-list-name">${image.name}</div>
@@ -1965,7 +2041,7 @@
                 });
                 html += '</div>';
             }
-            
+
             content.innerHTML = html;
             updatePagination(images.length);
             fillImageResolutions();
@@ -1990,7 +2066,7 @@
         }
 
         // Event listeners para desktop (mouse)
-        document.addEventListener('mousedown', function(e) {
+        document.addEventListener('mousedown', function (e) {
             const viewer = document.getElementById('imageViewer');
             const viewerImage = document.getElementById('viewerImage');
             if (viewer.style.display === 'flex' && e.target === viewerImage) {
@@ -2013,20 +2089,20 @@
             }
         });
 
-        document.addEventListener('mousemove', function(e) {
+        document.addEventListener('mousemove', function (e) {
             if (isDragging) {
                 const deltaX = e.clientX - dragStartX;
                 const deltaY = e.clientY - dragStartY;
-                
+
                 imageOffsetX = lastImageOffsetX + deltaX;
                 imageOffsetY = lastImageOffsetY + deltaY;
-                
+
                 applyImageTransform();
                 e.preventDefault();
             }
         });
 
-        document.addEventListener('mouseup', function(e) {
+        document.addEventListener('mouseup', function (e) {
             if (isDragging) {
                 isDragging = false;
                 document.body.style.userSelect = '';
@@ -2035,10 +2111,10 @@
         });
 
         // Event listeners para mobile (touch)
-        document.addEventListener('touchstart', function(e) {
+        document.addEventListener('touchstart', function (e) {
             const viewer = document.getElementById('imageViewer');
             const viewerImage = document.getElementById('viewerImage');
-            
+
             if (viewer.style.display === 'flex') {
                 if (e.touches.length === 1 && e.target === viewerImage && viewerZoom > 1) {
                     // Arrastar com um dedo quando há zoom
@@ -2047,7 +2123,7 @@
                     dragStartY = e.touches[0].clientY;
                     lastImageOffsetX = imageOffsetX;
                     lastImageOffsetY = imageOffsetY;
-                    
+
                     e.preventDefault();
                 } else if (e.touches.length === 1) {
                     // Navegação normal com um dedo quando não há zoom
@@ -2056,16 +2132,16 @@
                 } else if (e.touches.length === 2) {
                     // Zoom com dois dedos
                     lastTouchDistance = getTouchDistance(e.touches);
-                    
+
                     // Salvar posição inicial para o zoom focal
                     const rect = viewerImage.getBoundingClientRect();
                     const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
                     const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                    
+
                     // Converter para coordenadas relativas à imagem
                     const relativeX = (centerX - rect.left - rect.width / 2) / viewerZoom;
                     const relativeY = (centerY - rect.top - rect.height / 2) / viewerZoom;
-                    
+
                     // Armazenar para uso no zoom
                     e.focalPointX = relativeX;
                     e.focalPointY = relativeY;
@@ -2073,9 +2149,9 @@
             }
         }, { passive: false });
 
-        document.addEventListener('touchend', function(e) {
+        document.addEventListener('touchend', function (e) {
             const viewer = document.getElementById('imageViewer');
-            
+
             if (viewer.style.display === 'flex') {
                 if (isDragging) {
                     isDragging = false;
@@ -2086,7 +2162,7 @@
                     const touchEndY = e.changedTouches[0].clientY;
                     const deltaX = touchEndX - touchStartX;
                     const deltaY = touchEndY - touchStartY;
-                    
+
                     // Swipe horizontal para navegar (apenas se não há zoom significativo)
                     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50 && viewerZoom <= 1.1) {
                         if (deltaX > 0) {
@@ -2100,76 +2176,76 @@
         });
 
         // --- CONTROLES DO VISUALIZADOR: MOSTRAR/ESCONDER NO DESKTOP ---
-    let viewerControlsTimeout;
-    function showViewerControls() {
-        if (window.innerWidth <= 768) return; // Não faz nada no mobile
-        const controls = document.querySelector('.viewer-controls');
-        if (controls) {
-            controls.style.display = 'flex';
-            clearTimeout(viewerControlsTimeout);
-            viewerControlsTimeout = setTimeout(() => {
-                controls.style.display = 'none';
-            }, 2500);
+        let viewerControlsTimeout;
+        function showViewerControls() {
+            if (window.innerWidth <= 768) return; // Não faz nada no mobile
+            const controls = document.querySelector('.viewer-controls');
+            if (controls) {
+                controls.style.display = 'flex';
+                clearTimeout(viewerControlsTimeout);
+                viewerControlsTimeout = setTimeout(() => {
+                    controls.style.display = 'none';
+                }, 2500);
+            }
         }
-    }
-    
-    // Mostrar ao passar o mouse sobre a imagem OU clicar
-    document.getElementById('viewerImage').addEventListener('mouseenter', showViewerControls);
-    document.getElementById('viewerImage').addEventListener('click', showViewerControls);
-    document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
+
+        // Mostrar ao passar o mouse sobre a imagem OU clicar
+        document.getElementById('viewerImage').addEventListener('mouseenter', showViewerControls);
+        document.getElementById('viewerImage').addEventListener('click', showViewerControls);
+        document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
 
         // INICIALIZAÇÃO
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM carregado, iniciando aplicação...');
-            
+
             // Inicializar tema escuro
             createStarfield();
-            
+
             // Inicializar galeria
             loadImagesData(); // Carrega dados do JSON primeiro
             initSearchAndFilters();
-            
+
             const currentLink = document.querySelector('.nav-links a[href="imagens.html"]');
             if (currentLink) {
                 currentLink.classList.add('active');
             }
             addNavArrowsInteractionListeners();
-            
+
             // Event listeners para arrastar a imagem
-            document.addEventListener('mousemove', function(e) {
+            document.addEventListener('mousemove', function (e) {
                 if (isDragging) {
                     const deltaX = e.clientX - dragStartX;
                     const deltaY = e.clientY - dragStartY;
-                    
+
                     imageOffsetX = lastImageOffsetX + deltaX;
                     imageOffsetY = lastImageOffsetY + deltaY;
-                    
+
                     applyImageTransform();
                     e.preventDefault();
                 }
             });
-            
-            document.addEventListener('mouseup', function(e) {
+
+            document.addEventListener('mouseup', function (e) {
                 if (isDragging) {
                     isDragging = false;
                     document.body.style.userSelect = '';
                     applyImageTransform();
                 }
             });
-            
+
             // Resize otimizado para estrelas
             window.addEventListener('resize', debounce(() => {
                 performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
                 performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
                 createStarfield();
             }, 250));
-            
+
             // Animação de entrada
             const mainContent = document.querySelector('.main-content');
             if (mainContent) {
                 mainContent.style.opacity = '0';
                 mainContent.style.transform = 'translateY(30px)';
-                
+
                 setTimeout(() => {
                     mainContent.style.transition = 'all 0.8s ease-out';
                     mainContent.style.opacity = '1';
@@ -2227,12 +2303,12 @@
         // EXPORTAR LISTA DE IMAGENS
         function exportImageList() {
             const data = galleryData[currentFolder] || { images: [] };
-            const csvContent = "data:text/csv;charset=utf-8," + 
+            const csvContent = "data:text/csv;charset=utf-8," +
                 "Nome,Tamanho,Tipo,Data,URL\n" +
-                data.images.map(img => 
+                data.images.map(img =>
                     `"${img.name}","${img.size}","${img.type}","${img.date}","${img.url}"`
                 ).join("\n");
-            
+
             const link = document.createElement("a");
             link.setAttribute("href", encodeURI(csvContent));
             link.setAttribute("download", `imagens_${currentFolder.replace(/\//g, '_')}.csv`);
@@ -2286,7 +2362,7 @@
             // Para cada imagem visível na galeria
             document.querySelectorAll('.image-item img, .image-list-thumbnail').forEach(img => {
                 if (!img.dataset.resChecked) {
-                    img.addEventListener('load', function() {
+                    img.addEventListener('load', function () {
                         const parent = img.closest('.image-item, .image-list-item');
                         if (parent) {
                             const resElem = parent.querySelector('.image-details, .image-list-details.resolution');
@@ -2318,11 +2394,11 @@
             slider.style.background = `linear-gradient(90deg, var(--primary-color) ${percent}%, #333 ${percent}%)`;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const sizeSlider = document.getElementById('sizeSlider');
             if (sizeSlider) {
                 updateSliderBackground(sizeSlider);
-                sizeSlider.addEventListener('input', function() {
+                sizeSlider.addEventListener('input', function () {
                     updateSliderBackground(this);
                 });
             }
@@ -2330,4 +2406,5 @@
 
     </script>
 </body>
+
 </html>
