@@ -589,6 +589,43 @@
             opacity: 1;
         }
 
+        /* VÍDEO BADGE */
+        .video-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            z-index: 2;
+            pointer-events: none;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover .video-badge {
+            background: var(--primary-color);
+            transform: translate(-50%, -50%) scale(1.1);
+            border-color: white;
+        }
+
+        .viewer-video {
+            display: none;
+            width: 90vw;
+            height: 80vh;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
         .image-item:hover img {
             transform: scale(1.1);
         }
@@ -1189,6 +1226,7 @@
         <div class="viewer-content">
             <div class="viewer-loader" id="viewerLoader"></div>
             <img class="viewer-image" id="viewerImage" alt="Imagem ampliada">
+            <iframe class="viewer-video" id="viewerVideo" allow="autoplay"></iframe>
             <div class="viewer-controls">
                 <button class="viewer-btn" onclick="zoomIn()" title="Zoom In">+</button>
                 <button class="viewer-btn" onclick="zoomOut()" title="Zoom Out">-</button>
@@ -1421,21 +1459,40 @@
             return driveLink;
         }
 
+        function convertGoogleDriveVideoLink(driveLink) {
+            const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+            if (match) {
+                const fileId = match[1];
+                return `https://drive.google.com/file/d/${fileId}/preview`;
+            }
+            return driveLink;
+        }
+
+        function isVideoFile(link) {
+            const videoExtensions = ['.mp4', '.mov', '.mkv', '.avi', '.webm', '.ts', '.m4v'];
+            const lowerLink = link.toLowerCase();
+            return videoExtensions.some(ext => lowerLink.includes(ext)) || lowerLink.includes('drive_fs') || lowerLink.includes('usp=sharing'); // Algumas heurísticas de vídeo
+        }
+
         function processFolderLevel(folderData, folderName, parentPath = '') {
             const result = { folders: [], images: [] };
             const currentPath = parentPath === '/' ? `/${folderName.toLowerCase().replace(/\s+/g, '-')}` : `${parentPath}/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
 
             if (folderData._files && folderData._files.length > 0) {
-                result.images = folderData._files.map((link, index) => ({
-                    id: `${folderName}_${index}`,
-                    name: `Imagem ${index + 1}`,
-                    url: convertGoogleDriveLink(link, 's0'),
-                    thumbnail: convertGoogleDriveLink(link, 'w600'),
-                    size: 'Desconhecido',
-                    type: 'JPG',
-                    date: new Date().toLocaleDateString('pt-BR'),
-                    resolution: ''
-                }));
+                result.images = folderData._files.map((link, index) => {
+                    const isVideo = isVideoFile(link);
+                    return {
+                        id: `${folderName}_${index}`,
+                        name: `Mídia ${index + 1}`,
+                        url: isVideo ? convertGoogleDriveVideoLink(link) : convertGoogleDriveLink(link, 's0'),
+                        thumbnail: convertGoogleDriveLink(link, 'w600'),
+                        size: 'Desconhecido',
+                        type: isVideo ? 'VIDEO' : 'JPG',
+                        mediaType: isVideo ? 'video' : 'image',
+                        date: new Date().toLocaleDateString('pt-BR'),
+                        resolution: ''
+                    };
+                });
             }
 
             Object.entries(folderData).forEach(([key, value]) => {
@@ -1624,6 +1681,7 @@
                                     <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                         onload="this.classList.add('loaded')"
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+                                    ${image.mediaType === 'video' ? '<div class="video-badge">▶</div>' : ''}
                                     <div class="image-info">
                                         <div class="image-name">${image.name}</div>
                                         <div class="image-details">${image.size} • ${image.type} • ${image.date}</div>
@@ -1833,35 +1891,49 @@
 
         function updateViewerImage() {
             const viewerImage = document.getElementById('viewerImage');
+            const viewerVideo = document.getElementById('viewerVideo');
             const viewerLoader = document.getElementById('viewerLoader');
+            const item = currentImages[currentImageIndex];
 
-            // Esconde a imagem e mostra o loader imediatamente
+            // Esconde ambos e mostra o loader imediatamente
+            viewerImage.style.display = 'none';
+            viewerVideo.style.display = 'none';
+            viewerVideo.src = ''; // Limpa o iframe para parar o vídeo anterior
             viewerImage.style.opacity = '0';
             viewerLoader.style.display = 'block';
 
-            const newImg = new Image();
-            newImg.src = currentImages[currentImageIndex].url;
-            newImg.referrerPolicy = "no-referrer";
-
-            newImg.onload = function () {
-                viewerImage.src = newImg.src;
-                viewerImage.alt = currentImages[currentImageIndex].name;
-
-                // Só mostra após carregar
-                setTimeout(() => {
-                    viewerImage.style.opacity = '1';
-                    viewerLoader.style.display = 'none';
-                    resetZoom();
-                    preloadAdjacentImages();
-                    updateNavArrowsState(); // Atualiza visibilidade das setas
-                }, 50); // Delay mínimo para suavidade
-            };
-
-            newImg.onerror = function () {
-                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
+            if (item.mediaType === 'video') {
+                // MODO VÍDEO
+                viewerVideo.src = item.url;
+                viewerVideo.style.display = 'block';
                 viewerLoader.style.display = 'none';
-                viewerImage.style.opacity = '1';
-            };
+                updateNavArrowsState();
+            } else {
+                // MODO IMAGEM
+                viewerImage.style.display = 'block';
+                const newImg = new Image();
+                newImg.src = item.url;
+                newImg.referrerPolicy = "no-referrer";
+
+                newImg.onload = function () {
+                    viewerImage.src = newImg.src;
+                    viewerImage.alt = item.name;
+
+                    setTimeout(() => {
+                        viewerImage.style.opacity = '1';
+                        viewerLoader.style.display = 'none';
+                        resetZoom();
+                        preloadAdjacentImages();
+                        updateNavArrowsState();
+                    }, 50);
+                };
+
+                newImg.onerror = function () {
+                    viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
+                    viewerLoader.style.display = 'none';
+                    viewerImage.style.opacity = '1';
+                };
+            }
         }
 
         function fitImageToScreen() {
