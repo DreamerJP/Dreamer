@@ -1471,7 +1471,11 @@
         function isVideoFile(link) {
             const videoExtensions = ['.mp4', '.mov', '.mkv', '.avi', '.webm', '.ts', '.m4v'];
             const lowerLink = link.toLowerCase();
-            return videoExtensions.some(ext => lowerLink.includes(ext)) || lowerLink.includes('drive_fs') || lowerLink.includes('usp=sharing'); // Algumas heurísticas de vídeo
+            // Heurística: extensões comuns ou parâmetros específicos do Drive que indicam vídeo
+            return videoExtensions.some(ext => lowerLink.includes(ext)) || 
+                   lowerLink.includes('drive_fs') || 
+                   lowerLink.includes('usp=drive_fs') || 
+                   lowerLink.includes('view?usp=drive_link');
         }
 
         function processFolderLevel(folderData, folderName, parentPath = '') {
@@ -1832,38 +1836,15 @@
         function openViewer(imageIndex) {
             currentImageIndex = imageIndex;
             const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            const viewerLoader = document.getElementById('viewerLoader');
-
-            // Reset state
-            viewerImage.style.opacity = '0';
-            viewerLoader.style.display = 'block';
+            
+            // Exibe o modal
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            const newImg = new Image();
-            newImg.src = currentImages[imageIndex].url;
-            newImg.referrerPolicy = "no-referrer";
-
-            newImg.onload = function () {
-                viewerImage.src = newImg.src;
-                viewerImage.alt = currentImages[imageIndex].name;
-
-                setTimeout(() => {
-                    viewerImage.style.opacity = '1';
-                    viewerLoader.style.display = 'none';
-                    fitImageToScreen();
-                    preloadAdjacentImages();
-                    updateNavArrowsState(); // Atualiza visibilidade das setas
-                }, 50);
-            };
-
-            newImg.onerror = function () {
-                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
-                viewerLoader.style.display = 'none';
-                viewerImage.style.opacity = '1';
-            };
-
+            // Delega o carregamento para a função unificada
+            updateViewerImage();
+            
+            // Mostra as setas (elas se auto-ajustarão no updateViewerImage)
             showNavArrows();
         }
 
