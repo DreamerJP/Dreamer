@@ -678,6 +678,32 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
+        .viewer-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 2100;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+
         .viewer-btn {
             width: 50px;
             height: 50px;
@@ -1161,6 +1187,7 @@
         <button class="close-viewer" onclick="closeViewer()">✕</button>
         <button class="nav-arrows nav-prev" onclick="prevImage()">‹</button>
         <div class="viewer-content">
+            <div class="viewer-loader" id="viewerLoader"></div>
             <img class="viewer-image" id="viewerImage" alt="Imagem ampliada">
             <div class="viewer-controls">
                 <button class="viewer-btn" onclick="zoomIn()" title="Zoom In">+</button>
@@ -1753,25 +1780,36 @@
             currentImageIndex = imageIndex;
             const viewer = document.getElementById('imageViewer');
             const viewerImage = document.getElementById('viewerImage');
+            const viewerLoader = document.getElementById('viewerLoader');
 
-            viewerImage.src = currentImages[imageIndex].url;
-            viewerImage.alt = currentImages[imageIndex].name;
-            viewerImage.referrerPolicy = "no-referrer";
-
+            // Reset state
+            viewerImage.style.opacity = '0';
+            viewerLoader.style.display = 'block';
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            // Aguardar a imagem carregar para calcular o zoom inicial
-            viewerImage.onload = function () {
-                fitImageToScreen();
-                preloadAdjacentImages();
+            const newImg = new Image();
+            newImg.src = currentImages[imageIndex].url;
+            newImg.referrerPolicy = "no-referrer";
+
+            newImg.onload = function () {
+                viewerImage.src = newImg.src;
+                viewerImage.alt = currentImages[imageIndex].name;
+
+                setTimeout(() => {
+                    viewerImage.style.opacity = '1';
+                    viewerLoader.style.display = 'none';
+                    fitImageToScreen();
+                    preloadAdjacentImages();
+                }, 50);
             };
 
-            // Se a imagem já estiver carregada (cache), calcular imediatamente
-            if (viewerImage.complete) {
-                fitImageToScreen();
-                preloadAdjacentImages();
-            }
+            newImg.onerror = function () {
+                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
+                viewerLoader.style.display = 'none';
+                viewerImage.style.opacity = '1';
+            };
+
             showNavArrows();
         }
 
@@ -1799,15 +1837,34 @@
 
         function updateViewerImage() {
             const viewerImage = document.getElementById('viewerImage');
-            viewerImage.style.opacity = '0.5';
+            const viewerLoader = document.getElementById('viewerLoader');
 
-            setTimeout(() => {
-                viewerImage.src = currentImages[currentImageIndex].url;
+            // Esconde a imagem e mostra o loader imediatamente
+            viewerImage.style.opacity = '0';
+            viewerLoader.style.display = 'block';
+
+            const newImg = new Image();
+            newImg.src = currentImages[currentImageIndex].url;
+            newImg.referrerPolicy = "no-referrer";
+
+            newImg.onload = function () {
+                viewerImage.src = newImg.src;
                 viewerImage.alt = currentImages[currentImageIndex].name;
+
+                // Só mostra após carregar
+                setTimeout(() => {
+                    viewerImage.style.opacity = '1';
+                    viewerLoader.style.display = 'none';
+                    resetZoom();
+                    preloadAdjacentImages();
+                }, 50); // Delay mínimo para suavidade
+            };
+
+            newImg.onerror = function () {
+                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
+                viewerLoader.style.display = 'none';
                 viewerImage.style.opacity = '1';
-                resetZoom(); // Isso agora também reseta a posição
-                preloadAdjacentImages();
-            }, 150);
+            };
         }
 
         function fitImageToScreen() {
