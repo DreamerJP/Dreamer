@@ -1499,6 +1499,8 @@
                 }
 
                 console.log('Carregando conteúdo da galeria...');
+                // REGISTRA O ESTADO INICIAL (Fix para o primeiro clique no botão Voltar)
+                window.history.replaceState({ folder: currentFolder, page: currentPage }, '', window.location.href);
                 loadGalleryContent(false); // false indica que não deve dar pushState nesta carga inicial
 
                 // ESCUTA O BOTÃO VOLTAR DO NAVEGADOR (History API)
