@@ -581,7 +581,12 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .image-item img.loaded {
+            opacity: 1;
         }
 
         .image-item:hover img {
@@ -1303,7 +1308,7 @@
                 }
 
                 // Função auxiliar para processar estrutura hierárquica
-                function processFolderStructure(folderData, basePath = '', folderName = '') {
+                function processFolderStructure(folderData, folderName = '') {
                     const result = {
                         folders: [],
                         images: []
@@ -1314,21 +1319,11 @@
                         result.images = folderData._files.map((linkOrFilename, index) => {
                             let url, thumbnail, name, type;
 
-                            // Verifica se é um link do Google Drive ou nome de arquivo
-                            if (typeof linkOrFilename === 'string' && linkOrFilename.includes('drive.google.com')) {
-                                // É um link do Google Drive
-                                url = convertGoogleDriveLink(linkOrFilename, 's0'); // Alta resolução para o visualizador
-                                thumbnail = convertGoogleDriveLink(linkOrFilename, 'w600'); // Miniatura otimizada para a grade
-                                name = `Imagem ${index + 1}`;
-                                type = 'JPG'; // Default para Google Drive
-                            } else {
-                                // Compatibilidade com nomes de arquivos antigos
-                                const fullPath = basePath ? `${basePath}/${linkOrFilename}` : linkOrFilename;
-                                url = `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(fullPath)}`;
-                                thumbnail = url;
-                                name = linkOrFilename;
-                                type = linkOrFilename.split('.').pop().toUpperCase();
-                            }
+                            // Para Google Drive, linkOrFilename ja é a URL
+                            url = convertGoogleDriveLink(linkOrFilename, 's0'); // Alta resolução para o visualizador
+                            thumbnail = convertGoogleDriveLink(linkOrFilename, 'w600'); // Miniatura otimizada para a grade
+                            name = `Imagem ${index + 1}`;
+                            type = 'JPG';
 
                             return {
                                 id: `${folderName}_${index}`,
@@ -1346,7 +1341,6 @@
                     // Processa subpastas
                     Object.entries(folderData).forEach(([key, value]) => {
                         if (key !== '_files' && typeof value === 'object') {
-                            const subPath = basePath ? `${basePath}/${key}` : key;
                             const previewImage = getFirstImageFromFolder(value);
 
                             result.folders.push({
@@ -1354,12 +1348,12 @@
                                 icon: getFolderIcon(key),
                                 count: countItemsInFolder(value),
                                 path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
-                                preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage, 'w600') : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
+                                preview: previewImage ? convertGoogleDriveLink(previewImage, 'w600') : null
                             });
 
                             // Processa recursivamente a subpasta
                             const subFolderPath = `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`;
-                            galleryData[subFolderPath] = processFolderStructure(value, subPath, folderName);
+                            galleryData[subFolderPath] = processFolderStructure(value, folderName);
                         }
                     });
 
@@ -1408,7 +1402,7 @@
                         icon: getFolderIcon(folderName),
                         count: `${countItemsInFolder(folderData)} imagens`,
                         path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                        preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage, 'w600') : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
+                        preview: previewImage ? convertGoogleDriveLink(previewImage, 'w600') : null
                     };
                 });
 
@@ -1417,7 +1411,7 @@
                 // Processa cada pasta principal e suas subpastas
                 Object.entries(imagesIndex).forEach(([folderName, folderData]) => {
                     const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-                    galleryData[path] = processFolderStructure(folderData, '', folderName);
+                    galleryData[path] = processFolderStructure(folderData, folderName);
                     console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
                 });
 
@@ -1557,6 +1551,7 @@
                             html += `
                                 <div class="image-item" onclick="openViewer(${globalIndex})">
                                     <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
+                                        onload="this.classList.add('loaded')"
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                     <div class="image-info">
                                         <div class="image-name">${image.name}</div>
@@ -1574,6 +1569,7 @@
                             html += `
                                 <div class="image-list-item" onclick="openViewer(${globalIndex})">
                                     <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
+                                        onload="this.classList.add('loaded')"
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                     <div class="image-list-content">
                                         <div class="image-list-name">${image.name}</div>
@@ -1831,13 +1827,9 @@
 
         function downloadImage() {
             const currentImage = currentImages[currentImageIndex];
-            const link = document.createElement('a');
-            link.href = currentImage.url;
-            link.download = currentImage.name;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Para Google Drive, é melhor abrir o link de visualização original 
+            // já que downloads diretos binários podem ser bloqueados por CORS
+            window.open(currentImage.url.replace('thumbnail', 'file/d').replace('&sz=s0', '/view'), '_blank');
         }
 
         // Função para detectar se é mobile
@@ -2012,7 +2004,7 @@
                     const globalIndex = startIndex + index;
                     html += `
                         <div class="image-item" onclick="openViewer(${globalIndex})">
-                            <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
+                            <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('loaded')" 
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                             <div class="image-info">
                                 <div class="image-name">${image.name}</div>
@@ -2028,7 +2020,7 @@
                     const globalIndex = startIndex + index;
                     html += `
                         <div class="image-list-item" onclick="openViewer(${globalIndex})">
-                            <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
+                            <img class="image-list-thumbnail" src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('loaded')" 
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                             <div class="image-list-content">
                                 <div class="image-list-name">${image.name}</div>
