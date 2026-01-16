@@ -1217,12 +1217,12 @@
 
             // Função auxiliar para converter link do Google Drive para URL direta
             function convertGoogleDriveLink(driveLink) {
-                // Extrai o ID do arquivo do link
-                const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                // Extrai o ID do arquivo do link (/d/ ou id=)
+                const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
                 if (match) {
                     const fileId = match[1];
-                    // URL para visualização direta (thumbnail)
-                    return `https://drive.google.com/uc?id=${fileId}`;
+                    // URL para visualização direta compatível com <img> (formato de download direto)
+                    return `https://drive.usercontent.google.com/download?id=${fileId}&authuser=0`;
                 }
                 return driveLink; // fallback
             }
@@ -1333,7 +1333,7 @@
                     icon: getFolderIcon(folderName),
                     count: `${countItemsInFolder(folderData)} imagens`,
                     path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                    preview: previewImage ? `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}` : null
+                    preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
                 };
             });
 
