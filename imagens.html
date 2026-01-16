@@ -1301,6 +1301,8 @@
 
         // DADOS DA GALERIA
         let galleryData = {};
+        let rawImagesIndex = null; // Guardará o JSON bruto para processamento sob demanda
+        let pathMap = {}; // Mapeamento de caminho da URL para o nó de dados no JSON
 
         // FUNÇÕES DE NAVEGAÇÃO
         function toggleMenu() {
@@ -1333,206 +1335,156 @@
         async function loadImagesData() {
             try {
                 console.log('Iniciando carregamento do índice de imagens...');
-
                 const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Imagens/images-index.json');
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                const imagesIndex = await response.json();
-                console.log('Índice carregado:', imagesIndex);
+                rawImagesIndex = await response.json();
+                console.log('Índice carregado:', rawImagesIndex);
 
-                // Inicializa a estrutura base se não existir
-                if (!galleryData['/']) {
-                    galleryData['/'] = { folders: [], images: [] };
-                }
+                // Inicializa a estrutura base
+                galleryData = { '/': { folders: [], images: [] } };
+                pathMap = { '/': { _root: true } };
 
-                // Limpa os dados simulados
-                galleryData['/'].folders = [];
-                galleryData['/'].images = [];
+                // Gera a estrutura da HOME (Lazy Mode)
+                galleryData['/'].folders = Object.keys(rawImagesIndex).map(folderName => {
+                    const folderData = rawImagesIndex[folderName];
+                    const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
 
-                // Definir imagens de preview para cada pasta (personalizadas)
-                const folderPreviews = {
-                    'Alessa': 'SilentHill__1_.gif',
-                    'Aurora': 'Aurora__9_.jpg',
-                    'Avril Lavigne': 'Avril_Lavigne_10.jpg',
-                    'Emily Browning': 'Emily_Browning__95_.jpg',
-                    'Luna Lovegood': 'Luna_Lovegood__1_.jpg',
-                    'Nier Automata': 'NierAutomata__7_.jpg',
-                    't.A.T.u': 't.A.T.u._55.jpg'
-                };
-
-                // Função auxiliar para converter link do Google Drive para URL direta
-                function convertGoogleDriveLink(driveLink, size = 's0') {
-                    // Extrai o ID do arquivo do link (/d/ ou id=)
-                    const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
-                    if (match) {
-                        const fileId = match[1];
-                        // sz=s0 é o parâmetro oficial para o tamanho original (alta resolução)
-                        // sz=w600 ou similar é ideal para miniaturas rápidas
-                        return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
-                    }
-                    return driveLink; // fallback
-                }
-
-                // Função auxiliar para processar estrutura hierárquica
-                function processFolderStructure(folderData, folderName = '') {
-                    const result = {
-                        folders: [],
-                        images: []
-                    };
-
-                    // Processa arquivos na pasta atual
-                    if (folderData._files && folderData._files.length > 0) {
-                        result.images = folderData._files.map((linkOrFilename, index) => {
-                            let url, thumbnail, name, type;
-
-                            // Para Google Drive, linkOrFilename ja é a URL
-                            url = convertGoogleDriveLink(linkOrFilename, 's0'); // Alta resolução para o visualizador
-                            thumbnail = convertGoogleDriveLink(linkOrFilename, 'w600'); // Miniatura otimizada para a grade
-                            name = `Imagem ${index + 1}`;
-                            type = 'JPG';
-
-                            return {
-                                id: `${folderName}_${index}`,
-                                name: name,
-                                url: url,
-                                thumbnail: thumbnail,
-                                size: 'Desconhecido',
-                                type: type,
-                                date: new Date().toLocaleDateString('pt-BR'),
-                                resolution: ''
-                            };
-                        });
-                    }
-
-                    // Processa subpastas
-                    Object.entries(folderData).forEach(([key, value]) => {
-                        if (key !== '_files' && key !== '_cover' && typeof value === 'object') {
-                            // Prioriza a capa personalizada (_cover), se não houver, busca a primeira imagem
-                            const previewImage = value._cover || getFirstImageFromFolder(value);
-
-                            result.folders.push({
-                                name: key,
-                                icon: getFolderIcon(key),
-                                count: countItemsInFolder(value),
-                                path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
-                                preview: previewImage ? convertGoogleDriveLink(previewImage, 'w600') : null
-                            });
-
-                            // Processa recursivamente a subpasta
-                            const subFolderPath = `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`;
-                            galleryData[subFolderPath] = processFolderStructure(value, folderName);
-                        }
-                    });
-
-                    return result;
-                }
-
-                // Função auxiliar para encontrar primeira imagem em uma pasta
-                function getFirstImageFromFolder(folderData) {
-                    if (folderData._files && folderData._files.length > 0) {
-                        const firstItem = folderData._files[0];
-                        // Se for link do Google Drive, retorna diretamente
-                        if (typeof firstItem === 'string' && firstItem.includes('drive.google.com')) {
-                            return firstItem;
-                        }
-                        // Caso contrário, assume que é nome de arquivo
-                        return firstItem;
-                    }
-                    // Procura recursivamente nas subpastas
-                    for (const [key, value] of Object.entries(folderData)) {
-                        if (key !== '_files' && typeof value === 'object') {
-                            const found = getFirstImageFromFolder(value);
-                            if (found) return found;
-                        }
-                    }
-                    return null;
-                }
-
-                // Função auxiliar para contar itens em uma pasta
-                function countItemsInFolder(folderData) {
-                    let count = folderData._files ? folderData._files.length : 0;
-                    for (const [key, value] of Object.entries(folderData)) {
-                        if (key !== '_files' && typeof value === 'object') {
-                            count += countItemsInFolder(value);
-                        }
-                    }
-                    return count;
-                }
-
-                // Gera a estrutura de pastas principais com preview
-                galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
-                    const folderData = imagesIndex[folderName];
-                    // Prioriza a capa do JSON (_cover), depois o fallback legado (se houver), depois a primeira foto
-                    const previewImage = folderData._cover || folderPreviews[folderName] || getFirstImageFromFolder(folderData);
+                    // Mapeia o caminho para os dados brutos
+                    pathMap[path] = folderData;
 
                     return {
                         name: folderName,
                         icon: getFolderIcon(folderName),
                         count: `${countItemsInFolder(folderData)} imagens`,
-                        path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                        preview: previewImage ? convertGoogleDriveLink(previewImage, 'w600') : null
+                        path: path,
+                        preview: (folderData._cover || getFirstImageFromFolder(folderData)) ? convertGoogleDriveLink(folderData._cover || getFirstImageFromFolder(folderData), 'w600') : null
                     };
                 });
 
-                console.log('Pastas principais criadas:', galleryData['/'].folders);
-
-                // Processa cada pasta principal e suas subpastas
-                Object.entries(imagesIndex).forEach(([folderName, folderData]) => {
-                    const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-                    galleryData[path] = processFolderStructure(folderData, folderName);
-                    console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
-                });
+                console.log('Menu principal pronto (Lazy Mode).');
 
                 // Carrega o conteúdo inicial baseado na URL (Deep Linking)
                 const urlParams = new URLSearchParams(window.location.search);
-                const folderParam = urlParams.get('folder');
+                const folderParam = urlParams.get('folder') || '/';
                 const pageParam = urlParams.get('page');
 
-                if (folderParam && galleryData[folderParam]) {
-                    currentFolder = folderParam;
-                }
+                currentFolder = folderParam;
                 if (pageParam) {
                     currentPage = parseInt(pageParam) || 1;
                 }
 
-                console.log('Carregando conteúdo da galeria...');
-                // REGISTRA O ESTADO INICIAL (Fix para o primeiro clique no botão Voltar)
+                // REGISTRA O ESTADO INICIAL (History API)
                 window.history.replaceState({ folder: currentFolder, page: currentPage }, '', window.location.href);
+
+                // Se não for root, precisamos garantir que o caminho até a pasta atual esteja mapeado
+                if (currentFolder !== '/') {
+                    ensurePathIsMapped(currentFolder, rawImagesIndex);
+                }
+
                 loadGalleryContent(false); // false indica que não deve dar pushState nesta carga inicial
 
-                // ESCUTA O BOTÃO VOLTAR DO NAVEGADOR (History API)
+                // ESCUTA O BOTÃO VOLTAR DO NAVEGADOR
                 window.onpopstate = function (event) {
                     if (event.state) {
                         currentFolder = event.state.folder || '/';
                         currentPage = event.state.page || 1;
-                        loadGalleryContent(false); // false para não criar loop de pushState
+                        loadGalleryContent(false);
                     }
                 };
 
             } catch (error) {
                 console.error('Erro ao carregar índice de imagens:', error);
-
-                // Fallback: exibe uma mensagem de erro
                 const content = document.getElementById('galleryContent');
                 content.innerHTML = `
-                <div class="loading" style="color: var(--primary-coral);">
-                    ❌ Erro ao carregar imagens<br>
-                    <small>Verifique a conexão com a internet e tente novamente</small>
-                    <br><br>
-                    <button onclick="loadImagesData()" style="
-                        padding: 10px 20px; 
-                        background: var(--button-gradient); 
-                        color: white; 
-                        border: none; 
-                        border-radius: 10px; 
-                        cursor: pointer;
-                        font-size: 14px;
-                    ">🔄 Tentar Novamente</button>
-                </div>
-            `;
+                    <div class="loading" style="color: var(--primary-coral);">
+                        ❌ Erro ao carregar imagens<br>
+                        <small>Verifique a conexão com a internet e tente novamente</small>
+                        <br><br>
+                        <button onclick="loadImagesData()" style="padding: 10px 20px; background: var(--button-gradient); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 14px;">🔄 Tentar Novamente</button>
+                    </div>
+                `;
+            }
+        }
+
+        // --- FUNÇÕES AUXILIARES ---
+
+        function convertGoogleDriveLink(driveLink, size = 's0') {
+            const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+            if (match) {
+                const fileId = match[1];
+                return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
+            }
+            return driveLink;
+        }
+
+        function processFolderLevel(folderData, folderName, parentPath = '') {
+            const result = { folders: [], images: [] };
+            const currentPath = parentPath === '/' ? `/${folderName.toLowerCase().replace(/\s+/g, '-')}` : `${parentPath}/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
+
+            if (folderData._files && folderData._files.length > 0) {
+                result.images = folderData._files.map((link, index) => ({
+                    id: `${folderName}_${index}`,
+                    name: `Imagem ${index + 1}`,
+                    url: convertGoogleDriveLink(link, 's0'),
+                    thumbnail: convertGoogleDriveLink(link, 'w600'),
+                    size: 'Desconhecido',
+                    type: 'JPG',
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    resolution: ''
+                }));
+            }
+
+            Object.entries(folderData).forEach(([key, value]) => {
+                if (key !== '_files' && key !== '_cover' && typeof value === 'object') {
+                    const subPath = currentPath === '/' ? `/${key.toLowerCase().replace(/\s+/g, '-')}` : `${currentPath}/${key.toLowerCase().replace(/\s+/g, '-')}`;
+                    pathMap[subPath] = value;
+                    result.folders.push({
+                        name: key,
+                        icon: getFolderIcon(key),
+                        count: countItemsInFolder(value),
+                        path: subPath,
+                        preview: (value._cover || getFirstImageFromFolder(value)) ? convertGoogleDriveLink(value._cover || getFirstImageFromFolder(value), 'w600') : null
+                    });
+                }
+            });
+            return result;
+        }
+
+        function getFirstImageFromFolder(folderData) {
+            if (folderData._files && folderData._files.length > 0) return folderData._files[0];
+            for (const [key, value] of Object.entries(folderData)) {
+                if (key !== '_files' && typeof value === 'object') {
+                    const found = getFirstImageFromFolder(value);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        function countItemsInFolder(folderData) {
+            let count = folderData._files ? folderData._files.length : 0;
+            for (const [key, value] of Object.entries(folderData)) {
+                if (key !== '_files' && typeof value === 'object') count += countItemsInFolder(value);
+            }
+            return count;
+        }
+
+        function ensurePathIsMapped(targetPath, rootData) {
+            const parts = targetPath.split('/').filter(p => p);
+            let currentData = rootData;
+            let builtPath = '';
+            for (const part of parts) {
+                const keys = Object.keys(currentData);
+                const originalKey = keys.find(k => k.toLowerCase().replace(/\s+/g, '-') === part);
+                if (originalKey) {
+                    builtPath += `/${part}`;
+                    currentData = currentData[originalKey];
+                    pathMap[builtPath] = currentData;
+                } else break;
             }
         }
 
@@ -1583,6 +1535,17 @@
 
         // CARREGAR CONTEÚDO DA GALERIA
         function loadGalleryContent(shouldPushState = true) {
+            // Se a pasta não estiver processada, processamos ela AGORA (Lazy Loading)
+            if (!galleryData[currentFolder]) {
+                const rawData = pathMap[currentFolder];
+                if (rawData) {
+                    const folderName = currentFolder.split('/').pop() || 'Root';
+                    galleryData[currentFolder] = processFolderLevel(rawData, folderName, currentFolder.split('/').slice(0, -1).join('/'));
+                } else {
+                    console.error('Dados não encontrados para o caminho:', currentFolder);
+                }
+            }
+
             // Atualiza URL e Histórico se solicitado
             if (shouldPushState) {
                 const url = new URL(window.location);
@@ -1598,7 +1561,7 @@
 
             if (!data) {
                 content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
-                galleryControls.style.display = 'none'; // Esconder controles
+                galleryControls.style.display = 'none';
                 pagination.innerHTML = '';
                 pagination.style.display = 'none';
                 return;
