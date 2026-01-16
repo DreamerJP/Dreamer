@@ -1206,7 +1206,7 @@
             
             // Definir imagens de preview para cada pasta (personalizadas)
             const folderPreviews = {
-                'Alessa': 'SilentHill__1_.gif', // substitua pelo nome da imagem desejada
+                'Alessa': 'SilentHill__1_.gif',
                 'Aurora': 'Aurora__9_.jpg',
                 'Avril Lavigne': 'Avril_Lavigne_10.jpg',
                 'Emily Browning': 'Emily_Browning__95_.jpg',
@@ -1214,38 +1214,136 @@
                 'Nier Automata': 'NierAutomata__7_.jpg',
                 't.A.T.u': 't.A.T.u._55.jpg'
             };
-            
-            // Gera a estrutura de pastas com preview
+
+            // Função auxiliar para converter link do Google Drive para URL direta
+            function convertGoogleDriveLink(driveLink) {
+                // Extrai o ID do arquivo do link
+                const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                if (match) {
+                    const fileId = match[1];
+                    // URL para visualização direta (thumbnail)
+                    return `https://drive.google.com/uc?id=${fileId}`;
+                }
+                return driveLink; // fallback
+            }
+
+            // Função auxiliar para processar estrutura hierárquica
+            function processFolderStructure(folderData, basePath = '', folderName = '') {
+                const result = {
+                    folders: [],
+                    images: []
+                };
+
+                // Processa arquivos na pasta atual
+                if (folderData._files && folderData._files.length > 0) {
+                    result.images = folderData._files.map((linkOrFilename, index) => {
+                        let url, thumbnail, name, type;
+
+                        // Verifica se é um link do Google Drive ou nome de arquivo
+                        if (typeof linkOrFilename === 'string' && linkOrFilename.includes('drive.google.com')) {
+                            // É um link do Google Drive
+                            url = convertGoogleDriveLink(linkOrFilename);
+                            thumbnail = convertGoogleDriveLink(linkOrFilename); // Mesmo link para thumbnail
+                            name = `Imagem ${index + 1}`;
+                            type = 'JPG'; // Default para Google Drive
+                        } else {
+                            // Compatibilidade com nomes de arquivos antigos
+                            const fullPath = basePath ? `${basePath}/${linkOrFilename}` : linkOrFilename;
+                            url = `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(fullPath)}`;
+                            thumbnail = url;
+                            name = linkOrFilename;
+                            type = linkOrFilename.split('.').pop().toUpperCase();
+                        }
+
+                        return {
+                            id: `${folderName}_${index}`,
+                            name: name,
+                            url: url,
+                            thumbnail: thumbnail,
+                            size: 'Desconhecido',
+                            type: type,
+                            date: new Date().toLocaleDateString('pt-BR'),
+                            resolution: ''
+                        };
+                    });
+                }
+
+                // Processa subpastas
+                Object.entries(folderData).forEach(([key, value]) => {
+                    if (key !== '_files' && typeof value === 'object') {
+                        const subPath = basePath ? `${basePath}/${key}` : key;
+                        const previewImage = getFirstImageFromFolder(value);
+
+                        result.folders.push({
+                            name: key,
+                            icon: getFolderIcon(key),
+                            count: countItemsInFolder(value),
+                            path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
+                            preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
+                        });
+
+                        // Processa recursivamente a subpasta
+                        const subFolderPath = `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`;
+                        galleryData[subFolderPath] = processFolderStructure(value, subPath, folderName);
+                    }
+                });
+
+                return result;
+            }
+
+            // Função auxiliar para encontrar primeira imagem em uma pasta
+            function getFirstImageFromFolder(folderData) {
+                if (folderData._files && folderData._files.length > 0) {
+                    const firstItem = folderData._files[0];
+                    // Se for link do Google Drive, retorna diretamente
+                    if (typeof firstItem === 'string' && firstItem.includes('drive.google.com')) {
+                        return firstItem;
+                    }
+                    // Caso contrário, assume que é nome de arquivo
+                    return firstItem;
+                }
+                // Procura recursivamente nas subpastas
+                for (const [key, value] of Object.entries(folderData)) {
+                    if (key !== '_files' && typeof value === 'object') {
+                        const found = getFirstImageFromFolder(value);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            }
+
+            // Função auxiliar para contar itens em uma pasta
+            function countItemsInFolder(folderData) {
+                let count = folderData._files ? folderData._files.length : 0;
+                for (const [key, value] of Object.entries(folderData)) {
+                    if (key !== '_files' && typeof value === 'object') {
+                        count += countItemsInFolder(value);
+                    }
+                }
+                return count;
+            }
+
+            // Gera a estrutura de pastas principais com preview
             galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
-                const previewImage = folderPreviews[folderName] || imagesIndex[folderName][0]; // usar primeira imagem se não tiver preview definido
+                const folderData = imagesIndex[folderName];
+                const previewImage = folderPreviews[folderName] || getFirstImageFromFolder(folderData);
+
                 return {
                     name: folderName,
                     icon: getFolderIcon(folderName),
-                    count: `${imagesIndex[folderName].length} imagens`,
+                    count: `${countItemsInFolder(folderData)} imagens`,
                     path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                    preview: `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`
+                    preview: previewImage ? `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}` : null
                 };
             });
-            
-            console.log('Pastas criadas:', galleryData['/'].folders);
-            
-            // Gera dados para cada pasta (resto permanece igual)
-            Object.entries(imagesIndex).forEach(([folderName, images]) => {
+
+            console.log('Pastas principais criadas:', galleryData['/'].folders);
+
+            // Processa cada pasta principal e suas subpastas
+            Object.entries(imagesIndex).forEach(([folderName, folderData]) => {
                 const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-                galleryData[path] = {
-                    folders: [],
-                    images: images.map((filename, index) => ({
-                        id: `${folderName}_${index}`,
-                        name: filename,
-                        url: `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(filename)}`,
-                        thumbnail: `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(filename)}`,
-                        size: 'Desconhecido',
-                        type: filename.split('.').pop().toUpperCase(),
-                        date: new Date().toLocaleDateString('pt-BR'),
-                        resolution: ''
-                    }))
-                };
-                console.log(`Pasta ${path} criada com ${images.length} imagens`);
+                galleryData[path] = processFolderStructure(folderData, '', folderName);
+                console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
             });
             
             // Carrega o conteúdo inicial
