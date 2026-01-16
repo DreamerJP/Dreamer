@@ -1290,14 +1290,14 @@
                 };
 
                 // Função auxiliar para converter link do Google Drive para URL direta
-                function convertGoogleDriveLink(driveLink) {
+                function convertGoogleDriveLink(driveLink, size = 's0') {
                     // Extrai o ID do arquivo do link (/d/ ou id=)
                     const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
                     if (match) {
                         const fileId = match[1];
-                        // URL de miniatura/preview que permite incorporação direta em sites externos
-                        // sz=w1200 solicita uma imagem de alta qualidade
-                        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+                        // sz=s0 é o parâmetro oficial para o tamanho original (alta resolução)
+                        // sz=w600 ou similar é ideal para miniaturas rápidas
+                        return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
                     }
                     return driveLink; // fallback
                 }
@@ -1317,8 +1317,8 @@
                             // Verifica se é um link do Google Drive ou nome de arquivo
                             if (typeof linkOrFilename === 'string' && linkOrFilename.includes('drive.google.com')) {
                                 // É um link do Google Drive
-                                url = convertGoogleDriveLink(linkOrFilename);
-                                thumbnail = convertGoogleDriveLink(linkOrFilename); // Mesmo link para thumbnail
+                                url = convertGoogleDriveLink(linkOrFilename, 's0'); // Alta resolução para o visualizador
+                                thumbnail = convertGoogleDriveLink(linkOrFilename, 'w600'); // Miniatura otimizada para a grade
                                 name = `Imagem ${index + 1}`;
                                 type = 'JPG'; // Default para Google Drive
                             } else {
@@ -1354,7 +1354,7 @@
                                 icon: getFolderIcon(key),
                                 count: countItemsInFolder(value),
                                 path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}/${key.toLowerCase().replace(/\s+/g, '-')}`,
-                                preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
+                                preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage, 'w600') : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(subPath)}/${encodeURIComponent(previewImage)}`) : null
                             });
 
                             // Processa recursivamente a subpasta
@@ -1408,7 +1408,7 @@
                         icon: getFolderIcon(folderName),
                         count: `${countItemsInFolder(folderData)} imagens`,
                         path: `/${folderName.toLowerCase().replace(/\s+/g, '-')}`,
-                        preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage) : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
+                        preview: previewImage ? (typeof previewImage === 'string' && previewImage.includes('drive.google.com') ? convertGoogleDriveLink(previewImage, 'w600') : `https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/${encodeURIComponent(folderName)}/${encodeURIComponent(previewImage)}`) : null
                     };
                 });
 
