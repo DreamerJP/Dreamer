@@ -1801,6 +1801,7 @@
                     viewerLoader.style.display = 'none';
                     fitImageToScreen();
                     preloadAdjacentImages();
+                    updateNavArrowsState(); // Atualiza visibilidade das setas
                 }, 50);
             };
 
@@ -1857,6 +1858,7 @@
                     viewerLoader.style.display = 'none';
                     resetZoom();
                     preloadAdjacentImages();
+                    updateNavArrowsState(); // Atualiza visibilidade das setas
                 }, 50); // Delay mínimo para suavidade
             };
 
@@ -2468,8 +2470,11 @@
         function showNavArrows() {
             const prevArrow = document.querySelector('.nav-arrows.nav-prev');
             const nextArrow = document.querySelector('.nav-arrows.nav-next');
-            if (prevArrow) prevArrow.style.opacity = '1';
-            if (nextArrow) nextArrow.style.opacity = '1';
+
+            // Só tenta mostrar se a navegação naquela direção for possível
+            if (prevArrow && currentImageIndex > 0) prevArrow.style.opacity = '1';
+            if (nextArrow && currentImageIndex < currentImages.length - 1) nextArrow.style.opacity = '1';
+
             clearTimeout(navArrowsTimeout);
             navArrowsTimeout = setTimeout(hideNavArrows, 1000);
         }
@@ -2479,6 +2484,21 @@
             const nextArrow = document.querySelector('.nav-arrows.nav-next');
             if (prevArrow) prevArrow.style.opacity = '0';
             if (nextArrow) nextArrow.style.opacity = '0';
+        }
+
+        // Função para atualizar o estado físico das setas (se elas podem existir ou não)
+        function updateNavArrowsState() {
+            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
+            const nextArrow = document.querySelector('.nav-arrows.nav-next');
+
+            if (prevArrow) {
+                const canGoBack = currentImageIndex > 0;
+                prevArrow.style.display = canGoBack ? 'block' : 'none';
+            }
+            if (nextArrow) {
+                const canGoForward = currentImageIndex < currentImages.length - 1;
+                nextArrow.style.display = canGoForward ? 'block' : 'none';
+            }
         }
 
         // Mostrar setas ao interagir com a imagem/visualizador
