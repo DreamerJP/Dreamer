@@ -1465,7 +1465,8 @@
                 // Gera a estrutura de pastas principais com preview
                 galleryData['/'].folders = Object.keys(imagesIndex).map(folderName => {
                     const folderData = imagesIndex[folderName];
-                    const previewImage = folderPreviews[folderName] || getFirstImageFromFolder(folderData);
+                    // Prioriza a capa do JSON (_cover), depois o fallback legado (se houver), depois a primeira foto
+                    const previewImage = folderData._cover || folderPreviews[folderName] || getFirstImageFromFolder(folderData);
 
                     return {
                         name: folderName,
@@ -1485,9 +1486,29 @@
                     console.log(`Pasta ${path} processada com ${countItemsInFolder(folderData)} imagens`);
                 });
 
-                // Carrega o conteúdo inicial
+                // Carrega o conteúdo inicial baseado na URL (Deep Linking)
+                const urlParams = new URLSearchParams(window.location.search);
+                const folderParam = urlParams.get('folder');
+                const pageParam = urlParams.get('page');
+
+                if (folderParam && galleryData[folderParam]) {
+                    currentFolder = folderParam;
+                }
+                if (pageParam) {
+                    currentPage = parseInt(pageParam) || 1;
+                }
+
                 console.log('Carregando conteúdo da galeria...');
-                loadGalleryContent();
+                loadGalleryContent(false); // false indica que não deve dar pushState nesta carga inicial
+
+                // ESCUTA O BOTÃO VOLTAR DO NAVEGADOR (History API)
+                window.onpopstate = function (event) {
+                    if (event.state) {
+                        currentFolder = event.state.folder || '/';
+                        currentPage = event.state.page || 1;
+                        loadGalleryContent(false); // false para não criar loop de pushState
+                    }
+                };
 
             } catch (error) {
                 console.error('Erro ao carregar índice de imagens:', error);
@@ -1539,7 +1560,7 @@
             }
 
             updateBreadcrumb();
-            loadGalleryContent();
+            loadGalleryContent(true); // true para atualizar o histórico
         }
 
         function updateBreadcrumb() {
@@ -1559,7 +1580,15 @@
         }
 
         // CARREGAR CONTEÚDO DA GALERIA
-        function loadGalleryContent() {
+        function loadGalleryContent(shouldPushState = true) {
+            // Atualiza URL e Histórico se solicitado
+            if (shouldPushState) {
+                const url = new URL(window.location);
+                url.searchParams.set('folder', currentFolder);
+                url.searchParams.set('page', currentPage);
+                window.history.pushState({ folder: currentFolder, page: currentPage }, '', url);
+            }
+
             const content = document.getElementById('galleryContent');
             const galleryControls = document.querySelector('.gallery-controls');
             const data = galleryData[currentFolder];
@@ -1772,8 +1801,8 @@
 
         function changePage(page) {
             currentPage = page;
-            loadGalleryContent();
-            document.querySelector('.main-content').scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            loadGalleryContent(true); // Atualiza histórico ao mudar de página
         }
 
         // VISUALIZADOR DE IMAGEM
