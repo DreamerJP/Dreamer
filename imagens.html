@@ -1409,8 +1409,9 @@
 
                     // Processa subpastas
                     Object.entries(folderData).forEach(([key, value]) => {
-                        if (key !== '_files' && typeof value === 'object') {
-                            const previewImage = getFirstImageFromFolder(value);
+                        if (key !== '_files' && key !== '_cover' && typeof value === 'object') {
+                            // Prioriza a capa personalizada (_cover), se não houver, busca a primeira imagem
+                            const previewImage = value._cover || getFirstImageFromFolder(value);
 
                             result.folders.push({
                                 name: key,
