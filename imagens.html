@@ -1045,6 +1045,48 @@
             color: var(--text-secondary);
             opacity: 1;
         }
+
+        /* SKELETON LOADING */
+        .skeleton-grid {
+            display: grid;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .skeleton-item {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: var(--border-radius);
+            height: 200px;
+            border: 1px solid rgba(187, 134, 252, 0.1);
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -1503,8 +1545,15 @@
                 return;
             }
 
-            content.innerHTML = '<div class="loading">Carregando galeria</div>';
+            // Exibe Skeleton Loader enquanto prepara o conteúdo
+            const skeletonHTML = `
+                <div class="skeleton-grid grid-${imageSize}">
+                    ${Array(itemsPerPage).fill('<div class="skeleton-item"></div>').join('')}
+                </div>
+            `;
+            content.innerHTML = skeletonHTML;
 
+            // Reduzido o atraso artificial para uma transição quase instantânea
             setTimeout(() => {
                 let html = '';
                 let hasImages = data.images && data.images.length > 0;
@@ -1601,7 +1650,8 @@
 
                 content.innerHTML = html;
                 fillImageResolutions();
-            }, 300);
+                preloadSubfolderContent(data); // Inicia o pré-carregamento inteligente das subpastas
+            }, 50); // De 300ms para 50ms para maior fluidez
         }
 
         // CONTROLES DE VISUALIZAÇÃO
@@ -1777,16 +1827,57 @@
         }
 
         function preloadAdjacentImages() {
-            // Precarregar imagem anterior
-            if (currentImageIndex > 0) {
-                const prevImg = new Image();
-                prevImg.src = currentImages[currentImageIndex - 1].url;
+            // Precarregar 3 imagens anteriores e 3 próximas para navegação ultrarrápida
+            const preloadCount = 3;
+
+            // Próximas imagens
+            for (let i = 1; i <= preloadCount; i++) {
+                const nextIdx = currentImageIndex + i;
+                if (nextIdx < currentImages.length) {
+                    const img = new Image();
+                    img.src = currentImages[nextIdx].url;
+                }
             }
 
-            // Precarregar próxima imagem
-            if (currentImageIndex < currentImages.length - 1) {
-                const nextImg = new Image();
-                nextImg.src = currentImages[currentImageIndex + 1].url;
+            // Imagens anteriores
+            for (let i = 1; i <= preloadCount; i++) {
+                const prevIdx = currentImageIndex - i;
+                if (prevIdx >= 0) {
+                    const img = new Image();
+                    img.src = currentImages[prevIdx].url;
+                }
+            }
+        }
+
+        // Função para pré-carregar conteúdo de subpastas (Smart Prefetch)
+        function preloadSubfolderContent(data) {
+            if (!data.folders || data.folders.length === 0) return;
+
+            // Usa requestIdleCallback se disponível para não impactar a thread principal
+            const runPrefetch = () => {
+                data.folders.forEach(folder => {
+                    // 1. Pré-carrega o preview da pasta
+                    if (folder.preview) {
+                        const imgPreview = new Image();
+                        imgPreview.src = folder.preview;
+                    }
+
+                    // 2. Pré-carrega as primeiras miniaturas da subpasta
+                    const subfolderData = galleryData[folder.path];
+                    if (subfolderData && subfolderData.images) {
+                        // Pré-carrega as 5 primeiras miniaturas daquela pasta
+                        subfolderData.images.slice(0, 5).forEach(img => {
+                            const preImg = new Image();
+                            preImg.src = img.thumbnail;
+                        });
+                    }
+                });
+            };
+
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(runPrefetch);
+            } else {
+                setTimeout(runPrefetch, 2000); // Fallback para navegadores antigos
             }
         }
 
