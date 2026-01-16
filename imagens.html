@@ -1977,9 +1977,18 @@
 
         function downloadImage() {
             const currentImage = currentImages[currentImageIndex];
-            // Para Google Drive, é melhor abrir o link de visualização original 
-            // já que downloads diretos binários podem ser bloqueados por CORS
-            window.open(currentImage.url.replace('thumbnail', 'file/d').replace('&sz=s0', '/view'), '_blank');
+            const driveLink = currentImage.url;
+
+            // Extrai o ID do arquivo do link (/d/ ou id=)
+            const match = driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/) || driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (match) {
+                const fileId = match[1];
+                // Abre a página oficial de visualização/download do Drive
+                window.open(`https://drive.google.com/file/d/${fileId}/view?usp=drive_link`, '_blank');
+            } else {
+                // Fallback para o link original se não for um link do Drive reconhecido
+                window.open(driveLink, '_blank');
+            }
         }
 
         // Função para detectar se é mobile
