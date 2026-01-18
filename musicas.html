@@ -892,7 +892,7 @@
             createStarfield();
             try {
                 // Fetch index
-                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Musicas/music-index.json');
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
                 if (!response.ok) throw new Error('Index not found');
                 musicData = await response.json();
 
@@ -966,7 +966,7 @@
 
                     // If cover exists, show image. Else show folder icon.
                     const iconHtml = coverUrl
-                        ? `<img src="${coverUrl}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
+                        ? `<img src="${getDriveThumbnail(coverUrl)}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
                         : `<div class="folder-icon">📁</div>`;
 
                     item.innerHTML = `
@@ -1043,11 +1043,22 @@
 
         // --- Player Functions ---
 
-        function convertDriveLink(link) {
-            // Converts 'view' or 'open' links to direct stream links if possible
-            // Usually: https://drive.google.com/uc?export=download&id=FILE_ID
+        // Helper to get efficient image url
+        function getDriveThumbnail(link) {
             const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
             if (match) {
+                return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
+            }
+            return link;
+        }
+
+        // --- Player Functions ---
+
+        function convertDriveLink(link) {
+            // Converts 'view' or 'open' links to direct stream links if possible
+            const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
+            if (match) {
+                // Use docs.google.com for potentially better handling, though drive.google.com is standard
                 return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
             return link;
@@ -1056,7 +1067,7 @@
         function playQueue(files, startIndex, folderPath, trackName) {
             currentQueue = files.map((f, i) => ({
                 url: convertDriveLink(f),
-                title: `Faixa ${i + 1}`, // We can improve this if index has names
+                title: `Faixa ${i + 1}`,
                 artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Desconhecido'
             }));
 
@@ -1071,15 +1082,20 @@
 
             const track = currentQueue[index];
             document.getElementById('playerTitle').innerText = track.title;
-            document.getElementById('playerArtist').innerText = track.artist; // Should come from folder name
+            document.getElementById('playerArtist').innerText = track.artist;
 
             audio.src = track.url;
+            // Reset progress
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('currentTime').innerText = '0:00';
+            document.getElementById('totalTime').innerText = '--:--';
+
             audio.play().then(() => {
                 isPlaying = true;
                 updatePlayButton();
             }).catch(e => {
                 console.error("Playback failed", e);
-                // Could be auth issue with drive link
+                alert("Erro ao reproduzir. Verifique se o arquivo no Google Drive está com permissão 'Qualquer pessoa com o link'.");
             });
         }
 
@@ -1130,10 +1146,10 @@
 
         // Progress Bar
         audio.ontimeupdate = () => {
-            const pct = (audio.currentTime / audio.duration) * 100;
-            document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('currentTime').innerText = formatTime(audio.currentTime);
-            if (!isNaN(audio.duration)) {
+            if (isFinite(audio.duration)) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('progressFill').style.width = pct + '%';
+                document.getElementById('currentTime').innerText = formatTime(audio.currentTime);
                 document.getElementById('totalTime').innerText = formatTime(audio.duration);
             }
         };
@@ -1143,9 +1159,11 @@
         };
 
         function seek(e) {
-            const bar = document.getElementById('progressBar');
-            const pct = e.offsetX / bar.offsetWidth;
-            audio.currentTime = pct * audio.duration;
+            if (audio.duration && isFinite(audio.duration)) {
+                const bar = document.getElementById('progressBar');
+                const pct = e.offsetX / bar.offsetWidth;
+                audio.currentTime = pct * audio.duration;
+            }
         }
 
         function formatTime(s) {
