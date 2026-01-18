@@ -834,7 +834,7 @@
     </div>
 
     <!-- Hidden Audio Element -->
-    <audio id="audioElement" preload="none"></audio>
+    <audio id="audioElement" preload="none" referrerpolicy="no-referrer"></audio>
 
     <script>
         // Stars Animation
@@ -892,7 +892,7 @@
             createStarfield();
             try {
                 // Fetch index
-                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Musicas/music-index.json');
                 if (!response.ok) throw new Error('Index not found');
                 musicData = await response.json();
 
