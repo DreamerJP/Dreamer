@@ -1077,6 +1077,9 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
+            // DEBUG: Log the URL being attempted
+            console.log("🎵 Attempting to load:", track.url);
+
             // Reset current sources and set new src
             audio.pause();
             audio.removeAttribute('src');
@@ -1088,11 +1091,25 @@
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
 
+            // DEBUG: Test fetch to see what we get
+            fetch(track.url, { method: 'HEAD' })
+                .then(response => {
+                    console.log("📊 Response headers:", {
+                        status: response.status,
+                        contentType: response.headers.get('content-type'),
+                        contentLength: response.headers.get('content-length')
+                    });
+                })
+                .catch(err => console.warn("HEAD request failed:", err));
+
             audio.play().then(() => {
                 isPlaying = true;
                 updatePlayButton();
+                console.log("✅ Playback started successfully");
             }).catch(e => {
-                console.warn("Playback failed with primary URL, trying fallback...", e);
+                console.warn("❌ Playback failed with primary URL, trying fallback...", e);
+                console.log("Error details:", e.message, e.name);
+
                 // Fallback sequence: drive.usercontent -> drive.google.com -> docs.google.com
                 let fallbackUrl = "";
                 if (track.url.includes('drive.usercontent.google.com')) {
@@ -1102,11 +1119,16 @@
                 }
 
                 if (fallbackUrl) {
+                    console.log("🔄 Trying fallback URL:", fallbackUrl);
                     audio.src = fallbackUrl;
                     audio.play().then(() => {
                         isPlaying = true;
                         updatePlayButton();
-                    }).catch(e2 => console.error("Final fallback failed", e2));
+                        console.log("✅ Fallback playback started");
+                    }).catch(e2 => {
+                        console.error("❌ Final fallback failed", e2);
+                        console.log("URL attempted:", fallbackUrl);
+                    });
                 }
             });
         }
