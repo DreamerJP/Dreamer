@@ -1077,8 +1077,6 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
-            // Hacker Solution: Bypass Google Drive 403 Forbidden by routing through a CORS proxy
-            // This hides our origin from Google
             let targetUrl = track.url;
 
             // Normalize to standard export link for the proxy
@@ -1089,42 +1087,40 @@
                 }
             }
 
-            // Primary Proxy: corsproxy.io
-            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
-            console.log("🔓 Attempting Proxy Bypass:", proxyUrl);
+            // OPTIMIZATION: Prioritize AllOrigins as it proved successful
+            const fastProxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+            console.log("� Turbo Load: Proxy via AllOrigins...", fastProxy);
 
-            // Reset player
+            // Reset player hard
             audio.pause();
             audio.removeAttribute('src');
             audio.load();
-            audio.src = proxyUrl;
+
+            // Set source and force buffer
+            audio.src = fastProxy;
+            audio.preload = "auto";
 
             // UI Reset
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
 
-            audio.play().then(() => {
-                isPlaying = true;
-                updatePlayButton();
-                console.log("✅ Proxy Success! We are in.");
-            }).catch(e => {
-                console.warn("❌ Primary proxy failed:", e);
+            const playPromise = audio.play();
 
-                // Secondary Proxy: AllOrigins
-                console.log("🔄 Engaging secondary bypass...");
-                const backupProxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
-
-                audio.src = backupProxy;
-                audio.play().then(() => {
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
                     isPlaying = true;
                     updatePlayButton();
-                    console.log("✅ Secondary Proxy Success!");
-                }).catch(e2 => {
-                    console.error("⛔ All bypass methods failed.", e2);
-                    alert("Google Drive bloqueou o acesso direto (403). Tentativa de bypass falhou.");
+                    console.log("✅ Playback Started!");
+                }).catch(e => {
+                    console.warn("⚠️ Primary proxy slow/failed, trying emergency fallback...", e);
+
+                    // Emergency Fallback: CorsProxy.io
+                    const backupUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+                    audio.src = backupUrl;
+                    audio.play().then(() => console.log("✅ Backup Proxy Works")).catch(e2 => console.error("❌ All proxies failed", e2));
                 });
-            });
+            }
         }
 
         function togglePlay() {
