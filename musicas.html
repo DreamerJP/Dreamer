@@ -1077,35 +1077,29 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
-            // "Hacker" solution: Route through a CORS proxy to bypass Google's block
-            // We use the base Google Drive ID to construct a routed URL
+            // Hacker Solution: Bypass Google Drive 403 Forbidden by routing through a CORS proxy
+            // This hides our origin from Google
             let targetUrl = track.url;
 
-            // Ensure we are using the standard export=download link which proxies handle best
+            // Normalize to standard export link for the proxy
             if (targetUrl.includes('drive.usercontent')) {
-                // Convert back to standard if needed, or just use what we have if it's stable
-                // But proxies often prefer the 'uc' link to handle the redirect themselves
                 const idMatch = targetUrl.match(/id=([a-zA-Z0-9-_]+)/);
                 if (idMatch) {
                     targetUrl = `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
                 }
             }
 
-            // The Proxy Hack:
-            // We prepend a public CORS proxy. This server requests the file for us and forwards it
-            // stripping the origin headers that Google blocks.
-            // Note: Public proxies can be slow or get rate limited, but this is the "bypass" requested.
+            // Primary Proxy: corsproxy.io
             const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+            console.log("🔓 Attempting Proxy Bypass:", proxyUrl);
 
-            console.log("🔓 Bypassing protection via Proxy:", proxyUrl);
-
-            // Reset current sources and set new src
+            // Reset player
             audio.pause();
             audio.removeAttribute('src');
             audio.load();
             audio.src = proxyUrl;
 
-            // Reset progress
+            // UI Reset
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
@@ -1113,14 +1107,23 @@
             audio.play().then(() => {
                 isPlaying = true;
                 updatePlayButton();
-                console.log("✅ Proxy Playback Success!");
+                console.log("✅ Proxy Success! We are in.");
             }).catch(e => {
-                console.warn("❌ Proxy method failed:", e);
-                // Fallback: Try a different proxy if the first one fails
-                console.log("🔄 Trying secondary bypass...");
+                console.warn("❌ Primary proxy failed:", e);
+
+                // Secondary Proxy: AllOrigins
+                console.log("🔄 Engaging secondary bypass...");
                 const backupProxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+
                 audio.src = backupProxy;
-                audio.play().catch(e2 => console.error("All protections active. Bypass failed.", e2));
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updatePlayButton();
+                    console.log("✅ Secondary Proxy Success!");
+                }).catch(e2 => {
+                    console.error("⛔ All bypass methods failed.", e2);
+                    alert("Google Drive bloqueou o acesso direto (403). Tentativa de bypass falhou.");
+                });
             });
         }
 
