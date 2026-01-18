@@ -41,7 +41,8 @@
             min-height: 100vh;
             color: var(--text-primary);
             overflow-x: hidden;
-            line-height: 1.6;
+            padding: 20px;
+            overflow-y: scroll;
         }
 
         .starfield {
@@ -196,9 +197,6 @@
             border-radius: 25px;
             transition: all 0.3s ease;
             position: relative;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .nav-links a:hover,
@@ -214,24 +212,13 @@
             max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
-            background: var(--bg-main);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: 0 20px 40px var(--shadow-color-strong);
-            backdrop-filter: blur(15px);
+            padding: 0 20px;
             position: relative;
             min-height: calc(100vh - 140px);
-            border: 1px solid rgba(187, 134, 252, 0.1);
         }
 
         .main-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: none;
         }
 
         .page-title {
@@ -1019,6 +1006,199 @@
                 transform: translateY(0);
             }
         }
+
+        /* Header Unificado */
+        .unified-header {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
+                url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/imagens_background.png') center center/cover no-repeat;
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            padding: 60px 60px 24px 60px;
+            margin-bottom: 40px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .unified-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 3;
+            border-radius: inherit;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .unified-header>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-overlay-fix {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 20px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .unified-header h1 {
+            color: #111 !important;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow:
+                0 0 20px var(--primary-color),
+                2px 2px 4px var(--shadow-color);
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unified-header p {
+            color: #111 !important;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
+        }
+
+        .filters-stats-flex {
+            display: flex;
+            gap: 40px;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .filters {
+            flex: 2;
+            min-width: 320px;
+            border-radius: 18px !important;
+            padding: 10px 10px 8px 10px !important;
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+            margin-bottom: 0;
+            background: rgba(18, 18, 35, 0.6);
+            backdrop-filter: blur(10px);
+            min-height: 192px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 120px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 11px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .stats-compact {
+            flex: 1;
+            min-width: 220px;
+            background: rgba(18, 18, 35, 0.6);
+            border-radius: 18px !important;
+            padding: 8px 8px 4px 8px !important;
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+            margin-bottom: 0;
+            backdrop-filter: blur(10px);
+            min-height: 181px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .stats-compact .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: rgba(187, 134, 252, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 10px 0 6px 0;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 900px) {
+            .filters-stats-flex {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+
+            .filters,
+            .stats-compact {
+                width: 100%;
+                min-width: unset;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+        }
     </style>
 </head>
 
@@ -1029,7 +1209,6 @@
     <nav class="navigation">
         <div class="nav-container">
             <a href="index.html" class="nav-home">🏠 Home</a>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="animes.html">🎌 Animes</a></li>
                 <li><a href="filmes.html">🎬 Filmes</a></li>
@@ -1038,30 +1217,71 @@
                 <li><a href="imagens.html" class="active">🖼️ Imagens</a></li>
                 <li><a href="videos.html">📹 Vídeos</a></li>
             </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
     </nav>
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
-        <h1 class="page-title"> Galeria de Imagens</h1>
-        <!-- CONTROLES DA GALERIA -->
-        <div class="gallery-controls">
-            <div class="breadcrumb" id="breadcrumb">
-                <span onclick="navigateToFolder('/')">🏠 Início</span>
-            </div>
-            <div class="view-controls">
-                <div class="control-group">
-                    <label for="sizeSlider">Tamanho das Miniaturas:</label>
-                    <input type="range" class="size-slider" id="sizeSlider" min="1" max="4" value="2"
-                        oninput="changeImageSize(this.value)">
+        <div class="header unified-header">
+            <!-- BACKGROUND PLACEHOLDER - COLOQUE SUA IMAGEM AQUI -->
+            <div class="header-overlay-fix"></div>
+            <h1>🖼️ Galeria de Imagens</h1>
+            <p>MINHA COLEÇÃO DE IMAGENS</p>
+
+            <div class="filters-stats-flex">
+                <div class="filters">
+                    <!-- Linha 1: Navegação (Breadcrumbs) -->
+                    <div class="filter-row" style="margin-bottom: 15px;">
+                        <div class="filter-group" style="width: 100%;">
+                            <label>📂 Navegação:</label>
+                            <div class="breadcrumb" id="breadcrumb"
+                                style="display: flex; flex-wrap: wrap; gap: 5px; background: rgba(0,0,0,0.2); padding: 8px 15px; border-radius: 10px; align-items: center;">
+                                <span onclick="navigateToFolder('/')" style="cursor: pointer;">🏠 Início</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linha 2: Controles -->
+                    <div class="filter-row" id="imageControls" style="display: none;">
+                        <!-- Busca -->
+                        <div class="filter-group">
+                            <label>🔍 Buscar:</label>
+                            <input type="text" id="searchInput" placeholder="Nome da imagem..."
+                                style="padding: 8px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; width: 100%; max-width: 200px;">
+                        </div>
+
+                        <!-- Tamanho -->
+                        <div class="filter-group">
+                            <label>🖼️ Tamanho:</label>
+                            <input type="range" class="size-slider" id="sizeSlider" min="1" max="4" value="2"
+                                oninput="changeImageSize(this.value)" style="width: 100px; height: 6px;">
+                        </div>
+
+                        <!-- Por Página -->
+                        <div class="filter-group">
+                            <label>📄 Por pág:</label>
+                            <select id="itemsPerPage" onchange="changeItemsPerPage(this.value)"
+                                style="padding: 5px 10px; border-radius: 15px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.1);">
+                                <option value="12">12</option>
+                                <option value="24" selected>24</option>
+                                <option value="48">48</option>
+                                <option value="96">96</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="control-group">
-                    <label>Por página:</label>
-                    <select id="itemsPerPage" onchange="changeItemsPerPage(this.value)">
-                        <option value="12">12</option>
-                        <option value="24" selected>24</option>
-                        <option value="48">48</option>
-                        <option value="96">96</option>
-                    </select>
+                <div class="stats stats-compact">
+                    <h3 style="text-align: center; margin-bottom: 10px; font-size: 1.1em;">📊 Estatísticas</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="displayTotalImages">-</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="displayTotalFolders">-</div>
+                            <div class="stat-label">Pastas</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1202,6 +1422,22 @@
                 }
                 rawImagesIndex = await response.json();
                 console.log('Índice carregado:', rawImagesIndex);
+
+                // --- ATUALIZAÇÃO ESTATÍSTICAS (Unified Header) ---
+                try {
+                    let totalImagesCount = 0;
+                    Object.values(rawImagesIndex).forEach(folder => totalImagesCount += countItemsInFolder(folder));
+                    const totalFoldersCount = Object.keys(rawImagesIndex).length;
+
+                    const displayTotalImages = document.getElementById('displayTotalImages');
+                    const displayTotalFolders = document.getElementById('displayTotalFolders');
+
+                    if (displayTotalImages) displayTotalImages.textContent = totalImagesCount;
+                    if (displayTotalFolders) displayTotalFolders.textContent = totalFoldersCount;
+                } catch (e) {
+                    console.warn('Erro ao calcular estatísticas:', e);
+                }
+                // --------------------------------------------------
                 galleryData = { '/': { folders: [], images: [] } };
                 pathMap = { '/': { _root: true } };
                 galleryData['/'].folders = Object.keys(rawImagesIndex).map(folderName => {
@@ -1369,12 +1605,10 @@
                 window.history.pushState({ folder: currentFolder, page: currentPage }, '', url);
             }
             const content = document.getElementById('galleryContent');
-            const galleryControls = document.querySelector('.gallery-controls');
             const data = galleryData[currentFolder];
             const pagination = document.getElementById('pagination');
             if (!data) {
                 content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
-                galleryControls.style.display = 'none';
                 pagination.innerHTML = '';
                 pagination.style.display = 'none';
                 return;
@@ -1388,10 +1622,9 @@
             setTimeout(() => {
                 let html = '';
                 let hasImages = data.images && data.images.length > 0;
-                if (hasImages) {
-                    galleryControls.style.display = 'flex';
-                } else {
-                    galleryControls.style.display = 'none';
+                const imageControls = document.getElementById('imageControls');
+                if (imageControls) {
+                    imageControls.style.display = hasImages ? 'flex' : 'none';
                 }
                 if (data.folders && data.folders.length > 0) {
                     html += '<div class="folder-grid fade-in">';
