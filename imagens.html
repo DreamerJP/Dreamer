@@ -700,6 +700,8 @@
             background: rgba(0, 0, 0, 0.4);
             color: white;
             font-size: 2.5rem;
+            line-height: 1;
+            font-weight: 300;
             cursor: pointer;
             backdrop-filter: blur(15px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -709,6 +711,8 @@
             align-items: center;
             justify-content: center;
             pointer-events: auto;
+            padding: 0;
+            margin: 0;
         }
 
         .close-viewer:hover {
@@ -729,15 +733,20 @@
             background: rgba(0, 0, 0, 0.4);
             color: white;
             font-size: 3rem;
+            line-height: 1;
+            font-weight: 300;
             cursor: pointer;
             backdrop-filter: blur(15px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 3000;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: auto;
+            opacity: 0;
+            padding: 0;
+            margin: 0;
         }
 
         .nav-arrows:hover {
@@ -952,7 +961,7 @@
         }
 
         .nav-arrows {
-            transition: opacity 0.3s;
+            transition: opacity 0.4s;
         }
 
         .gallery-controls input[type="text"] {
@@ -1389,8 +1398,8 @@
         let lastTouchDistance = 0;
         let wasPinch = false;
         let galleryData = {};
-        let rawImagesIndex = null; // Guardará o JSON bruto para processamento sob demanda
-        let pathMap = {}; // Mapeamento de caminho da URL para o nó de dados no JSON
+        let rawImagesIndex = null;
+        let pathMap = {};
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             const menuToggle = document.querySelector('.menu-toggle');
@@ -1423,7 +1432,6 @@
                 rawImagesIndex = await response.json();
                 console.log('Índice carregado:', rawImagesIndex);
 
-                // --- ATUALIZAÇÃO ESTATÍSTICAS (Unified Header) ---
                 try {
                     let totalImagesCount = 0;
                     Object.values(rawImagesIndex).forEach(folder => totalImagesCount += countItemsInFolder(folder));
@@ -1437,7 +1445,6 @@
                 } catch (e) {
                     console.warn('Erro ao calcular estatísticas:', e);
                 }
-                // --------------------------------------------------
                 galleryData = { '/': { folders: [], images: [] } };
                 pathMap = { '/': { _root: true } };
                 galleryData['/'].folders = Object.keys(rawImagesIndex).map(folderName => {
@@ -1464,7 +1471,7 @@
                 if (currentFolder !== '/') {
                     ensurePathIsMapped(currentFolder, rawImagesIndex);
                 }
-                loadGalleryContent(false); // false indica que não deve dar pushState nesta carga inicial
+                loadGalleryContent(false);
                 window.onpopstate = function (event) {
                     if (event.state) {
                         currentFolder = event.state.folder || '/';
@@ -1574,7 +1581,7 @@
                 searchInput.value = '';
             }
             updateBreadcrumb();
-            loadGalleryContent(true); // true para atualizar o histórico
+            loadGalleryContent(true);
         }
         function updateBreadcrumb() {
             const breadcrumb = document.getElementById('breadcrumb');
@@ -1678,8 +1685,8 @@
                     html = '<div class="loading">Conteúdo não disponível</div>';
                 }
                 content.innerHTML = html;
-                preloadSubfolderContent(data); // Inicia o pré-carregamento inteligente das subpastas
-            }, 50); // De 300ms para 50ms para maior fluidez
+                preloadSubfolderContent(data);
+            }, 50);
         }
         function changeImageSize(size) {
             const sizes = ['small', 'medium', 'large', 'xlarge'];
@@ -1734,8 +1741,14 @@
         function changePage(page) {
             currentPage = page;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            loadGalleryContent(true); // Atualiza histórico ao mudar de página
+            loadGalleryContent(true);
         }
+        let globalViewerMouseMoveListener = null;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let isMouseMoving = false;
+        let mouseIdleTimeout = null;
+        
         function openViewer(imageIndex) {
             currentImageIndex = imageIndex;
             const viewer = document.getElementById('imageViewer');
@@ -1745,6 +1758,40 @@
             viewerLoader.style.display = 'block';
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            
+            isMouseMoving = false;
+            lastMouseX = 0;
+            lastMouseY = 0;
+            
+            if (globalViewerMouseMoveListener) {
+                document.removeEventListener('mousemove', globalViewerMouseMoveListener);
+            }
+            
+            globalViewerMouseMoveListener = (e) => {
+                if (viewer.style.display === 'flex') {
+                    const threshold = 5;
+                    const deltaX = Math.abs(e.clientX - lastMouseX);
+                    const deltaY = Math.abs(e.clientY - lastMouseY);
+                    
+                    if (deltaX > threshold || deltaY > threshold) {
+                        lastMouseX = e.clientX;
+                        lastMouseY = e.clientY;
+                        
+                        if (!isMouseMoving) {
+                            isMouseMoving = true;
+                            showNavArrows();
+                        }
+                        
+                        clearTimeout(mouseIdleTimeout);
+                        
+                        mouseIdleTimeout = setTimeout(() => {
+                            isMouseMoving = false;
+                            hideNavArrows();
+                        }, 2500);
+                    }
+                }
+            };
+            document.addEventListener('mousemove', globalViewerMouseMoveListener);
             const newImg = new Image();
             newImg.src = currentImages[imageIndex].url;
             newImg.referrerPolicy = "no-referrer";
@@ -1756,14 +1803,15 @@
                     viewerLoader.style.display = 'none';
                     fitImageToScreen();
                     preloadAdjacentImages();
-                    updateNavArrowsState(); // Atualiza visibilidade das setas
+                    updateNavArrowsState();
                 }, 50);
             };
             newImg.onerror = function () {
-                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
                 viewerLoader.style.display = 'none';
                 viewerImage.style.opacity = '1';
+                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
             };
+            updateNavArrowsState();
             showNavArrows();
         }
         function closeViewer() {
@@ -1772,6 +1820,15 @@
             document.body.style.overflow = 'auto';
             resetZoom();
             hideNavArrows();
+            
+            if (globalViewerMouseMoveListener) {
+                document.removeEventListener('mousemove', globalViewerMouseMoveListener);
+                globalViewerMouseMoveListener = null;
+            }
+            
+            clearTimeout(navArrowsTimeout);
+            clearTimeout(mouseIdleTimeout);
+            isMouseMoving = false;
         }
         function prevImage() {
             if (currentImageIndex > 0) {
@@ -1801,8 +1858,8 @@
                     viewerLoader.style.display = 'none';
                     resetZoom();
                     preloadAdjacentImages();
-                    updateNavArrowsState(); // Atualiza visibilidade das setas
-                }, 50); // Delay mínimo para suavidade
+                    updateNavArrowsState();
+                }, 50);
             };
             newImg.onerror = function () {
                 viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
@@ -1861,7 +1918,7 @@
             if ('requestIdleCallback' in window) {
                 window.requestIdleCallback(runPrefetch);
             } else {
-                setTimeout(runPrefetch, 2000); // Fallback para navegadores antigos
+                setTimeout(runPrefetch, 2000);
             }
         }
         function zoomIn() {
@@ -2157,7 +2214,7 @@
         });
         let viewerControlsTimeout;
         function showViewerControls() {
-            if (window.innerWidth <= 768) return; // Não faz nada no mobile
+            if (window.innerWidth <= 768) return;
             const controls = document.querySelector('.viewer-controls');
             if (controls) {
                 controls.style.display = 'flex';
@@ -2173,7 +2230,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM carregado, iniciando aplicação...');
             createStarfield();
-            loadImagesData(); // Carrega dados do JSON primeiro
+            loadImagesData();
             initSearchAndFilters();
             const currentLink = document.querySelector('.nav-links a[href="imagens.html"]');
             if (currentLink) {
@@ -2186,38 +2243,6 @@
                 sizeSlider.addEventListener('input', function () {
                     updateSliderBackground(this);
                 });
-            }
-            document.addEventListener('mousemove', function (e) {
-                if (isDragging) {
-                    const deltaX = e.clientX - dragStartX;
-                    const deltaY = e.clientY - dragStartY;
-                    imageOffsetX = lastImageOffsetX + deltaX;
-                    imageOffsetY = lastImageOffsetY + deltaY;
-                    applyImageTransform();
-                    e.preventDefault();
-                }
-            });
-            document.addEventListener('mouseup', function (e) {
-                if (isDragging) {
-                    isDragging = false;
-                    document.body.style.userSelect = '';
-                    applyImageTransform();
-                }
-            });
-            window.addEventListener('resize', debounce(() => {
-                performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
-                performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
-                createStarfield();
-            }, 250));
-            const mainContent = document.querySelector('.main-content');
-            if (mainContent) {
-                mainContent.style.opacity = '0';
-                mainContent.style.transform = 'translateY(30px)';
-                setTimeout(() => {
-                    mainContent.style.transition = 'all 0.8s ease-out';
-                    mainContent.style.opacity = '1';
-                    mainContent.style.transform = 'translateY(0)';
-                }, 100);
             }
         });
         function formatFileSize(bytes) {
@@ -2273,16 +2298,22 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
-        let navArrowsTimeout;
         function showNavArrows() {
+            console.log('showNavArrows called');
             const prevArrow = document.querySelector('.nav-arrows.nav-prev');
             const nextArrow = document.querySelector('.nav-arrows.nav-next');
-            if (prevArrow && currentImageIndex > 0) prevArrow.style.opacity = '1';
-            if (nextArrow && currentImageIndex < currentImages.length - 1) nextArrow.style.opacity = '1';
-            clearTimeout(navArrowsTimeout);
-            navArrowsTimeout = setTimeout(hideNavArrows, 1000);
+            console.log('Indices:', currentImageIndex, currentImages.length);
+            if (prevArrow && currentImageIndex > 0) {
+                prevArrow.style.opacity = '1';
+                console.log('Prev arrow opacity set to 1');
+            }
+            if (nextArrow && currentImageIndex < currentImages.length - 1) {
+                nextArrow.style.opacity = '1';
+                console.log('Next arrow opacity set to 1');
+            }
         }
         function hideNavArrows() {
+            console.log('hideNavArrows called');
             const prevArrow = document.querySelector('.nav-arrows.nav-prev');
             const nextArrow = document.querySelector('.nav-arrows.nav-next');
             if (prevArrow) prevArrow.style.opacity = '0';
@@ -2293,33 +2324,68 @@
             const nextArrow = document.querySelector('.nav-arrows.nav-next');
             if (prevArrow) {
                 const canGoBack = currentImageIndex > 0;
-                prevArrow.style.display = canGoBack ? 'block' : 'none';
+                prevArrow.style.display = canGoBack ? 'flex' : 'none';
+                if (!canGoBack) prevArrow.style.opacity = '0';
             }
             if (nextArrow) {
                 const canGoForward = currentImageIndex < currentImages.length - 1;
-                nextArrow.style.display = canGoForward ? 'block' : 'none';
+                nextArrow.style.display = canGoForward ? 'flex' : 'none';
+                if (!canGoForward) nextArrow.style.opacity = '0';
             }
         }
         function addNavArrowsInteractionListeners() {
-            const viewerImage = document.getElementById('viewerImage');
             const viewer = document.getElementById('imageViewer');
-            if (viewerImage) {
-                viewerImage.addEventListener('click', showNavArrows);
-                viewerImage.addEventListener('touchstart', showNavArrows);
-                viewerImage.addEventListener('mousemove', showNavArrows);
-            }
+            const viewerContent = document.querySelector('.viewer-content');
+            const viewerImage = document.getElementById('viewerImage');
+            const arrows = document.querySelectorAll('.nav-arrows');
+
+            const handleInteraction = () => {
+                if (viewer.style.display === 'flex') {
+                    showNavArrows();
+                }
+            };
+
             if (viewer) {
-                viewer.addEventListener('click', showNavArrows);
-                viewer.addEventListener('touchstart', showNavArrows);
-                viewer.addEventListener('mousemove', showNavArrows);
+                viewer.addEventListener('mousemove', handleInteraction);
+                viewer.addEventListener('click', handleInteraction);
+                viewer.addEventListener('touchstart', handleInteraction, { passive: true });
+                viewer.addEventListener('touchmove', handleInteraction, { passive: true });
             }
+            if (viewerContent) {
+                viewerContent.addEventListener('mousemove', handleInteraction);
+            }
+            if (viewerImage) {
+                viewerImage.addEventListener('mousemove', handleInteraction);
+                viewerImage.addEventListener('click', handleInteraction);
+            }
+
+            arrows.forEach(arrow => {
+                arrow.addEventListener('mouseenter', () => {
+                    clearTimeout(navArrowsTimeout);
+                    const isPrev = arrow.classList.contains('nav-prev');
+                    if (isPrev && currentImageIndex > 0) arrow.style.opacity = '1';
+                    if (!isPrev && currentImageIndex < currentImages.length - 1) arrow.style.opacity = '1';
+                });
+                arrow.addEventListener('mousemove', (e) => {
+                    e.stopPropagation();
+                    clearTimeout(navArrowsTimeout);
+                    const isPrev = arrow.classList.contains('nav-prev');
+                    if (isPrev && currentImageIndex > 0) arrow.style.opacity = '1';
+                    if (!isPrev && currentImageIndex < currentImages.length - 1) arrow.style.opacity = '1';
+                    navArrowsTimeout = setTimeout(hideNavArrows, 2500);
+                });
+                arrow.addEventListener('mouseleave', () => {
+                    clearTimeout(navArrowsTimeout);
+                    navArrowsTimeout = setTimeout(hideNavArrows, 2500);
+                });
+            });
         }
         function updateSliderBackground(slider) {
             const min = slider.min ? parseFloat(slider.min) : 1;
             const max = slider.max ? parseFloat(slider.max) : 4;
             const val = parseFloat(slider.value);
             const percent = ((val - min) / (max - min)) * 100;
-            const thumbWidth = 22; // largura do thumb em pixels
+            const thumbWidth = 22;
             const sliderWidth = slider.offsetWidth;
             const thumbOffset = (thumbWidth / sliderWidth) * 100;
             const adjustedPercent = percent - (thumbOffset / 2) + (percent * thumbOffset / 100);
