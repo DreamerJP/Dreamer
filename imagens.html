@@ -1105,7 +1105,7 @@
             min-height: 192px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: space-between;
         }
 
         .filter-row {
@@ -1748,7 +1748,7 @@
         let lastMouseY = 0;
         let isMouseMoving = false;
         let mouseIdleTimeout = null;
-        
+
         function openViewer(imageIndex) {
             currentImageIndex = imageIndex;
             const viewer = document.getElementById('imageViewer');
@@ -1758,32 +1758,32 @@
             viewerLoader.style.display = 'block';
             viewer.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            
+
             isMouseMoving = false;
             lastMouseX = 0;
             lastMouseY = 0;
-            
+
             if (globalViewerMouseMoveListener) {
                 document.removeEventListener('mousemove', globalViewerMouseMoveListener);
             }
-            
+
             globalViewerMouseMoveListener = (e) => {
                 if (viewer.style.display === 'flex') {
                     const threshold = 5;
                     const deltaX = Math.abs(e.clientX - lastMouseX);
                     const deltaY = Math.abs(e.clientY - lastMouseY);
-                    
+
                     if (deltaX > threshold || deltaY > threshold) {
                         lastMouseX = e.clientX;
                         lastMouseY = e.clientY;
-                        
+
                         if (!isMouseMoving) {
                             isMouseMoving = true;
                             showNavArrows();
                         }
-                        
+
                         clearTimeout(mouseIdleTimeout);
-                        
+
                         mouseIdleTimeout = setTimeout(() => {
                             isMouseMoving = false;
                             hideNavArrows();
@@ -1820,12 +1820,12 @@
             document.body.style.overflow = 'auto';
             resetZoom();
             hideNavArrows();
-            
+
             if (globalViewerMouseMoveListener) {
                 document.removeEventListener('mousemove', globalViewerMouseMoveListener);
                 globalViewerMouseMoveListener = null;
             }
-            
+
             clearTimeout(navArrowsTimeout);
             clearTimeout(mouseIdleTimeout);
             isMouseMoving = false;
