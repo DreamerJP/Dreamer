@@ -1077,59 +1077,50 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
-            // DEBUG: Log the URL being attempted
-            console.log("🎵 Attempting to load:", track.url);
+            // "Hacker" solution: Route through a CORS proxy to bypass Google's block
+            // We use the base Google Drive ID to construct a routed URL
+            let targetUrl = track.url;
+
+            // Ensure we are using the standard export=download link which proxies handle best
+            if (targetUrl.includes('drive.usercontent')) {
+                // Convert back to standard if needed, or just use what we have if it's stable
+                // But proxies often prefer the 'uc' link to handle the redirect themselves
+                const idMatch = targetUrl.match(/id=([a-zA-Z0-9-_]+)/);
+                if (idMatch) {
+                    targetUrl = `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+                }
+            }
+
+            // The Proxy Hack:
+            // We prepend a public CORS proxy. This server requests the file for us and forwards it
+            // stripping the origin headers that Google blocks.
+            // Note: Public proxies can be slow or get rate limited, but this is the "bypass" requested.
+            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+
+            console.log("🔓 Bypassing protection via Proxy:", proxyUrl);
 
             // Reset current sources and set new src
             audio.pause();
             audio.removeAttribute('src');
             audio.load();
-            audio.src = track.url;
+            audio.src = proxyUrl;
 
             // Reset progress
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
 
-            // DEBUG: Test fetch to see what we get
-            fetch(track.url, { method: 'HEAD' })
-                .then(response => {
-                    console.log("📊 Response headers:", {
-                        status: response.status,
-                        contentType: response.headers.get('content-type'),
-                        contentLength: response.headers.get('content-length')
-                    });
-                })
-                .catch(err => console.warn("HEAD request failed:", err));
-
             audio.play().then(() => {
                 isPlaying = true;
                 updatePlayButton();
-                console.log("✅ Playback started successfully");
+                console.log("✅ Proxy Playback Success!");
             }).catch(e => {
-                console.warn("❌ Playback failed with primary URL, trying fallback...", e);
-                console.log("Error details:", e.message, e.name);
-
-                // Fallback sequence: drive.usercontent -> drive.google.com -> docs.google.com
-                let fallbackUrl = "";
-                if (track.url.includes('drive.usercontent.google.com')) {
-                    fallbackUrl = track.url.replace('drive.usercontent.google.com/download', 'drive.google.com/uc');
-                } else if (track.url.includes('drive.google.com')) {
-                    fallbackUrl = track.url.replace('drive.google.com/uc', 'docs.google.com/uc');
-                }
-
-                if (fallbackUrl) {
-                    console.log("🔄 Trying fallback URL:", fallbackUrl);
-                    audio.src = fallbackUrl;
-                    audio.play().then(() => {
-                        isPlaying = true;
-                        updatePlayButton();
-                        console.log("✅ Fallback playback started");
-                    }).catch(e2 => {
-                        console.error("❌ Final fallback failed", e2);
-                        console.log("URL attempted:", fallbackUrl);
-                    });
-                }
+                console.warn("❌ Proxy method failed:", e);
+                // Fallback: Try a different proxy if the first one fails
+                console.log("🔄 Trying secondary bypass...");
+                const backupProxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+                audio.src = backupProxy;
+                audio.play().catch(e2 => console.error("All protections active. Bypass failed.", e2));
             });
         }
 
