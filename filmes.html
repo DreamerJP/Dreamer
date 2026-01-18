@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmes</title>
     <style>
@@ -15,8 +17,8 @@
             --text-secondary: #b3b3b3;
             --bg-main: rgba(18, 18, 35, 0.98);
             --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0,0,0,0.4);
-            --shadow-color-strong: rgba(0,0,0,0.6);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-color-strong: rgba(0, 0, 0, 0.6);
             --transition-speed: 0.8s;
         }
 
@@ -92,16 +94,20 @@
                 opacity: 0;
                 transform: translate(0, 0) scale(0.5);
             }
+
             10% {
                 opacity: 0.3;
             }
+
             50% {
                 opacity: 1;
                 transform: translate(var(--dx), var(--dy)) scale(1);
             }
+
             90% {
                 opacity: 0.8;
             }
+
             100% {
                 opacity: 0;
                 transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.5);
@@ -109,8 +115,13 @@
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
+            0% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
         }
 
         /* Navegação */
@@ -126,6 +137,7 @@
             padding: 15px 0;
             box-shadow: 0 2px 20px var(--shadow-color-strong);
         }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -134,6 +146,7 @@
             align-items: center;
             padding: 0 20px;
         }
+
         .nav-home {
             font-size: 1.5em;
             font-weight: bold;
@@ -141,15 +154,18 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
+
         .nav-home:hover {
             color: var(--primary-color);
             transform: scale(1.05);
         }
+
         .nav-links {
             display: flex;
             gap: 25px;
             list-style: none;
         }
+
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
@@ -159,6 +175,7 @@
             transition: all 0.3s ease;
             position: relative;
         }
+
         .nav-links a:hover,
         .nav-links a.active {
             color: white;
@@ -166,6 +183,7 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px var(--shadow-color);
         }
+
         .menu-toggle {
             display: none;
             background: none;
@@ -209,7 +227,7 @@
             color: #111 !important;
             font-size: 3em;
             margin-bottom: 15px;
-            text-shadow: 
+            text-shadow:
                 0 0 20px var(--primary-color),
                 2px 2px 4px var(--shadow-color);
         }
@@ -225,7 +243,8 @@
         .filters {
             flex: 2;
             min-width: 320px;
-            border-radius: 18px !important; /* Bordas mais arredondadas */
+            border-radius: 18px !important;
+            /* Bordas mais arredondadas */
             padding: 10px 10px 8px 10px !important;
             box-shadow: 0 2px 6px var(--shadow-color-strong);
             margin-bottom: 0;
@@ -254,7 +273,8 @@
             text-align: left;
         }
 
-        .filter-group select, .filter-group input {
+        .filter-group select,
+        .filter-group input {
             padding: 10px;
             border: 2px solid rgba(187, 134, 252, 0.3);
             border-radius: 8px;
@@ -264,7 +284,8 @@
             color: var(--text-primary);
         }
 
-        .filter-group select:focus, .filter-group input:focus {
+        .filter-group select:focus,
+        .filter-group input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
@@ -320,8 +341,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Grid de filmes */
@@ -346,13 +372,12 @@
         .separator-line {
             flex: 1;
             height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--primary-color) 20%, 
-                var(--secondary-color) 50%, 
-                var(--primary-color) 80%, 
-                transparent 100%
-            );
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    var(--primary-color) 20%,
+                    var(--secondary-color) 50%,
+                    var(--primary-color) 80%,
+                    transparent 100%);
             border-radius: 1px;
             opacity: 0.7;
         }
@@ -372,11 +397,14 @@
         }
 
         @keyframes separator-pulse {
-            0%, 100% { 
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 5px 15px var(--shadow-color);
             }
-            50% { 
+
+            50% {
                 transform: scale(1.05);
                 box-shadow: 0 8px 25px var(--shadow-color-strong);
             }
@@ -617,14 +645,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                135deg, 
-                rgba(0,0,0,0.8) 0%, 
-                rgba(0,0,0,0.3) 30%, 
-                rgba(0,0,0,0.1) 50%, 
-                rgba(0,0,0,0.4) 70%,
-                rgba(0,0,0,0.9) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(0, 0, 0, 0.3) 30%,
+                    rgba(0, 0, 0, 0.1) 50%,
+                    rgba(0, 0, 0, 0.4) 70%,
+                    rgba(0, 0, 0, 0.9) 100%);
             z-index: 1;
             border-radius: 24px;
         }
@@ -643,7 +669,7 @@
             font-size: 32px;
             font-weight: bold;
             cursor: pointer;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -655,7 +681,7 @@
         }
 
         .close:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
         }
 
@@ -860,43 +886,54 @@
                 box-shadow: 0 5px 20px var(--shadow-color-strong);
                 border-radius: 0 0 15px 15px;
             }
+
             .nav-links.active {
                 display: flex;
             }
+
             .menu-toggle {
                 display: block;
             }
+
             .main-container {
                 max-width: 100vw;
                 padding: 0;
             }
+
             .header h1 {
                 font-size: 2.2em;
             }
+
             .filter-row {
                 flex-direction: column;
                 gap: 15px;
             }
+
             .filter-group {
                 min-width: 100%;
             }
+
             .movies-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
+
             .movie-card {
                 margin: 0;
                 border-radius: 10px;
             }
+
             .page-separator {
                 margin: 15px 0;
                 padding: 10px 0;
                 gap: 8px;
             }
+
             .separator-text {
                 font-size: 0.8em;
                 padding: 6px 12px;
             }
+
             .modal-content {
                 width: 100%;
                 margin: 0;
@@ -909,42 +946,53 @@
             .header {
                 padding: 20px;
             }
+
             .header h1 {
                 font-size: 1.8em;
             }
+
             .main-container {
                 max-width: 100vw;
                 padding: 0;
             }
+
             .movies-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
+
             .movie-card {
                 margin: 0;
                 border-radius: 8px;
             }
+
             .modal-content {
                 width: 100%;
                 margin: 0;
                 border-radius: 0;
                 max-height: 100vh;
             }
+
             .modal-title {
                 font-size: 1.8rem;
             }
+
             .modal-details {
                 padding: 15px;
             }
+
             .modal-body {
                 padding: 0 4px 4px;
             }
+
             .info-grid {
                 gap: 8px 10px;
             }
+
             .info-item {
                 font-size: 0.9rem;
             }
+
             .info-item strong {
                 min-width: 70px;
             }
@@ -955,43 +1003,52 @@
             background: url('https://github.com/DreamerJP/site-images/blob/main/Filmes/AbsoluteCinema.jpg?raw=true') center center/cover no-repeat;
             position: relative;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-            padding: 60px 60px 24px 60px; /* Aumentado o tamanho geral e reduzido o padding inferior */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            padding: 60px 60px 24px 60px;
+            /* Aumentado o tamanho geral e reduzido o padding inferior */
             margin-bottom: 40px;
             margin-top: 80px;
-            min-height: 520px; /* Garante altura maior do modal principal */
+            min-height: 520px;
+            /* Garante altura maior do modal principal */
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
         }
-        .unified-header > * {
+
+        .unified-header>* {
             position: relative;
             z-index: 2;
         }
+
         .filters-stats-flex {
             display: flex;
             gap: 40px;
-            align-items: flex-end; /* Alinha as caixas na parte de baixo */
+            align-items: flex-end;
+            /* Alinha as caixas na parte de baixo */
             justify-content: space-between;
             flex-wrap: wrap;
             margin-top: auto;
             margin-bottom: 0;
         }
+
         .stats-compact {
             flex: 1;
             min-width: 220px;
             background: rgba(18, 18, 35, 0.6);
             border-radius: 18px !important;
             padding: 8px 8px 4px 8px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong); /* Igual à .filters */
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+            /* Igual à .filters */
             margin-bottom: 0;
             backdrop-filter: blur(10px);
         }
+
         .stats-compact .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
+
         .stat-card {
             background: rgba(187, 134, 252, 0.1);
             border-radius: 10px;
@@ -999,11 +1056,13 @@
             padding: 10px 0 6px 0;
             text-align: center;
         }
+
         .stat-value {
             font-size: 1.3em;
             font-weight: bold;
             color: var(--text-primary);
         }
+
         .stat-label {
             font-size: 0.9em;
             color: var(--text-secondary);
@@ -1016,12 +1075,14 @@
             padding: 4px 8px;
             border: 1px solid rgba(187, 134, 252, 0.1);
         }
+
         @media (max-width: 900px) {
             .filters-stats-flex {
                 flex-direction: column;
                 gap: 20px;
                 align-items: stretch;
             }
+
             .filters,
             .stats-compact {
                 width: 100%;
@@ -1030,17 +1091,21 @@
                 margin-top: 0;
             }
         }
+
         @media (max-width: 600px) {
+
             .filters,
             .stats-compact {
                 padding: 6px 4px 4px 4px !important;
                 border-radius: 12px !important;
             }
+
             .filter-tag,
             .stat-value,
             .stat-label {
                 font-size: 0.95em;
             }
+
             .filters .filter-group label {
                 font-size: 0.85em;
             }
@@ -1052,11 +1117,11 @@
                 grid-template-columns: 280px 1fr;
                 gap: 25px;
             }
-            
+
             .modal-poster {
                 height: 420px;
             }
-            
+
             .info-grid {
                 grid-template-columns: 1fr;
             }
@@ -1067,30 +1132,31 @@
                 max-width: 100vw;
                 padding: 0;
             }
+
             .movies-grid {
                 padding: 0;
             }
-            
+
             .modal-content {
                 width: 95%;
                 margin: 5% auto;
             }
-            
+
             .modal-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .modal-poster {
                 height: 400px;
                 max-width: 280px;
                 justify-self: center;
             }
-            
+
             .modal-title {
                 font-size: 2rem;
             }
-            
+
             .modal-body {
                 padding: 0 20px 20px;
             }
@@ -1101,31 +1167,32 @@
                 max-width: 100vw;
                 padding: 0;
             }
+
             .movies-grid {
                 padding: 0;
             }
-            
+
             .modal-content {
                 width: 100%;
                 margin: 0;
                 border-radius: 0;
             }
-            
+
             .modal-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .modal-poster {
                 height: 300px;
                 max-width: 100%;
                 justify-self: center;
             }
-            
+
             .modal-title {
                 font-size: 1.8rem;
             }
-            
+
             .modal-body {
                 padding: 0 20px 20px;
             }
@@ -1134,15 +1201,17 @@
         .header-overlay-fix {
             position: absolute;
             inset: 0;
-            background: rgba(255,255,255,0.75);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: 20px;
             z-index: 1;
             pointer-events: none;
         }
+
         @media (max-width: 600px) {
             .header-overlay-fix {
                 border-radius: 0 !important;
             }
+
             .unified-header {
                 border-radius: 0 !important;
             }
@@ -1168,6 +1237,7 @@
                 min-width: 200px;
                 max-width: 100%;
             }
+
             #yearFilter {
                 min-width: 100px;
                 max-width: 120px;
@@ -1179,6 +1249,7 @@
                 min-width: 180px;
                 max-width: 100%;
             }
+
             #yearFilter {
                 min-width: 80px;
                 max-width: 100px;
@@ -1186,6 +1257,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Campo de Estrelas -->
     <div class="starfield" id="starfield"></div>
@@ -1216,16 +1288,20 @@
                         <div class="filter-group">
                             <label>Categoria:</label>
                             <div class="filter-tags">
-                                <button class="filter-tag" onclick="filterByCategory('favorites', this)">⭐ Favoritos</button>
-                                <button class="filter-tag active" onclick="filterByCategory('all', this)">🎬 Todos</button>
-                                <button class="filter-tag" onclick="filterByCategory('recent', this)">🆕 Recentes</button>
+                                <button class="filter-tag" onclick="filterByCategory('favorites', this)">⭐
+                                    Favoritos</button>
+                                <button class="filter-tag active" onclick="filterByCategory('all', this)">🎬
+                                    Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('recent', this)">🆕
+                                    Recentes</button>
                             </div>
                         </div>
                     </div>
                     <div class="filter-row">
                         <div class="filter-group">
                             <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Digite o Título, Ator, ou Diretor" oninput="searchMovies()">
+                            <input type="text" id="searchInput" placeholder="Digite o Título, Ator, ou Diretor"
+                                oninput="searchMovies()">
                         </div>
                         <div class="filter-group">
                             <label>🎭 Gênero:</label>
@@ -1272,7 +1348,8 @@
                         </div>
                     </div>
                     <!-- Indicador de progresso de carregamento -->
-                    <div id="loadingProgress" class="loading-progress" style="display:none; text-align:center; margin-top:8px; font-size:0.85em; color:#b3b3b3;">
+                    <div id="loadingProgress" class="loading-progress"
+                        style="display:none; text-align:center; margin-top:8px; font-size:0.85em; color:#b3b3b3;">
                         <span id="progressText">Carregando detalhes dos filmes...</span>
                     </div>
                 </div>
@@ -1290,18 +1367,18 @@
         <div class="modal-content">
             <!-- Backdrop como fundo completo -->
             <img class="modal-backdrop" id="modalBackdrop" src="" alt="">
-            
+
             <!-- Header apenas com botão fechar -->
             <div class="modal-header">
                 <span class="close" onclick="closeModal()">&times;</span>
             </div>
-            
+
             <!-- Corpo do modal -->
             <div class="modal-body">
                 <div class="modal-info">
                     <!-- Poster do filme -->
                     <img class="modal-poster" id="modalPoster" src="" alt="">
-                    
+
                     <!-- Detalhes do filme -->
                     <div class="modal-details" id="modalDetails">
                         <!-- Conteúdo será inserido pelo JavaScript -->
@@ -1326,8 +1403,8 @@
             }
             // Regex robusta para diferentes formatos de título
             const yearMatch = movie.title.match(/\((\d{4})\)$/) ||
-                              movie.title.match(/(\d{4})$/) ||
-                              movie.title.match(/\[(\d{4})\]/);
+                movie.title.match(/(\d{4})$/) ||
+                movie.title.match(/\[(\d{4})\]/);
             if (yearMatch) {
                 const year = parseInt(yearMatch[1], 10);
                 if (year >= 1888 && year <= new Date().getFullYear() + 5) {
@@ -1364,25 +1441,25 @@
             const starfield = document.getElementById('starfield');
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
+
             starfield.innerHTML = '';
-            
+
             // Estrelas em movimento
             for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
+
                 const angle = Math.random() * 2 * Math.PI;
                 const initialRadius = Math.random() * 50 + 10;
                 const startX = centerX + Math.cos(angle) * initialRadius;
                 const startY = centerY + Math.sin(angle) * initialRadius;
-                
+
                 const directionX = Math.cos(angle);
                 const directionY = Math.sin(angle);
-                
+
                 const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
                 const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
-                
+
                 const starType = Math.random();
                 if (starType < 0.6) {
                     star.classList.add('distant');
@@ -1391,23 +1468,23 @@
                 } else {
                     star.classList.add('close');
                 }
-                
+
                 const colorType = Math.random();
                 if (colorType < 0.1) {
                     star.classList.add('blue');
                 } else if (colorType < 0.2) {
                     star.classList.add('yellow');
                 }
-                
+
                 star.style.left = startX + 'px';
                 star.style.top = startY + 'px';
                 star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
                 star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
                 star.style.animationDelay = Math.random() * 20 + 's';
-                
+
                 starfield.appendChild(star);
             }
-            
+
             // Estrelas estacionárias
             for (let i = 0; i < 50; i++) {
                 const staticStar = document.createElement('div');
@@ -1417,7 +1494,7 @@
                 staticStar.style.top = Math.random() * window.innerHeight + 'px';
                 staticStar.style.opacity = Math.random() * 0.3 + 0.1;
                 staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
-                
+
                 starfield.appendChild(staticStar);
             }
         }
@@ -1427,7 +1504,7 @@
         let displayedMovies = [];
         let currentCategory = 'favorites';
         let moviesWithDetails = new Map();
-        
+
         // Configuração da API
         const OMDB_API_KEY = 'ba0d5cc0';
         const OMDB_BASE_URL = 'https://www.omdbapi.com/';
@@ -1440,12 +1517,12 @@
         const TMDB_LANGUAGE = 'pt-BR';
 
         // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             createStarfield();
-            
+
             // Recriar estrelas no resize
             window.addEventListener('resize', createStarfield);
-            
+
             loadMovies();
         });
 
@@ -1454,7 +1531,7 @@
             try {
                 const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Filmes/minha_lista_filmes.json');
                 const data = await response.json();
-                
+
                 allMovies = data.films || [];
 
                 // Iniciar com todos os filmes
@@ -1466,7 +1543,7 @@
 
                 // Carregar detalhes em background SEM bloquear a UI
                 loadMovieDetailsBackground(allMovies);
-                
+
             } catch (error) {
                 console.error('Erro ao carregar filmes:', error);
                 document.getElementById('loading').innerHTML = '<p>❌ Erro ao carregar filmes. Tente novamente mais tarde.</p>';
@@ -1501,7 +1578,7 @@
 
             const totalPages = Math.ceil(movies.length / moviesPerPage);
             const currentPage = 1; // Sempre começa na página 1
-            
+
             // Calcular filmes da página atual
             const startIndex = (currentPage - 1) * moviesPerPage;
             const endIndex = startIndex + moviesPerPage;
@@ -1525,15 +1602,15 @@
                                     <span>⏱️ ${details.runtime}</span>
                                 </div>
                                 <div class="movie-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g => 
-                                        `<span class=\"genre-tag\">${g.trim()}</span>`
-                                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                        `<span class=\"genre-tag\">${g.trim()}</span>`
+                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
                                 <div class="movie-rating">
                                     <div class="rating-stars">${stars}</div>
                                     <span>${details.imdbRating}/10</span>
                                 </div>
-                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0, 2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1565,7 +1642,7 @@
             if (totalPages > 1) {
                 html += createPaginationHTML(currentPage, totalPages, movies.length);
             }
-            
+
             grid.innerHTML = html;
         }
 
@@ -1573,7 +1650,7 @@
         function createPaginationHTML(currentPage, totalPages, totalMovies) {
             const startMovie = (currentPage - 1) * moviesPerPage + 1;
             const endMovie = Math.min(currentPage * moviesPerPage, totalMovies);
-            
+
             let paginationHTML = `
                 <div class="pagination-container">
                     <div class="pagination-info">
@@ -1591,7 +1668,7 @@
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            
+
             if (endPage - startPage + 1 < maxVisiblePages) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
@@ -1656,15 +1733,15 @@
                                     <span>⏱️ ${details.runtime}</span>
                                 </div>
                                 <div class="movie-genres">
-                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g => 
-                                        `<span class=\"genre-tag\">${g.trim()}</span>`
-                                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
+                                    ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 2).map(g =>
+                        `<span class=\"genre-tag\">${g.trim()}</span>`
+                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
                                 <div class="movie-rating">
                                     <div class="rating-stars">${stars}</div>
                                     <span>${details.imdbRating}/10</span>
                                 </div>
-                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="movie-plot">Sinopse: ${details.plot ? details.plot.split(' ').slice(0, 2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1695,50 +1772,100 @@
             // Adicionar paginação atualizada
             const totalPages = Math.ceil(displayedMovies.length / moviesPerPage);
             html += createPaginationHTML(pageNumber, totalPages, displayedMovies.length);
-            
+
             grid.innerHTML = html;
 
             // Scroll suave para o topo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Configuração do Cache
+        const CACHE_PREFIX = 'dreamer_movie_v1_';
+        const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 dias
+
+        // Salvar no cache
+        function saveToCache(slug, data) {
+            try {
+                const cacheItem = {
+                    timestamp: Date.now(),
+                    data: data
+                };
+                localStorage.setItem(CACHE_PREFIX + slug, JSON.stringify(cacheItem));
+            } catch (e) {
+                console.warn('Erro ao salvar no cache (provavelmente cheio):', e);
+            }
+        }
+
+        // Recuperar do cache
+        function getFromCache(slug) {
+            try {
+                const cached = localStorage.getItem(CACHE_PREFIX + slug);
+                if (!cached) return null;
+
+                const item = JSON.parse(cached);
+                const age = Date.now() - item.timestamp;
+
+                // Verificar validade
+                if (age > CACHE_EXPIRY) {
+                    localStorage.removeItem(CACHE_PREFIX + slug);
+                    return null;
+                }
+
+                return item.data;
+            } catch (e) {
+                console.error('Erro ao ler do cache:', e);
+                return null;
+            }
+        }
+
         // Carregar detalhes em background
         async function loadMovieDetailsBackground(movies) {
-            const BATCH_SIZE = 8; // Máximo simultâneo
+            const BATCH_SIZE = 12; // Aumentado para aproveitar melhor o cache
 
             for (let i = 0; i < movies.length; i += BATCH_SIZE) {
                 const batch = movies.slice(i, i + BATCH_SIZE);
+                let hasFetches = false;
 
                 // Processar lote em paralelo
                 const promises = batch.map(async (movie) => {
                     if (!moviesWithDetails.has(movie.slug)) {
-                        try {
-                            const details = await fetchMovieDetailsTMDb(movie.title);
-                            moviesWithDetails.set(movie.slug, { ...movie, ...details });
+                        // 1. Tentar pegar do cache
+                        const cachedData = getFromCache(movie.slug);
 
-                            // Atualizar card individual
-                            updateMovieCard(movie.slug, details);
-
-                            // Atualização dinâmica dos recentes
-                            debouncedResortAndRender();
-                        } catch (error) {
-                            console.error('Erro ao carregar detalhes:', movie.title, error);
-                            const defaultData = getDefaultMovieData();
-                            moviesWithDetails.set(movie.slug, { ...movie, ...defaultData });
-                            updateMovieCard(movie.slug, { ...movie, ...defaultData });
-                            debouncedResortAndRender();
+                        if (cachedData) {
+                            moviesWithDetails.set(movie.slug, { ...movie, ...cachedData });
+                            updateMovieCard(movie.slug, cachedData);
+                            // Pequeno delay artificial para não travar a UI se for tudo cacheado
+                            await new Promise(r => setTimeout(r, 0));
+                        } else {
+                            // 2. Buscar da API se não tiver no cache
+                            hasFetches = true;
+                            try {
+                                const details = await fetchMovieDetailsTMDb(movie.title);
+                                moviesWithDetails.set(movie.slug, { ...movie, ...details });
+                                saveToCache(movie.slug, details); // Salvar
+                                updateMovieCard(movie.slug, details);
+                            } catch (error) {
+                                console.error('Erro ao carregar detalhes:', movie.title, error);
+                                const defaultData = getDefaultMovieData();
+                                moviesWithDetails.set(movie.slug, { ...movie, ...defaultData });
+                                updateMovieCard(movie.slug, { ...movie, ...defaultData });
+                            }
                         }
                     }
                 });
 
                 await Promise.all(promises);
 
+                // Verificação de atualização dinâmica dos recentes (fora do loop interno para performance)
+                debouncedResortAndRender();
+
                 // ATUALIZAR PROGRESSO A CADA LOTE PROCESSADO
                 updateLoadingProgress();
 
-                // Delay mínimo apenas entre lotes
+                // Delay adaptativo: se fez fetch, espera mais. Se foi tudo cache, espera menos.
                 if (i + BATCH_SIZE < movies.length) {
-                    await new Promise(resolve => setTimeout(resolve, 50));
+                    await new Promise(resolve => setTimeout(resolve, hasFetches ? 100 : 10));
                 }
             }
 
@@ -1752,18 +1879,18 @@
                 const yearMatch = title.match(/\((\d{4})\)/);
                 const cleanTitle = title.replace(/\(.*?\)/g, '').trim();
                 const year = yearMatch ? yearMatch[1] : null;
-                
+
                 // Primeira tentativa: busca com ano como parâmetro separado
                 let searchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle)}`;
                 if (year) {
                     searchUrl += `&year=${year}`;
                 }
-                
+
                 let searchResponse = await fetch(searchUrl);
                 let searchData = await searchResponse.json();
-                
+
                 let movie = null;
-                
+
                 if (searchData.results && searchData.results.length > 0) {
                     // Se temos um ano específico, tentar encontrar o filme correto
                     if (year) {
@@ -1772,7 +1899,7 @@
                             const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
                             return resultYear === year;
                         });
-                        
+
                         if (matchingMovie) {
                             movie = matchingMovie;
                         } else {
@@ -1781,19 +1908,19 @@
                             if (firstResultYear && Math.abs(parseInt(firstResultYear) - parseInt(year)) > 2) {
                                 // Se a diferença for maior que 2 anos, tentar uma busca mais específica
                                 console.warn(`Possível confusão de filmes: buscando "${cleanTitle} (${year})" mas encontrou ano ${firstResultYear}`);
-                                
+
                                 // Segunda tentativa: incluir o ano na query de busca
                                 const specificSearchUrl = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&query=${encodeURIComponent(cleanTitle + ' ' + year)}`;
                                 const specificResponse = await fetch(specificSearchUrl);
                                 const specificData = await specificResponse.json();
-                                
+
                                 if (specificData.results && specificData.results.length > 0) {
                                     // Procurar por um filme que corresponda ao ano na busca específica
                                     const specificMatchingMovie = specificData.results.find(result => {
                                         const resultYear = result.release_date ? result.release_date.split('-')[0] : null;
                                         return resultYear === year;
                                     });
-                                    
+
                                     if (specificMatchingMovie) {
                                         movie = specificMatchingMovie;
                                     } else {
@@ -1812,13 +1939,13 @@
                         movie = searchData.results[0];
                     }
                 }
-                
+
                 if (movie) {
                     // Buscar detalhes completos
                     const detailsUrl = `${TMDB_BASE_URL}/movie/${movie.id}?api_key=${TMDB_API_KEY}&language=${TMDB_LANGUAGE}&append_to_response=credits`;
                     const detailsResponse = await fetch(detailsUrl);
                     const details = await detailsResponse.json();
-                    
+
                     return {
                         poster: movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : null,
                         backdrop: movie.backdrop_path ? `${TMDB_BACKDROP_BASE}${movie.backdrop_path}` : null,
@@ -1840,10 +1967,10 @@
                         writer: details.credits?.crew?.filter(c => c.job === 'Writer' || c.job === 'Screenplay').map(w => w.name).join(', ') || 'N/A'
                     };
                 }
-                
+
                 // Fallback para dados padrão
                 return getDefaultMovieData();
-                
+
             } catch (error) {
                 console.error('Erro ao buscar no TMDb:', error);
                 return getDefaultMovieData();
@@ -1875,12 +2002,12 @@
             const fullStars = Math.floor(rating / 2);
             const halfStar = (rating % 2) >= 1;
             const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-            
+
             let stars = '';
             for (let i = 0; i < fullStars; i++) stars += '<span class="star">★</span>';
             if (halfStar) stars += '<span class="star">★</span>';
             for (let i = 0; i < emptyStars; i++) stars += '<span class="star empty">☆</span>';
-            
+
             return stars;
         }
 
@@ -1899,23 +2026,23 @@
             } else {
                 // Para inicialização, encontrar o botão correto pela categoria
                 const buttonSelector = category === 'favorites' ? '[onclick*="favorites"]' :
-                                     category === 'all' ? '[onclick*="all"]' :
-                                     category === 'recent' ? '[onclick*="recent"]' : '[onclick*="all"]';
+                    category === 'all' ? '[onclick*="all"]' :
+                        category === 'recent' ? '[onclick*="recent"]' : '[onclick*="all"]';
                 const targetButton = document.querySelector(buttonSelector);
                 if (targetButton) {
                     targetButton.classList.add('active');
                 }
             }
-            
+
             // Resetar outros filtros
             document.getElementById('searchInput').value = '';
             document.getElementById('genreFilter').value = '';
             document.getElementById('yearFilter').value = '';
             document.getElementById('ratingFilter').value = '';
-            
+
             let moviesToShow = [];
-            
-            switch(category) {
+
+            switch (category) {
                 case 'favorites':
                     moviesToShow = allMovies.slice(0, 24);
                     break;
@@ -1928,12 +2055,12 @@
                 default:
                     moviesToShow = allMovies.slice(0, 24);
             }
-            
+
             displayedMovies = moviesToShow;
-            
+
             // Renderizar básico primeiro
             renderMoviesSmart(displayedMovies);
-            
+
             // Carregar detalhes em background
             loadMovieDetailsBackground(moviesToShow);
         }
@@ -1941,21 +2068,21 @@
         // Buscar filmes (agora busca em todos os filmes)
         function searchMovies() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
+
             let baseList = allMovies;
             if (searchTerm === '') {
                 renderMoviesSmart(baseList);
                 updateCurrentCount(baseList.length);
                 return;
             }
-            
+
             const filteredMovies = baseList.filter(movie => {
                 const details = moviesWithDetails.get(movie.slug) || movie;
                 return details.title.toLowerCase().includes(searchTerm) ||
-                        (details.director && details.director.toLowerCase().includes(searchTerm)) ||
-                        (details.actors && details.actors.toLowerCase().includes(searchTerm));
+                    (details.director && details.director.toLowerCase().includes(searchTerm)) ||
+                    (details.actors && details.actors.toLowerCase().includes(searchTerm));
             });
-            
+
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
@@ -1966,17 +2093,17 @@
             const yearFilter = document.getElementById('yearFilter').value;
             const ratingFilter = document.getElementById('ratingFilter').value;
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
+
             let baseList = allMovies;
             let filteredMovies = baseList.filter(movie => {
                 const details = moviesWithDetails.get(movie.slug) || movie;
                 // Filtro de busca
-                const matchesSearch = searchTerm === '' || 
+                const matchesSearch = searchTerm === '' ||
                     details.title.toLowerCase().includes(searchTerm) ||
                     (details.director && details.director.toLowerCase().includes(searchTerm)) ||
                     (details.actors && details.actors.toLowerCase().includes(searchTerm));
                 // Filtro de gênero
-                const matchesGenre = genreFilter === '' || 
+                const matchesGenre = genreFilter === '' ||
                     (details.genre && details.genre.toLowerCase().includes(genreFilter.toLowerCase()));
                 // Filtro de ano
                 const matchesYear = yearFilter === '' || details.year === yearFilter;
@@ -1985,7 +2112,7 @@
                 const matchesRating = ratingFilter === '' || movieRating >= parseFloat(ratingFilter);
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
-            
+
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
@@ -2102,14 +2229,14 @@
         function openMovieModal(slug) {
             const details = moviesWithDetails.get(slug);
             if (!details) return;
-            
+
             const modal = document.getElementById('movieModal');
             const modalPoster = document.getElementById('modalPoster');
             const modalBackdrop = document.getElementById('modalBackdrop');
             const modalDetails = document.getElementById('modalDetails');
-            
+
             modalPoster.src = details.poster || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
-            
+
             // Configurar backdrop como fundo principal
             if (details.backdrop) {
                 modalBackdrop.src = details.backdrop;
@@ -2122,10 +2249,10 @@
             } else {
                 modalBackdrop.src = '';
             }
-            
+
             const rating = parseFloat(details.imdbRating) || 0;
             const stars = generateStars(rating);
-            
+
             modalDetails.innerHTML = `
                 <h2 class="modal-title">${details.title}</h2>
                 
@@ -2175,7 +2302,7 @@
                     <a href="${details.url}" target="_blank">🔗 Ver no Letterboxd</a>
                 </div>
             `;
-            
+
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
@@ -2188,7 +2315,7 @@
         }
 
         // Fechar modal clicando fora
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('movieModal');
             if (event.target === modal) {
                 closeModal();
@@ -2202,7 +2329,7 @@
         }
 
         // Fechar menu ao clicar fora
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const nav = document.querySelector('.navigation');
             const navLinks = document.getElementById('navLinks');
             if (!nav.contains(e.target)) {
@@ -2211,7 +2338,7 @@
         });
 
         // Atalhos do teclado
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeModal();
             }
@@ -2223,13 +2350,13 @@
 
         // Lazy loading para quando carregar todos os filmes
         let isLoadingMore = false;
-        
-        window.addEventListener('scroll', function() {
+
+        window.addEventListener('scroll', function () {
             if (currentCategory === 'all' && !isLoadingMore) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
                 const documentHeight = document.documentElement.scrollHeight;
-                
+
                 if (scrollTop + windowHeight >= documentHeight - 1000) {
                     loadMoreMovies();
                 }
@@ -2238,30 +2365,30 @@
 
         async function loadMoreMovies() {
             if (isLoadingMore || displayedMovies.length >= allMovies.length) return;
-            
+
             isLoadingMore = true;
             const currentLength = displayedMovies.length;
             const nextBatch = allMovies.slice(currentLength, currentLength + 20);
-            
+
             if (nextBatch.length === 0) return;
-            
+
             // Mostrar indicador de carregamento
             const grid = document.getElementById('moviesGrid');
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'loading';
             loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Carregando mais filmes...</p>';
             grid.appendChild(loadingDiv);
-            
+
             // Adicionar à lista exibida
             displayedMovies = displayedMovies.concat(nextBatch);
-            
+
             // Remover indicador e renderizar básico
             loadingDiv.remove();
             renderMoviesSmart(displayedMovies);
-            
+
             // Carregar detalhes em background
             loadMovieDetailsBackground(nextBatch);
-            
+
             isLoadingMore = false;
         }
 
@@ -2269,10 +2396,10 @@
         function updateMovieCard(slug, details) {
             const card = document.querySelector(`[data-slug="${slug}"]`);
             if (!card) return;
-            
+
             const rating = parseFloat(details.imdbRating) || 0;
             const stars = generateStars(rating);
-            
+
             // Atualizar poster
             const poster = card.querySelector('.movie-poster');
             if (details.poster) {
@@ -2280,33 +2407,33 @@
                 poster.classList.remove('loading');
                 poster.textContent = '';
             }
-            
+
             // Atualizar meta informações
             const meta = card.querySelector('.movie-meta');
             meta.innerHTML = `
                 <span>📅 ${details.year}</span>
                 <span>⏱️ ${details.runtime}</span>
             `;
-            
+
             // Atualizar gêneros
             const genres = card.querySelector('.movie-genres');
-            genres.innerHTML = details.genre !== 'N/A' ? 
-                details.genre.split(',').slice(0, 2).map(g => 
+            genres.innerHTML = details.genre !== 'N/A' ?
+                details.genre.split(',').slice(0, 2).map(g =>
                     `<span class="genre-tag">${g.trim()}</span>`
-                ).join('') : 
+                ).join('') :
                 '<span class="genre-tag">Gênero não disponível</span>';
-            
+
             // Atualizar avaliação
             const ratingDiv = card.querySelector('.movie-rating');
             ratingDiv.innerHTML = `
                 <div class="rating-stars">${stars}</div>
                 <span>${details.imdbRating}/10</span>
             `;
-            
+
             // Atualizar sinopse
             const plot = card.querySelector('.movie-plot');
             plot.textContent = details.plot;
-            
+
             // Atualizar filtros dinamicamente
             populateFilters();
         }
@@ -2330,4 +2457,5 @@
         }
     </script>
 </body>
+
 </html>
