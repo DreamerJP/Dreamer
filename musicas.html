@@ -835,7 +835,7 @@
     </div>
 
     <!-- Hidden Audio Element -->
-    <audio id="audioElement" preload="none" referrerpolicy="no-referrer"></audio>
+    <audio id="audioElement" preload="none" referrerpolicy="no-referrer" crossorigin="anonymous"></audio>
 
     <script>
         // Stars Animation
@@ -901,16 +901,8 @@
                 let totalTracks = 0;
                 let totalAlbums = 0; // Each folder in root is an Album/Artist
 
-                function countTracks(obj) {
-                    let count = 0;
-                    if (obj._files) count += obj._files.length;
-                    for (let key in obj) {
-                        if (key !== '_files' && typeof obj[key] === 'object') {
-                            count += countTracks(obj[key]);
-                        }
-                    }
-                    return count;
-                }
+                totalAlbums = Object.keys(musicData).length;
+                totalTracks = countTracks(musicData);
 
                 totalAlbums = Object.keys(musicData).length;
                 totalTracks = countTracks(musicData);
@@ -1085,7 +1077,10 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
-            // Direct assignment with no-referrer set on audio tag
+            // Reset current sources and set new src
+            audio.pause();
+            audio.removeAttribute('src');
+            audio.load();
             audio.src = track.url;
 
             // Reset progress
@@ -1097,16 +1092,20 @@
                 isPlaying = true;
                 updatePlayButton();
             }).catch(e => {
-                console.error("Playback failed", e);
-                // Fallback: Use alternate google domain
+                console.warn("Playback failed with primary URL, trying fallback...", e);
+                // Fallback: switch domain
                 if (track.url.includes('docs.google.com')) {
-                    console.log("Retrying with drive.google.com...");
                     audio.src = track.url.replace('docs.google.com', 'drive.google.com');
-                    audio.play().catch(e => console.error("Retry failed", e));
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        updatePlayButton();
+                    }).catch(e2 => console.error("Retry failed", e2));
                 } else if (track.url.includes('drive.google.com')) {
-                    console.log("Retrying with docs.google.com...");
                     audio.src = track.url.replace('drive.google.com', 'docs.google.com');
-                    audio.play().catch(e => console.error("Retry failed", e));
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        updatePlayButton();
+                    }).catch(e2 => console.error("Retry failed", e2));
                 }
             });
         }
