@@ -882,12 +882,7 @@
                         <div class="filter-group">
                             <label>Categoria:</label>
                             <div class="filter-tags" id="filters">
-                                <button class="filter-tag" onclick="filterVideos('Aurora')">Aurora</button>
-                                <button class="filter-tag" onclick="filterVideos('Emily Browning')">Emily
-                                    Browning</button>
-                                <button class="filter-tag" onclick="filterVideos('Chvrches')">Chvrches</button>
-                                <button class="filter-tag" onclick="filterVideos('t.A.T.u.')">t.A.T.u.</button>
-                                <button class="filter-tag active" onclick="filterVideos('Variado')">Variado</button>
+                                <!-- Botões gerados dinamicamente via JS -->
                             </div>
                         </div>
                     </div>
@@ -1280,7 +1275,7 @@
             }
         ];
 
-        let currentFilter = 'Aurora';
+        let currentFilter = 'Todos';
 
         // Função para renderizar vídeos
         function renderVideos(videos = videosData) {
@@ -1322,12 +1317,17 @@
         // Função para filtrar vídeos
         function filterVideos(category) {
             currentFilter = category;
+
+            // Atualizar classes dos botões
             document.querySelectorAll('.filter-tag').forEach(btn => {
-                btn.classList.remove('active');
+                btn.classList.toggle('active', btn.textContent.trim() === category);
             });
-            event.target.classList.add('active');
-            // Exibir apenas vídeos da categoria selecionada
-            const filteredVideos = videosData.filter(video => video.category === currentFilter);
+
+            // Filtrar dados
+            const filteredVideos = category === 'Todos'
+                ? videosData
+                : videosData.filter(video => video.category === category);
+
             renderVideos(filteredVideos);
             updateStats();
         }
@@ -1338,7 +1338,7 @@
             let filteredVideos = videosData;
 
             // Aplicar filtro de categoria primeiro
-            if (currentFilter !== 'Variado') {
+            if (currentFilter !== 'Todos') {
                 filteredVideos = filteredVideos.filter(video => video.category === currentFilter);
             }
 
@@ -1547,33 +1547,13 @@
             const filtersContainer = document.getElementById('filters');
             filtersContainer.innerHTML = '';
 
-            // Botão "Todos" (Variado)
-            const todosButton = document.createElement('button');
-            todosButton.className = `filter-tag ${currentFilter === 'Variado' ? 'active' : ''}`;
-            todosButton.innerHTML = `Todos`;
-            todosButton.onclick = function () {
-                document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentFilter = 'Variado';
-                renderVideos(videosData);
-                updateStats();
-            };
-            filtersContainer.appendChild(todosButton);
+            const categories = ['Todos', 'Aurora', 'Emily Browning', 'Chvrches', 't.A.T.u.', 'Variado'];
 
-            // Botões das categorias
-            const categories = ['Aurora', 'Emily Browning', 'Chvrches', 't.A.T.u.'];
             categories.forEach(category => {
                 const button = document.createElement('button');
                 button.className = `filter-tag ${currentFilter === category ? 'active' : ''}`;
                 button.innerHTML = `${category}`;
-                button.onclick = function () {
-                    document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = category;
-                    const filteredVideos = videosData.filter(video => video.category === currentFilter);
-                    renderVideos(filteredVideos);
-                    updateStats();
-                };
+                button.onclick = () => filterVideos(category);
                 filtersContainer.appendChild(button);
             });
         }
@@ -1585,8 +1565,7 @@
             createStarfield();
             setupParallax();
             createFilters();
-            currentFilter = 'Variado';
-            renderVideos(videosData);
+            renderVideos(videosData); // Por padrão mostra todos
             updateStats();
         });
     </script>
