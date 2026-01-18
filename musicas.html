@@ -216,7 +216,7 @@
         /* Unified Header */
         .unified-header {
             background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
-                url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/musicas_background.png') center center/cover no-repeat;
+                url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/musicas_background.jpg') center center/cover no-repeat;
             position: relative;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
@@ -628,6 +628,7 @@
             width: 100px;
             height: 4px;
             -webkit-appearance: none;
+            appearance: none;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 2px;
             outline: none;
@@ -1058,8 +1059,8 @@
             // Converts 'view' or 'open' links to direct stream links if possible
             const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
             if (match) {
-                // Use docs.google.com for potentially better handling, though drive.google.com is standard
-                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+                // Using docs.google.com often works better for audio streaming
+                return `https://docs.google.com/uc?export=download&id=${match[1]}`;
             }
             return link;
         }
@@ -1077,50 +1078,37 @@
             document.getElementById('audioPlayerBar').classList.remove('hidden');
         }
 
-        async function loadTrack(index) {
+        function loadTrack(index) {
             if (index < 0 || index >= currentQueue.length) return;
 
             const track = currentQueue[index];
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
+            // Direct assignment with no-referrer set on audio tag
+            audio.src = track.url;
+
             // Reset progress
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
 
-            try {
-                // Try fetching as blob to bypass some direct-link restrictions or handle headers better
-                const response = await fetch(track.url, { referrerPolicy: "no-referrer" });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                const blob = await response.blob();
-                const objectUrl = URL.createObjectURL(blob);
-
-                audio.src = objectUrl;
-
-                // Cleanup old blob url when track changes
-                audio.onload = () => {
-                    URL.revokeObjectURL(objectUrl);
-                };
-
-                await audio.play();
+            audio.play().then(() => {
                 isPlaying = true;
                 updatePlayButton();
-            } catch (e) {
-                console.error("Playback failed with Blob method", e);
-                // Fallback to direct link if fetch fails
-                console.log("Falling back to direct link...");
-                try {
-                    audio.src = track.url;
-                    await audio.play();
-                    isPlaying = true;
-                    updatePlayButton();
-                } catch (err2) {
-                    console.error("Fallback failed", err2);
-                    alert("Erro ao reproduzir (Bloqueio do Google Drive). Tente abrir o console (F12) para ver o erro.");
+            }).catch(e => {
+                console.error("Playback failed", e);
+                // Fallback: Use alternate google domain
+                if (track.url.includes('docs.google.com')) {
+                    console.log("Retrying with drive.google.com...");
+                    audio.src = track.url.replace('docs.google.com', 'drive.google.com');
+                    audio.play().catch(e => console.error("Retry failed", e));
+                } else if (track.url.includes('drive.google.com')) {
+                    console.log("Retrying with docs.google.com...");
+                    audio.src = track.url.replace('drive.google.com', 'docs.google.com');
+                    audio.play().catch(e => console.error("Retry failed", e));
                 }
-            }
+            });
         }
 
         function togglePlay() {
