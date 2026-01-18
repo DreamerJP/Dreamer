@@ -835,7 +835,7 @@
     </div>
 
     <!-- Hidden Audio Element -->
-    <audio id="audioElement" preload="none" referrerpolicy="no-referrer" crossorigin="anonymous"></audio>
+    <audio id="audioElement" preload="none" referrerpolicy="no-referrer"></audio>
 
     <script>
         // Stars Animation
@@ -1048,11 +1048,11 @@
         // --- Player Functions ---
 
         function convertDriveLink(link) {
-            // Converts 'view' or 'open' links to direct stream links if possible
+            // Converts 'view' or 'open' links to direct content delivery links
             const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
             if (match) {
-                // Using docs.google.com often works better for audio streaming
-                return `https://docs.google.com/uc?export=download&id=${match[1]}`;
+                // drive.usercontent.google.com is superior for direct media delivery/streaming
+                return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download`;
             }
             return link;
         }
@@ -1093,19 +1093,20 @@
                 updatePlayButton();
             }).catch(e => {
                 console.warn("Playback failed with primary URL, trying fallback...", e);
-                // Fallback: switch domain
-                if (track.url.includes('docs.google.com')) {
-                    audio.src = track.url.replace('docs.google.com', 'drive.google.com');
-                    audio.play().then(() => {
-                        isPlaying = true;
-                        updatePlayButton();
-                    }).catch(e2 => console.error("Retry failed", e2));
+                // Fallback sequence: drive.usercontent -> drive.google.com -> docs.google.com
+                let fallbackUrl = "";
+                if (track.url.includes('drive.usercontent.google.com')) {
+                    fallbackUrl = track.url.replace('drive.usercontent.google.com/download', 'drive.google.com/uc');
                 } else if (track.url.includes('drive.google.com')) {
-                    audio.src = track.url.replace('drive.google.com', 'docs.google.com');
+                    fallbackUrl = track.url.replace('drive.google.com/uc', 'docs.google.com/uc');
+                }
+
+                if (fallbackUrl) {
+                    audio.src = fallbackUrl;
                     audio.play().then(() => {
                         isPlaying = true;
                         updatePlayButton();
-                    }).catch(e2 => console.error("Retry failed", e2));
+                    }).catch(e2 => console.error("Final fallback failed", e2));
                 }
             });
         }
