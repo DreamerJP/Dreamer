@@ -1077,26 +1077,50 @@
             document.getElementById('audioPlayerBar').classList.remove('hidden');
         }
 
-        function loadTrack(index) {
+        async function loadTrack(index) {
             if (index < 0 || index >= currentQueue.length) return;
 
             const track = currentQueue[index];
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
-            audio.src = track.url;
             // Reset progress
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
 
-            audio.play().then(() => {
+            try {
+                // Try fetching as blob to bypass some direct-link restrictions or handle headers better
+                const response = await fetch(track.url, { referrerPolicy: "no-referrer" });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const blob = await response.blob();
+                const objectUrl = URL.createObjectURL(blob);
+
+                audio.src = objectUrl;
+
+                // Cleanup old blob url when track changes
+                audio.onload = () => {
+                    URL.revokeObjectURL(objectUrl);
+                };
+
+                await audio.play();
                 isPlaying = true;
                 updatePlayButton();
-            }).catch(e => {
-                console.error("Playback failed", e);
-                alert("Erro ao reproduzir. Verifique se o arquivo no Google Drive está com permissão 'Qualquer pessoa com o link'.");
-            });
+            } catch (e) {
+                console.error("Playback failed with Blob method", e);
+                // Fallback to direct link if fetch fails
+                console.log("Falling back to direct link...");
+                try {
+                    audio.src = track.url;
+                    await audio.play();
+                    isPlaying = true;
+                    updatePlayButton();
+                } catch (err2) {
+                    console.error("Fallback failed", err2);
+                    alert("Erro ao reproduzir (Bloqueio do Google Drive). Tente abrir o console (F12) para ver o erro.");
+                }
+            }
         }
 
         function togglePlay() {
