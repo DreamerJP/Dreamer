@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Minha seleção especial de músicas - Uma curadoria musical pessoal">
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=10">
+    <meta name="description" content="Minha seleção especial de músicas - Dreamer Collection">
     <title>Músicas - Dreamer Collection</title>
     <style>
         :root {
@@ -16,10 +18,11 @@
             --text-secondary: #b3b3b3;
             --bg-main: rgba(18, 18, 35, 0.98);
             --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0,0,0,0.4);
-            --shadow-color-strong: rgba(0,0,0,0.6);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-color-strong: rgba(0, 0, 0, 0.6);
             --transition-speed: 0.3s;
             --border-radius: 15px;
+            --main-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         }
 
         * {
@@ -29,15 +32,18 @@
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
             color: var(--text-primary);
             overflow-x: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            padding: 20px;
+            overflow-y: scroll;
+            padding-bottom: 120px;
+            /* Space for the fixed player */
         }
 
-        /* Melhor organização do campo de estrelas */
+        /* Starfield Animation */
         .starfield {
             position: fixed;
             top: 0;
@@ -79,21 +85,35 @@
             box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
         }
 
+        .star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        }
+
+        .star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        }
+
         @keyframes star-travel {
             0% {
                 opacity: 0;
                 transform: translate(0, 0) scale(0.5);
             }
+
             10% {
                 opacity: 0.4;
             }
+
             50% {
                 opacity: 1;
                 transform: translate(var(--dx), var(--dy)) scale(1);
             }
+
             90% {
                 opacity: 0.6;
             }
+
             100% {
                 opacity: 0;
                 transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
@@ -101,11 +121,18 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
-        /* Navegação */
+        /* Navigation */
         .navigation {
             position: fixed;
             top: 0;
@@ -123,10 +150,10 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
         }
 
         .nav-home {
@@ -134,10 +161,7 @@
             font-weight: bold;
             color: var(--text-primary);
             text-decoration: none;
-            transition: all var(--transition-speed) ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.3s ease;
         }
 
         .nav-home:hover {
@@ -176,574 +200,970 @@
             font-size: 1.8em;
             cursor: pointer;
             color: var(--text-primary);
-            transition: color var(--transition-speed) ease;
         }
 
-        .menu-toggle:hover {
-            color: var(--primary-color);
-        }
-
-        /* Container principal */
+        /* Main Content */
         .main-content {
-            padding: 120px 20px 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .container {
-            background: var(--bg-main);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: 0 20px 40px var(--shadow-color-strong);
-            backdrop-filter: blur(15px);
+            margin-top: 100px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
             position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(187, 134, 252, 0.1);
+            min-height: calc(100vh - 140px);
         }
 
-        .container::before {
+        /* Unified Header */
+        .unified-header {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
+                url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Imagens/musicas_background.png') center center/cover no-repeat;
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            padding: 60px 60px 24px 60px;
+            margin-bottom: 40px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Fallback background if image fails */
+        .unified-header[style*="undefined"] {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .unified-header::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 3;
+            border-radius: inherit;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .header h1 {
-            color: var(--text-primary);
-            font-size: 2.8em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 
-                0 0 20px var(--primary-color),
-                2px 2px 8px var(--shadow-color);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Elementos flutuantes */
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .floating-element {
-            position: absolute;
-            font-size: 2em;
-            opacity: 0.15;
-            animation: float 8s ease-in-out infinite;
-            color: var(--secondary-color);
-            filter: blur(0.5px);
-        }
-
-        .floating-element:nth-child(1) { 
-            top: 15%; 
-            left: 10%; 
-            animation-delay: 0s; 
-        }
-        .floating-element:nth-child(2) { 
-            top: 25%; 
-            right: 15%; 
-            animation-delay: 2s; 
-        }
-        .floating-element:nth-child(3) { 
-            bottom: 25%; 
-            left: 20%; 
-            animation-delay: 4s; 
-        }
-        .floating-element:nth-child(4) { 
-            bottom: 35%; 
-            right: 25%; 
-            animation-delay: 1s; 
-        }
-
-        @keyframes float {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg) scale(1); 
-            }
-            25% { 
-                transform: translateY(-15px) rotate(3deg) scale(1.05); 
-            }
-            50% { 
-                transform: translateY(-25px) rotate(-2deg) scale(0.95); 
-            }
-            75% { 
-                transform: translateY(-10px) rotate(4deg) scale(1.02); 
-            }
-        }
-
-        /* Informações da playlist */
-        .playlist-info {
-            background: linear-gradient(135deg, 
-                rgba(187, 134, 252, 0.1), 
-                rgba(3, 218, 198, 0.1));
-            border-radius: var(--border-radius);
-            padding: 30px;
-            margin-bottom: 35px;
-            border-left: 4px solid var(--primary-color);
-            animation: fadeInUp 0.8s ease-out 0.4s both;
+        .unified-header>* {
             position: relative;
             z-index: 2;
         }
 
-        .playlist-info h3 {
-            color: var(--text-primary);
-            font-size: 1.4em;
+        .header-overlay-fix {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 20px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .unified-header h1 {
+            color: #111 !important;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 0 20px var(--primary-color), 2px 2px 4px var(--shadow-color);
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unified-header p {
+            color: #111 !important;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
+        }
+
+        .filters-stats-flex {
+            display: flex;
+            gap: 40px;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .filters {
+            flex: 2;
+            min-width: 320px;
+            border-radius: 18px !important;
+            padding: 10px 10px 8px 10px !important;
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+            margin-bottom: 0;
+            background: rgba(18, 18, 35, 0.6);
+            backdrop-filter: blur(10px);
+            min-height: 192px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 120px;
+        }
+
+        .filter-group label {
             font-weight: 600;
-            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .breadcrumb {
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .playlist-info p {
+            font-weight: 500;
             color: var(--text-secondary);
-            font-size: 1.05em;
-            line-height: 1.6;
         }
 
-        /* Player do YouTube melhorado */
-        .youtube-embed {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            margin-bottom: 35px;
+        .breadcrumb span:hover {
+            color: var(--primary-color);
+        }
+
+        .stats-compact {
+            flex: 1;
+            min-width: 220px;
+            background: rgba(18, 18, 35, 0.6);
+            border-radius: 18px !important;
+            padding: 8px 8px 4px 8px !important;
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+            margin-bottom: 0;
+            backdrop-filter: blur(10px);
+            min-height: 181px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .stats-compact .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: rgba(187, 134, 252, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 10px 0 6px 0;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        /* Music Grid & Items */
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .folder-item {
+            background: linear-gradient(135deg, rgba(187, 134, 252, 0.1), rgba(3, 218, 198, 0.1));
             border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
             overflow: hidden;
-            box-shadow: 0 15px 40px var(--shadow-color-strong);
-            animation: fadeInUp 0.8s ease-out 0.6s both;
-            border: 2px solid rgba(187, 134, 252, 0.2);
-            transition: all var(--transition-speed) ease;
+            backdrop-filter: blur(10px);
         }
 
-        .youtube-embed:hover {
+        .folder-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 50px var(--shadow-color-strong);
+            box-shadow: 0 15px 30px var(--shadow-color-strong);
             border-color: var(--primary-color);
         }
 
-        .youtube-embed iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: inherit;
-        }
-
-        /* Link do YouTube aprimorado */
-        .youtube-link {
-            text-align: center;
-            margin-top: 25px;
-            animation: fadeInUp 0.8s ease-out 0.8s both;
-        }
-
-        .youtube-link a {
-            display: inline-flex;
+        .folder-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            height: 80px;
+            display: flex;
             align-items: center;
+            justify-content: center;
+        }
+
+        .folder-name {
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .folder-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Track List */
+        .track-list {
+            display: flex;
+            flex-direction: column;
             gap: 10px;
+            padding-bottom: 100px;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .track-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .track-item.active {
+            background: rgba(187, 134, 252, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .track-icon {
+            font-size: 1.2em;
+            color: var(--primary-color);
+        }
+
+        .track-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .track-duration {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .play-btn-small {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .play-btn-small:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Fixed Audio Player */
+        .audio-player-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(18, 18, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--primary-color);
+            padding: 15px 30px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .audio-player-fixed.hidden {
+            transform: translateY(100%);
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        .now-playing-title {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .now-playing-artist {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            width: 50px;
+            height: 50px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
             color: white;
-            padding: 16px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: all var(--transition-speed) ease;
-            box-shadow: 0 6px 20px var(--shadow-color);
+            font-size: 1.8em;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+        }
+
+        .play-pause-btn:hover {
+            transform: scale(1.1);
+            color: white;
+            box-shadow: 0 6px 20px rgba(187, 134, 252, 0.6);
+        }
+
+        .player-progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 2;
+            max-width: 800px;
+        }
+
+        .time-display {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .progress-bar-wrapper {
+            flex: 1;
             position: relative;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            cursor: pointer;
             overflow: hidden;
         }
 
-        .youtube-link a::before {
-            content: '';
+        .progress-bar-fill {
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
+            left: 0;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            border-radius: 3px;
         }
 
-        .youtube-link a:hover::before {
-            left: 100%;
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
         }
 
-        .youtube-link a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px var(--shadow-color-strong);
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
         }
 
-        /* Animações melhoradas */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: '';
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            40% {
+                content: '.';
+            }
+
+            60% {
+                content: '..';
+            }
+
+            80%,
+            100% {
+                content: '...';
             }
         }
 
-        /* Responsividade aprimorada */
         @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
             .nav-links {
-                display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
                 background: var(--bg-nav);
                 flex-direction: column;
-                padding: 25px 20px;
-                box-shadow: 0 8px 25px var(--shadow-color-strong);
-                border-radius: 0 0 var(--border-radius) var(--border-radius);
-                backdrop-filter: blur(15px);
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
             }
-            
+
             .nav-links.active {
-                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .main-content {
-                padding: 100px 15px 30px;
-            }
-            
-            .container {
-                padding: 30px 25px;
-            }
-            
-            .header h1 {
-                font-size: 2.2em;
-            }
-            
-            .header p {
-                font-size: 1.1em;
-            }
-            
-            .floating-element {
-                font-size: 1.6em;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.9em;
+            .filters-stats-flex {
+                flex-direction: column;
+                align-items: stretch;
             }
-            
-            .container {
-                padding: 25px 20px;
-            }
-            
-            .playlist-info {
-                padding: 25px;
-            }
-            
-            .youtube-link a {
-                padding: 14px 28px;
-                font-size: 1em;
-            }
-        }
 
-        /* Estados de carregamento */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* Melhor acessibilidade */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .stats-compact,
+            .filters {
+                min-width: unset;
             }
-        }
 
-        /* Focus states para acessibilidade */
-        .nav-links a:focus,
-        .youtube-link a:focus,
-        .menu-toggle:focus {
-            outline: 2px solid var(--primary-color);
-            outline-offset: 2px;
+            .audio-player-fixed {
+                flex-direction: column;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .player-controls {
+                width: 100%;
+                justify-content: space-evenly;
+            }
+
+            .player-progress-container {
+                width: 100%;
+                order: -1;
+                margin-bottom: 5px;
+            }
+
+            .volume-container {
+                display: none;
+                /* Hide volume on mobile to save space */
+            }
+
+            .player-info {
+                text-align: center;
+                order: -2;
+            }
         }
     </style>
 </head>
+
 <body>
-    <!-- Campo de Estrelas -->
     <div class="starfield" id="starfield" aria-hidden="true"></div>
 
-    <!-- Navegação -->
-    <nav class="navigation" role="navigation" aria-label="Menu principal">
+    <!-- Navigation -->
+    <nav class="navigation">
         <div class="nav-container">
-            <a href="index.html" class="nav-home" aria-label="Ir para página inicial">
-                🏠 <span>Home</span>
-            </a>
+            <a href="index.html" class="nav-home">🏠 Home</a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="animes.html">🎌 Animes</a></li>
                 <li><a href="filmes.html">🎬 Filmes</a></li>
                 <li><a href="jogos.html">🎮 Jogos</a></li>
-                <li><a href="musicas.html" class="active" aria-current="page">🎵 Músicas</a></li>
+                <li><a href="musicas.html" class="active">🎵 Músicas</a></li>
                 <li><a href="imagens.html">🖼️ Imagens</a></li>
                 <li><a href="videos.html">📹 Vídeos</a></li>
             </ul>
-            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menu de navegação" aria-expanded="false">
-                ☰
-            </button>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
     </nav>
 
-    <!-- Conteúdo Principal -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Elementos Flutuantes -->
-            <div class="floating-elements" aria-hidden="true">
-                <div class="floating-element">🎵</div>
-                <div class="floating-element">🎶</div>
-                <div class="floating-element">🎧</div>
-                <div class="floating-element">🎤</div>
-            </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header unified-header">
+            <div class="header-overlay-fix"></div>
+            <h1>🎵 Galeria Musical</h1>
+            <p>MINHA COLEÇÃO DE MÚSICAS</p>
 
-            <header class="header">
-                <h1>🎵 Músicas</h1>
-                <p>Minha seleção especial de músicas que tocam a alma e inspiram momentos únicos</p>
-            </header>
+            <div class="filters-stats-flex">
+                <div class="filters">
+                    <!-- Navigation -->
+                    <div class="filter-row" style="margin-bottom: 5px;">
+                        <div class="filter-group" style="width: 100%;">
+                            <label>📂 Navegação:</label>
+                            <div class="breadcrumb" id="breadcrumb"
+                                style="display: flex; flex-wrap: wrap; gap: 5px; background: rgba(0,0,0,0.2); padding: 8px 15px; border-radius: 10px; align-items: center;">
+                                <span onclick="navigateToFolder('/')" style="cursor: pointer;">🏠 Início</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <section class="playlist-info">
-                <h3>🎧 Lista de Reprodução Pessoal</h3>
-                <p>Uma curadoria cuidadosa de faixas que marcaram momentos especiais, desde clássicos atemporais até descobertas recentes que despertam emoções e memórias.</p>
-            </section>
-
-            <div class="youtube-embed">
-                <iframe 
-                    src="https://www.youtube.com/embed/videoseries?list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO"
-                    title="Playlist Musical Pessoal"
-                    allowfullscreen
-                    loading="lazy">
-                </iframe>
-            </div>
-
-            <div class="youtube-link">
-                <a href="https://www.youtube.com/watch?v=bpNwakXj-E4&list=PLQJxsD56fqpQB-J7YISz48BoU4fnLAfMO" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    aria-label="Abrir playlist completa no YouTube (abre em nova aba)">
-                    🎬 <span>Abrir Playlist no YouTube</span>
-                </a>
+                <div class="stats stats-compact">
+                    <h3 style="text-align: center; margin-bottom: 10px; font-size: 1.1em;">📊 Estatísticas</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="displayTotalTracks">-</div>
+                            <div class="stat-label">Músicas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="displayTotalAlbums">-</div>
+                            <div class="stat-label">Álbuns</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+
+        <!-- Content Area -->
+        <div id="galleryContent">
+            <div class="loading">Carregando biblioteca...</div>
+        </div>
+    </div>
+
+    <!-- Fixed Audio Player -->
+    <div class="audio-player-fixed hidden" id="audioPlayerBar">
+        <div class="player-info">
+            <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
+            <div class="now-playing-artist" id="playerArtist">--</div>
+        </div>
+
+        <div class="player-controls">
+            <button class="control-btn" onclick="prevTrack()" title="Anterior">⏮</button>
+            <button class="control-btn play-pause-btn" onclick="togglePlay()" id="playPauseBtn">▶</button>
+            <button class="control-btn" onclick="nextTrack()" title="Próxima">⏭</button>
+            <button class="control-btn" onclick="toggleShuffle()" id="shuffleBtn" title="Aleatório">🔀</button>
+        </div>
+
+        <div class="player-progress-container">
+            <span class="time-display" id="currentTime">0:00</span>
+            <div class="progress-bar-wrapper" id="progressBar" onclick="seek(event)">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <span class="time-display" id="totalTime">0:00</span>
+        </div>
+
+        <div class="volume-container">
+            <button class="control-btn" style="font-size: 1.2em;" onclick="toggleMute()">🔊</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1"
+                oninput="setVolume(this.value)">
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioElement" preload="none"></audio>
 
     <script>
-        // Configuração do desempenho
+        // Stars Animation
         const performanceConfig = {
             maxStars: window.innerWidth > 768 ? 150 : 80,
             staticStars: window.innerWidth > 768 ? 40 : 20
         };
 
-        // Criação otimizada do campo de estrelas
         function createStarfield() {
             const starfield = document.getElementById('starfield');
+            starfield.innerHTML = '';
+            const fragment = document.createDocumentFragment();
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
-            // Limpar stars existentes
-            starfield.innerHTML = '';
-            
-            // Fragment para melhor performance
-            const fragment = document.createDocumentFragment();
-            
-            // Estrelas em movimento
+
             for (let i = 0; i < performanceConfig.maxStars; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
                 const angle = Math.random() * 2 * Math.PI;
-                const initialRadius = Math.random() * 50 + 10;
-                const startX = centerX + Math.cos(angle) * initialRadius;
-                const startY = centerY + Math.sin(angle) * initialRadius;
-                
-                const directionX = Math.cos(angle);
-                const directionY = Math.sin(angle);
-                
-                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
-                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
-                
-                // Tipos de estrela com probabilidades otimizadas
-                const starType = Math.random();
-                if (starType < 0.7) {
-                    star.classList.add('distant');
-                } else if (starType < 0.9) {
-                    star.classList.add('medium');
-                } else {
-                    star.classList.add('close');
-                }
-                
-                star.style.left = startX + 'px';
-                star.style.top = startY + 'px';
-                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
-                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
-                star.style.animationDelay = Math.random() * 25 + 's';
-                
+                const distance = Math.random() * 200 + 50;
+                star.style.left = centerX + 'px';
+                star.style.top = centerY + 'px';
+
+                const type = Math.random();
+                if (type < 0.6) star.classList.add('distant');
+                else if (type < 0.9) star.classList.add('medium');
+                else star.classList.add('close');
+
+                const dx = Math.cos(angle) * window.innerWidth;
+                const dy = Math.sin(angle) * window.innerHeight;
+                star.style.setProperty('--dx', dx + 'px');
+                star.style.setProperty('--dy', dy + 'px');
+                star.style.animationDelay = Math.random() * 10 + 's';
+
                 fragment.appendChild(star);
             }
-            
-            // Estrelas estacionárias com twinkle
-            for (let i = 0; i < performanceConfig.staticStars; i++) {
-                const staticStar = document.createElement('div');
-                staticStar.className = 'star distant';
-                staticStar.style.position = 'absolute';
-                staticStar.style.left = Math.random() * window.innerWidth + 'px';
-                staticStar.style.top = Math.random() * window.innerHeight + 'px';
-                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
-                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
-                staticStar.style.animationDelay = Math.random() * 2 + 's';
-                
-                fragment.appendChild(staticStar);
-            }
-            
             starfield.appendChild(fragment);
         }
 
-        // Efeito de paralaxe otimizado com throttling
-        function setupParallax() {
-            let ticking = false;
-            
-            function updateParallax(e) {
-                const floatingElements = document.querySelectorAll('.floating-element');
-                const x = e.clientX / window.innerWidth;
-                const y = e.clientY / window.innerHeight;
-                
-                floatingElements.forEach((element, index) => {
-                    const speed = (index + 1) * 0.3;
-                    const xPos = (x - 0.5) * speed * 15;
-                    const yPos = (y - 0.5) * speed * 15;
-                    
-                    element.style.transform = `translate(${xPos}px, ${yPos}px)`;
-                });
-                
-                ticking = false;
-            }
-            
-            document.addEventListener('mousemove', function(e) {
-                if (!ticking) {
-                    requestAnimationFrame(() => updateParallax(e));
-                    ticking = true;
-                }
-            });
-        }
+        // Logic
+        let musicData = {};
+        let currentPath = '/';
+        let currentQueue = [];
+        let currentTrackIndex = -1;
+        let isPlaying = false;
+        let isShuffle = false;
+        let audio = document.getElementById('audioElement');
+        let pathMap = { '/': { name: 'Início', type: 'root' } };
 
-        // Menu mobile melhorado
         function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            const isActive = navLinks.classList.toggle('active');
-            
-            // Atualizar aria-expanded
-            menuToggle.setAttribute('aria-expanded', isActive);
-            menuToggle.setAttribute('aria-label', isActive ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
-        // Fechar menu ao clicar fora ou pressionar Escape
-        document.addEventListener('click', function(e) {
-            const nav = document.querySelector('.navigation');
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            
-            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.setAttribute('aria-label', 'Abrir menu de navegação');
-            }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.getElementById('navLinks').classList.contains('active')) {
-                toggleMenu();
-            }
-        });
-
-        // Otimização do resize com debounce
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // Inicialização otimizada
-        document.addEventListener('DOMContentLoaded', function() {
-            // Criar starfield inicial
+        async function init() {
             createStarfield();
-            
-            // Setup de efeitos
-            setupParallax();
-            
-            // Otimizar resize
-            window.addEventListener('resize', debounce(() => {
-                // Atualizar configuração de performance
-                performanceConfig.maxStars = window.innerWidth > 768 ? 150 : 80;
-                performanceConfig.staticStars = window.innerWidth > 768 ? 40 : 20;
-                createStarfield();
-            }, 250));
-            
-            // Animação de entrada
-            const container = document.querySelector('.container');
-            container.style.opacity = '0';
-            container.style.transform = 'translateY(30px)';
-            
-            setTimeout(() => {
-                container.style.transition = 'all 0.8s ease-out';
-                container.style.opacity = '1';
-                container.style.transform = 'translateY(0)';
-            }, 100);
-        });
+            try {
+                // Fetch index
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/main/Musicas/music-index.json');
+                if (!response.ok) throw new Error('Index not found');
+                musicData = await response.json();
 
-        // Service Worker para cache (opcional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // Registrar service worker se disponível
+                // Calculate stats
+                let totalTracks = 0;
+                let totalAlbums = 0; // Each folder in root is an Album/Artist
+
+                function countTracks(obj) {
+                    let count = 0;
+                    if (obj._files) count += obj._files.length;
+                    for (let key in obj) {
+                        if (key !== '_files' && typeof obj[key] === 'object') {
+                            count += countTracks(obj[key]);
+                        }
+                    }
+                    return count;
+                }
+
+                totalAlbums = Object.keys(musicData).length;
+                totalTracks = countTracks(musicData);
+
+                document.getElementById('displayTotalTracks').innerText = totalTracks;
+                document.getElementById('displayTotalAlbums').innerText = totalAlbums;
+
+                loadContent('/');
+            } catch (e) {
+                console.error(e);
+                document.getElementById('galleryContent').innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: rgba(0,0,0,0.3); border-radius: 15px;">
+                        <h2>🎵 Nenhuma música encontrada</h2>
+                        <p style="color: #bbb; margin-top: 10px;">O índice de músicas ainda não está disponível.</p>
+                        <p style="color: #bbb; font-size: 0.9em;">(Carregando dados simulados para demonstração...)</p>
+                    </div>
+                `;
+                // Start with empty/demo content if needed
+            }
+        }
+
+        function loadContent(path) {
+            currentPath = path;
+            const contentDiv = document.getElementById('galleryContent');
+            contentDiv.innerHTML = '';
+
+            // Resolve data from path
+            let data = musicData;
+            const parts = path.split('/').filter(p => p);
+
+            // Helper to find key efficiently case-insensitive if needed, or direct
+            for (let part of parts) {
+                // Assuming keys in JSON match path structure
+                // We need to map friendly names back to keys if we transformed them, 
+                // but here we can just traverse.
+                // Simple traversal:
+                const key = Object.keys(data).find(k => k.toLowerCase().replace(/\s/g, '-') === part);
+                if (key) data = data[key];
+            }
+
+            updateBreadcrumb(parts);
+
+            // Render Folders
+            const folders = Object.keys(data).filter(k => k !== '_files' && typeof data[k] === 'object');
+
+            if (folders.length > 0) {
+                const grid = document.createElement('div');
+                grid.className = 'folder-grid';
+
+                folders.forEach(folder => {
+                    const item = document.createElement('div');
+                    item.className = 'folder-item';
+                    const coverUrl = data[folder]._cover;
+
+                    // If cover exists, show image. Else show folder icon.
+                    const iconHtml = coverUrl
+                        ? `<img src="${coverUrl}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
+                        : `<div class="folder-icon">📁</div>`;
+
+                    item.innerHTML = `
+                        ${iconHtml}
+                        <div class="folder-name">${folder}</div>
+                        <div class="folder-count">${countTracks(data[folder])} faixas</div>
+                    `;
+                    item.onclick = () => navigateToFolder(`${path === '/' ? '' : path}/${folder.toLowerCase().replace(/\s/g, '-')}`);
+                    grid.appendChild(item);
+                });
+                contentDiv.appendChild(grid);
+            }
+
+            // Render Tracks
+            if (data._files && data._files.length > 0) {
+                const list = document.createElement('div');
+                list.className = 'track-list';
+
+                data._files.forEach((file, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'track-item';
+                    const fileName = `Faixa ${index + 1}`; // Or parse filename if available in your index structure
+
+                    item.innerHTML = `
+                        <div class="track-info">
+                            <span class="track-icon">🎵</span>
+                            <div>
+                                <div class="track-name">${fileName}</div>
+                                <div class="track-duration">Google Drive Stream</div>
+                            </div>
+                        </div>
+                        <button class="play-btn-small">▶</button>
+                    `;
+                    item.onclick = () => playQueue(data._files, index, path, fileName);
+                    list.appendChild(item);
+                });
+
+                contentDiv.appendChild(list);
+            }
+
+            if (folders.length === 0 && (!data._files || data._files.length === 0)) {
+                contentDiv.innerHTML = '<div class="loading">Pasta vazia</div>';
+            }
+        }
+
+        function navigateToFolder(path) {
+            loadContent(path);
+        }
+
+        function updateBreadcrumb(parts) {
+            const bc = document.getElementById('breadcrumb');
+            let html = '<span onclick="navigateToFolder(\'/\')" style="cursor: pointer;">🏠 Início</span>';
+
+            let buildPath = '';
+            parts.forEach(p => {
+                buildPath += '/' + p;
+                html += ` › <span onclick="navigateToFolder('${buildPath}')" style="cursor: pointer; text-transform: capitalize;">${p.replace(/-/g, ' ')}</span>`;
+            });
+            bc.innerHTML = html;
+        }
+
+        function countTracks(obj) {
+            let count = 0;
+            if (obj && obj._files) count += obj._files.length;
+            if (obj) {
+                for (let key in obj) {
+                    if (key !== '_files' && typeof obj[key] === 'object') {
+                        count += countTracks(obj[key]);
+                    }
+                }
+            }
+            return count;
+        }
+
+        // --- Player Functions ---
+
+        function convertDriveLink(link) {
+            // Converts 'view' or 'open' links to direct stream links if possible
+            // Usually: https://drive.google.com/uc?export=download&id=FILE_ID
+            const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
+            if (match) {
+                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+            return link;
+        }
+
+        function playQueue(files, startIndex, folderPath, trackName) {
+            currentQueue = files.map((f, i) => ({
+                url: convertDriveLink(f),
+                title: `Faixa ${i + 1}`, // We can improve this if index has names
+                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Desconhecido'
+            }));
+
+            currentTrackIndex = startIndex;
+            loadTrack(currentTrackIndex);
+
+            document.getElementById('audioPlayerBar').classList.remove('hidden');
+        }
+
+        function loadTrack(index) {
+            if (index < 0 || index >= currentQueue.length) return;
+
+            const track = currentQueue[index];
+            document.getElementById('playerTitle').innerText = track.title;
+            document.getElementById('playerArtist').innerText = track.artist; // Should come from folder name
+
+            audio.src = track.url;
+            audio.play().then(() => {
+                isPlaying = true;
+                updatePlayButton();
+            }).catch(e => {
+                console.error("Playback failed", e);
+                // Could be auth issue with drive link
             });
         }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                isPlaying = true;
+            } else {
+                audio.pause();
+                isPlaying = false;
+            }
+            updatePlayButton();
+        }
+
+        function updatePlayButton() {
+            const btn = document.getElementById('playPauseBtn');
+            btn.innerHTML = isPlaying ? '⏸' : '▶';
+        }
+
+        function nextTrack() {
+            if (isShuffle) {
+                let next = Math.floor(Math.random() * currentQueue.length);
+                loadTrack(next);
+                currentTrackIndex = next;
+            } else {
+                if (currentTrackIndex < currentQueue.length - 1) {
+                    currentTrackIndex++;
+                    loadTrack(currentTrackIndex);
+                }
+            }
+        }
+
+        function prevTrack() {
+            if (audio.currentTime > 3) {
+                audio.currentTime = 0;
+            } else {
+                if (currentTrackIndex > 0) {
+                    currentTrackIndex--;
+                    loadTrack(currentTrackIndex);
+                }
+            }
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            document.getElementById('shuffleBtn').style.color = isShuffle ? 'var(--primary-color)' : 'var(--text-primary)';
+        }
+
+        // Progress Bar
+        audio.ontimeupdate = () => {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('currentTime').innerText = formatTime(audio.currentTime);
+            if (!isNaN(audio.duration)) {
+                document.getElementById('totalTime').innerText = formatTime(audio.duration);
+            }
+        };
+
+        audio.onended = () => {
+            nextTrack();
+        };
+
+        function seek(e) {
+            const bar = document.getElementById('progressBar');
+            const pct = e.offsetX / bar.offsetWidth;
+            audio.currentTime = pct * audio.duration;
+        }
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m}:${sec < 10 ? '0' + sec : sec}`;
+        }
+
+        function setVolume(val) {
+            audio.volume = val;
+        }
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+        }
+
+        window.onload = init;
     </script>
 </body>
+
 </html>
