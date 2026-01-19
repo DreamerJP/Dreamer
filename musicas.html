@@ -892,19 +892,10 @@
         async function init() {
             createStarfield();
             try {
-                // Fetch index
-                // Tenta carregar localmente primeiro (desenvolvimento)
+                // Load music index
                 const response = await fetch('music-index.json');
-                if (!response.ok) {
-                    // Fallback para GitHub (caso o caminho local falhe ou esteja publicado)
-                    // throw new Error('Index not found');
-                    console.warn('Local index not found, trying GitHub...');
-                    const resGh = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
-                    if (!resGh.ok) throw new Error('Index not found on GitHub either');
-                    musicData = await resGh.json();
-                } else {
-                    musicData = await response.json();
-                }
+                if (!response.ok) throw new Error('Index not found');
+                musicData = await response.json();
 
                 // Calculate stats
                 let totalTracks = 0;
@@ -919,22 +910,30 @@
                 document.getElementById('displayTotalTracks').innerText = totalTracks;
                 document.getElementById('displayTotalAlbums').innerText = totalAlbums;
 
-                loadContent('/');
+                // Start with initial content (no history push)
+                loadContent('/', false);
             } catch (e) {
                 console.error(e);
-                document.getElementById('galleryContent').innerHTML = `
-                    <div style="text-align: center; padding: 40px; background: rgba(0,0,0,0.3); border-radius: 15px;">
-                        <h2>🎵 Nenhuma música encontrada</h2>
-                        <p style="color: #bbb; margin-top: 10px;">O índice de músicas ainda não está disponível.</p>
-                        <p style="color: #bbb; font-size: 0.9em;">(Carregando dados simulados para demonstração...)</p>
-                    </div>
-                `;
-                // Start with empty/demo content if needed
+                // ... error handling ...
             }
         }
 
-        function loadContent(path) {
+        // Handle Back Button
+        window.onpopstate = (event) => {
+            if (event.state && event.state.path) {
+                loadContent(event.state.path, false);
+            } else {
+                loadContent('/', false);
+            }
+        };
+
+        function loadContent(path, pushToHistory = true) {
             currentPath = path;
+
+            if (pushToHistory) {
+                history.pushState({ path: path }, '', '#folder=' + path);
+            }
+
             const contentDiv = document.getElementById('galleryContent');
             contentDiv.innerHTML = '';
 
@@ -968,7 +967,7 @@
 
                     // If cover exists, show image. Else show folder icon.
                     const iconHtml = coverUrl
-                        ? `<img src="${getDriveThumbnail(coverUrl)}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
+                        ? `<img src="${coverUrl}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
                         : `<div class="folder-icon">📁</div>`;
 
                     item.innerHTML = `
@@ -997,7 +996,7 @@
                             <span class="track-icon">🎵</span>
                             <div>
                                 <div class="track-name">${fileName}</div>
-                                <div class="track-duration">Google Drive Stream</div>
+                                <div class="track-duration">${path.split('/').pop().replace(/-/g, ' ')}</div>
                             </div>
                         </div>
                         <button class="play-btn-small">▶</button>
@@ -1043,13 +1042,6 @@
             return count;
         }
 
-        // --- Player Functions ---
-
-        // Helper to get efficient image url
-        // Helper to get efficient image url
-        function getDriveThumbnail(link) {
-            return link; // No transformation needed for direct links
-        }
 
         // --- Player Functions ---
 
@@ -1093,7 +1085,7 @@
             audio.removeAttribute('src');
             audio.load();
 
-            // Direct assignment - expects a valid direct link (like Archive.org)
+            // Direct assignment - standard HTML5 Audio
             audio.src = track.url;
             audio.preload = "auto";
 
@@ -1111,9 +1103,6 @@
                     console.log("✅ Playback Started!");
                 }).catch(e => {
                     console.error("❌ Playback failed:", e);
-                    if (track.url.includes('drive.google.com')) {
-                        console.warn("⚠️ Google Drive link detected but not proxied. Playback may fail due to CORS/403.");
-                    }
                 });
             }
         }
