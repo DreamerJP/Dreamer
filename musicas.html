@@ -1581,7 +1581,38 @@
             }
         }
 
-        // ... prevTrack stays same ...
+        function prevTrack() {
+            if (audio.currentTime > 3) {
+                audio.currentTime = 0;
+            } else {
+                if (currentTrackIndex > 0) {
+                    currentTrackIndex--;
+                    loadTrack(currentTrackIndex);
+                }
+            }
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            const btn = document.getElementById('shuffleBtn');
+            btn.classList.toggle('active', isShuffle);
+        }
+
+        // Progress Bar & State Management - Maintain loading state logic
+        audio.onloadstart = () => { isLoading = true; updatePlayButton(); };
+        audio.onwaiting = () => { isLoading = true; updatePlayButton(); };
+        audio.onplaying = () => { isLoading = false; isPlaying = true; updatePlayButton(); updateActiveTrackUI(); };
+        audio.oncanplay = () => { isLoading = false; updatePlayButton(); };
+        audio.onpause = () => { isLoading = false; isPlaying = false; updatePlayButton(); updateActiveTrackUI(); };
+
+        audio.ontimeupdate = () => {
+            if (isFinite(audio.duration)) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('progressFill').style.width = pct + '%';
+                document.getElementById('currentTime').innerText = formatTime(audio.currentTime);
+                document.getElementById('totalTime').innerText = formatTime(audio.duration);
+            }
+        };
 
         audio.onended = () => {
             if (repeatMode === 2) {
