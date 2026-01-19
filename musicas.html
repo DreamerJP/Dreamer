@@ -1174,7 +1174,18 @@
             audio.load();
 
             // Direct assignment - standard HTML5 Audio
-            audio.src = track.url;
+            let playUrl = track.url;
+
+            // FIX: jsDelivr has 20MB limit. Bypass for FLAC by using Raw GitHub.
+            if (playUrl.includes('.flac') && playUrl.includes('cdn.jsdelivr.net')) {
+                // Convert: https://cdn.jsdelivr.net/gh/User/Repo@Branch/Path
+                // To:      https://raw.githubusercontent.com/User/Repo/Branch/Path
+                playUrl = playUrl.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com')
+                    .replace('@', '/');
+                console.log("🔄 Bypassing jsDelivr for FLAC:", playUrl);
+            }
+
+            audio.src = playUrl;
             audio.preload = "auto";
 
             // UI Reset
