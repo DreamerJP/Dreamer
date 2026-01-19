@@ -1569,7 +1569,10 @@
             }
         }
 
+        let tooltipTimeout;
+
         function showRepeatTooltip(element) {
+            clearTimeout(tooltipTimeout);
             const tt = document.getElementById('btnTooltip');
             let text = "";
             let subtext = "";
@@ -1591,9 +1594,15 @@
             tt.style.left = (rect.left + rect.width / 2) + 'px';
             tt.style.top = rect.top + 'px';
             tt.style.opacity = '1';
+
+            // Mobile Fix: Auto-hide after 2.5s because mouseleave doesn't exist/work same way
+            if (window.innerWidth <= 768 || 'ontouchstart' in window) {
+                tooltipTimeout = setTimeout(hideRepeatTooltip, 2500);
+            }
         }
 
         function hideRepeatTooltip() {
+            clearTimeout(tooltipTimeout);
             document.getElementById('btnTooltip').style.opacity = '0';
         }
 
