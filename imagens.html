@@ -462,43 +462,6 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            .folder-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            .folder-preview {
-                height: 100px;
-            }
-
-            .folder-item {
-                padding: 12px;
-            }
-
-            .folder-name {
-                font-size: 0.9rem;
-            }
-
-            .folder-count {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .folder-grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                gap: 15px;
-            }
-
-            .folder-preview {
-                height: 80px;
-                margin-bottom: 10px;
-            }
-
-            .folder-item {
-                padding: 10px;
-            }
-        }
 
         .image-grid {
             display: grid;
@@ -816,6 +779,7 @@
                 transition: all 0.3s ease;
                 box-shadow: 0 8px 25px var(--shadow-color-strong);
                 border-radius: 0 0 var(--border-radius) var(--border-radius);
+                z-index: 1001;
             }
 
             .nav-links.active {
@@ -825,78 +789,152 @@
             }
 
             .main-content {
-                margin-top: 120px;
-                padding: 20px;
+                margin-top: 80px;
+                padding: 0 10px;
             }
 
-            .page-title {
-                font-size: 2rem;
+            .unified-header {
+                min-height: auto !important;
+                padding: 30px 15px 15px 15px !important;
+                margin-bottom: 20px;
+                border-radius: 0 !important;
             }
 
-            .gallery-controls {
+            .header-overlay-fix {
+                border-radius: 0 !important;
+            }
+
+            .unified-header h1 {
+                font-size: 1.8em !important;
+                min-height: auto;
+                margin-bottom: 5px;
+                line-height: 1.2;
+            }
+
+            .unified-header p {
+                font-size: 0.9em !important;
+                margin-bottom: 15px;
+            }
+
+            .filters-stats-flex {
                 flex-direction: column;
+                gap: 15px;
                 align-items: stretch;
             }
 
-            .view-controls {
-                justify-content: center;
+            .filters {
+                width: 100%;
+                min-width: unset;
+                min-height: auto !important;
+                padding: 12px !important;
+            }
+
+            .stats-compact {
+                width: 100%;
+                min-width: unset;
+                min-height: auto !important;
+                padding: 12px !important;
+            }
+
+            .stats-compact h3 {
+                font-size: 1.1em !important;
+                margin-bottom: 15px !important;
+            }
+
+            .stat-card {
+                padding: 15px 5px !important;
+            }
+
+            .stat-value {
+                font-size: 1.5em !important;
+            }
+
+            .breadcrumb {
+                font-size: 0.8em !important;
+                padding: 8px 12px !important;
+                border-radius: 8px !important;
             }
 
             .folder-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+
+            .folder-preview {
+                height: 90px;
+            }
+
+            .folder-name {
+                font-size: 0.85rem;
             }
 
             .grid-small {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
 
             .grid-medium {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             }
 
             .grid-large {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             }
 
             .grid-xlarge {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        .viewer-controls {
+            bottom: 10px;
+            padding: 10px;
+            max-width: 98vw;
+        }
+
+        .close-viewer {
+            top: 10px;
+            right: 10px;
+            width: 48px;
+            height: 48px;
+            font-size: 1.2rem;
+        }
+
+
+
+        @media (max-width: 480px) {
+            .unified-header h1 {
+                font-size: 1.5em !important;
+            }
+
+            .unified-header p {
+                font-size: 0.8em !important;
+            }
+
+            .folder-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .folder-preview {
+                height: 70px;
+            }
+
+            .control-group {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .size-slider {
+                width: 100%;
+                max-width: 200px;
             }
 
             .viewer-controls {
                 bottom: 10px;
-                padding: 10px;
-                max-width: 98vw;
-            }
-
-            .close-viewer {
-                top: 10px;
-                right: 10px;
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-
-            .nav-arrows {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .control-group {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .size-slider {
-                width: 200px;
-            }
-
-            .viewer-controls {
-                bottom: -80px;
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 15px;
             }
         }
 
@@ -1190,22 +1228,6 @@
         .stat-label {
             font-size: 0.9em;
             color: var(--text-secondary);
-        }
-
-        @media (max-width: 900px) {
-            .filters-stats-flex {
-                flex-direction: column;
-                gap: 20px;
-                align-items: stretch;
-            }
-
-            .filters,
-            .stats-compact {
-                width: 100%;
-                min-width: unset;
-                margin-bottom: 0;
-                margin-top: 0;
-            }
         }
     </style>
 </head>
