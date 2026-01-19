@@ -1076,21 +1076,23 @@
                         fileName = decodeURIComponent(rawName).replace(/\.(mp3|m4a|wav|flac)$/i, '');
                     } catch (e) { }
 
+                    item.setAttribute('data-url', file);
                     item.innerHTML = `
-                        <div class="track-info">
-                            <span class="track-icon">🎵</span>
-                            <div>
-                                <div class="track-name">${fileName}</div>
-                                <div class="track-duration">${path.split('/').pop().replace(/-/g, ' ')}</div>
-                            </div>
-                        </div>
-                        <button class="play-btn-small">▶</button>
-                    `;
+                <div class="track-info">
+                    <span class="track-icon">🎵</span>
+                    <div>
+                        <div class="track-name">${fileName}</div>
+                        <div class="track-duration">${path.split('/').pop().replace(/-/g, ' ')}</div>
+                    </div>
+                </div>
+                <button class="play-btn-small">▶</button>
+            `;
                     item.onclick = () => playQueue(data._files, index, path, fileName);
                     list.appendChild(item);
                 });
 
                 contentDiv.appendChild(list);
+                updateActiveTrackUI();
             }
 
             if (folders.length === 0 && (!data._files || data._files.length === 0)) {
@@ -1200,11 +1202,29 @@
                 playPromise.then(() => {
                     isPlaying = true;
                     updatePlayButton();
+                    updateActiveTrackUI();
                     console.log("✅ Playback Started!");
                 }).catch(e => {
                     console.error("❌ Playback failed:", e);
                 });
             }
+            updateActiveTrackUI();
+        }
+
+        function updateActiveTrackUI() {
+            const currentTrack = currentQueue[currentTrackIndex];
+            document.querySelectorAll('.track-item').forEach(item => {
+                const itemUrl = item.getAttribute('data-url');
+                const btn = item.querySelector('.play-btn-small');
+
+                if (currentTrack && itemUrl === currentTrack.url) {
+                    item.classList.add('active');
+                    btn.innerHTML = isPlaying ? '⏸' : '▶';
+                } else {
+                    item.classList.remove('active');
+                    btn.innerHTML = '▶';
+                }
+            });
         }
 
         function togglePlay() {
@@ -1272,9 +1292,9 @@
         // Progress Bar & State Management - Maintain loading state logic
         audio.onloadstart = () => { isLoading = true; updatePlayButton(); };
         audio.onwaiting = () => { isLoading = true; updatePlayButton(); };
-        audio.onplaying = () => { isLoading = false; isPlaying = true; updatePlayButton(); };
+        audio.onplaying = () => { isLoading = false; isPlaying = true; updatePlayButton(); updateActiveTrackUI(); };
         audio.oncanplay = () => { isLoading = false; updatePlayButton(); };
-        audio.onpause = () => { isLoading = false; isPlaying = false; updatePlayButton(); };
+        audio.onpause = () => { isLoading = false; isPlaying = false; updatePlayButton(); updateActiveTrackUI(); };
 
         audio.ontimeupdate = () => {
             if (isFinite(audio.duration)) {
