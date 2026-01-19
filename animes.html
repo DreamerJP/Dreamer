@@ -990,16 +990,25 @@
         /* Responsividade */
         @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
-                margin: 120px 10px 0 10px;
+                margin-top: 80px;
+                padding: 0 10px;
             }
 
-            .header h1 {
-                font-size: 2.2em;
+            .unified-header {
+                min-height: auto !important;
+                padding: 30px 15px 15px 15px !important;
+                margin-bottom: 20px;
             }
 
-            .header p {
-                font-size: 1.1em;
+            .unified-header h1 {
+                font-size: 1.8em !important;
+                min-height: auto;
+                margin-bottom: 5px;
+            }
+
+            .unified-header p {
+                font-size: 0.9em !important;
+                margin-bottom: 15px;
             }
 
             .floating-element {
@@ -1012,12 +1021,12 @@
         }
 
         @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8em;
+            .unified-header h1 {
+                font-size: 1.6em !important;
             }
 
-            .header p {
-                font-size: 1em;
+            .unified-header p {
+                font-size: 0.85em !important;
             }
 
             .filter-btn {
