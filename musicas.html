@@ -1305,6 +1305,14 @@
 
         function setVolume(val) {
             audio.volume = val;
+            const btn = document.getElementById('muteBtn');
+            if (val == 0) {
+                btn.innerHTML = '🔇';
+            } else {
+                btn.innerHTML = '🔊';
+                // If user moves slider, ensuring we unmute if it was muted
+                if (audio.muted) audio.muted = false;
+            }
         }
 
         function toggleMute() {
