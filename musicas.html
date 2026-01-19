@@ -1061,8 +1061,8 @@
                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
                 </svg>
             </button>
-            <button class="control-btn" onclick="toggleRepeat()" id="repeatBtn" title="Repetir: Desligado"
-                style="opacity: 0.5;">
+            <button class="control-btn" onclick="toggleRepeat()" id="repeatBtn" onmouseenter="showRepeatTooltip(this)"
+                onmouseleave="hideRepeatTooltip()" style="opacity: 0.5;">
                 <svg class="control-icon" viewBox="0 0 24 24">
                     <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v6z" />
                 </svg>
@@ -1560,8 +1560,42 @@
                     <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v6z"/>
                     <text x="12" y="16" font-size="10" font-weight="bold" fill="currentColor" text-anchor="middle">1</text>
                 </svg>`;
-                btn.setAttribute('title', 'Repetir: Uma');
+                // btn.setAttribute('title', 'Repetir: Uma'); // Removed native title in favor of custom tooltip
             }
+
+            // Update tooltip if currently hovering
+            if (document.getElementById('btnTooltip').style.opacity === '1') {
+                showRepeatTooltip(btn);
+            }
+        }
+
+        function showRepeatTooltip(element) {
+            const tt = document.getElementById('btnTooltip');
+            let text = "";
+            let subtext = "";
+
+            if (repeatMode === 0) {
+                text = "Repetir: Desligado";
+                subtext = "Clique para repetir a lista 🔁";
+            } else if (repeatMode === 1) {
+                text = "Repetir: Tudo";
+                subtext = "Clique para repetir apenas uma 🔂";
+            } else {
+                text = "Repetir: Uma";
+                subtext = "Clique para desligar ➡️";
+            }
+
+            tt.innerHTM = text; // Typo fix in next line logic
+            tt.innerHTML = `<div>${text}</div><div style='font-weight:normal; font-size:0.8em; color:#ccc; margin-top:2px;'>${subtext}</div>`;
+
+            const rect = element.getBoundingClientRect();
+            tt.style.left = (rect.left + rect.width / 2) + 'px';
+            tt.style.top = rect.top + 'px';
+            tt.style.opacity = '1';
+        }
+
+        function hideRepeatTooltip() {
+            document.getElementById('btnTooltip').style.opacity = '0';
         }
 
         function nextTrack() {
@@ -1719,6 +1753,11 @@
 
         window.onload = init;
     </script>
+
+    <!-- Global Tooltip for Buttons -->
+    <div id="btnTooltip" class="play-tooltip"
+        style="position: fixed; opacity: 0; top: 0; left: 0; transform: translate(-50%, -100%); margin-top: -15px; z-index: 5000; white-space: nowrap;">
+    </div>
 </body>
 
 </html>
