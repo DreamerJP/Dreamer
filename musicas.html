@@ -1546,12 +1546,12 @@
                 btn.style.color = 'var(--text-primary)';
                 btn.style.opacity = '0.5';
                 btn.innerHTML = `<svg class="control-icon" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v6z"/></svg>`;
-                btn.setAttribute('title', 'Repetir: Desligado');
+                // Title removed for custom tooltip
             } else if (repeatMode === 1) { // All
                 btn.style.color = 'var(--primary-color)';
                 btn.style.opacity = '1';
                 btn.innerHTML = `<svg class="control-icon" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v6z"/></svg>`;
-                btn.setAttribute('title', 'Repetir: Tudo');
+                // Title removed
             } else { // One
                 btn.style.color = 'var(--primary-color)';
                 btn.style.opacity = '1';
@@ -1585,7 +1585,6 @@
                 subtext = "Clique para desligar ➡️";
             }
 
-            tt.innerHTM = text; // Typo fix in next line logic
             tt.innerHTML = `<div>${text}</div><div style='font-weight:normal; font-size:0.8em; color:#ccc; margin-top:2px;'>${subtext}</div>`;
 
             const rect = element.getBoundingClientRect();
