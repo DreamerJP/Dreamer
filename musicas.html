@@ -647,7 +647,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 3px;
             cursor: pointer;
-            overflow: hidden;
+            /* overflow: hidden; Removed to allow tooltip visibility */
         }
 
         .progress-bar-fill {
@@ -658,6 +658,41 @@
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             width: 0%;
             border-radius: 3px;
+        }
+
+        .play-tooltip {
+            position: absolute;
+            top: -40px;
+            background: rgba(18, 18, 35, 0.95);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.1s;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            border: 1px solid var(--primary-color);
+            z-index: 2005;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        /* Arrow for tooltip */
+        .play-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0;
+            border-style: solid;
+            border-color: var(--primary-color) transparent transparent transparent;
+        }
+
+        .progress-bar-wrapper:hover .play-tooltip {
+            opacity: 1;
         }
 
         .volume-container {
@@ -1032,6 +1067,7 @@
             <span class="time-display" id="currentTime">0:00</span>
             <div class="progress-bar-wrapper" id="progressBar" onclick="seek(event)">
                 <div class="progress-bar-fill" id="progressFill"></div>
+                <div id="playTooltip" class="play-tooltip">0:00</div>
             </div>
             <span class="time-display" id="totalTime">0:00</span>
         </div>
@@ -1556,6 +1592,67 @@
             const btn = document.getElementById('muteBtn');
             btn.innerHTML = audio.muted ? '🔇' : '🔊';
         }
+
+        // Initialize
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            // Ignore if typing in an input (future proofing)
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault(); // Prevent scrolling
+                    togglePlay();
+                    break;
+                case 'ArrowLeft':
+                    if (audio.duration) {
+                        audio.currentTime = Math.max(0, audio.currentTime - 5);
+                        updatePlayButton(); // Optional: Visual feedback if needed
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (audio.duration) {
+                        audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+                    }
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    setVolume(Math.min(1, audio.volume + 0.1));
+                    document.querySelector('.volume-slider').value = audio.volume;
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    setVolume(Math.max(0, audio.volume - 0.1));
+                    document.querySelector('.volume-slider').value = audio.volume;
+                    break;
+                case 'KeyM':
+                    toggleMute();
+                    break;
+            }
+        });
+
+        // Tooltip Logic
+        const pBar = document.getElementById('progressBar');
+        const pTooltip = document.getElementById('playTooltip');
+
+        pBar.addEventListener('mousemove', (e) => {
+            const rect = pBar.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const width = rect.width;
+
+            // Calculate time
+            let duration = audio.duration || 0;
+            // If nothing loaded yet, default to 0 or maybe a placeholder if desired.
+            if (!isFinite(duration)) duration = 0;
+
+            const pct = Math.max(0, Math.min(1, offsetX / width));
+            const time = pct * duration;
+
+            // Update Position & Text
+            pTooltip.style.left = offsetX + 'px';
+            pTooltip.innerText = formatTime(time);
+        });
 
         window.onload = init;
     </script>
