@@ -526,8 +526,26 @@
 
         .player-info {
             display: flex;
-            flex-direction: column;
-            min-width: 200px;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        /* Visualizer */
+        .visualizer-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 25px;
+            width: 40px;
+        }
+
+        .vis-bar {
+            flex: 1;
+            background: var(--primary-color);
+            min-height: 2px;
+            border-radius: 1px;
+            transition: height 0.05s ease;
         }
 
         .now-playing-title {
@@ -535,6 +553,10 @@
             font-weight: bold;
             font-size: 1rem;
             margin-bottom: 2px;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .now-playing-artist {
@@ -870,8 +892,16 @@
     <!-- Fixed Audio Player -->
     <div class="audio-player-fixed hidden" id="audioPlayerBar">
         <div class="player-info">
-            <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
-            <div class="now-playing-artist" id="playerArtist">--</div>
+            <div class="visualizer-container" id="visualizer">
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+            </div>
+            <div>
+                <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
+                <div class="now-playing-artist" id="playerArtist">--</div>
+            </div>
         </div>
 
         <div class="player-controls">
@@ -914,7 +944,7 @@
     </div>
 
     <!-- Hidden Audio Element -->
-    <audio id="audioElement" preload="none" referrerpolicy="no-referrer"></audio>
+    <audio id="audioElement" preload="none" crossorigin="anonymous"></audio>
 
     <script>
         // Stars Animation
@@ -963,6 +993,37 @@
         let isShuffle = false;
         let audio = document.getElementById('audioElement');
         let pathMap = { '/': { name: 'Início', type: 'root' } };
+
+        // Visualizer State
+        let audioCtx, analyser, dataArray, source;
+        const visBars = document.getElementsByClassName('vis-bar');
+
+        function initVisualizer() {
+            if (audioCtx) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            source = audioCtx.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            analyser.fftSize = 32;
+            const bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+            animateVisualizer();
+        }
+
+        function animateVisualizer() {
+            requestAnimationFrame(animateVisualizer);
+            if (!isPlaying) {
+                for (let bar of visBars) bar.style.height = '2px';
+                return;
+            }
+            analyser.getByteFrequencyData(dataArray);
+            for (let i = 0; i < visBars.length; i++) {
+                const val = dataArray[i * 2] || 0;
+                const height = Math.max(2, (val / 255) * 25);
+                visBars[i].style.height = height + 'px';
+            }
+        }
 
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
@@ -1192,9 +1253,14 @@
             audio.preload = "auto";
 
             // UI Reset
-            document.getElementById('progressFill').style.width = '0%';
-            document.getElementById('currentTime').innerText = '0:00';
             document.getElementById('totalTime').innerText = '--:--';
+
+            // Init audio context on first user interaction
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            } else {
+                initVisualizer();
+            }
 
             const playPromise = audio.play();
 
@@ -1213,6 +1279,8 @@
 
         function updateActiveTrackUI() {
             const currentTrack = currentQueue[currentTrackIndex];
+            let activeItem = null;
+
             document.querySelectorAll('.track-item').forEach(item => {
                 const itemUrl = item.getAttribute('data-url');
                 const btn = item.querySelector('.play-btn-small');
@@ -1220,14 +1288,24 @@
                 if (currentTrack && itemUrl === currentTrack.url) {
                     item.classList.add('active');
                     btn.innerHTML = isPlaying ? '⏸' : '▶';
+                    activeItem = item;
                 } else {
                     item.classList.remove('active');
                     btn.innerHTML = '▶';
                 }
             });
+
+            // Auto-scroll to active item
+            if (activeItem) {
+                activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         function togglePlay() {
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
             if (audio.paused) {
                 audio.play();
                 isPlaying = true;
