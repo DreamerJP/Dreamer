@@ -184,6 +184,100 @@
             box-shadow: 0 5px 15px var(--shadow-color);
         }
 
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-nav);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 20px var(--shadow-color-strong);
+                border-radius: 0 0 15px 15px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-container {
+                margin-top: 80px;
+                padding: 0 10px;
+            }
+
+            .unified-header {
+                min-height: 480px;
+                padding: 40px 20px 20px 20px !important;
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+
+            .unified-header h1 {
+                font-size: 2.2em;
+            }
+
+            .unified-header p {
+                font-size: 1.1em;
+            }
+
+            .filters-stats-flex {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+
+            .filters,
+            .stats-compact {
+                width: 100%;
+                min-width: unset;
+                padding: 12px !important;
+            }
+
+            .stats-compact h3 {
+                font-size: 1em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .stat-value {
+                font-size: 1.1em;
+            }
+
+            .stat-label {
+                font-size: 0.8em;
+            }
+
+            .breadcrumb {
+                font-size: 0.9em;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .unified-header {
+                min-height: 420px;
+                padding: 30px 15px 15px 15px !important;
+            }
+
+            .unified-header h1 {
+                font-size: 1.8em;
+            }
+
+            .unified-header p {
+                font-size: 1em;
+            }
+        }
+
         .menu-toggle {
             display: none;
             background: none;
@@ -1075,40 +1169,6 @@
             color: var(--text-secondary);
         }
 
-        @media (max-width: 900px) {
-            .filters-stats-flex {
-                flex-direction: column;
-                gap: 20px;
-                align-items: stretch;
-            }
-
-            .filters,
-            .stats-compact {
-                width: 100%;
-                min-width: unset;
-                margin-bottom: 0;
-                margin-top: 0;
-            }
-        }
-
-        @media (max-width: 600px) {
-
-            .filters,
-            .stats-compact {
-                padding: 6px 4px 4px 4px !important;
-                border-radius: 12px !important;
-            }
-
-            .filter-tag,
-            .stat-value,
-            .stat-label {
-                font-size: 0.95em;
-            }
-
-            .filters .filter-group label {
-                font-size: 0.85em;
-            }
-        }
 
         /* Modal de Trailer */
         .trailer-modal {
