@@ -1069,7 +1069,7 @@
 
         <div class="player-progress-container">
             <span class="time-display" id="currentTime">0:00</span>
-            <div class="progress-bar-wrapper" id="progressBar" onclick="seek(event)">
+            <div class="progress-bar-wrapper" id="progressBar">
                 <div class="progress-bar-fill" id="progressFill"></div>
                 <div id="playTooltip" class="play-tooltip">0:00</div>
             </div>
@@ -1664,13 +1664,7 @@
             }
         };
 
-        function seek(e) {
-            if (audio.duration && isFinite(audio.duration)) {
-                const bar = document.getElementById('progressBar');
-                const pct = e.offsetX / bar.offsetWidth;
-                audio.currentTime = pct * audio.duration;
-            }
-        }
+        // seek(event) replaced by scrubbing logic
 
         function formatTime(s) {
             const m = Math.floor(s / 60);
@@ -1735,35 +1729,100 @@
             }
         });
 
-        // Tooltip Logic (Mobile + Desktop)
+        // Scrubbing & Tooltip Logic
         const pBar = document.getElementById('progressBar');
         const pTooltip = document.getElementById('playTooltip');
+        const pFill = document.getElementById('progressFill');
         let pTooltipTimeout;
+        let isDragging = false;
 
-        function updateProgressTooltip(clientX) {
+        function updateScrub(clientX) {
             const rect = pBar.getBoundingClientRect();
-            const offsetX = clientX - rect.left;
+            let offsetX = clientX - rect.left;
             const width = rect.width;
+
+            // Layout bounds
+            offsetX = Math.max(0, Math.min(width, offsetX));
+
             let duration = audio.duration || 0;
             if (!isFinite(duration)) duration = 0;
-            const pct = Math.max(0, Math.min(1, offsetX / width));
+
+            const pct = offsetX / width;
             const time = pct * duration;
+
+            // Visual Update
             pTooltip.style.left = offsetX + 'px';
             pTooltip.innerText = formatTime(time);
             pTooltip.style.opacity = '1';
+
+            // If dragging, also update bar fill immediately for feedback
+            if (isDragging) {
+                pFill.style.width = (pct * 100) + '%';
+            }
+
             clearTimeout(pTooltipTimeout);
+            return time; // Return time for seek
         }
 
-        function hideProgressTooltip() {
-            pTooltip.style.opacity = '0';
+        function startScrub(clientX) {
+            isDragging = true;
+            updateScrub(clientX);
+        }
+
+        function endScrub(clientX) {
+            if (isDragging) {
+                const finalTime = updateScrub(clientX);
+                if (isFinite(finalTime)) audio.currentTime = finalTime;
+                isDragging = false;
+
+                // Hide tooltip after delay
+                pTooltipTimeout = setTimeout(() => {
+                    pTooltip.style.opacity = '0';
+                }, 1000);
+            }
         }
 
         // Listeners
-        pBar.addEventListener('mousemove', (e) => { updateProgressTooltip(e.clientX); });
-        pBar.addEventListener('mouseleave', () => { hideProgressTooltip(); });
-        pBar.addEventListener('touchstart', (e) => { if (e.touches.length > 0) updateProgressTooltip(e.touches[0].clientX); }, { passive: true });
-        pBar.addEventListener('touchmove', (e) => { if (e.touches.length > 0) updateProgressTooltip(e.touches[0].clientX); }, { passive: true });
-        pBar.addEventListener('touchend', () => { pTooltipTimeout = setTimeout(hideProgressTooltip, 1500); });
+        // Mouse
+        pBar.addEventListener('mousedown', (e) => { startScrub(e.clientX); });
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                e.preventDefault(); // Prevent selection
+                updateScrub(e.clientX);
+            } else {
+                // Hover preview (only if over bar)
+                if (e.target === pBar || pBar.contains(e.target)) {
+                    updateScrub(e.clientX);
+                }
+            }
+        });
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging) endScrub(e.clientX);
+        });
+
+        // Hover out behavior for PC (only if not dragging)
+        pBar.addEventListener('mouseleave', () => {
+            if (!isDragging) pTooltip.style.opacity = '0';
+        });
+
+        // Touch
+        pBar.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) startScrub(e.touches[0].clientX);
+        }, { passive: false }); // False to prevent scrolling while scrubbing
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging && e.touches.length > 0) {
+                e.preventDefault(); // Stop scroll
+                updateScrub(e.touches[0].clientX);
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            // touches is empty on end, use changedTouches
+            if (isDragging && e.changedTouches.length > 0) {
+                endScrub(e.changedTouches[0].clientX);
+            }
+        });
 
         window.onload = init;
     </script>
