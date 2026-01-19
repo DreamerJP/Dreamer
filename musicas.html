@@ -1000,7 +1000,13 @@
                 data._files.forEach((file, index) => {
                     const item = document.createElement('div');
                     item.className = 'track-item';
-                    const fileName = `Faixa ${index + 1}`; // Or parse filename if available in your index structure
+
+                    // Extract real name from URL
+                    let fileName = 'Faixa ' + (index + 1);
+                    try {
+                        const rawName = file.split('/').pop();
+                        fileName = decodeURIComponent(rawName).replace(/\.(mp3|m4a|wav|flac)$/i, '');
+                    } catch (e) { }
 
                     item.innerHTML = `
                         <div class="track-info">
