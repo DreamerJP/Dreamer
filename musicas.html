@@ -1375,6 +1375,25 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
+            // Media Session API Update
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: track.title,
+                    artist: track.artist,
+                    artwork: [
+                        { src: 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '96x96', type: 'image/x-icon' },
+                        { src: 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '128x128', type: 'image/x-icon' },
+                        // Could use album art if available in track object
+                    ]
+                });
+
+                // Ensure handlers are set
+                navigator.mediaSession.setActionHandler('play', togglePlay);
+                navigator.mediaSession.setActionHandler('pause', togglePlay);
+                navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
+                navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+            }
+
             console.log("🎵 Loading track:", track.url);
 
             // Instant Loading Feedback
