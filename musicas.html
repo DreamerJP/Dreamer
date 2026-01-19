@@ -894,7 +894,7 @@
             try {
                 // Fetch index
                 // Tenta carregar localmente primeiro (desenvolvimento)
-                const response = await fetch('../Repositório site-images/Musicas/music-index.json');
+                const response = await fetch('music-index.json');
                 if (!response.ok) {
                     // Fallback para GitHub (caso o caminho local falhe ou esteja publicado)
                     // throw new Error('Index not found');
@@ -1046,12 +1046,9 @@
         // --- Player Functions ---
 
         // Helper to get efficient image url
+        // Helper to get efficient image url
         function getDriveThumbnail(link) {
-            const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
-            if (match) {
-                return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
-            }
-            return link;
+            return link; // No transformation needed for direct links
         }
 
         // --- Player Functions ---
@@ -1074,16 +1071,12 @@
                 } catch (e) { }
             });
 
+
+
             currentTrackIndex = startIndex;
             loadTrack(currentTrackIndex);
 
             document.getElementById('audioPlayerBar').classList.remove('hidden');
-        }
-
-        currentTrackIndex = startIndex;
-        loadTrack(currentTrackIndex);
-
-        document.getElementById('audioPlayerBar').classList.remove('hidden');
         }
 
         function loadTrack(index) {
