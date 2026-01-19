@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogos</title>
     <style>
@@ -15,8 +17,8 @@
             --text-secondary: #b3b3b3;
             --bg-main: rgba(18, 18, 35, 0.98);
             --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0,0,0,0.4);
-            --shadow-color-strong: rgba(0,0,0,0.6);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-color-strong: rgba(0, 0, 0, 0.6);
             --transition-speed: 0.8s;
         }
 
@@ -92,16 +94,20 @@
                 opacity: 0;
                 transform: translate(0, 0) scale(0.5);
             }
+
             10% {
                 opacity: 0.3;
             }
+
             50% {
                 opacity: 1;
                 transform: translate(var(--dx), var(--dy)) scale(1);
             }
+
             90% {
                 opacity: 0.8;
             }
+
             100% {
                 opacity: 0;
                 transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.5);
@@ -109,8 +115,13 @@
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
+            0% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
         }
 
         /* Navegação */
@@ -126,6 +137,7 @@
             padding: 15px 0;
             box-shadow: 0 2px 20px var(--shadow-color-strong);
         }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -134,6 +146,7 @@
             align-items: center;
             padding: 0 20px;
         }
+
         .nav-home {
             font-size: 1.5em;
             font-weight: bold;
@@ -141,15 +154,18 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
+
         .nav-home:hover {
             color: var(--primary-color);
             transform: scale(1.05);
         }
+
         .nav-links {
             display: flex;
             gap: 25px;
             list-style: none;
         }
+
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
@@ -159,6 +175,7 @@
             transition: all 0.3s ease;
             position: relative;
         }
+
         .nav-links a:hover,
         .nav-links a.active {
             color: white;
@@ -166,6 +183,7 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px var(--shadow-color);
         }
+
         .menu-toggle {
             display: none;
             background: none;
@@ -225,7 +243,8 @@
         .filters {
             flex: 2;
             min-width: 320px;
-            border-radius: 18px !important; /* Bordas mais arredondadas */
+            border-radius: 18px !important;
+
             padding: 10px 10px 8px 10px !important;
             box-shadow: 0 2px 6px var(--shadow-color-strong);
             margin-bottom: 0;
@@ -254,7 +273,8 @@
             text-align: left;
         }
 
-        .filter-group select, .filter-group input {
+        .filter-group select,
+        .filter-group input {
             padding: 10px;
             border: 2px solid rgba(187, 134, 252, 0.3);
             border-radius: 8px;
@@ -264,7 +284,8 @@
             color: var(--text-primary);
         }
 
-        .filter-group select:focus, .filter-group input:focus {
+        .filter-group select:focus,
+        .filter-group input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
@@ -320,8 +341,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Grid de jogos */
@@ -347,12 +373,11 @@
             flex: 1;
             height: 2px;
             background: linear-gradient(90deg,
-                transparent 0%,
-                var(--primary-color) 20%,
-                var(--secondary-color) 50%,
-                var(--primary-color) 80%,
-                transparent 100%
-            );
+                    transparent 0%,
+                    var(--primary-color) 20%,
+                    var(--secondary-color) 50%,
+                    var(--primary-color) 80%,
+                    transparent 100%);
             border-radius: 1px;
             opacity: 0.7;
         }
@@ -372,10 +397,13 @@
         }
 
         @keyframes separator-pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 5px 15px var(--shadow-color);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 8px 25px var(--shadow-color-strong);
@@ -598,7 +626,7 @@
             box-shadow: 0 30px 60px var(--shadow-color-strong);
         }
 
-        /* Backdrop como fundo completo */
+
         .modal-backdrop {
             position: absolute;
             top: 0;
@@ -609,7 +637,7 @@
             z-index: 0;
         }
 
-        /* Overlay gradiente para melhor legibilidade */
+
         .modal-content::before {
             content: '';
             position: absolute;
@@ -617,19 +645,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(0,0,0,0.8) 0%,
-                rgba(0,0,0,0.3) 30%,
-                rgba(0,0,0,0.1) 50%,
-                rgba(0,0,0,0.4) 70%,
-                rgba(0,0,0,0.9) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(0, 0, 0, 0.3) 30%,
+                    rgba(0, 0, 0, 0.1) 50%,
+                    rgba(0, 0, 0, 0.4) 70%,
+                    rgba(0, 0, 0, 0.9) 100%);
             z-index: 1;
             border-radius: 24px;
         }
 
-        /* Header simplificado só com botão fechar */
+
         .modal-header {
             position: relative;
             z-index: 3;
@@ -643,7 +669,7 @@
             font-size: 32px;
             font-weight: bold;
             cursor: pointer;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -655,11 +681,11 @@
         }
 
         .close:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
         }
 
-        /* Container principal do conteúdo */
+
         .modal-body {
             position: relative;
             z-index: 2;
@@ -669,7 +695,7 @@
             overflow-y: auto;
         }
 
-        /* Layout principal com poster e informações lado a lado */
+
         .modal-info {
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -678,7 +704,7 @@
             min-height: 500px;
         }
 
-        /* Poster com destaque */
+
         .modal-poster {
             width: 100%;
             height: 480px;
@@ -692,7 +718,7 @@
             transform: translateY(-5px);
         }
 
-        /* Container das informações */
+
         .modal-details {
             background: rgba(18, 18, 35, 0.8);
             backdrop-filter: blur(20px);
@@ -710,7 +736,7 @@
             line-height: 1.2;
         }
 
-        /* Grid de informações */
+
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -731,7 +757,7 @@
             font-weight: 600;
         }
 
-        /* Seção da sinopse */
+
         .modal-plot-section {
             margin-top: 25px;
             padding-top: 25px;
@@ -752,7 +778,7 @@
             text-align: justify;
         }
 
-        /* Ações do modal */
+
         .modal-actions {
             margin-top: 25px;
             padding-top: 25px;
@@ -787,7 +813,7 @@
             background: linear-gradient(45deg, #f7931e, #ff6b35) !important;
         }
 
-        /* Estrelas de avaliação */
+
         .stars {
             color: #ffd700;
             font-size: 1.1rem;
@@ -869,43 +895,54 @@
                 box-shadow: 0 5px 20px var(--shadow-color-strong);
                 border-radius: 0 0 15px 15px;
             }
+
             .nav-links.active {
                 display: flex;
             }
+
             .menu-toggle {
                 display: block;
             }
+
             .main-container {
                 max-width: 100vw;
                 padding: 0;
             }
+
             .header h1 {
                 font-size: 2.2em;
             }
+
             .filter-row {
                 flex-direction: column;
                 gap: 15px;
             }
+
             .filter-group {
                 min-width: 100%;
             }
+
             .games-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
+
             .game-card {
                 margin: 0;
                 border-radius: 10px;
             }
+
             .page-separator {
                 margin: 15px 0;
                 padding: 10px 0;
                 gap: 8px;
             }
+
             .separator-text {
                 font-size: 0.8em;
                 padding: 6px 12px;
             }
+
             .modal-content {
                 width: 100%;
                 margin: 0;
@@ -918,42 +955,53 @@
             .header {
                 padding: 20px;
             }
+
             .header h1 {
                 font-size: 1.8em;
             }
+
             .main-container {
                 max-width: 100vw;
                 padding: 0;
             }
+
             .games-grid {
                 gap: 8px;
                 padding: 0 4px;
             }
+
             .game-card {
                 margin: 0;
                 border-radius: 8px;
             }
+
             .modal-content {
                 width: 100%;
                 margin: 0;
                 border-radius: 0;
                 max-height: 100vh;
             }
+
             .modal-title {
                 font-size: 1.8rem;
             }
+
             .modal-details {
                 padding: 15px;
             }
+
             .modal-body {
                 padding: 0 4px 4px;
             }
+
             .info-grid {
                 gap: 8px 10px;
             }
+
             .info-item {
                 font-size: 0.9rem;
             }
+
             .info-item strong {
                 min-width: 70px;
             }
@@ -964,43 +1012,50 @@
             background: url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Jogos/capa_jogos_zerados.jpg') center center/cover no-repeat;
             position: relative;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-            padding: 60px 60px 24px 60px; /* Aumentado o tamanho geral e reduzido o padding inferior */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            padding: 60px 60px 24px 60px;
             margin-bottom: 40px;
             margin-top: 80px;
-            min-height: 520px; /* Garante altura maior do modal principal */
+            min-height: 520px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
         }
-        .unified-header > * {
+
+        .unified-header>* {
             position: relative;
             z-index: 2;
         }
+
         .filters-stats-flex {
             display: flex;
             gap: 40px;
-            align-items: flex-end; /* Alinha as caixas na parte de baixo */
+            align-items: flex-end;
+
             justify-content: space-between;
             flex-wrap: wrap;
             margin-top: auto;
             margin-bottom: 0;
         }
+
         .stats-compact {
             flex: 1;
             min-width: 220px;
             background: rgba(18, 18, 35, 0.6);
             border-radius: 18px !important;
             padding: 8px 8px 4px 8px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong); /* Igual à .filters */
+            box-shadow: 0 2px 6px var(--shadow-color-strong);
+
             margin-bottom: 0;
             backdrop-filter: blur(10px);
         }
+
         .stats-compact .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
+
         .stat-card {
             background: rgba(187, 134, 252, 0.1);
             border-radius: 10px;
@@ -1008,21 +1063,25 @@
             padding: 10px 0 6px 0;
             text-align: center;
         }
+
         .stat-value {
             font-size: 1.3em;
             font-weight: bold;
             color: var(--text-primary);
         }
+
         .stat-label {
             font-size: 0.9em;
             color: var(--text-secondary);
         }
+
         @media (max-width: 900px) {
             .filters-stats-flex {
                 flex-direction: column;
                 gap: 20px;
                 align-items: stretch;
             }
+
             .filters,
             .stats-compact {
                 width: 100%;
@@ -1031,17 +1090,21 @@
                 margin-top: 0;
             }
         }
+
         @media (max-width: 600px) {
+
             .filters,
             .stats-compact {
                 padding: 6px 4px 4px 4px !important;
                 border-radius: 12px !important;
             }
+
             .filter-tag,
             .stat-value,
             .stat-label {
                 font-size: 0.95em;
             }
+
             .filters .filter-group label {
                 font-size: 0.85em;
             }
@@ -1107,7 +1170,8 @@
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
+
             background: #000;
             border-radius: 10px;
             overflow: hidden;
@@ -1143,6 +1207,7 @@
                 max-width: 100vw;
                 padding: 0;
             }
+
             .games-grid {
                 padding: 0;
             }
@@ -1177,6 +1242,7 @@
                 max-width: 100vw;
                 padding: 0;
             }
+
             .games-grid {
                 padding: 0;
             }
@@ -1210,15 +1276,17 @@
         .header-overlay-fix {
             position: absolute;
             inset: 0;
-            background: rgba(255,255,255,0.75);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: 20px;
             z-index: 1;
             pointer-events: none;
         }
+
         @media (max-width: 600px) {
             .header-overlay-fix {
                 border-radius: 0 !important;
             }
+
             .unified-header {
                 border-radius: 0 !important;
             }
@@ -1244,6 +1312,7 @@
                 min-width: 200px;
                 max-width: 100%;
             }
+
             #yearFilter {
                 min-width: 100px;
                 max-width: 120px;
@@ -1255,6 +1324,7 @@
                 min-width: 180px;
                 max-width: 100%;
             }
+
             #yearFilter {
                 min-width: 80px;
                 max-width: 100px;
@@ -1262,6 +1332,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Campo de Estrelas -->
     <div class="starfield" id="starfield"></div>
@@ -1293,16 +1364,18 @@
                         <div class="filter-group">
                             <label>Categoria:</label>
                             <div class="filter-tags">
-                                <button class="filter-tag" onclick="filterByCategory('favorites', this)">⭐ Favoritos</button>
-                                <button class="filter-tag active" onclick="filterByCategory('all', this)">🎮 Todos</button>
-                                <button class="filter-tag" onclick="filterByCategory('recent', this)">🆕 Recentes</button>
+                                <button class="filter-tag"
+                                    onclick="filterByCategory('favorites', this)">Favoritos</button>
+                                <button class="filter-tag active" onclick="filterByCategory('all', this)">Todos</button>
+                                <button class="filter-tag" onclick="filterByCategory('recent', this)">Recentes</button>
                             </div>
                         </div>
                     </div>
                     <div class="filter-row">
                         <div class="filter-group">
                             <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Digite o Título, Desenvolvedora, ou Gênero" oninput="searchGames()">
+                            <input type="text" id="searchInput" placeholder="Digite o Título, Desenvolvedora, ou Gênero"
+                                oninput="searchGames()">
                         </div>
                         <div class="filter-group">
                             <label>🎭 Gênero:</label>
@@ -1393,7 +1466,8 @@
             </div>
             <div class="trailer-modal-body">
                 <div class="video-container">
-                    <iframe id="trailerVideo" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <iframe id="trailerVideo" width="100%" height="100%" src="" frameborder="0"
+                        allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -1409,17 +1483,17 @@
             if (details && details.year && details.year !== 'N/A') {
                 return parseInt(details.year, 10);
             }
-            // Regex robusta para diferentes formatos de título
+
             const yearMatch = game.title.match(/\((\d{4})\)$/) ||
-                              game.title.match(/(\d{4})$/) ||
-                              game.title.match(/\[(\d{4})\]/);
+                game.title.match(/(\d{4})$/) ||
+                game.title.match(/\[(\d{4})\]/);
             if (yearMatch) {
                 const year = parseInt(yearMatch[1], 10);
                 if (year >= 1970 && year <= new Date().getFullYear() + 5) {
                     return year;
                 }
             }
-            return 0; // Se não encontrar, joga para o fim da lista
+            return 0;
         };
 
         // Função centralizada para ordenar e selecionar os jogos recentes
@@ -1452,7 +1526,7 @@
 
             starfield.innerHTML = '';
 
-            // Estrelas em movimento
+
             for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -1493,7 +1567,7 @@
                 starfield.appendChild(star);
             }
 
-            // Estrelas estacionárias
+
             for (let i = 0; i < 50; i++) {
                 const staticStar = document.createElement('div');
                 staticStar.className = 'star distant';
@@ -1515,10 +1589,10 @@
         let resortDebounceTimer;
 
         // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             createStarfield();
 
-            // Recriar estrelas no resize
+
             window.addEventListener('resize', createStarfield);
 
             loadGames();
@@ -1532,10 +1606,10 @@
 
                 allGames = data.games || [];
 
-                // Iniciar com todos os jogos
+
                 await filterByCategory('all');
 
-                // Carregar filtros
+
                 await waitForAllDetailsAndPopulateFilters();
                 updateStats();
 
@@ -1550,12 +1624,12 @@
             const favorites = allGames.slice(0, 24);
             displayedGames = favorites;
 
-            // Renderizar imediatamente com dados básicos
+
             renderGamesSmart(displayedGames);
 
-            // Carregar detalhes em paralelo
+
             await loadGameDetailsBackground(favorites);
-            // Após carregar favoritos, iniciar carregamento de todos os jogos em background
+
             if (allGames.length > 0) {
                 loadGameDetailsBackground(allGames);
             }
@@ -1572,14 +1646,14 @@
             }
 
             const totalPages = Math.ceil(games.length / gamesPerPage);
-            const currentPage = 1; // Sempre começa na página 1
+            const currentPage = 1;
 
-            // Calcular jogos da página atual
+
             const startIndex = (currentPage - 1) * gamesPerPage;
             const endIndex = startIndex + gamesPerPage;
             const currentGames = games.slice(startIndex, endIndex);
 
-            // Renderizar jogos da página atual
+
             let html = currentGames.map(game => {
                 const details = gamesWithDetails.get(game.slug);
                 if (details) {
@@ -1598,14 +1672,14 @@
                                 </div>
                                 <div class="game-genres">
                                     ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 1).map(g =>
-                                        `<span class="genre-tag">${g.trim()}</span>`
-                                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
+                        `<span class="genre-tag">${g.trim()}</span>`
+                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
                                 <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
                                     <span>${normalizeRating(details.rating)}/10</span>
                                 </div>
-                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0, 2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1633,7 +1707,7 @@
                 }
             }).join('');
 
-            // Adicionar paginação se houver mais de uma página
+
             if (totalPages > 1) {
                 html += createPaginationHTML(currentPage, totalPages, games.length);
             }
@@ -1654,12 +1728,12 @@
                     <div class="pagination-controls">
             `;
 
-            // Botão "Anterior"
+
             if (currentPage > 1) {
                 paginationHTML += `<button class="pagination-btn prev-btn" onclick="changePage(${currentPage - 1})">← Anterior</button>`;
             }
 
-            // Botões de página
+
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -1668,7 +1742,7 @@
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
 
-            // Primeira página
+
             if (startPage > 1) {
                 paginationHTML += `<button class="pagination-btn" onclick="changePage(1)">1</button>`;
                 if (startPage > 2) {
@@ -1676,13 +1750,13 @@
                 }
             }
 
-            // Páginas do meio
+
             for (let i = startPage; i <= endPage; i++) {
                 const isActive = i === currentPage;
                 paginationHTML += `<button class="pagination-btn${isActive ? ' active' : ''}" onclick="changePage(${i})">${i}</button>`;
             }
 
-            // Última página
+
             if (endPage < totalPages) {
                 if (endPage < totalPages - 1) {
                     paginationHTML += `<span class="pagination-dots">...</span>`;
@@ -1690,7 +1764,7 @@
                 paginationHTML += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
             }
 
-            // Botão "Próximo"
+
             if (currentPage < totalPages) {
                 paginationHTML += `<button class="pagination-btn next-btn" onclick="changePage(${currentPage + 1})">Próximo →</button>`;
             }
@@ -1709,7 +1783,7 @@
             const endIndex = startIndex + gamesPerPage;
             const currentGames = displayedGames.slice(startIndex, endIndex);
 
-            // Renderizar jogos da nova página
+
             const grid = document.getElementById('gamesGrid');
             let html = currentGames.map(game => {
                 const details = gamesWithDetails.get(game.slug);
@@ -1729,14 +1803,14 @@
                                 </div>
                                 <div class="game-genres">
                                     ${details.genre !== 'N/A' ? details.genre.split(',').slice(0, 1).map(g =>
-                                        `<span class="genre-tag">${g.trim()}</span>`
-                                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
+                        `<span class="genre-tag">${g.trim()}</span>`
+                    ).join('') : '<span class="genre-tag">Gênero não disponível</span>'}
                                 </div>
                                 <div class="game-rating">
                                     <div class="rating-stars">${stars}</div>
                                     <span>${normalizeRating(details.rating)}/10</span>
                                 </div>
-                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0,2).join(' ') + '...' : '...'}</p>
+                                <p class="game-plot">Sinopse (EN): ${details.summary ? details.summary.split(' ').slice(0, 2).join(' ') + '...' : '...'}</p>
                             </div>
                         </div>
                     `;
@@ -1764,40 +1838,40 @@
                 }
             }).join('');
 
-            // Adicionar paginação atualizada
+
             const totalPages = Math.ceil(displayedGames.length / gamesPerPage);
             html += createPaginationHTML(pageNumber, totalPages, displayedGames.length);
 
             grid.innerHTML = html;
 
-            // Scroll suave para o topo
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Carregar detalhes em background
         function loadGameDetailsBackground(games) {
-            const BATCH_SIZE = 8; // Máximo simultâneo
+            const BATCH_SIZE = 8;
 
             for (let i = 0; i < games.length; i += BATCH_SIZE) {
                 const batch = games.slice(i, i + BATCH_SIZE);
 
-                // Processar lote (dados já estão completos no JSON)
+
                 batch.forEach((game) => {
                     if (!gamesWithDetails.has(game.slug)) {
-                        // Os dados já estão completos no JSON, apenas armazenar
+
                         gamesWithDetails.set(game.slug, game);
 
-                        // Atualizar card individual
+
                         updateGameCard(game.slug, game);
 
-                        // Atualização dinâmica dos recentes
+
                         debouncedResortAndRender();
                     }
                 });
 
-                // Pequeno delay entre lotes para não travar a UI
+
                 if (i + BATCH_SIZE < games.length) {
-                    setTimeout(() => {}, 10);
+                    setTimeout(() => { }, 10);
                 }
             }
 
@@ -1807,13 +1881,13 @@
         // Buscar detalhes no IGDB
         async function fetchGameDetailsIGDB(title) {
             try {
-                // Extrair ano do título se existir
+
                 const yearMatch = title.match(/\((\d{4})\)/);
                 const cleanTitle = title.replace(/\(.*?\)/g, '').trim();
                 const year = yearMatch ? yearMatch[1] : null;
 
-                // Usar IGDB API (simulado por enquanto - você precisará configurar uma API key real)
-                // Por enquanto, retornar dados padrão com algumas informações básicas
+
+
                 return {
                     cover: null,
                     year: year || 'N/A',
@@ -1848,7 +1922,7 @@
         // Função helper para normalizar rating (IGDB usa 0-100, converter para 0-10)
         function normalizeRating(rating) {
             const numRating = parseFloat(rating) || 0;
-            return Math.round((numRating / 10) * 10) / 10; // Divide por 10 e arredonda para 1 casa decimal
+            return Math.round((numRating / 10) * 10) / 10;
         }
 
         // Gerar estrelas para avaliação
@@ -1869,26 +1943,26 @@
         async function filterByCategory(category, clickedButton = null) {
             currentCategory = category;
 
-            // Atualizar botões ativos
+
             document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
 
-            // Se foi passado um botão clicado, ou se há um event.target, usar ele
+
             if (clickedButton) {
                 clickedButton.classList.add('active');
             } else if (typeof event !== 'undefined' && event.target) {
                 event.target.classList.add('active');
             } else {
-                // Para inicialização, encontrar o botão correto pela categoria
+
                 const buttonSelector = category === 'favorites' ? '[onclick*="favorites"]' :
-                                     category === 'all' ? '[onclick*="all"]' :
-                                     category === 'recent' ? '[onclick*="recent"]' : '[onclick*="all"]';
+                    category === 'all' ? '[onclick*="all"]' :
+                        category === 'recent' ? '[onclick*="recent"]' : '[onclick*="all"]';
                 const targetButton = document.querySelector(buttonSelector);
                 if (targetButton) {
                     targetButton.classList.add('active');
                 }
             }
 
-            // Resetar outros filtros
+
             document.getElementById('searchInput').value = '';
             document.getElementById('genreFilter').value = '';
             document.getElementById('yearFilter').value = '';
@@ -1896,7 +1970,7 @@
 
             let gamesToShow = [];
 
-            switch(category) {
+            switch (category) {
                 case 'favorites':
                     gamesToShow = allGames.slice(0, 24);
                     break;
@@ -1912,10 +1986,10 @@
 
             displayedGames = gamesToShow;
 
-            // Renderizar básico primeiro
+
             renderGamesSmart(displayedGames);
 
-            // Carregar detalhes em background
+
             loadGameDetailsBackground(gamesToShow);
         }
 
@@ -1933,8 +2007,8 @@
             const filteredGames = baseList.filter(game => {
                 const details = gamesWithDetails.get(game.slug) || game;
                 return details.title.toLowerCase().includes(searchTerm) ||
-                        (details.developer && details.developer.toLowerCase().includes(searchTerm)) ||
-                        (details.genre && details.genre.toLowerCase().includes(searchTerm));
+                    (details.developer && details.developer.toLowerCase().includes(searchTerm)) ||
+                    (details.genre && details.genre.toLowerCase().includes(searchTerm));
             });
 
             renderGamesSmart(filteredGames);
@@ -1951,17 +2025,17 @@
             let baseList = allGames;
             let filteredGames = baseList.filter(game => {
                 const details = gamesWithDetails.get(game.slug) || game;
-                // Filtro de busca
+
                 const matchesSearch = searchTerm === '' ||
                     details.title.toLowerCase().includes(searchTerm) ||
                     (details.developer && details.developer.toLowerCase().includes(searchTerm)) ||
                     (details.genre && details.genre.toLowerCase().includes(searchTerm));
-                // Filtro de gênero
+
                 const matchesGenre = genreFilter === '' ||
                     (details.genre && details.genre.toLowerCase().includes(genreFilter.toLowerCase()));
-                // Filtro de ano
+
                 const matchesYear = yearFilter === '' || details.year === yearFilter;
-                // Filtro de nota
+
                 const gameRating = normalizeRating(details.rating);
                 const matchesRating = ratingFilter === '' || gameRating >= parseFloat(ratingFilter);
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
@@ -1976,20 +2050,20 @@
             const genres = new Set();
             const years = new Set();
 
-            // 1. Dados básicos
+
             allGames.forEach(game => {
-                // Ano do título (ex: "The Last of Us (2013)")
+
                 const yearMatch = game.title?.match(/\((\d{4})\)/);
                 if (yearMatch) years.add(yearMatch[1]);
                 if (game.year && game.year !== 'N/A') years.add(game.year);
 
-                // Gênero básico, se existir
+
                 if (game.genre && game.genre !== 'N/A') {
                     game.genre.split(',').forEach(g => genres.add(g.trim()));
                 }
             });
 
-            // 2. Detalhes carregados
+
             gamesWithDetails.forEach(details => {
                 if (details.genre && details.genre !== 'N/A') {
                     details.genre.split(',').forEach(g => genres.add(g.trim()));
@@ -1999,7 +2073,7 @@
                 }
             });
 
-            // Atualizar selects
+
             const genreSelect = document.getElementById('genreFilter');
             const currentGenre = genreSelect.value;
             genreSelect.innerHTML = '<option value="">Gêneros</option>';
@@ -2028,7 +2102,7 @@
             const totalGames = allGames.length;
             const currentGames = displayedGames.length;
 
-            // Calcular gêneros únicos
+
             const genres = new Set();
             gamesWithDetails.forEach(details => {
                 if (details.genre && details.genre !== 'N/A') {
@@ -2036,7 +2110,7 @@
                 }
             });
 
-            // Calcular nota média
+
             let totalRating = 0;
             let ratedGames = 0;
             gamesWithDetails.forEach(details => {
@@ -2048,7 +2122,7 @@
             });
             const avgRating = ratedGames > 0 ? (totalRating / ratedGames).toFixed(1) : 0;
 
-            // Atualizar DOM
+
             document.getElementById('totalGames').textContent = totalGames;
             document.getElementById('currentGames').textContent = currentGames;
             document.getElementById('genresCount').textContent = genres.size;
@@ -2072,11 +2146,11 @@
 
             modalPoster.src = details.cover || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
 
-            // Fundo do modal - usar imagem de fundo de alta resolução se disponível, senão gradiente
+
             if (details.background && details.background !== 'N/A') {
                 modalBackdrop.src = details.background;
                 modalBackdrop.style.background = 'none';
-                modalBackdrop.style.opacity = '0.8'; // Reduzir opacidade para melhor legibilidade
+                modalBackdrop.style.opacity = '0.8';
             } else {
                 modalBackdrop.src = '';
                 modalBackdrop.style.background = 'linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 50%, rgba(15, 52, 96, 0.9) 100%)';
@@ -2140,7 +2214,7 @@
 
             title.textContent = `🎬 ${gameTitle} - Trailer`;
 
-            // Converter URL do YouTube se necessário
+
             let embedUrl = trailerUrl;
             if (trailerUrl.includes('youtube.com/watch?v=')) {
                 const videoId = trailerUrl.split('v=')[1].split('&')[0];
@@ -2150,7 +2224,7 @@
                 embedUrl = `https://www.youtube.com/embed/${videoId}`;
             }
 
-            // Adicionar parâmetros para autoplay e outras configurações
+
             const separator = embedUrl.includes('?') ? '&' : '?';
             embedUrl += `${separator}autoplay=1&rel=0&modestbranding=1&showinfo=0`;
 
@@ -2158,7 +2232,7 @@
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
 
-            // Fechar modal do jogo se estiver aberto
+
             closeModal();
         }
 
@@ -2168,12 +2242,12 @@
             const video = document.getElementById('trailerVideo');
 
             modal.style.display = 'none';
-            video.src = ''; // Parar o vídeo
+            video.src = '';
             document.body.style.overflow = 'auto';
         }
 
         // Fechar modal clicando fora
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const gameModal = document.getElementById('gameModal');
             const trailerModal = document.getElementById('trailerModal');
 
@@ -2192,7 +2266,7 @@
         }
 
         // Fechar menu ao clicar fora
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const nav = document.querySelector('.navigation');
             const navLinks = document.getElementById('navLinks');
             if (!nav.contains(e.target)) {
@@ -2201,9 +2275,9 @@
         });
 
         // Atalhos do teclado
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
-                // Fechar modal de trailer se estiver aberto, senão fechar modal do jogo
+
                 const trailerModal = document.getElementById('trailerModal');
                 if (trailerModal.style.display === 'block') {
                     closeTrailerModal();
@@ -2220,7 +2294,7 @@
         // Lazy loading para quando carregar todos os jogos
         let isLoadingMore = false;
 
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (currentCategory === 'all' && !isLoadingMore) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
@@ -2241,21 +2315,21 @@
 
             if (nextBatch.length === 0) return;
 
-            // Mostrar indicador de carregamento
+
             const grid = document.getElementById('gamesGrid');
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'loading';
             loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Carregando mais jogos...</p>';
             grid.appendChild(loadingDiv);
 
-            // Adicionar à lista exibida
+
             displayedGames = displayedGames.concat(nextBatch);
 
-            // Remover indicador e renderizar básico
+
             loadingDiv.remove();
             renderGamesSmart(displayedGames);
 
-            // Carregar detalhes em background
+
             loadGameDetailsBackground(nextBatch);
 
             isLoadingMore = false;
@@ -2269,7 +2343,7 @@
             const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
 
-            // Atualizar poster
+
             const poster = card.querySelector('.game-poster');
             if (details.cover) {
                 poster.style.backgroundImage = `url(${details.cover})`;
@@ -2277,14 +2351,14 @@
                 poster.textContent = '';
             }
 
-            // Atualizar meta informações
+
             const meta = card.querySelector('.game-meta');
             meta.innerHTML = `
                 <span>📅 ${details.year}</span>
                 <span>🎮 ${details.developer}</span>
             `;
 
-            // Atualizar gêneros
+
             const genres = card.querySelector('.game-genres');
             genres.innerHTML = details.genre !== 'N/A' ?
                 details.genre.split(',').slice(0, 1).map(g =>
@@ -2292,18 +2366,18 @@
                 ).join('') :
                 '<span class="genre-tag">Gênero não disponível</span>';
 
-            // Atualizar avaliação
+
             const ratingDiv = card.querySelector('.game-rating');
             ratingDiv.innerHTML = `
                 <div class="rating-stars">${stars}</div>
                 <span>${normalizeRating(details.rating)}/10</span>
             `;
 
-            // Atualizar sinopse
+
             const plot = card.querySelector('.game-plot');
             plot.textContent = details.summary;
 
-            // Atualizar filtros dinamicamente
+
             populateFilters();
         }
 
@@ -2316,4 +2390,5 @@
         }
     </script>
 </body>
+
 </html>
