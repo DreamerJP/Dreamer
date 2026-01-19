@@ -424,11 +424,11 @@
             font-size: 0.9rem;
         }
 
-        /* Track List */
+        /* Track List - Compact & Modern */
         .track-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 2px;
             padding-bottom: 100px;
         }
 
@@ -436,43 +436,50 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px 20px;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 8px 16px;
+            border-radius: 6px;
             transition: all 0.2s ease;
             border: 1px solid transparent;
+            cursor: pointer;
         }
 
         .track-item:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
+            transform: scale(1.005);
+            /* Subtle scale instead of move */
+            padding-left: 20px;
+            /* Indent on hover */
         }
 
         .track-item.active {
-            background: rgba(187, 134, 252, 0.2);
-            border-color: var(--primary-color);
+            background: linear-gradient(90deg, rgba(187, 134, 252, 0.2), transparent);
+            border-left: 3px solid var(--primary-color);
         }
 
         .track-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex: 1;
         }
 
         .track-icon {
-            font-size: 1.2em;
+            font-size: 1em;
             color: var(--primary-color);
+            opacity: 0.8;
         }
 
         .track-name {
             font-weight: 500;
+            font-size: 0.95rem;
             color: var(--text-primary);
         }
 
         .track-duration {
             color: var(--text-secondary);
-            font-size: 0.9em;
+            font-size: 0.8rem;
+            margin-right: 15px;
         }
 
         .play-btn-small {
@@ -900,7 +907,7 @@
         </div>
 
         <div class="volume-container">
-            <button class="control-btn" style="font-size: 1.2em;" onclick="toggleMute()">🔊</button>
+            <button class="control-btn" style="font-size: 1.2em;" onclick="toggleMute()" id="muteBtn">🔊</button>
             <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1"
                 oninput="setVolume(this.value)">
         </div>
@@ -1302,6 +1309,8 @@
 
         function toggleMute() {
             audio.muted = !audio.muted;
+            const btn = document.getElementById('muteBtn');
+            btn.innerHTML = audio.muted ? '🔇' : '🔊';
         }
 
         window.onload = init;
