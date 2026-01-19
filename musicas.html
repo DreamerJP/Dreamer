@@ -1735,29 +1735,7 @@
             }
         });
 
-        // Tooltip Logic
-        const pBar = document.getElementById('progressBar');
-        const pTooltip = document.getElementById('playTooltip');
-
-        pBar.addEventListener('mousemove', (e) => {
-            const rect = pBar.getBoundingClientRect();
-            const offsetX = e.clientX - rect.left;
-            const width = rect.width;
-
-            // Calculate time
-            let duration = audio.duration || 0;
-            // If nothing loaded yet, default to 0 or maybe a placeholder if desired.
-            if (!isFinite(duration)) duration = 0;
-
-            const pct = Math.max(0, Math.min(1, offsetX / width));
-            const time = pct * duration;
-
-            // Update Position & Text
-            pTooltip.style.left = offsetX + 'px';
-            pTooltip.innerText = formatTime(time);
-        });
-
-        // New Tooltip Logic (Mobile + Desktop)
+        // Tooltip Logic (Mobile + Desktop)
         let pTooltipTimeout;
 
         function updateProgressTooltip(clientX) {
