@@ -899,7 +899,7 @@
                     // Fallback para GitHub (caso o caminho local falhe ou esteja publicado)
                     // throw new Error('Index not found');
                     console.warn('Local index not found, trying GitHub...');
-                    const resGh = await fetch('https://cdn.jsdelivr.net/gh/paulozappen/musicas@main/music-index.json');
+                    const resGh = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
                     if (!resGh.ok) throw new Error('Index not found on GitHub either');
                     musicData = await resGh.json();
                 } else {
