@@ -194,8 +194,11 @@
         }
 
         @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
             .nav-links {
-                display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -203,28 +206,61 @@
                 background: var(--bg-nav);
                 flex-direction: column;
                 padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
                 box-shadow: 0 5px 20px var(--shadow-color-strong);
                 border-radius: 0 0 15px 15px;
             }
 
             .nav-links.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
 
             .container {
-                margin-top: 100px;
+                margin-top: 80px;
+                padding: 0 10px;
             }
 
-            .header h1 {
-                font-size: 2.2em;
+            .unified-header {
+                min-height: auto !important;
+                padding: 30px 15px 15px 15px !important;
+                margin-bottom: 20px;
             }
 
-            .header p {
-                font-size: 1.1em;
+            .unified-header h1 {
+                font-size: 1.8em !important;
+                min-height: auto;
+                margin-bottom: 5px;
+            }
+
+            .unified-header p {
+                font-size: 0.9em !important;
+                margin-bottom: 15px;
+            }
+
+            .filters-stats-flex {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .filters {
+                min-height: auto !important;
+                padding: 12px !important;
+            }
+
+            .stats-compact {
+                min-height: auto !important;
+                padding: 10px !important;
+            }
+
+            .stats-compact h3 {
+                font-size: 0.9em !important;
+                margin-bottom: 8px !important;
             }
 
             .animes-grid {
