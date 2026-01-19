@@ -1056,27 +1056,34 @@
 
         // --- Player Functions ---
 
-        function convertDriveLink(link) {
-            // Converts 'view' or 'open' links to direct content delivery links
-            const match = link.match(/\/d\/([a-zA-Z0-9-_]+)/) || link.match(/id=([a-zA-Z0-9-_]+)/);
-            if (match) {
-                // drive.usercontent.google.com is superior for direct media delivery/streaming
-                return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download`;
-            }
-            return link;
-        }
-
         function playQueue(files, startIndex, folderPath, trackName) {
             currentQueue = files.map((f, i) => ({
-                url: convertDriveLink(f),
-                title: `Faixa ${i + 1}`,
-                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Desconhecido'
+                url: f, // Use URL directly (GitHub/jsDelivr)
+                title: trackName && i === startIndex ? trackName : `Faixa ${i + 1}`,
+                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Artist'
             }));
+
+            // Try to extract better title from filename if possible
+            currentQueue.forEach(t => {
+                try {
+                    const fname = decodeURIComponent(t.url.split('/').pop());
+                    // Remove extension
+                    const cleanName = fname.replace(/\.(mp3|m4a|wav|flac)$/i, '');
+                    // Update title
+                    t.title = cleanName;
+                } catch (e) { }
+            });
 
             currentTrackIndex = startIndex;
             loadTrack(currentTrackIndex);
 
             document.getElementById('audioPlayerBar').classList.remove('hidden');
+        }
+
+        currentTrackIndex = startIndex;
+        loadTrack(currentTrackIndex);
+
+        document.getElementById('audioPlayerBar').classList.remove('hidden');
         }
 
         function loadTrack(index) {
