@@ -1736,6 +1736,8 @@
         });
 
         // Tooltip Logic (Mobile + Desktop)
+        const pBar = document.getElementById('progressBar');
+        const pTooltip = document.getElementById('playTooltip');
         let pTooltipTimeout;
 
         function updateProgressTooltip(clientX) {
