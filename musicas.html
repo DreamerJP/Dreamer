@@ -498,7 +498,8 @@
         }
 
         .play-btn-small:hover {
-            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.2);
+            color: var(--primary-color);
         }
 
         /* Fixed Audio Player */
@@ -874,6 +875,55 @@
                 order: -2;
             }
         }
+
+        /* Equalizer Animation in Track List */
+        .playing-wave {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+            height: 18px;
+            width: 18px;
+            margin: 0 auto;
+        }
+
+        .wave-bar {
+            width: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            animation: wave-animation 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) {
+            animation-duration: 0.6s;
+        }
+
+        .wave-bar:nth-child(2) {
+            animation-duration: 1.1s;
+        }
+
+        .wave-bar:nth-child(3) {
+            animation-duration: 0.8s;
+        }
+
+        /* Pause animation when paused */
+        .track-item.active.paused .wave-bar {
+            animation-play-state: paused;
+            height: 4px;
+            /* Resting state */
+        }
+
+        @keyframes wave-animation {
+
+            0%,
+            100% {
+                height: 3px;
+            }
+
+            50% {
+                height: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -1157,7 +1207,7 @@
 
                     // If cover exists, show image. Else show folder icon.
                     const iconHtml = coverUrl
-                        ? `<img src="${coverUrl}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
+                        ? `<img src="${coverUrl}" loading="lazy" alt="${folder}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
                         : `<div class="folder-icon">📁</div>`;
 
                     item.innerHTML = `
@@ -1244,6 +1294,19 @@
         // --- Player Functions ---
 
         function playQueue(files, startIndex, folderPath, trackName) {
+            // Smart Toggle: If clicking the currently active track, just toggle Play/Pause
+            if (currentQueue.length > 0 && currentTrackIndex > -1) {
+                const clickedUrl = files[startIndex];
+                const currentTrack = currentQueue[currentTrackIndex];
+
+                // Check match. Note: decodeURIComponent might be needed depending on how files are passed, 
+                // but usually they match the source exactly.
+                if (currentTrack && currentTrack.url === clickedUrl) {
+                    togglePlay();
+                    return;
+                }
+            }
+
             currentQueue = files.map((f, i) => ({
                 url: f, // Use URL directly (GitHub/jsDelivr)
                 title: trackName && i === startIndex ? trackName : `Faixa ${i + 1}`,
@@ -1334,14 +1397,39 @@
             document.querySelectorAll('.track-item').forEach(item => {
                 const itemUrl = item.getAttribute('data-url');
                 const btn = item.querySelector('.play-btn-small');
+                const iconContainer = item.querySelector('.track-icon');
 
                 if (currentTrack && itemUrl === currentTrack.url) {
                     item.classList.add('active');
+
+                    // Animation state based on play/pause
+                    if (isPlaying) {
+                        item.classList.remove('paused');
+                    } else {
+                        item.classList.add('paused');
+                    }
+
                     btn.innerHTML = isPlaying ? '⏸' : '▶';
+
+                    // Inject Visualizer if not present
+                    if (!iconContainer.querySelector('.playing-wave')) {
+                        iconContainer.innerHTML = `
+                            <div class="playing-wave">
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                            </div>
+                        `;
+                    }
+
                     activeItem = item;
                 } else {
-                    item.classList.remove('active');
+                    item.classList.remove('active', 'paused');
                     btn.innerHTML = '▶';
+                    // Restore default icon if needed
+                    if (iconContainer.innerHTML.indexOf('playing-wave') !== -1) {
+                        iconContainer.innerHTML = '🎵';
+                    }
                 }
             });
 
