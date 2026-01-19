@@ -645,6 +645,17 @@
         }
 
         /* Loading */
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spin {
+            display: inline-block;
+            animation: spin 2s infinite linear;
+        }
+
         .loading {
             text-align: center;
             padding: 40px;
@@ -892,8 +903,8 @@
         async function init() {
             createStarfield();
             try {
-                // Load music index
-                const response = await fetch('music-index.json');
+                // Load music index (Remote GitHub)
+                const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
                 if (!response.ok) throw new Error('Index not found');
                 musicData = await response.json();
 
@@ -1152,7 +1163,22 @@
             document.getElementById('shuffleBtn').style.color = isShuffle ? 'var(--primary-color)' : 'var(--text-primary)';
         }
 
-        // Progress Bar
+        // Progress Bar & State Management
+        audio.onloadstart = () => {
+            document.getElementById('playPauseBtn').innerHTML = '<span class="spin">⏳</span>'; // Or just ⏳
+        };
+        audio.onwaiting = () => {
+            document.getElementById('playPauseBtn').innerHTML = '<span class="spin">⏳</span>';
+        };
+        audio.onplaying = () => {
+            isPlaying = true;
+            updatePlayButton();
+        };
+        audio.onpause = () => {
+            isPlaying = false;
+            updatePlayButton();
+        };
+
         audio.ontimeupdate = () => {
             if (isFinite(audio.duration)) {
                 const pct = (audio.currentTime / audio.duration) * 100;
