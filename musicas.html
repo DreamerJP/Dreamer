@@ -691,9 +691,7 @@
             border-color: var(--primary-color) transparent transparent transparent;
         }
 
-        .progress-bar-wrapper:hover .play-tooltip {
-            opacity: 1;
-        }
+        /* Removed hover CSS to handle via JS for mobile support */
 
         .volume-container {
             display: flex;
@@ -1758,6 +1756,34 @@
             pTooltip.style.left = offsetX + 'px';
             pTooltip.innerText = formatTime(time);
         });
+
+        // New Tooltip Logic (Mobile + Desktop)
+        let pTooltipTimeout;
+
+        function updateProgressTooltip(clientX) {
+            const rect = pBar.getBoundingClientRect();
+            const offsetX = clientX - rect.left;
+            const width = rect.width;
+            let duration = audio.duration || 0;
+            if (!isFinite(duration)) duration = 0;
+            const pct = Math.max(0, Math.min(1, offsetX / width));
+            const time = pct * duration;
+            pTooltip.style.left = offsetX + 'px';
+            pTooltip.innerText = formatTime(time);
+            pTooltip.style.opacity = '1';
+            clearTimeout(pTooltipTimeout);
+        }
+
+        function hideProgressTooltip() {
+            pTooltip.style.opacity = '0';
+        }
+
+        // Listeners
+        pBar.addEventListener('mousemove', (e) => { updateProgressTooltip(e.clientX); });
+        pBar.addEventListener('mouseleave', () => { hideProgressTooltip(); });
+        pBar.addEventListener('touchstart', (e) => { if (e.touches.length > 0) updateProgressTooltip(e.touches[0].clientX); }, { passive: true });
+        pBar.addEventListener('touchmove', (e) => { if (e.touches.length > 0) updateProgressTooltip(e.touches[0].clientX); }, { passive: true });
+        pBar.addEventListener('touchend', () => { pTooltipTimeout = setTimeout(hideProgressTooltip, 1500); });
 
         window.onload = init;
     </script>
