@@ -1164,6 +1164,10 @@
 
             console.log("🎵 Loading track:", track.url);
 
+            // Instant Loading Feedback
+            isLoading = true;
+            updatePlayButton();
+
             // Reset player (Standard HTML5)
             audio.pause();
             audio.removeAttribute('src');
@@ -1202,11 +1206,16 @@
             updatePlayButton();
         }
 
+        // State Logic
+        let isLoading = false;
+
         function updatePlayButton() {
             const btn = document.getElementById('playPauseBtn');
-            if (audio.seeking || audio.readyState < 2 && !audio.paused && audio.currentTime > 0) {
+
+            if (isLoading) {
                 // Loading/Buffering
-                btn.innerHTML = '<span class="spin" style="font-size: 24px;">⌛</span>';
+                btn.innerHTML = '<span class="spin" style="font-size: 24px;">⏳</span>';
+                btn.style.paddingLeft = '0';
             } else if (isPlaying) {
                 // Pause Icon (SVG) - Perfect Center
                 btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
@@ -1249,10 +1258,11 @@
         }
 
         // Progress Bar & State Management - Maintain loading state logic
-        audio.onloadstart = () => updatePlayButton();
-        audio.onwaiting = () => updatePlayButton();
-        audio.onplaying = () => { isPlaying = true; updatePlayButton(); };
-        audio.onpause = () => { isPlaying = false; updatePlayButton(); };
+        audio.onloadstart = () => { isLoading = true; updatePlayButton(); };
+        audio.onwaiting = () => { isLoading = true; updatePlayButton(); };
+        audio.onplaying = () => { isLoading = false; isPlaying = true; updatePlayButton(); };
+        audio.oncanplay = () => { isLoading = false; updatePlayButton(); };
+        audio.onpause = () => { isLoading = false; isPlaying = false; updatePlayButton(); };
 
         audio.ontimeupdate = () => {
             if (isFinite(audio.duration)) {
