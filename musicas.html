@@ -549,6 +549,14 @@
             justify-content: center;
         }
 
+        /* SVG Icon Utilities */
+        .control-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            display: block;
+        }
+
         .control-btn {
             background: none;
             border: none;
@@ -581,6 +589,10 @@
             color: white;
             font-size: 1.8em;
             box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
 
         .play-pause-btn:hover {
@@ -862,10 +874,27 @@
         </div>
 
         <div class="player-controls">
-            <button class="control-btn" onclick="prevTrack()" title="Anterior">⏮</button>
-            <button class="control-btn play-pause-btn" onclick="togglePlay()" id="playPauseBtn">▶</button>
-            <button class="control-btn" onclick="nextTrack()" title="Próxima">⏭</button>
-            <button class="control-btn" onclick="toggleShuffle()" id="shuffleBtn" title="Aleatório">🔀</button>
+            <button class="control-btn" onclick="toggleShuffle()" id="shuffleBtn" title="Aleatório">
+                <svg class="control-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" />
+                </svg>
+            </button>
+            <button class="control-btn" onclick="prevTrack()" title="Anterior">
+                <svg class="control-icon" viewBox="0 0 24 24">
+                    <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+                </svg>
+            </button>
+            <button class="control-btn play-pause-btn" onclick="togglePlay()" id="playPauseBtn" title="Play/Pause">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 28px; height: 28px; margin-left: 4px;">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </button>
+            <button class="control-btn" onclick="nextTrack()" title="Próxima">
+                <svg class="control-icon" viewBox="0 0 24 24">
+                    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+                </svg>
+            </button>
         </div>
 
         <div class="player-progress-container">
@@ -1175,7 +1204,18 @@
 
         function updatePlayButton() {
             const btn = document.getElementById('playPauseBtn');
-            btn.innerHTML = isPlaying ? '⏸' : '▶';
+            if (audio.seeking || audio.readyState < 2 && !audio.paused && audio.currentTime > 0) {
+                // Loading/Buffering
+                btn.innerHTML = '<span class="spin" style="font-size: 24px;">⌛</span>';
+            } else if (isPlaying) {
+                // Pause Icon (SVG) - Perfect Center
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                btn.style.paddingLeft = '0'; // Reset optical adjustment
+            } else {
+                // Play Icon (SVG) - Perfect Center
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" style="width: 28px; height: 28px; margin-left: 4px;"><path d="M8 5v14l11-7z"/></svg>';
+                btn.style.paddingLeft = '0';
+            }
         }
 
         function nextTrack() {
@@ -1208,21 +1248,11 @@
             btn.classList.toggle('active', isShuffle);
         }
 
-        // Progress Bar & State Management
-        audio.onloadstart = () => {
-            document.getElementById('playPauseBtn').innerHTML = '<span class="spin">⏳</span>'; // Or just ⏳
-        };
-        audio.onwaiting = () => {
-            document.getElementById('playPauseBtn').innerHTML = '<span class="spin">⏳</span>';
-        };
-        audio.onplaying = () => {
-            isPlaying = true;
-            updatePlayButton();
-        };
-        audio.onpause = () => {
-            isPlaying = false;
-            updatePlayButton();
-        };
+        // Progress Bar & State Management - Maintain loading state logic
+        audio.onloadstart = () => updatePlayButton();
+        audio.onwaiting = () => updatePlayButton();
+        audio.onplaying = () => { isPlaying = true; updatePlayButton(); };
+        audio.onpause = () => { isPlaying = false; updatePlayButton(); };
 
         audio.ontimeupdate = () => {
             if (isFinite(audio.duration)) {
