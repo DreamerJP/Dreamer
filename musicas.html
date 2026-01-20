@@ -1524,7 +1524,12 @@
                     item.classList.remove('active', 'paused');
                     btn.innerHTML = '▶';
                     if (iconContainer.innerHTML.indexOf('playing-wave') !== -1) {
-                        iconContainer.innerHTML = '🎵';
+                        // Fix: If it has a cover, clear content (show cover bg). If not, show icon.
+                        if (iconContainer.classList.contains('has-cover')) {
+                            iconContainer.innerHTML = '';
+                        } else {
+                            iconContainer.innerHTML = '🎵';
+                        }
                     }
                 }
             });
