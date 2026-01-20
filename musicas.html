@@ -1574,14 +1574,33 @@
 
             let playUrl = track.url;
 
-            // FIX: jsDelivr has 20MB limit. Bypass for FLAC by using Raw GitHub.
-            if (playUrl.includes('.flac') && playUrl.includes('cdn.jsdelivr.net')) {
+            // FIX: jsDelivr has 20MB limit. Bypass for FLAC and known large files (like lengthy mixes).
+            if ((playUrl.includes('.flac') || playUrl.includes('G%26D') || playUrl.includes('G&D')) && playUrl.includes('cdn.jsdelivr.net')) {
                 // Convert: https://cdn.jsdelivr.net/gh/User/Repo@Branch/Path
                 // To:      https://raw.githubusercontent.com/User/Repo/Branch/Path
                 playUrl = playUrl.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com')
                     .replace('@', '/');
-                console.log("🔄 Bypassing jsDelivr for FLAC:", playUrl);
+                console.log("🔄 Bypassing jsDelivr for Large File:", playUrl);
             }
+
+            // Fallback: If CDN fails (e.g. 403 Forbidden due to size), retry with Raw GitHub
+            audio.onerror = (e) => {
+                if (audio.src.includes('cdn.jsdelivr.net')) {
+                    console.warn("⚠️ Media load failed (likely >20MB), switching to Raw GitHub...");
+                    const rawUrl = audio.src.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com').replace('@', '/');
+
+                    audio.onerror = null; // Prevent infinite loops
+                    audio.src = rawUrl;
+                    audio.load();
+
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        updatePlayButton();
+                        updateActiveTrackUI();
+                        console.log("✅ Playback Recovered with Raw URL!");
+                    }).catch(err => console.error("❌ Retry failed:", err));
+                }
+            };
 
             audio.src = playUrl;
             audio.preload = "auto";
