@@ -1243,15 +1243,14 @@
             // Resolve data from path
             let data = musicData;
             const parts = path.split('/').filter(p => p);
+            let currentArtistName = "Músicas";
 
-            // Helper to find key efficiently case-insensitive if needed, or direct
             for (let part of parts) {
-                // Assuming keys in JSON match path structure
-                // We need to map friendly names back to keys if we transformed them, 
-                // but here we can just traverse.
-                // Simple traversal:
                 const key = Object.keys(data).find(k => k.toLowerCase().replace(/\s/g, '-') === part);
-                if (key) data = data[key];
+                if (key) {
+                    data = data[key];
+                    currentArtistName = key;
+                }
             }
 
             updateBreadcrumb(parts);
@@ -1319,12 +1318,12 @@
                     ${iconHtml}
                     <div>
                         <div class="track-name">${fileName}</div>
-                        <div class="track-duration">${path.split('/').pop().replace(/-/g, ' ')}</div>
+                        <div class="track-duration">${currentArtistName}</div>
                     </div>
                 </div>
                 <button class="play-btn-small">▶</button>
             `;
-                    item.onclick = () => playQueue(data._files, index, path, fileName, currentCover);
+                    item.onclick = () => playQueue(data._files, index, currentArtistName, fileName, currentCover);
                     list.appendChild(item);
                 });
 
@@ -1369,7 +1368,7 @@
 
         // --- Player Functions ---
 
-        function playQueue(files, startIndex, folderPath, trackName, coverUrl) {
+        function playQueue(files, startIndex, artistName, trackName, coverUrl) {
             // Smart Toggle: If clicking the currently active track, just toggle Play/Pause
             if (currentQueue.length > 0 && currentTrackIndex > -1) {
                 const clickedUrl = files[startIndex];
@@ -1384,7 +1383,7 @@
             currentQueue = files.map((f, i) => ({
                 url: f,
                 title: trackName && i === startIndex ? trackName : `Faixa ${i + 1}`,
-                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Artist',
+                artist: artistName || 'Artist',
                 artwork: coverUrl // Save cover URL
             }));
 
