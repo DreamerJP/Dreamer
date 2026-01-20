@@ -1197,9 +1197,7 @@
                 musicData = await response.json();
 
                 let totalAlbums = 0;
-
-                totalAlbums = Object.keys(musicData).length;
-                totalTracks = countTracks(musicData);
+                let totalTracks = 0;
 
                 totalAlbums = Object.keys(musicData).length;
                 totalTracks = countTracks(musicData);
