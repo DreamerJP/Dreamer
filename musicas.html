@@ -1007,13 +1007,119 @@
                 <div class="filters">
 
                     <div class="filter-row" style="margin-bottom: 5px;">
-                        <div class="filter-group" style="width: 100%;">
-                            <label>📂 Navegação:</label>
-                            <div class="breadcrumb" id="breadcrumb"
-                                style="display: flex; flex-wrap: wrap; gap: 5px; background: rgba(0,0,0,0.2); padding: 8px 15px; border-radius: 10px; align-items: center;">
-                                <span onclick="navigateToFolder('/')" style="cursor: pointer;">🏠 Início</span>
+                        <!-- Modern Navigation Toolbar -->
+                        <div class="nav-toolbar"
+                            style="background: rgba(255, 255, 255, 0.03); padding: 8px 15px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; border: 1px solid rgba(255,255,255,0.05); min-height: 50px;">
+
+                            <!-- Breadcrumb Section -->
+                            <div
+                                style="flex: 1; display: flex; align-items: center; gap: 8px; min-width: 150px; overflow-x: auto;">
+                                <div class="breadcrumb" id="breadcrumb"
+                                    style="display: flex; align-items: center; gap: 6px; white-space: nowrap;">
+                                    <span onclick="navigateToFolder('/')" class="crumb-item">🏠 Início</span>
+                                </div>
+                            </div>
+
+                            <!-- Actions Section -->
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <button onclick="playAll()" class="action-btn-nav">
+                                    🔀 <span class="btn-text">Tocar Tudo</span>
+                                </button>
+
+                                <div class="search-container">
+                                    <span class="search-icon">🔍</span>
+                                    <input type="text" id="searchInput" placeholder="Buscar música..."
+                                        oninput="handleSearch(this.value)">
+                                </div>
                             </div>
                         </div>
+                        <style>
+                            /* Toolbar Styles */
+                            .crumb-item {
+                                cursor: pointer;
+                                opacity: 0.8;
+                                transition: all 0.2s;
+                                padding: 4px 8px;
+                                border-radius: 6px;
+                            }
+
+                            .crumb-item:hover {
+                                background: rgba(255, 255, 255, 0.1);
+                                opacity: 1;
+                            }
+
+                            .crumb-separator {
+                                opacity: 0.4;
+                                font-size: 0.8em;
+                            }
+
+                            .action-btn-nav {
+                                background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+                                border: none;
+                                color: white;
+                                padding: 8px 16px;
+                                border-radius: 20px;
+                                cursor: pointer;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                transition: all 0.3s ease;
+                                white-space: nowrap;
+                            }
+
+                            .action-btn-nav:hover {
+                                transform: translateY(-2px);
+                                box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
+                            }
+
+                            .search-container {
+                                position: relative;
+                                display: flex;
+                                align-items: center;
+                            }
+
+                            .search-container input {
+                                background: rgba(0, 0, 0, 0.3);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                padding: 8px 12px 8px 32px;
+                                border-radius: 20px;
+                                color: white;
+                                width: 140px;
+                                transition: all 0.3s ease;
+                                font-size: 0.9rem;
+                            }
+
+                            .search-container input:focus {
+                                width: 200px;
+                                border-color: var(--secondary-color);
+                                outline: none;
+                                background: rgba(0, 0, 0, 0.5);
+                            }
+
+                            .search-icon {
+                                position: absolute;
+                                left: 10px;
+                                font-size: 0.9rem;
+                                opacity: 0.6;
+                                pointer-events: none;
+                            }
+
+                            @media(max-width: 480px) {
+                                .btn-text {
+                                    display: none;
+                                }
+
+                                .search-container input {
+                                    width: 100px;
+                                }
+
+                                .search-container input:focus {
+                                    width: 140px;
+                                }
+                            }
+                        </style>
                     </div>
                 </div>
 
@@ -1336,15 +1442,33 @@
         }
 
         function updateBreadcrumb(parts) {
-            const bc = document.getElementById('breadcrumb');
-            let html = '<span onclick="navigateToFolder(\'/\')" style="cursor: pointer;">🏠 Início</span>';
+            const breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = ''; // Clear existing breadcrumb
 
-            let buildPath = '';
-            parts.forEach(p => {
-                buildPath += '/' + p;
-                html += ` › <span onclick="navigateToFolder('${buildPath}')" style="cursor: pointer; text-transform: capitalize;">${p.replace(/-/g, ' ')}</span>`;
+            const homeCrumb = document.createElement('span');
+            homeCrumb.className = 'crumb-item';
+            homeCrumb.innerHTML = '🏠 Início';
+            homeCrumb.onclick = () => navigateToFolder('/');
+            breadcrumb.appendChild(homeCrumb);
+
+            let fullPath = '';
+            parts.forEach((part) => {
+                fullPath += '/' + part;
+                const name = part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+                // Separator
+                const sep = document.createElement('span');
+                sep.className = 'crumb-separator';
+                sep.innerText = '›';
+                breadcrumb.appendChild(sep);
+
+                // Item
+                const span = document.createElement('span');
+                span.className = 'crumb-item';
+                span.innerText = name;
+                span.onclick = () => navigateToFolder(fullPath);
+                breadcrumb.appendChild(span);
             });
-            bc.innerHTML = html;
         }
 
         function countTracks(obj) {
@@ -1731,7 +1855,124 @@
             btn.innerHTML = audio.muted ? '🔇' : '🔊';
         }
 
+        // --- Play All & Search Features ---
+
+        function getAllTracksRecursive(dataObj, parentArtist, parentCover) {
+            let results = [];
+            const currentCover = dataObj._cover || parentCover;
+
+            if (dataObj._files && Array.isArray(dataObj._files)) {
+                dataObj._files.forEach(url => {
+                    let title = 'Desconhecida';
+                    try {
+                        const fname = decodeURIComponent(url.split('/').pop());
+                        title = fname.replace(/\.(mp3|m4a|wav|flac)$/i, '');
+                    } catch (e) { }
+
+                    results.push({
+                        url: url,
+                        title: title,
+                        artist: parentArtist || 'Vários Artistas',
+                        artwork: currentCover
+                    });
+                });
+            }
+
+            Object.keys(dataObj).forEach(key => {
+                if (key !== '_files' && key !== '_cover' && typeof dataObj[key] === 'object') {
+                    // Refine artist context: if parentArtist is null, the Key is likely the Artist.
+                    const nextArtist = parentArtist ? parentArtist : key;
+                    results = results.concat(getAllTracksRecursive(dataObj[key], nextArtist, currentCover));
+                }
+            });
+
+            return results;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function playAll() {
+            const allTracks = getAllTracksRecursive(musicData, null, null);
+            if (allTracks.length === 0) return;
+
+            shuffleArray(allTracks);
+
+            // Set global queue directly
+            currentQueue = allTracks;
+            currentTrackIndex = 0;
+
+            loadTrack(0);
+            document.getElementById('audioPlayerBar').classList.remove('hidden');
+        }
+
+        function handleSearch(query) {
+            const contentDiv = document.getElementById('galleryContent');
+
+            if (!query || query.trim() === '') {
+                // Restore current view
+                loadContent(currentPath, false);
+                return;
+            }
+
+            query = query.toLowerCase();
+            const allTracks = getAllTracksRecursive(musicData, null, null);
+
+            const matches = allTracks.filter(t =>
+                t.title.toLowerCase().includes(query) ||
+                t.artist.toLowerCase().includes(query)
+            );
+
+            contentDiv.innerHTML = '';
+
+            if (matches.length === 0) {
+                contentDiv.innerHTML = '<div style="text-align:center; padding: 40px; opacity: 0.6;">Nenhuma música encontrada</div>';
+                return;
+            }
+
+            const list = document.createElement('div');
+            list.className = 'track-list';
+
+            matches.forEach((track, index) => {
+                const item = document.createElement('div');
+                item.className = 'track-item';
+
+                let iconHtml = '<span class="track-icon">🎵</span>';
+                if (track.artwork) {
+                    iconHtml = `<div class="track-icon has-cover" style="background-image: url('${track.artwork}');"></div>`;
+                }
+
+                item.innerHTML = `
+                    <div class="track-info">
+                        ${iconHtml}
+                        <div>
+                            <div class="track-name">${track.title}</div>
+                            <div class="track-duration">${track.artist}</div>
+                        </div>
+                    </div>
+                    <button class="play-btn-small">▶</button>
+                `;
+
+                // For search results, clicking plays THAT song, and sets the SEARCH RESULT LIST as the queue
+                item.onclick = () => {
+                    currentQueue = matches;
+                    currentTrackIndex = index;
+                    loadTrack(index);
+                    document.getElementById('audioPlayerBar').classList.remove('hidden');
+                };
+                list.appendChild(item);
+            });
+
+            contentDiv.appendChild(list);
+        }
+
         // Initialize
+        init();
 
         // Keyboard Controls
         document.addEventListener('keydown', (e) => {
