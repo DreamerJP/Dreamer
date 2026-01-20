@@ -43,7 +43,7 @@
 
         }
 
-        /* Starfield Animation */
+        /* --- Estilização do Fundo (Estrelas) --- */
         .starfield {
             position: fixed;
             top: 0;
@@ -132,7 +132,7 @@
             }
         }
 
-        /* Navigation */
+        /* --- Barra de Navegação --- */
         .navigation {
             position: fixed;
             top: 0;
@@ -212,7 +212,7 @@
             color: var(--text-primary);
         }
 
-        /* Main Content */
+        /* --- Estrutura Principal --- */
         .main-content {
             margin-top: 100px;
             max-width: 1400px;
@@ -223,7 +223,7 @@
             min-height: calc(100vh - 140px);
         }
 
-        /* Unified Header */
+        /* --- Header Unificado (Banner) --- */
         .unified-header {
             background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
                 url('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/musicas_background.jpg') center center/cover no-repeat;
@@ -386,7 +386,7 @@
             color: var(--text-secondary);
         }
 
-        /* Music Grid & Items */
+        /* --- Grid de Pastas e Itens --- */
         .folder-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -1333,7 +1333,7 @@
             starfield.appendChild(fragment);
         }
 
-        // Logic
+        /* --- Configurações e Estado Global do Site --- */
         let musicData = {};
         let currentPath = '/';
         let currentQueue = [];
@@ -1346,7 +1346,10 @@
         let playbackHistory = []; // Stack to keep track of played songs for the "Back" button
         let pathMap = { '/': { name: 'Início', type: 'root' } };
 
-        // Visualizer State
+        /* 
+           --- Estado do Visualizador de Áudio ---
+           Configurações para a Web Audio API processar frequências em tempo real.
+        */
         let audioCtx, analyser, dataArray, source;
         const visBars = document.getElementsByClassName('vis-bar');
 
@@ -1357,7 +1360,12 @@
             source = audioCtx.createMediaElementSource(audio);
             source.connect(analyser);
             analyser.connect(audioCtx.destination);
-            analyser.fftSize = 32;
+
+            analyser.fftSize = 128;
+            analyser.smoothingTimeConstant = 0.7;
+            analyser.minDecibels = -85;
+            analyser.maxDecibels = -10;
+
             const bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
             animateVisualizer();
@@ -1370,9 +1378,32 @@
                 return;
             }
             analyser.getByteFrequencyData(dataArray);
+
+            const ranges = [
+                { start: 0, end: 1 },    // Bass (0 - ~600Hz)
+                { start: 2, end: 5 },    // Low-Mid (~600Hz - ~2kHz)
+                { start: 6, end: 15 },   // High-Mid (~2kHz - ~5kHz)
+                { start: 16, end: 40 }   // Highs (>5kHz)
+            ];
+
             for (let i = 0; i < visBars.length; i++) {
-                const val = dataArray[i * 2] || 0;
-                const height = Math.max(2, (val / 255) * 25);
+                let sum = 0;
+                let count = 0;
+                for (let j = ranges[i].start; j <= ranges[i].end; j++) {
+                    sum += dataArray[j] || 0;
+                    count++;
+                }
+                let avg = sum / count;
+
+                // Apply a small boost to higher frequencies which naturally have lower energy in FFT
+                if (i === 2) avg *= 1.2;
+                if (i === 3) avg *= 1.5;
+
+                // Non-linear scaling to make low volumes more visible
+                const normalized = avg / 255;
+                const sensitivity = 1.3; // Higher = more "jumpy" for small sounds
+                const height = Math.max(3, Math.min(25, Math.pow(normalized, 0.8) * 25 * sensitivity));
+
                 visBars[i].style.height = height + 'px';
             }
         }
@@ -1415,6 +1446,10 @@
             }
         };
 
+        /* 
+           Carrega pastas e músicas baseado no caminho (path).
+           Atualiza a interface, o histórico de navegação e o breadcrumb.
+        */
         function loadContent(path, pushToHistory = true) {
             currentPath = path;
 
@@ -1648,7 +1683,7 @@
                 vis.style.display = 'flex';
             }
 
-            // Media Session API Update
+            // Integração com controles de mídia do sistema/dispositivo (Media Session API)
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: track.title,
@@ -1721,9 +1756,9 @@
             audio.load();
 
 
+            // Lógica de Bypass: jsDelivr tem limite de 20MB. 
+            // Se o arquivo for grande (.flac ou mixagens longas), redirecionamos para o Raw do GitHub.
             let playUrl = track.url;
-
-            // FIX: jsDelivr has 20MB limit. Bypass for FLAC and known large files (like lengthy mixes).
             if ((playUrl.includes('.flac') || playUrl.includes('G%26D') || playUrl.includes('G&D')) && playUrl.includes('cdn.jsdelivr.net')) {
                 // Convert: https://cdn.jsdelivr.net/gh/User/Repo@Branch/Path
                 // To:      https://raw.githubusercontent.com/User/Repo/Branch/Path
@@ -1850,6 +1885,7 @@
 
         let isLoading = false;
 
+        /* Atualiza o ícone de Play/Pause principal e gerencia o estado de carregamento (Spinner) */
         function updatePlayButton() {
             const btn = document.getElementById('playPauseBtn');
 
@@ -1965,6 +2001,10 @@
         }
 
         // Preload the next track intelligently
+        /* 
+           Sistema de Preload: Carrega a próxima música silenciosamente 15s antes da atual acabar.
+           Garante uma transição "instantânea" e sem silêncio entre faixas.
+        */
         function preloadNextTrack() {
             // Don't preload if already preloaded/preloading
             if (preloadedTrackIndex !== -1) return;
@@ -2114,6 +2154,10 @@
 
         // --- Play All & Search Features ---
 
+        /* 
+           Função recursiva para encontrar todas as músicas dentro de uma árvore de pastas.
+           Útil para o "Tocar Tudo" e para o sistema de Busca Global.
+        */
         function getAllTracksRecursive(dataObj, parentArtist, parentCover) {
             let results = [];
             const currentCover = dataObj._cover || parentCover;
@@ -2170,6 +2214,7 @@
             document.getElementById('audioPlayerBar').classList.remove('hidden');
         }
 
+        /* Pesquisa músicas por título ou artista em toda a biblioteca e renderiza os resultados */
         function handleSearch(query) {
             const contentDiv = document.getElementById('galleryContent');
 
