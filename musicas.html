@@ -1403,6 +1403,9 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
+            const pArt = document.getElementById('playerArt');
+            const vis = document.getElementById('visualizer');
+
             if (track.artwork) {
                 pArt.src = track.artwork;
                 pArt.style.display = 'block';
