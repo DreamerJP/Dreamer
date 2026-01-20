@@ -565,15 +565,52 @@
             transition: height 0.05s ease;
         }
 
+        .now-playing-info {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .now-playing-title-container {
+            width: 100%;
+            max-width: 250px;
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+
         .now-playing-title {
             color: var(--text-primary);
             font-weight: bold;
             font-size: 1rem;
             margin-bottom: 2px;
-            max-width: 200px;
+            display: inline-block;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        /* Marquee Effect */
+        .now-playing-title.scrollable {
+            animation: marquee 12s linear infinite;
+            padding-left: 0;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .now-playing-title-container {
+                max-width: 100%;
+            }
         }
 
         .now-playing-artist {
@@ -910,12 +947,13 @@
 
             }
 
-            .now-playing-title {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 100%;
-                font-size: 0.95rem;
+            .now-playing-title-container {
+                width: 100%;
+                text-align: left;
+            }
+
+            .now-playing-info {
+                text-align: left;
             }
 
             .player-progress-container {
@@ -1137,15 +1175,26 @@
 
                             @media(max-width: 480px) {
                                 .btn-text {
-                                    display: none;
+                                    display: inline;
+                                }
+
+                                .action-btn-nav {
+                                    padding: 10px 18px;
+                                    font-size: 1rem;
+                                    flex: 1;
+                                    justify-content: center;
+                                }
+
+                                .search-container {
+                                    flex: 2;
                                 }
 
                                 .search-container input {
-                                    width: 100px;
+                                    width: 100%;
                                 }
 
                                 .search-container input:focus {
-                                    width: 140px;
+                                    width: 100%;
                                 }
                             }
                         </style>
@@ -1185,8 +1234,10 @@
                 <div class="vis-bar"></div>
                 <div class="vis-bar"></div>
             </div>
-            <div>
-                <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
+            <div class="now-playing-info">
+                <div class="now-playing-title-container">
+                    <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
+                </div>
                 <div class="now-playing-artist">
                     <span id="playerArtist">--</span>
                     <span id="playerCounter" style="opacity: 0.6; font-size: 0.85em; margin-left: 6px;"></span>
@@ -1560,7 +1611,27 @@
             if (index < 0 || index >= currentQueue.length) return;
 
             const track = currentQueue[index];
-            document.getElementById('playerTitle').innerText = track.title;
+            const titleEl = document.getElementById('playerTitle');
+            titleEl.innerText = track.title;
+
+            // Check if title needs scroll
+            setTimeout(() => {
+                const container = titleEl.parentElement;
+                // Important: force width calculation check
+                if (titleEl.scrollWidth > container.offsetWidth) {
+                    titleEl.classList.add('scrollable');
+                    // Quadruple the text to ensure it covers the screen during long scrolls
+                    titleEl.innerHTML = `<span>${track.title} &nbsp;&nbsp;&nbsp;&nbsp; ${track.title} &nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+                    // Adjust animation duration based on name length
+                    const duration = Math.max(8, track.title.length / 4);
+                    titleEl.style.animationDuration = `${duration}s`;
+                } else {
+                    titleEl.classList.remove('scrollable');
+                    titleEl.innerHTML = track.title;
+                    titleEl.style.animationDuration = '';
+                }
+            }, 100);
+
             document.getElementById('playerArtist').innerText = track.artist;
             document.getElementById('playerCounter').innerText = `• ${index + 1}/${currentQueue.length}`;
 
