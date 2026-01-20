@@ -1261,7 +1261,7 @@
 
 
                     const iconHtml = coverUrl
-                        ? `<img src="${coverUrl}" loading="lazy" alt="${folder}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
+                        ? `<img src="${coverUrl}" loading="lazy" alt="${folder}" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
                         : `<div class="folder-icon">📁</div>`;
 
                     item.innerHTML = `
