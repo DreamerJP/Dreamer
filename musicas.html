@@ -1052,7 +1052,10 @@
             </div>
             <div>
                 <div class="now-playing-title" id="playerTitle">Selecione uma música</div>
-                <div class="now-playing-artist" id="playerArtist">--</div>
+                <div class="now-playing-artist">
+                    <span id="playerArtist">--</span>
+                    <span id="playerCounter" style="opacity: 0.6; font-size: 0.85em; margin-left: 6px;"></span>
+                </div>
             </div>
         </div>
 
@@ -1400,6 +1403,7 @@
             const track = currentQueue[index];
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
+            document.getElementById('playerCounter').innerText = `• ${index + 1}/${currentQueue.length}`;
 
             const pArt = document.getElementById('playerArt');
             const vis = document.getElementById('visualizer');
