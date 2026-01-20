@@ -581,6 +581,27 @@
             display: block;
         }
 
+        /* Track Icon with Cover Support */
+        .track-icon {
+            font-size: 1em;
+            color: var(--primary-color);
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-icon.has-cover {
+            opacity: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Darken cover when playing to show waves clearly */
+        .track-item.active .track-icon.has-cover {
+            box-shadow: inset 0 0 0 50px rgba(0, 0, 0, 0.6);
+        }
+
         .control-btn {
             background: none;
             border: none;
@@ -1025,6 +1046,8 @@
     <!-- Fixed Audio Player -->
     <div class="audio-player-fixed hidden" id="audioPlayerBar">
         <div class="player-info">
+            <img id="playerArt" src="" alt="Album Art"
+                style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; display: none; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
             <div class="visualizer-container" id="visualizer">
                 <div class="vis-bar"></div>
                 <div class="vis-bar"></div>
@@ -1265,6 +1288,7 @@
             if (data._files && data._files.length > 0) {
                 const list = document.createElement('div');
                 list.className = 'track-list';
+                const currentCover = data._cover; // Capture cover for this folder
 
                 data._files.forEach((file, index) => {
                     const item = document.createElement('div');
@@ -1278,9 +1302,21 @@
                     } catch (e) { }
 
                     item.setAttribute('data-url', file);
+
+                    // Icon logic: Use cover if available, otherwise default note icon
+                    let iconHtml = '<span class="track-icon">🎵</span>';
+                    if (currentCover) {
+                        iconHtml = `<div class="track-icon has-cover" style="
+                            background-image: url('${currentCover}');
+                            min-width: 45px; width: 45px; height: 45px; 
+                            background-size: cover; background-position: center; 
+                            border-radius: 8px; flex-shrink: 0;
+                        "></div>`;
+                    }
+
                     item.innerHTML = `
                 <div class="track-info">
-                    <span class="track-icon">🎵</span>
+                    ${iconHtml}
                     <div>
                         <div class="track-name">${fileName}</div>
                         <div class="track-duration">${path.split('/').pop().replace(/-/g, ' ')}</div>
@@ -1288,7 +1324,7 @@
                 </div>
                 <button class="play-btn-small">▶</button>
             `;
-                    item.onclick = () => playQueue(data._files, index, path, fileName);
+                    item.onclick = () => playQueue(data._files, index, path, fileName, currentCover);
                     list.appendChild(item);
                 });
 
@@ -1333,14 +1369,12 @@
 
         // --- Player Functions ---
 
-        function playQueue(files, startIndex, folderPath, trackName) {
+        function playQueue(files, startIndex, folderPath, trackName, coverUrl) {
             // Smart Toggle: If clicking the currently active track, just toggle Play/Pause
             if (currentQueue.length > 0 && currentTrackIndex > -1) {
                 const clickedUrl = files[startIndex];
                 const currentTrack = currentQueue[currentTrackIndex];
 
-                // Check match. Note: decodeURIComponent might be needed depending on how files are passed, 
-                // but usually they match the source exactly.
                 if (currentTrack && currentTrack.url === clickedUrl) {
                     togglePlay();
                     return;
@@ -1348,23 +1382,20 @@
             }
 
             currentQueue = files.map((f, i) => ({
-                url: f, // Use URL directly (GitHub/jsDelivr)
+                url: f,
                 title: trackName && i === startIndex ? trackName : `Faixa ${i + 1}`,
-                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Artist'
+                artist: folderPath.split('/').pop().replace(/-/g, ' ') || 'Artist',
+                artwork: coverUrl // Save cover URL
             }));
 
             // Try to extract better title from filename if possible
             currentQueue.forEach(t => {
                 try {
                     const fname = decodeURIComponent(t.url.split('/').pop());
-                    // Remove extension
                     const cleanName = fname.replace(/\.(mp3|m4a|wav|flac)$/i, '');
-                    // Update title
                     t.title = cleanName;
                 } catch (e) { }
             });
-
-
 
             currentTrackIndex = startIndex;
             loadTrack(currentTrackIndex);
@@ -1379,15 +1410,33 @@
             document.getElementById('playerTitle').innerText = track.title;
             document.getElementById('playerArtist').innerText = track.artist;
 
+            // Player Art (Fixed Bar)
+            const pArt = document.getElementById('playerArt');
+            const vis = document.getElementById('visualizer');
+            if (track.artwork) {
+                pArt.src = track.artwork;
+                pArt.style.display = 'block';
+                vis.style.display = 'none'; // Hide visualizer to save space/clean look, or keep both? 
+                // Let's keep visualizer HIDDEN if artwork exists for cleaner look on mobile, or style differently.
+                // Actually, user might like visualizer. Let's try to keep both if space permits, 
+                // but for now simple swap or side-by-side. 
+                // Based on "using the image", replacing the abstract visualizer/icon space with the image creates a stronger connection.
+                // However, visualizer is functional. Let's put visualizer NEXT to it if on desktop, or hide on mobile.
+                // The CSS for player-info allows flex items.
+                if (window.innerWidth > 768) vis.style.display = 'flex'; // Keep visualizer on desktop
+            } else {
+                pArt.style.display = 'none';
+                vis.style.display = 'flex';
+            }
+
             // Media Session API Update
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: track.title,
                     artist: track.artist,
                     artwork: [
-                        { src: 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '96x96', type: 'image/x-icon' },
-                        { src: 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '128x128', type: 'image/x-icon' },
-                        // Could use album art if available in track object
+                        { src: track.artwork || 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '96x96', type: 'image/x-icon' },
+                        { src: track.artwork || 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico', sizes: '512x512', type: 'image/png' },
                     ]
                 });
 
