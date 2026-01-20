@@ -554,14 +554,15 @@
             align-items: flex-end;
             gap: 2px;
             height: 25px;
-            width: 40px;
+            width: 60px;
         }
 
         .vis-bar {
             flex: 1;
-            background: var(--primary-color);
+            background: linear-gradient(to top, var(--primary-color), var(--secondary-color));
             min-height: 2px;
-            border-radius: 1px;
+            border-radius: 2px 2px 0 0;
+            box-shadow: 0 0 5px rgba(187, 134, 252, 0.2);
             transition: height 0.05s ease;
         }
 
@@ -1233,6 +1234,12 @@
                 <div class="vis-bar"></div>
                 <div class="vis-bar"></div>
                 <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
+                <div class="vis-bar"></div>
             </div>
             <div class="now-playing-info">
                 <div class="now-playing-title-container">
@@ -1380,29 +1387,33 @@
             analyser.getByteFrequencyData(dataArray);
 
             const ranges = [
-                { start: 0, end: 1 },    // Bass (0 - ~600Hz)
-                { start: 2, end: 5 },    // Low-Mid (~600Hz - ~2kHz)
-                { start: 6, end: 15 },   // High-Mid (~2kHz - ~5kHz)
-                { start: 16, end: 40 }   // Highs (>5kHz)
+                { start: 1, end: 1, mult: 0.8 },  // Grave 1
+                { start: 2, end: 2, mult: 0.9 },  // Grave 2
+                { start: 3, end: 4, mult: 1.0 },  // Médio-Grave
+                { start: 5, end: 7, mult: 1.1 },  // Médio
+                { start: 8, end: 12, mult: 1.3 }, // Médio-Agudo
+                { start: 13, end: 18, mult: 1.5 },// Agudo 1
+                { start: 19, end: 25, mult: 1.7 },// Agudo 2
+                { start: 26, end: 35, mult: 2.0 },// Ultra-agudo
+                { start: 36, end: 48, mult: 2.3 },// Brilho
+                { start: 49, end: 63, mult: 2.8 } // Ar
             ];
 
             for (let i = 0; i < visBars.length; i++) {
+                const range = ranges[i];
+                if (!range) continue;
+
                 let sum = 0;
                 let count = 0;
-                for (let j = ranges[i].start; j <= ranges[i].end; j++) {
+                for (let j = range.start; j <= range.end; j++) {
                     sum += dataArray[j] || 0;
                     count++;
                 }
-                let avg = sum / count;
+                let avg = (sum / count) * range.mult;
 
-                // Apply a small boost to higher frequencies which naturally have lower energy in FFT
-                if (i === 2) avg *= 1.2;
-                if (i === 3) avg *= 1.5;
-
-                // Non-linear scaling to make low volumes more visible
-                const normalized = avg / 255;
-                const sensitivity = 1.3; // Higher = more "jumpy" for small sounds
-                const height = Math.max(3, Math.min(25, Math.pow(normalized, 0.8) * 25 * sensitivity));
+                // Normalização com limite para evitar topo travado e curva de resposta natural
+                const normalized = Math.min(1, avg / 220);
+                const height = Math.max(3, Math.min(25, Math.pow(normalized, 0.8) * 25));
 
                 visBars[i].style.height = height + 'px';
             }
