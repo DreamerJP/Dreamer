@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dreamer - Portfolio Digital</title>
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico">
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Home/favicon.ico">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        
+
         :root {
             --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             --primary-color: #bb86fc;
@@ -17,8 +19,8 @@
             --text-secondary: #b3b3b3;
             --bg-main: rgba(18, 18, 35, 0.98);
             --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0,0,0,0.4);
-            --shadow-color-strong: rgba(0,0,0,0.6);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-color-strong: rgba(0, 0, 0, 0.6);
             --transition-speed: 0.3s;
             --border-radius: 15px;
         }
@@ -37,7 +39,7 @@
             width: 100vw;
             height: 100vh;
             z-index: -3;
-            background: url('https://raw.githubusercontent.com/DreamerJP/Dreamer/main/background.jpg') center center/cover no-repeat;
+            background: url('https://raw.githubusercontent.com/DreamerJP/site-images/main/Home/background.jpg') center center/cover no-repeat;
         }
 
         body {
@@ -49,13 +51,30 @@
         }
 
         /* Fallback para todos os elementos interativos */
-        *, *:before, *:after, a, button, input, textarea, select {
+        *,
+        *:before,
+        *:after,
+        a,
+        button,
+        input,
+        textarea,
+        select {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'), auto !important;
         }
 
         /* Em dispositivos móveis, usar cursor padrão */
-        @media (max-width: 768px), (hover: none) {
-            body, *, *:before, *:after, a, button, input, textarea, select {
+        @media (max-width: 768px),
+        (hover: none) {
+
+            body,
+            *,
+            *:before,
+            *:after,
+            a,
+            button,
+            input,
+            textarea,
+            select {
                 cursor: auto !important;
             }
         }
@@ -69,7 +88,8 @@
             height: 100vh;
             pointer-events: none;
             z-index: -2;
-            opacity: 0.8; /* Mais visível */
+            opacity: 0.8;
+            /* Mais visível */
             overflow: hidden;
         }
 
@@ -87,49 +107,66 @@
             animation-duration: 25s;
             box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
         }
+
         .star.medium {
             width: 1.5px;
             height: 1.5px;
             animation-duration: 15s;
             box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
         }
+
         .star.close {
             width: 2px;
             height: 2px;
             animation-duration: 8s;
             box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
         }
+
         .star.blue {
             background: #e6f3ff;
             box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
         }
+
         .star.yellow {
             background: #fff8e1;
             box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
         }
+
         @keyframes star-travel {
             0% {
                 opacity: 0;
                 transform: translate(0, 0) scale(0.5);
             }
+
             10% {
                 opacity: 0.4;
             }
+
             50% {
                 opacity: 1;
                 transform: translate(var(--dx), var(--dy)) scale(1);
             }
+
             90% {
                 opacity: 0.6;
             }
+
             100% {
                 opacity: 0;
                 transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
             }
         }
+
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         /* Hero Section */
@@ -166,8 +203,15 @@
         }
 
         @keyframes textGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .cta-buttons {
@@ -260,8 +304,12 @@
         .quote-section::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 10, 20, 0.55); /* fundo escuro translúcido mais suave */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.55);
+            /* fundo escuro translúcido mais suave */
             z-index: 0;
             pointer-events: none;
         }
@@ -397,18 +445,19 @@
             background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: #fff;
             text-decoration: none;
-            box-shadow: 0 6px 24px rgba(78,205,196,0.18), 0 1.5px 4px rgba(255,107,107,0.10);
+            box-shadow: 0 6px 24px rgba(78, 205, 196, 0.18), 0 1.5px 4px rgba(255, 107, 107, 0.10);
             letter-spacing: 0.03em;
             transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
             position: relative;
             overflow: hidden;
         }
 
-        .portfolio-link:hover, .portfolio-link:focus {
+        .portfolio-link:hover,
+        .portfolio-link:focus {
             background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
             color: #fff;
             transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 12px 32px rgba(255,107,107,0.18), 0 2px 8px rgba(78,205,196,0.10);
+            box-shadow: 0 12px 32px rgba(255, 107, 107, 0.18), 0 2px 8px rgba(78, 205, 196, 0.10);
             text-decoration: none;
         }
 
@@ -442,6 +491,7 @@
             transform: translateY(-50%);
             z-index: 100;
         }
+
         @media (max-width: 768px) {
             .scroll-indicator {
                 display: none !important;
@@ -478,7 +528,7 @@
             width: 28px;
             height: 28px;
             background: linear-gradient(135deg, #4ecdc4 60%, #ff6b6b 100%);
-            box-shadow: 0 0 30px 8px rgba(78, 205, 196, 0.3), 0 0 0 4px rgba(78,205,196,0.15);
+            box-shadow: 0 0 30px 8px rgba(78, 205, 196, 0.3), 0 0 0 4px rgba(78, 205, 196, 0.15);
             filter: brightness(1.2) saturate(1.3);
             z-index: 101;
         }
@@ -554,22 +604,27 @@
                 transform: translate(0);
                 opacity: 1;
             }
+
             20% {
                 transform: translate(-2px, 2px);
                 opacity: 1;
             }
+
             40% {
                 transform: translate(-2px, -2px);
                 opacity: 1;
             }
+
             60% {
                 transform: translate(2px, 2px);
                 opacity: 1;
             }
+
             80% {
                 transform: translate(2px, -2px);
                 opacity: 1;
             }
+
             100% {
                 transform: translate(0);
                 opacity: 1;
@@ -581,22 +636,27 @@
                 transform: translate(0);
                 opacity: 0.8;
             }
+
             20% {
                 transform: translate(2px, 2px);
                 opacity: 0.8;
             }
+
             40% {
                 transform: translate(2px, -2px);
                 opacity: 0.8;
             }
+
             60% {
                 transform: translate(-2px, 2px);
                 opacity: 0.8;
             }
+
             80% {
                 transform: translate(-2px, -2px);
                 opacity: 0.8;
             }
+
             100% {
                 transform: translate(0);
                 opacity: 0.8;
@@ -604,13 +664,16 @@
         }
 
         /* Epic mode filter - aplicado apenas ao conteúdo, não ao cursor */
-        body.epic-mode > *:not(.custom-cursor) {
+        body.epic-mode>*:not(.custom-cursor) {
             filter: hue-rotate(300deg) saturate(2) contrast(1.5);
             transition: filter 1s ease-in-out;
         }
 
         /* Remover áreas e dicas antigas */
-        .touch-area, .touch-hint { display: none !important; }
+        .touch-area,
+        .touch-hint {
+            display: none !important;
+        }
 
         /* Video background para quote section */
         .quote-section {
@@ -663,9 +726,12 @@
         }
 
         @keyframes pulse-audio {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
             }
+
             50% {
                 box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
             }
@@ -716,18 +782,48 @@
         }
 
         @keyframes twinkle-intense {
-            0% { opacity: 0.2; }
-            30% { opacity: 0.7; }
-            60% { opacity: 1; }
-            100% { opacity: 0.3; }
+            0% {
+                opacity: 0.2;
+            }
+
+            30% {
+                opacity: 0.7;
+            }
+
+            60% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
         }
 
         /* Variações para diferentes intensidades */
-        .twinkle-star.weak { opacity: 0.3; animation-duration: 3.5s; }
-        .twinkle-star.medium { opacity: 0.6; animation-duration: 2.2s; }
-        .twinkle-star.strong { opacity: 1; animation-duration: 1.3s; }
-        .twinkle-star.yellow { background: #fff8e1; box-shadow: 0 0 8px 2px #fff8e1, 0 0 16px 4px #fff8e155; }
-        .twinkle-star.blue { background: #e6f3ff; box-shadow: 0 0 8px 2px #e6f3ff, 0 0 16px 4px #e6f3ff55; }
+        .twinkle-star.weak {
+            opacity: 0.3;
+            animation-duration: 3.5s;
+        }
+
+        .twinkle-star.medium {
+            opacity: 0.6;
+            animation-duration: 2.2s;
+        }
+
+        .twinkle-star.strong {
+            opacity: 1;
+            animation-duration: 1.3s;
+        }
+
+        .twinkle-star.yellow {
+            background: #fff8e1;
+            box-shadow: 0 0 8px 2px #fff8e1, 0 0 16px 4px #fff8e155;
+        }
+
+        .twinkle-star.blue {
+            background: #e6f3ff;
+            box-shadow: 0 0 8px 2px #e6f3ff, 0 0 16px 4px #e6f3ff55;
+        }
 
         /* Matrix Canvas */
         .matrix-canvas {
@@ -742,13 +838,16 @@
             transition: opacity 0.8s ease;
             will-change: opacity;
         }
+
         .matrix-mode .matrix-canvas {
             opacity: 1;
         }
+
         .matrix-mode {
             background: #000;
             color: #00ff41;
         }
+
         .matrix-mode .hero-title {
             background: linear-gradient(45deg, #00ff41, #008f11);
             background-clip: text;
@@ -758,6 +857,7 @@
             transform: translateZ(0);
             will-change: text-shadow, filter;
         }
+
         .matrix-mode .portfolio-item,
         .matrix-mode .content-section,
         .matrix-mode .quote-section,
@@ -766,19 +866,35 @@
             border: 1px solid #00ff41 !important;
             box-shadow: 0 0 20px rgba(0, 255, 65, 0.3) !important;
         }
+
         @keyframes matrix-glow {
-            0% { text-shadow: 0 0 10px rgba(0, 255, 65, 0.8); filter: brightness(1); }
-            100% { text-shadow: 0 0 30px rgba(0, 255, 65, 1), 0 0 40px rgba(0, 255, 65, 0.8); filter: brightness(1.2); }
+            0% {
+                text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+                filter: brightness(1);
+            }
+
+            100% {
+                text-shadow: 0 0 30px rgba(0, 255, 65, 1), 0 0 40px rgba(0, 255, 65, 0.8);
+                filter: brightness(1.2);
+            }
         }
+
         .hero-title.konami-loading {
             animation: pulse-konami 0.5s infinite alternate;
             transform: scale(1.05) translateZ(0);
             will-change: transform, text-shadow;
         }
+
         @keyframes pulse-konami {
-            0% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
-            100% { text-shadow: 0 0 20px rgba(0, 255, 65, 1); }
+            0% {
+                text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+            }
+
+            100% {
+                text-shadow: 0 0 20px rgba(0, 255, 65, 1);
+            }
         }
+
         .achievement-popup {
             position: fixed;
             top: 20px;
@@ -793,22 +909,57 @@
             min-width: 250px;
             will-change: transform, opacity;
         }
-        .achievement-content h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
-        .achievement-content p { margin: 0; font-size: 0.9rem; opacity: 0.8; }
+
+        .achievement-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .achievement-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
+
         @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
+
         @media (max-width: 768px) {
-            .achievement-popup { top: 10px; right: 10px; left: 10px; min-width: auto; }
-            .hero-title { font-size: 1.5rem; }
+            .achievement-popup {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
+
 <body>
     <canvas class="matrix-canvas" id="matrixCanvas"></canvas>
     <div class="stars-background"></div>
@@ -817,7 +968,8 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 class="hero-title glitch" data-text="DREAMER"><span class="progress-text">DREAMER</span><span class="progress-bar"></span></h1>
+            <h1 class="hero-title glitch" data-text="DREAMER"><span class="progress-text">DREAMER</span><span
+                    class="progress-bar"></span></h1>
             <div class="cta-buttons">
                 <a href="#portfolio" class="cta-button cta-primary">Explorar</a>
             </div>
@@ -839,7 +991,7 @@
     <!-- Quote Section -->
     <section class="quote-section">
         <video class="quote-video-bg" autoplay muted loop playsinline preload="metadata">
-            <source src="https://raw.githubusercontent.com/DreamerJP/Dreamer/main/HSIN%20.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/DreamerJP/site-images/main/Home/HSIN .mp4" type="video/mp4">
         </video>
 
         <div class="audio-control" onclick="toggleAudio()" id="audioControl">
@@ -952,26 +1104,26 @@
             const starfield = document.getElementById('starfield');
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
+
             starfield.innerHTML = '';
             const fragment = document.createDocumentFragment();
-            
+
             // Estrelas em movimento
             for (let i = 0; i < performanceConfig.maxStars; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
+
                 const angle = Math.random() * 2 * Math.PI;
                 const initialRadius = Math.random() * 50 + 10;
                 const startX = centerX + Math.cos(angle) * initialRadius;
                 const startY = centerY + Math.sin(angle) * initialRadius;
-                
+
                 const directionX = Math.cos(angle);
                 const directionY = Math.sin(angle);
-                
+
                 const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
                 const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
-                
+
                 // Tipos com probabilidades
                 const starType = Math.random();
                 if (starType < 0.7) {
@@ -981,7 +1133,7 @@
                 } else {
                     star.classList.add('close');
                 }
-                
+
                 // Cores especiais
                 const colorType = Math.random();
                 if (colorType < 0.1) {
@@ -989,16 +1141,16 @@
                 } else if (colorType < 0.2) {
                     star.classList.add('yellow');
                 }
-                
+
                 star.style.left = startX + 'px';
                 star.style.top = startY + 'px';
                 star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
                 star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
                 star.style.animationDelay = Math.random() * 25 + 's';
-                
+
                 fragment.appendChild(star);
             }
-            
+
             // Estrelas estacionárias com twinkle
             for (let i = 0; i < performanceConfig.staticStars; i++) {
                 const staticStar = document.createElement('div');
@@ -1009,10 +1161,10 @@
                 staticStar.style.opacity = Math.random() * 0.4 + 0.1;
                 staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
                 staticStar.style.animationDelay = Math.random() * 2 + 's';
-                
+
                 fragment.appendChild(staticStar);
             }
-            
+
             starfield.appendChild(fragment);
         }
 
@@ -1053,7 +1205,7 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     // Offset especial para o botão 'Explorar' (portfolio)
                     const offset = targetId === '#portfolio' ? -90 : 0;
@@ -1072,11 +1224,11 @@
 
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY + window.innerHeight / 2;
-            
+
             sections.forEach((section, index) => {
                 const sectionTop = section.offsetTop;
                 const sectionBottom = sectionTop + section.offsetHeight;
-                
+
                 if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
                     scrollDots.forEach(dot => dot.classList.remove('active'));
                     if (scrollDots[index]) {
@@ -1139,12 +1291,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             createStarfield();
             createTwinkleStars();
-            
+
             // Efeito de digitação no título
             const title = document.querySelector('.hero-title');
             const text = title.textContent;
             title.textContent = '';
-            
+
             let i = 0;
             const typeEffect = setInterval(() => {
                 if (i < text.length) {
@@ -1430,7 +1582,7 @@
         });
 
         // Corrigir vídeo congelado ao voltar do histórico (bfcache)
-        window.addEventListener('pageshow', function(event) {
+        window.addEventListener('pageshow', function (event) {
             if (event.persisted) {
                 const video = document.querySelector('.quote-video-bg');
                 if (video) {
@@ -1438,10 +1590,11 @@
                     video.currentTime = 0;
                     video.load();
                     video.muted = true; // ou false, conforme seu padrão
-                    video.play().catch(() => {});
+                    video.play().catch(() => { });
                 }
             }
         });
     </script>
 </body>
+
 </html>
