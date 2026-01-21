@@ -1332,18 +1332,18 @@
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 6px;
-            cursor: grab;
-            /* Indica que pode ser arrastado */
+            cursor: pointer;
+            /* Change from grab to pointer */
             transition: all 0.2s;
             border: 1px solid transparent;
             position: relative;
             background: rgba(255, 255, 255, 0.02);
             user-select: none;
-            /* Evita selecionar texto ao arrastar */
         }
 
+        /* Normal cursor when active, no more grabbing on the whole item */
         .np-queue-item:active {
-            cursor: grabbing;
+            cursor: pointer;
         }
 
         .np-queue-item.dragging {
@@ -1396,25 +1396,33 @@
             color: var(--text-secondary);
         }
 
-        /* Drag Handle */
         .np-q-handle {
             color: var(--text-primary);
             opacity: 0.2;
             cursor: grab;
+            /* Grab cursor only here */
             font-size: 1.2rem;
             user-select: none;
-            padding: 0 4px;
+            padding: 4px 8px;
+            /* Slightly larger hit area */
+            margin-right: -4px;
             display: flex;
             align-items: center;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+
+        .np-q-handle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0.8 !important;
+        }
+
+        .np-q-handle:active {
+            cursor: grabbing;
         }
 
         .np-queue-item:hover .np-q-handle {
-            opacity: 0.6;
-        }
-
-        .np-queue-item.dragging .np-q-handle {
-            cursor: grabbing;
+            opacity: 0.5;
         }
 
         /* Remove Button */
@@ -2065,6 +2073,21 @@
             }
 
             const contentDiv = document.getElementById('galleryContent');
+
+            // Auto-scroll to content area when navigating (especially helpful on mobile)
+            if (pushToHistory) {
+                setTimeout(() => {
+                    const navHeight = 80; // Offset for fixed navbar
+                    const elementPosition = contentDiv.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: elementPosition - navHeight,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            } else {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+
             contentDiv.innerHTML = '';
 
 
@@ -2155,7 +2178,7 @@
                 });
 
                 contentDiv.appendChild(list);
-                updateActiveTrackUI();
+                updateActiveTrackUI(false); // Don't scroll when just loading folder content
             }
 
             if (folders.length === 0 && (!data._files || data._files.length === 0)) {
@@ -2434,7 +2457,7 @@
             updateNowPlayingUI();
         }
 
-        function updateActiveTrackUI() {
+        function updateActiveTrackUI(shouldScroll = true) {
             const currentTrack = currentQueue[currentTrackIndex];
             let activeItem = null;
 
@@ -2495,7 +2518,7 @@
                 });
             }
 
-            if (activeItem) {
+            if (activeItem && shouldScroll) {
                 activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
@@ -2873,7 +2896,7 @@
                 item.innerHTML = `
                     <div class="np-q-handle" title="Arraste para reordenar">⠿</div>
                     ${leftInd}
-                    <img src="${thumb}" class="np-q-thumb" loading="lazy">
+                    <img src="${thumb}" class="np-q-thumb" loading="lazy" draggable="false">
                     <div class="np-q-info">
                         <div class="np-q-title">${t.title}</div>
                         <div class="np-q-artist">${t.artist}</div>
@@ -2886,6 +2909,7 @@
                 // Mouse: Enable dragging only when clicking the handle
                 handle.onmousedown = () => item.setAttribute('draggable', 'true');
                 item.onmouseup = () => item.setAttribute('draggable', 'false');
+                item.onmouseleave = () => item.setAttribute('draggable', 'false');
 
                 // --- Drag and Drop Logic (Mouse & Touch) ---
                 const startDrag = (index) => {
