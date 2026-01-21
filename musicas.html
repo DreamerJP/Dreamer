@@ -545,7 +545,68 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            min-width: 250px;
+            width: 350px;
+            flex-shrink: 0;
+            overflow: visible;
+            /* Allows the badge to pop up */
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .player-info:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(187, 134, 252, 0.1);
+        }
+
+        /* Subtle "Ver Fila" indicator */
+        .player-info::after {
+            content: 'Ver Fila';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--primary-color);
+            color: #1a1a2e;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+        }
+
+        .player-info:hover::after,
+        .player-info.discovery-cue::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .player-info.discovery-cue {
+            background: rgba(187, 134, 252, 0.15);
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+            animation: pulse-cue 2s infinite;
+        }
+
+        @keyframes pulse-cue {
+            0% {
+                box-shadow: 0 0 10px rgba(187, 134, 252, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(187, 134, 252, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(187, 134, 252, 0.2);
+            }
         }
 
         /* Visualizer */
@@ -576,8 +637,8 @@
         }
 
         .now-playing-title-container {
-            width: 100%;
-            max-width: 250px;
+            width: 220px;
+            /* Fixed width for the text area */
             overflow: hidden;
             position: relative;
             white-space: nowrap;
@@ -622,8 +683,10 @@
         .player-controls {
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex: 1;
+            gap: 15px;
+            width: 240px;
+            /* Fixed width for controls cluster */
+            flex-shrink: 0;
             justify-content: center;
         }
 
@@ -713,8 +776,9 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            flex: 2;
-            max-width: 800px;
+            flex: 1;
+            /* Progress bar takes the available space */
+            min-width: 0;
         }
 
         .time-display {
@@ -781,7 +845,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            min-width: 150px;
+            width: 150px;
+            /* Fixed width for volume area */
+            flex-shrink: 0;
+            justify-content: flex-end;
         }
 
         .volume-slider {
@@ -1022,9 +1089,9 @@
         }
 
 
-        .track-item.active.paused .wave-bar {
+        .track-item.active.paused .wave-bar,
+        .np-queue-item.playing.paused .wave-bar {
             animation-play-state: paused;
-
         }
 
         @keyframes wave-animation {
@@ -1036,6 +1103,482 @@
 
             50% {
                 height: 100%;
+            }
+        }
+
+        /* --- Now Playing Panel (Slide View) --- */
+        .now-playing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Ensure it sits above content but below header/player */
+            z-index: 40;
+            background: #0a0a0f;
+            display: flex;
+            flex-direction: column;
+
+            /* Layout Adjustment: Space for Header and Player */
+            padding-top: 160px;
+            /* Reduced to provide more safety room */
+            padding-bottom: 110px;
+            padding-left: 40px;
+            padding-right: 40px;
+
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+            overflow: hidden;
+            box-sizing: border-box;
+            justify-content: center;
+            /* Safely center the container */
+        }
+
+        .now-playing-overlay.active {
+            transform: translateX(0);
+        }
+
+        /* Adjust main content when NP is open (Slide Effect) */
+        .main-content {
+            transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.5s;
+        }
+
+        .main-content.slide-out {
+            transform: translateX(-30%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .np-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(60px) brightness(0.2);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            transition: background-image 1.2s ease;
+        }
+
+        /* Close button mostly for safety/mobile, but now optional due to nav */
+        .np-close {
+            display: none;
+        }
+
+        /* Small close/back button inside the panel */
+        .np-close-panel {
+            position: absolute;
+            top: 135px;
+            /* Aligned near top of panel content */
+            right: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .np-close-panel:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .np-container {
+            max-width: 1400px;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            /* Vertical margin removed to prevent scrollIntoView shifts */
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            /* Fixed width art, flexible queue */
+            gap: 60px;
+            align-items: center;
+            /* Better centering than flex-start */
+            overflow: hidden;
+        }
+
+        .np-left {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .np-artwork-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 25px;
+        }
+
+        .np-artwork {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 2;
+        }
+
+        .np-artwork-glow {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            background: var(--primary-color);
+            filter: blur(50px);
+            opacity: 0.3;
+            z-index: 1;
+            border-radius: 50%;
+        }
+
+        .np-title {
+            font-size: 2rem;
+            color: white;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .np-artist {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .np-right {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            /* Lighter blur */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .np-queue-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .np-queue-list {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .np-queue-list::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .np-queue-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .np-queue-list::-webkit-scrollbar-thumb {
+            background: rgba(187, 134, 252, 0.3);
+            border-radius: 10px;
+        }
+
+        .np-queue-list::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .np-queue-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            cursor: grab;
+            /* Indica que pode ser arrastado */
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            user-select: none;
+            /* Evita selecionar texto ao arrastar */
+        }
+
+        .np-queue-item:active {
+            cursor: grabbing;
+        }
+
+        .np-queue-item.dragging {
+            opacity: 0.4;
+            background: rgba(187, 134, 252, 0.2);
+            border: 1px dashed var(--primary-color);
+        }
+
+        .np-queue-item.drag-over {
+            border-top: 2px solid var(--primary-color);
+            padding-top: 14px;
+            /* Compensação visual */
+        }
+
+        .np-queue-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .np-queue-item.playing {
+            background: rgba(187, 134, 252, 0.1);
+            border-color: rgba(187, 134, 252, 0.15);
+        }
+
+        .np-q-thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .np-q-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .np-q-title {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .np-q-artist {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Drag Handle */
+        .np-q-handle {
+            color: var(--text-primary);
+            opacity: 0.2;
+            cursor: grab;
+            font-size: 1.2rem;
+            user-select: none;
+            padding: 0 4px;
+            display: flex;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+
+        .np-queue-item:hover .np-q-handle {
+            opacity: 0.6;
+        }
+
+        .np-queue-item.dragging .np-q-handle {
+            cursor: grabbing;
+        }
+
+        /* Remove Button */
+        .np-q-remove {
+            opacity: 0;
+            color: var(--primary-color);
+            background: rgba(187, 134, 252, 0.08);
+            border: 1px solid rgba(187, 134, 252, 0.15);
+            cursor: pointer;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            transform: scale(0.9);
+            pointer-events: none;
+            /* Avoid blocking clicks when invisible */
+        }
+
+        .np-queue-item:hover .np-q-remove {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .np-q-remove:hover {
+            background: rgba(187, 134, 252, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(187, 134, 252, 0.2);
+        }
+
+        .np-visualizer-large {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 100px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .np-vis-bar {
+            flex: 0 0 8px;
+            background: linear-gradient(to top, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            min-height: 6px;
+            box-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
+            transition: height 0.05s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .now-playing-overlay {
+                padding-top: 120px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .np-container {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 25px !important;
+                padding-top: 0 !important;
+                overflow-y: auto !important;
+                height: 100% !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                grid-template-columns: 1fr !important;
+                /* Override desktop grid */
+            }
+
+            .np-left {
+                width: 100%;
+                height: auto;
+                flex-shrink: 0;
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .np-artwork-container {
+                max-width: 260px;
+                margin: 0 auto 15px auto;
+            }
+
+            .np-title {
+                font-size: 1.6rem;
+                padding: 0 10px;
+            }
+
+            .np-artist {
+                font-size: 0.95rem;
+                margin-bottom: 0;
+            }
+
+            .np-right {
+                background: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                padding: 0 !important;
+                height: auto !important;
+                width: 100% !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+
+            .np-queue-header {
+                padding: 0 5px;
+                margin-bottom: 12px;
+                font-size: 1rem;
+            }
+
+            .np-queue-list {
+                height: auto !important;
+                overflow: visible !important;
+                padding-right: 0 !important;
+            }
+
+            .np-close-panel {
+                top: 110px;
+                right: 15px;
+                width: 44px;
+                height: 44px;
+            }
+
+            .np-queue-item {
+                padding: 12px 10px;
+                background: rgba(255, 255, 255, 0.04);
+                /* Slightly visible cards */
+                margin-bottom: 8px;
+                border-radius: 12px;
+                border-color: rgba(255, 255, 255, 0.05);
+            }
+
+            .np-q-thumb {
+                width: 45px;
+                height: 45px;
+            }
+
+            .np-q-title {
+                font-size: 0.85rem;
+            }
+
+            .np-q-remove {
+                opacity: 0.8;
+                /* More visible on mobile */
+                pointer-events: auto;
+                transform: scale(1);
+                padding: 6px 8px;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .now-playing-overlay {
+                padding-top: 100px;
+            }
+
+            .np-close-panel {
+                top: 85px;
+            }
+
+            .np-artwork-container {
+                max-width: 180px;
+            }
+
+            .np-title {
+                font-size: 1.3rem;
+            }
+
+            .np-container {
+                gap: 15px !important;
             }
         }
     </style>
@@ -1226,7 +1769,7 @@
 
     <!-- Fixed Audio Player -->
     <div class="audio-player-fixed hidden" id="audioPlayerBar">
-        <div class="player-info">
+        <div class="player-info" onclick="openNowPlaying()">
             <img id="playerArt" src="" alt="Album Art"
                 style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; display: none; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
             <div class="visualizer-container" id="visualizer">
@@ -1298,6 +1841,37 @@
         </div>
     </div>
 
+    <!-- Now Playing Panel -->
+    <div id="nowPlayingOverlay" class="now-playing-overlay">
+        <div class="np-background" id="npBackground"></div>
+        <button class="np-close-panel" onclick="closeNowPlaying()" title="Fechar">✕</button>
+
+        <div class="np-container">
+            <div class="np-left">
+                <div class="np-artwork-container">
+                    <div class="np-artwork-glow" id="npArtGlow"></div>
+                    <img src="" class="np-artwork" id="npArtwork">
+                </div>
+                <div class="np-title" id="npTitle">--</div>
+                <div class="np-artist" id="npArtist">--</div>
+
+                <div class="visualizer-container np-visualizer-large" id="npVisualizer">
+                    <!-- Bars generated by JS -->
+                </div>
+            </div>
+
+            <div class="np-right">
+                <div class="np-queue-header">
+                    Fila de Reprodução
+                    <span id="npQueueCount">0 faixas</span>
+                </div>
+                <div class="np-queue-list" id="npQueueList">
+                    <!-- Queue items -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Hidden Audio Elements -->
     <audio id="audioElement" preload="none" crossorigin="anonymous"></audio>
     <audio id="preloadElement" preload="none" crossorigin="anonymous"></audio>
@@ -1359,6 +1933,7 @@
         */
         let audioCtx, analyser, dataArray, source;
         const visBars = document.getElementsByClassName('vis-bar');
+        const npVisBars = document.getElementsByClassName('np-vis-bar');
 
         function initVisualizer() {
             if (audioCtx) return;
@@ -1416,6 +1991,12 @@
                 const height = Math.max(3, Math.min(25, Math.pow(normalized, 0.8) * 25));
 
                 visBars[i].style.height = height + 'px';
+
+                if (npVisBars[i]) {
+                    // Larger scale for big visualizer
+                    const largeHeight = Math.max(6, Math.min(100, Math.pow(normalized, 0.8) * 100));
+                    npVisBars[i].style.height = largeHeight + 'px';
+                }
             }
         }
 
@@ -1651,6 +2232,18 @@
             loadTrack(currentTrackIndex);
 
             document.getElementById('audioPlayerBar').classList.remove('hidden');
+
+            // Trigger Discovery Cue (Highlight the player info area)
+            const playerInfo = document.querySelector('.player-info');
+            if (playerInfo) {
+                // Clear any existing timeout if user clicks rapidly
+                if (playerInfo._cueTimeout) clearTimeout(playerInfo._cueTimeout);
+
+                playerInfo.classList.add('discovery-cue');
+                playerInfo._cueTimeout = setTimeout(() => {
+                    playerInfo.classList.remove('discovery-cue');
+                }, 2000); // Highlight for 2 seconds
+            }
         }
 
         function loadTrack(index) {
@@ -1823,6 +2416,7 @@
                 });
             }
             updateActiveTrackUI();
+            updateNowPlayingUI();
         }
 
         function updateActiveTrackUI() {
@@ -1872,6 +2466,19 @@
                 }
             });
 
+            // Sync with Now Playing Overlay Queue
+            const npOverlay = document.getElementById('nowPlayingOverlay');
+            if (npOverlay && npOverlay.classList.contains('active')) {
+                const npQueueItems = document.querySelectorAll('.np-queue-item');
+                npQueueItems.forEach((item, i) => {
+                    if (i === currentTrackIndex) {
+                        if (isPlaying) item.classList.remove('paused');
+                        else item.classList.add('paused');
+                    } else {
+                        item.classList.remove('paused');
+                    }
+                });
+            }
 
             if (activeItem) {
                 activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2060,8 +2667,8 @@
             // Caso contrário (como num pulo manual logo no início da música), sorteia/calcula a próxima
             if (isShuffle) {
                 let next = Math.floor(Math.random() * currentQueue.length);
-                loadTrack(next);
                 currentTrackIndex = next;
+                loadTrack(currentTrackIndex);
             } else {
                 if (currentTrackIndex < currentQueue.length - 1) {
                     currentTrackIndex++;
@@ -2161,6 +2768,276 @@
             audio.muted = !audio.muted;
             const btn = document.getElementById('muteBtn');
             btn.innerHTML = audio.muted ? '🔇' : '🔊';
+        }
+
+        /* --- Sistema de Em Execução (Now Playing Overlay) --- */
+        function openNowPlaying() {
+            if (currentTrackIndex === -1) return;
+            const npOverlay = document.getElementById('nowPlayingOverlay');
+            if (!npOverlay) return;
+
+            npOverlay.classList.add('active');
+
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) mainContent.classList.add('slide-out');
+
+            updateNowPlayingUI();
+
+            // Hide body scroll to avoid double scrollbars
+            document.body.style.overflow = 'hidden';
+
+            // Generate visualizer bars if needed
+            const visContainer = document.getElementById('npVisualizer');
+            if (visContainer.children.length === 0) {
+                visContainer.innerHTML = '';
+                for (let i = 0; i < 10; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'np-vis-bar';
+                    visContainer.appendChild(bar);
+                }
+            }
+        }
+
+        function closeNowPlaying() {
+            const npOverlay = document.getElementById('nowPlayingOverlay');
+            if (!npOverlay) return;
+
+            npOverlay.classList.remove('active');
+
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) mainContent.classList.remove('slide-out');
+
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        function updateNowPlayingUI() {
+            const npOverlay = document.getElementById('nowPlayingOverlay');
+            if (!npOverlay || !npOverlay.classList.contains('active')) return;
+
+            const track = currentQueue[currentTrackIndex];
+            if (!track) return;
+
+            document.getElementById('npTitle').innerText = track.title;
+            document.getElementById('npArtist').innerText = track.artist;
+
+            const artwork = track.artwork || 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico';
+            document.getElementById('npArtwork').src = artwork;
+            document.getElementById('npBackground').style.backgroundImage = `url('${artwork}')`;
+
+            // Update glow color based on theme or just use primary
+            document.getElementById('npArtGlow').style.background = 'var(--primary-color)';
+
+            renderNowPlayingQueue();
+        }
+
+        function renderNowPlayingQueue() {
+            const list = document.getElementById('npQueueList');
+            const countEl = document.getElementById('npQueueCount');
+            list.innerHTML = '';
+
+            currentQueue.forEach((t, i) => {
+                const item = document.createElement('div');
+                item.className = `np-queue-item ${i === currentTrackIndex ? 'playing' : ''}`;
+                item.setAttribute('draggable', 'false'); // Disabled by default
+
+                const thumb = t.artwork || 'https://raw.githubusercontent.com/DreamerJP/Dreamer/refs/heads/main/favicon.ico';
+
+                // Determine if we show playing indicator or number
+                let leftInd = `<div style="font-size: 0.8rem; opacity: 0.3; width: 25px; font-weight: bold;">${(i + 1).toString().padStart(2, '0')}</div>`;
+                if (i === currentTrackIndex) {
+                    leftInd = '<div class="playing-wave" style="width:15px; height:15px; margin-right:10px;"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>';
+                }
+
+                item.innerHTML = `
+                    <div class="np-q-handle" title="Arraste para reordenar">⠿</div>
+                    ${leftInd}
+                    <img src="${thumb}" class="np-q-thumb" loading="lazy">
+                    <div class="np-q-info">
+                        <div class="np-q-title">${t.title}</div>
+                        <div class="np-q-artist">${t.artist}</div>
+                    </div>
+                    <button class="np-q-remove" title="Remover da fila" onclick="removeTrackFromQueue(${i}, event)">Remover</button>
+                `;
+
+                const handle = item.querySelector('.np-q-handle');
+
+                // Mouse: Enable dragging only when clicking the handle
+                handle.onmousedown = () => item.setAttribute('draggable', 'true');
+                item.onmouseup = () => item.setAttribute('draggable', 'false');
+
+                // --- Drag and Drop Logic (Mouse & Touch) ---
+                const startDrag = (index) => {
+                    item.classList.add('dragging');
+                    return index;
+                };
+
+                const endDrag = () => {
+                    item.classList.remove('dragging');
+                    document.querySelectorAll('.np-queue-item').forEach(el => el.classList.remove('drag-over'));
+                };
+
+                const handleMove = (fromIndex, toIndex) => {
+                    if (fromIndex !== -1 && fromIndex !== toIndex) {
+                        const movedItem = currentQueue.splice(fromIndex, 1)[0];
+                        currentQueue.splice(toIndex, 0, movedItem);
+
+                        // Sync currentTrackIndex
+                        if (currentTrackIndex === fromIndex) currentTrackIndex = toIndex;
+                        else if (fromIndex < currentTrackIndex && toIndex >= currentTrackIndex) currentTrackIndex--;
+                        else if (fromIndex > currentTrackIndex && toIndex <= currentTrackIndex) currentTrackIndex++;
+
+                        renderNowPlayingQueue();
+                        updateActiveTrackUI();
+                        return toIndex;
+                    }
+                    return fromIndex;
+                };
+
+                // Mouse Events
+                item.ondragstart = (e) => {
+                    e.dataTransfer.setData('text/plain', i);
+                    startDrag(i);
+                };
+                item.ondragover = (e) => {
+                    e.preventDefault();
+                    item.classList.add('drag-over');
+                };
+                item.ondragleave = () => item.classList.remove('drag-over');
+                item.ondrop = (e) => {
+                    e.preventDefault();
+                    const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                    handleMove(fromIndex, i);
+                };
+                item.ondragend = endDrag;
+
+                // Touch Events
+                let isDraggingTouch = false;
+                let touchOriginIsHandle = false;
+
+                item.ontouchstart = (e) => {
+                    isDraggingTouch = false;
+                    touchOriginIsHandle = e.target.closest('.np-q-handle') !== null;
+                };
+
+                item.ontouchmove = (e) => {
+                    if (!touchOriginIsHandle) return; // Only allow drag if started on handle
+
+                    const touch = e.touches[0];
+                    const elementUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const targetItem = elementUnder?.closest('.np-queue-item');
+
+                    if (!isDraggingTouch) {
+                        isDraggingTouch = true;
+                        item.classList.add('dragging');
+                    }
+
+                    if (isDraggingTouch) {
+                        // Prevent scroll when dragging
+                        if (e.cancelable) e.preventDefault();
+
+                        document.querySelectorAll('.np-queue-item').forEach(el => el.classList.remove('drag-over'));
+                        if (targetItem) targetItem.classList.add('drag-over');
+                    }
+                };
+
+                item.ontouchend = (e) => {
+                    if (isDraggingTouch && touchOriginIsHandle) {
+                        const touch = e.changedTouches[0];
+                        const elementUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+                        const targetItem = elementUnder?.closest('.np-queue-item');
+
+                        if (targetItem) {
+                            const allItems = Array.from(list.children);
+                            const toIndex = allItems.indexOf(targetItem);
+                            if (toIndex !== -1) {
+                                handleMove(i, toIndex);
+                            }
+                        }
+                    }
+                    endDrag();
+                    isDraggingTouch = false;
+                };
+
+                item.onclick = (e) => {
+                    // Ignore clicks on buttons inside
+                    if (e.target.tagName === 'BUTTON') return;
+
+                    if (i === currentTrackIndex) {
+                        togglePlay();
+                    } else {
+                        currentTrackIndex = i;
+                        loadTrack(i);
+                    }
+                };
+
+                list.appendChild(item);
+            });
+
+            countEl.innerText = `${currentQueue.length} faixas`;
+
+            // Scroll current track into view
+            setTimeout(() => {
+                const activeItem = list.querySelector('.playing');
+                if (activeItem) {
+                    const isMobile = window.innerWidth <= 1024;
+                    const scrollContainer = isMobile ? document.getElementById('npContainer') : list;
+
+                    if (isMobile) {
+                        // Calculate position relative to the scrollContainer
+                        const containerRect = scrollContainer.getBoundingClientRect();
+                        const itemRect = activeItem.getBoundingClientRect();
+                        const relativeTop = itemRect.top - containerRect.top + scrollContainer.scrollTop;
+
+                        scrollContainer.scrollTo({
+                            top: relativeTop - (scrollContainer.clientHeight / 2) + (activeItem.offsetHeight / 2),
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        const containerHeight = list.clientHeight;
+                        const itemTop = activeItem.offsetTop;
+                        const itemHeight = activeItem.clientHeight;
+                        list.scrollTo({
+                            top: itemTop - (containerHeight / 2) + (itemHeight / 2),
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }, 100);
+        }
+
+        function removeTrackFromQueue(index, event) {
+            if (event) event.stopPropagation();
+
+            // If removing current track
+            if (index === currentTrackIndex) {
+                // Play next valid track
+                if (currentQueue.length > 1) {
+                    currentQueue.splice(index, 1);
+                    // Adjust index if needed (it stays same unless we were at end)
+                    if (currentTrackIndex >= currentQueue.length) currentTrackIndex = 0;
+                    loadTrack(currentTrackIndex); // Load new track at this index
+                } else {
+                    // Queue empty
+                    audio.pause();
+                    currentQueue = [];
+                    currentTrackIndex = -1;
+                    document.getElementById('audioPlayerBar').classList.add('hidden');
+                    closeNowPlaying();
+                    return;
+                }
+            } else {
+                // Removing other track
+                currentQueue.splice(index, 1);
+                // Adjust current index if we removed something before it
+                if (index < currentTrackIndex) {
+                    currentTrackIndex--;
+                }
+            }
+
+            // Refund/Update UI
+            renderNowPlayingQueue();
+            updateActiveTrackUI(); // Update list indicators
         }
 
         // --- Play All & Search Features ---
@@ -2425,6 +3302,42 @@
 
         window.onload = init;
     </script>
+
+    <!-- Now Playing System Overlay -->
+    <div id="nowPlayingOverlay" class="now-playing-overlay">
+        <div id="npBackground" class="np-background"></div>
+        <button class="np-close" onclick="closeNowPlaying()" title="Fechar">✕</button>
+
+        <div class="np-container">
+            <div class="np-left">
+                <div class="np-artwork-container">
+                    <div id="npArtGlow" class="np-artwork-glow"></div>
+                    <img id="npArtwork" src="" alt="Album Art" class="np-artwork">
+                </div>
+
+                <div class="np-info">
+                    <h2 id="npTitle" class="np-title">Título da Música</h2>
+                    <p id="npArtist" class="np-artist">Nome do Artista</p>
+                </div>
+
+                <div class="np-visualizer-large" id="npVisualizer">
+                    <!-- Bars will be generated by JS -->
+                </div>
+            </div>
+
+            <div class="np-right">
+                <div class="np-queue-header">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span>📂</span> Fila de Reprodução
+                    </div>
+                    <span id="npQueueCount" style="font-size: 0.85rem; opacity: 0.6; font-weight: 400;">0 faixas</span>
+                </div>
+                <div id="npQueueList" class="np-queue-list">
+                    <!-- Queue items injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Global Tooltip for Buttons -->
     <div id="btnTooltip" class="play-tooltip"
