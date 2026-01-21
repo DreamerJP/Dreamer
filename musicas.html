@@ -2029,6 +2029,10 @@
 
         async function init() {
             createStarfield();
+            // Desabilita restauração automática do scroll pelo navegador
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
             try {
                 // Load music index (Remote GitHub)
                 const response = await fetch('https://raw.githubusercontent.com/DreamerJP/site-images/refs/heads/main/Musicas/music-index.json');
@@ -2076,9 +2080,12 @@
 
             // Auto-scroll to content area when navigating (especially helpful on mobile)
             if (pushToHistory) {
+                // Reset instantâneo para o topo antes do scroll suave para garantir que ele sempre "venha de cima"
+                window.scrollTo({ top: 0, behavior: 'instant' });
+
                 setTimeout(() => {
-                    const navHeight = 80; // Offset for fixed navbar
-                    const elementPosition = contentDiv.getBoundingClientRect().top + window.pageYOffset;
+                    const navHeight = 85; // Aumentado levemente para segurança contra sobreposição
+                    const elementPosition = contentDiv.getBoundingClientRect().top + window.scrollY;
                     window.scrollTo({
                         top: elementPosition - navHeight,
                         behavior: 'smooth'
