@@ -10095,6 +10095,26 @@
       "production": "Legendary Pictures, Syncopy, Warner Bros. Pictures",
       "boxOffice": "$839,030,630",
       "released": "2010-07-15"
+    },
+    {
+      "title": "Deadpool & Wolverine",
+      "slug": "deadpool-wolverine",
+      "year": "2024",
+      "url": "https://letterboxd.com/film/deadpool-wolverine/",
+      "plot": "Um apático Wade Wilson trabalha duro na vida civil. Seus dias como mercenário moralmente flexível, Deadpool, ficaram para trás. Quando seu planeta enfrenta uma ameaça, Wade deve relutantemente vestir-se novamente com um ainda mais relutante... relutante? Mais relutante? Ele deve convencer um Wolverine relutante em... Porra. As sinopses são tão estúpidas.",
+      "director": "Shawn Levy",
+      "actors": "Ryan Reynolds, Hugh Jackman, Emma Corrin, Matthew Macfadyen, Dafne Keen",
+      "genre": "Ação, Comédia, Ficção científica",
+      "runtime": "128 min",
+      "imdbRating": "7.6",
+      "poster": "https://image.tmdb.org/t/p/w500/hJ0LGNZhgjLL6PBOKYtsbfLEQq4.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/ufpeVEM64uZHPpzzeiDNIAdaeOD.jpg",
+      "imdbVotes": "8175",
+      "country": "United States of America",
+      "language": "English",
+      "production": "Marvel Studios, Maximum Effort, 21 Laps Entertainment, 20th Century Studios, Kevin Feige Productions, TSG Entertainment",
+      "boxOffice": "$1,338,073,645",
+      "released": "2024-07-24"
     }
   ]
 }
