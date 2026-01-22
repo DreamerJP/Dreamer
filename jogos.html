@@ -304,25 +304,25 @@
                 flex-direction: column;
             }
 
-            /* Mobile Poster - Show as content at top */
+            /* Mobile Poster - Hide the mini inline poster as requested */
             .modal-poster {
-                display: block;
-                width: calc(100% + 40px);
-                /* Full width including padding negation */
-                height: auto;
-                max-height: none;
-                object-fit: cover;
-                border-radius: 0;
-                box-shadow: none;
-                margin: -20px -20px 20px -20px;
-                /* Negate modal-body padding */
-                order: 0;
-                /* Ensures it's at the very top */
+                display: none;
             }
 
-            /* Hide backdrop on mobile since we use the poster as content */
+            /* Show backdrop on mobile as the main visual */
             .modal-backdrop.mobile-only {
-                display: none !important;
+                display: block !important;
+                object-fit: cover;
+                /* Fill the screen */
+                opacity: 1 !important;
+                filter: brightness(0.4);
+                background-color: #000;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
             }
 
             .modal-info {
@@ -862,14 +862,19 @@
 
         .modal-content {
             background: transparent;
-            margin: 2% auto;
+            margin: 0;
             padding: 0;
             border-radius: 24px;
-            width: 98%;
-            max-width: 1400px;
-            max-height: 96vh;
+            width: 95vw;
+            height: 95vh;
+            max-width: none;
+            max-height: none;
             overflow: hidden;
-            position: relative;
+            position: absolute;
+            /* Changed to absolute for centering */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             box-shadow: 0 30px 60px var(--shadow-color-strong);
         }
 
