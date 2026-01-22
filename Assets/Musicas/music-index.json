@@ -353,5 +353,14 @@
             "https://cdn.jsdelivr.net/gh/paulozappen/musicas@main/Musicas/t.A.T.u/Zacem%20Ja.mp3"
         ],
         "_cover": "https://cdn.jsdelivr.net/gh/paulozappen/musicas@main/Musicas/t.A.T.u/Cover.png"
+    },
+    "Stellar Blade OST": {
+        "_files": [
+            "https://github.com/paulozappen/musicas/raw/refs/heads/main/Musicas/Stellar%20Blade%20OST/Stellar%20Blade%20OST%20-%20Eidos%207%20Silent%20Street%20Combat.mp3",
+            "https://github.com/paulozappen/musicas/raw/refs/heads/main/Musicas/Stellar%20Blade%20OST/Stellar%20Blade%20OST%20Eidos-7%20Silent%20Street.mp3",
+            "https://github.com/paulozappen/musicas/raw/refs/heads/main/Musicas/Stellar%20Blade%20OST/Stellar%20Blade%20OST%20Escape.mp3",
+            "https://github.com/paulozappen/musicas/raw/refs/heads/main/Musicas/Stellar%20Blade%20OST/Stellar%20Blade%20OST%20Raven.mp3"
+        ],
+        "_cover": "https://raw.githubusercontent.com/paulozappen/musicas/refs/heads/main/Musicas/Stellar%20Blade%20OST/Cover.jpg"
     }
 }
