@@ -1879,6 +1879,14 @@
                 // Processar lote em paralelo
                 const promises = batch.map(async (movie) => {
                     if (!moviesWithDetails.has(movie.slug)) {
+
+                        // 0. Verificar se o JSON já tem detalhes completos (do Editor)
+                        if (movie.plot && movie.poster && movie.plot !== 'Informações não disponíveis.') {
+                            moviesWithDetails.set(movie.slug, movie);
+                            updateMovieCard(movie.slug, movie);
+                            return;
+                        }
+
                         // 1. Tentar pegar do cache
                         const cachedData = getFromCache(movie.slug);
 
