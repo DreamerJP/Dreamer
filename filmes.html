@@ -1307,6 +1307,88 @@
                 max-width: 100px;
             }
         }
+
+        /* Modal de Trailer (Video) */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(187, 134, 252, 0.3);
+            border: 1px solid rgba(187, 134, 252, 0.2);
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--primary-color);
+        }
+
+        #videoPlayerFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Botão de trailer estilizado igual aos links */
+        .action-btn-trailer {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #FF0000, #cc0000);
+            /* YouTube colors */
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .action-btn-trailer:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 0, 0, 0.3);
+        }
     </style>
 </head>
 
@@ -1435,6 +1517,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Trailer -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
+            <iframe id="videoPlayerFrame" allowfullscreen
+                allow="autoplay; encrypted-media; picture-in-picture"></iframe>
         </div>
     </div>
 
@@ -2358,6 +2449,7 @@
                 
                 <div class="modal-actions">
                     <a href="${details.url}" target="_blank">🔗 Ver no Letterboxd</a>
+                    ${details.trailer ? `<button class="action-btn-trailer" onclick="playTrailer('${details.trailer}')">▶ Assistir Trailer</button>` : ''}
                 </div>
             `;
 
@@ -2395,16 +2487,56 @@
             }
         });
 
-        // Atalhos do teclado
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeModal();
+                closeVideoModal();
             }
             if (e.key === '/' && !e.ctrlKey && !e.altKey) {
                 e.preventDefault();
                 document.getElementById('searchInput').focus();
             }
         });
+
+        // Funções do Modal de Trailer
+        function playTrailer(url) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayerFrame');
+
+            // Extrair ID do YouTube se for link
+            let videoUrl = url;
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = '';
+                if (url.includes('/embed/')) {
+                    videoId = url.split('/embed/')[1].split('?')[0];
+                } else if (url.includes('v=')) {
+                    videoId = url.split('v=')[1].split('&')[0];
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                }
+
+                if (videoId) {
+                    // Parâmetros para autoplay e fullscreen
+                    videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                }
+            }
+
+            player.src = videoUrl;
+            modal.style.display = 'flex';
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayerFrame');
+            player.src = '';
+            modal.style.display = 'none';
+        }
+
+        // Fechar ao clicar fora
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') closeVideoModal();
+        });
+
 
         // Lazy loading para quando carregar todos os filmes
         let isLoadingMore = false;

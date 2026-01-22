@@ -20,7 +20,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "Kyoto Animation, ABC Animation, Kodansha, Pony Canyon, Quaras, Shochiku",
-      "boxOffice": "$30,819,442"
+      "boxOffice": "$30,819,442",
+      "trailer": "https://www.youtube.com/watch?v=TQK9By9qQiw"
     },
     {
       "slug": "the-anthem-of-the-heart",
@@ -42,7 +43,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "A-1 Pictures, Graphinica, Lawson Entertainment, Shogakukan, dentsu, Fuji Television Network, Aniplex",
-      "boxOffice": "$8,852,989"
+      "boxOffice": "$8,852,989",
+      "trailer": "https://www.youtube.com/watch?v=mnOKdfEwNMQ"
     },
     {
       "slug": "your-name",
@@ -64,7 +66,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "CoMix Wave Films, TOHO, KADOKAWA, jeki, AMUSE, voque ting, Lawson Entertainment",
-      "boxOffice": "$358,000,000"
+      "boxOffice": "$358,000,000",
+      "trailer": "https://www.youtube.com/watch?v=o4-URMnBOPU"
     },
     {
       "slug": "silent-hill",
@@ -86,7 +89,8 @@
       "country": "Canada, France, Japan",
       "language": "English",
       "production": "Silent Hill DCP, Davis Films, Konami",
-      "boxOffice": "$100,605,135"
+      "boxOffice": "$100,605,135",
+      "trailer": "https://www.youtube.com/watch?v=1mfnhu8sO5k"
     },
     {
       "slug": "silent-hill-revelation-3d",
@@ -108,7 +112,8 @@
       "country": "Canada, France, Japan",
       "language": "English",
       "production": "Konami, Davis Films, Silent Hill 2 DCP",
-      "boxOffice": "$55,975,672"
+      "boxOffice": "$55,975,672",
+      "trailer": "https://www.youtube.com/watch?v=hEU2fk8pEug"
     },
     {
       "slug": "sucker-punch",
@@ -130,29 +135,29 @@
       "country": "Canada, United States of America",
       "language": "English, Deutsch",
       "production": "Legendary Pictures, Lennox House Films, Warner Bros. Pictures, Cruel & Unusual Films",
-      "boxOffice": "$89,792,502"
+      "boxOffice": "$89,792,502",
+      "trailer": "https://www.youtube.com/watch?v=vJ0xYZ5mVMc"
     },
     {
-      "slug": "god-help-the-girl",
-      "url": "https://letterboxd.com/film/god-help-the-girl/",
       "title": "God Help the Girl",
-      "original_title": "God Help the Girl",
+      "slug": "god-help-the-girl",
       "year": "2014",
-      "released": "2014-08-22",
-      "runtime": "111 min",
-      "genre": "Comédia, Drama, Música",
+      "url": "https://letterboxd.com/film/god-help-the-girl/",
+      "trailer": "https://www.youtube.com/watch?v=1zYFJHaZO_Y",
+      "plot": "Eve é uma jovem problemática que também tem talento para cantar e compor músicas, o que, nos momentos mais sombrios, se torna seu caminho adiante. A música a leva a Glasgow, onde conhece James e Cassie, duas almas gêmeas, cada uma em sua própria encruzilhada. Juntos, eles mergulham na cena musical da cidade enquanto suas vidas e letras se entrelaçam.",
       "director": "Stuart Murdoch",
       "actors": "Emily Browning, Olly Alexander, Hannah Murray, Pierre Boulanger, Cora Bissett",
-      "plot": "",
+      "genre": "Comédia, Drama, Música",
+      "runtime": "111 min",
+      "imdbRating": "6.5",
       "poster": "https://image.tmdb.org/t/p/w500/7HvJyWDP5OhgAjrg1qs1dHPV9rd.jpg",
       "backdrop": "https://image.tmdb.org/t/p/original/yMh8badxy3ekUavcBNW37hjWE1d.jpg",
-      "imdbRating": "6.5",
       "imdbVotes": "227",
-      "tmdb_slug": "god-help-the-girl",
       "country": "United Kingdom",
       "language": "English",
       "production": "HanWay Films, Barry Mendel Productions, British Film Company",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "released": "2014-08-22"
     },
     {
       "slug": "lemony-snickets-a-series-of-unfortunate-events",
@@ -174,7 +179,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, DreamWorks Pictures, Nickelodeon Movies, Parkes+MacDonald Production",
-      "boxOffice": "$209,073,645"
+      "boxOffice": "$209,073,645",
+      "trailer": "https://www.youtube.com/watch?v=AN8gFIvKts0"
     },
     {
       "slug": "the-girl-who-leapt-through-time",
@@ -196,7 +202,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "Madhouse, Happinet Pictures, KADOKAWA, KADOKAWA Shoten, Q-TEC, Memory-Tech, Studio Chizu",
-      "boxOffice": "$3,478,290"
+      "boxOffice": "$3,478,290",
+      "trailer": "https://www.youtube.com/watch?v=boZINHGDxMw"
     },
     {
       "slug": "i-kill-giants",
@@ -218,7 +225,8 @@
       "country": "Belgium, United Kingdom, United States of America, Ireland",
       "language": "English",
       "production": "XYZ Films, 1492 Pictures, Having Me Films, Ocean Blue Entertainment, uFund, Man of Action Entertainment, Adonis Production, Parallel Films, uMedia",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=n7Jg-eo8nBo"
     },
     {
       "slug": "bridge-to-terabithia",
@@ -240,7 +248,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lauren Levine Productions Inc., Walden Media, Hal Lieberman Company, Walt Disney Pictures",
-      "boxOffice": "$137,587,063"
+      "boxOffice": "$137,587,063",
+      "trailer": "https://www.youtube.com/watch?v=50xhXc1ZU_c"
     },
     {
       "slug": "drive-2011",
@@ -262,7 +271,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "FilmDistrict, Bold Films, Marc Platt Productions, OddLot Entertainment, Motel Movies, Newbridge Film Capital",
-      "boxOffice": "$78,100,000"
+      "boxOffice": "$78,100,000",
+      "trailer": "https://www.youtube.com/watch?v=J8lZi3ocbYk"
     },
     {
       "slug": "fight-club",
@@ -284,7 +294,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Fox 2000 Pictures, Regency Enterprises, Linson Entertainment, 20th Century Fox, Taurus Film",
-      "boxOffice": "$100,853,753"
+      "boxOffice": "$100,853,753",
+      "trailer": "https://www.youtube.com/watch?v=dfeUzm6KF4g"
     },
     {
       "slug": "joker-2019",
@@ -306,7 +317,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Joint Effort, Village Roadshow Pictures, Bron Studios, DC Films",
-      "boxOffice": "$1,078,958,629"
+      "boxOffice": "$1,078,958,629",
+      "trailer": "https://www.youtube.com/watch?v=i-mq08BpLWE"
     },
     {
       "slug": "amelie-2001",
@@ -328,7 +340,8 @@
       "country": "France, Germany",
       "language": "Français, Pусский",
       "production": "Victoires Productions, Tapioca Films, France 3 Cinéma, MMC Independent, UGC, Claudie Ossard Productions",
-      "boxOffice": "$173,921,954"
+      "boxOffice": "$173,921,954",
+      "trailer": "https://www.youtube.com/watch?v=QY6Qt0ZUeVQ"
     },
     {
       "slug": "into-the-wild",
@@ -350,7 +363,8 @@
       "country": "United States of America",
       "language": "Dansk, English",
       "production": "River Road Entertainment, Paramount Vantage, Linson Entertainment, Square One C.I.H., Into the Wild",
-      "boxOffice": "$56,255,142"
+      "boxOffice": "$56,255,142",
+      "trailer": "https://www.youtube.com/watch?v=XZG1FzyB8DI"
     },
     {
       "slug": "jurassic-park-1993",
@@ -372,7 +386,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Universal Pictures, Amblin Entertainment",
-      "boxOffice": "$920,100,000"
+      "boxOffice": "$920,100,000",
+      "trailer": "https://www.youtube.com/watch?v=f9ch9_52pSk"
     },
     {
       "slug": "the-lost-world-jurassic-park",
@@ -394,7 +409,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Universal Pictures, Amblin Entertainment",
-      "boxOffice": "$618,638,999"
+      "boxOffice": "$618,638,999",
+      "trailer": "https://www.youtube.com/watch?v=vtfwgaHD5_w"
     },
     {
       "slug": "jurassic-park-iii",
@@ -416,7 +432,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Universal Pictures, Amblin Entertainment",
-      "boxOffice": "$368,780,809"
+      "boxOffice": "$368,780,809",
+      "trailer": "https://www.youtube.com/watch?v=nMSATV39o-c"
     },
     {
       "slug": "jurassic-world-2015",
@@ -438,7 +455,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Amblin Entertainment, Universal Pictures, Legendary Pictures",
-      "boxOffice": "$1,671,537,444"
+      "boxOffice": "$1,671,537,444",
+      "trailer": "https://www.youtube.com/watch?v=aJJrkyHas78"
     },
     {
       "slug": "jurassic-world-fallen-kingdom",
@@ -460,7 +478,8 @@
       "country": "United States of America",
       "language": "English, Pусский",
       "production": "Amblin Entertainment, Universal Pictures",
-      "boxOffice": "$1,310,469,037"
+      "boxOffice": "$1,310,469,037",
+      "trailer": "https://www.youtube.com/watch?v=JZDXwycMjSc"
     },
     {
       "slug": "war-of-the-worlds-2005",
@@ -482,7 +501,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, DreamWorks Pictures, Amblin Entertainment, Cruise/Wagner Productions",
-      "boxOffice": "$603,873,119"
+      "boxOffice": "$603,873,119",
+      "trailer": "https://www.youtube.com/watch?v=9oNgmaFJXnY"
     },
     {
       "slug": "the-breakfast-club",
@@ -504,7 +524,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Universal Pictures, A&M Films, Channel Productions",
-      "boxOffice": "$51,530,442"
+      "boxOffice": "$51,530,442",
+      "trailer": "https://www.youtube.com/watch?v=OVdr9HiAStI"
     },
     {
       "slug": "the-hitchhikers-guide-to-the-galaxy-2005",
@@ -526,7 +547,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Spyglass Entertainment, Everyman Pictures, Hammer & Tongs, Touchstone Pictures",
-      "boxOffice": "$104,500,000"
+      "boxOffice": "$104,500,000",
+      "trailer": "https://www.youtube.com/watch?v=MbGNcoB2Y4I"
     },
     {
       "slug": "a-monster-calls",
@@ -548,7 +570,8 @@
       "country": "Spain, United States of America",
       "language": "English",
       "production": "River Road Entertainment, Participant, Apaches Films, La Trini, A Monster Calls, Telecinco Cinema",
-      "boxOffice": "$47,309,313"
+      "boxOffice": "$47,309,313",
+      "trailer": "https://www.youtube.com/watch?v=8q-7trUd8Vw"
     },
     {
       "slug": "tron-legacy",
@@ -570,7 +593,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Sean Bailey Productions",
-      "boxOffice": "$409,912,892"
+      "boxOffice": "$409,912,892",
+      "trailer": "https://www.youtube.com/watch?v=m9CTGwEZiPk"
     },
     {
       "slug": "no-game-no-life",
@@ -592,7 +616,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "Madhouse, AT-X, KADOKAWA, movic, Frontier Works",
-      "boxOffice": "$6,356,284"
+      "boxOffice": "$6,356,284",
+      "trailer": "https://www.youtube.com/watch?v=0-KGvuSmdr0"
     },
     {
       "slug": "the-new-mutants",
@@ -614,7 +639,8 @@
       "country": "United States of America",
       "language": "Latin, English, Português",
       "production": "20th Century Studios, Genre Films, Sunswept Entertainment, Marvel Entertainment",
-      "boxOffice": "$49,169,594"
+      "boxOffice": "$49,169,594",
+      "trailer": "https://www.youtube.com/watch?v=b99eAtayLDo"
     },
     {
       "slug": "alita-battle-angel",
@@ -636,7 +662,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Troublemaker Studios, Lightstorm Entertainment, 20th Century Fox, TSG Entertainment",
-      "boxOffice": "$405,000,000"
+      "boxOffice": "$405,000,000",
+      "trailer": "https://www.youtube.com/watch?v=Nxn9uzZyhrM"
     },
     {
       "slug": "that-time-i-got-reincarnated-as-a-slime-the-movie-scarlet-bond",
@@ -658,7 +685,8 @@
       "country": "Japan",
       "language": "日本語",
       "production": "8bit, Bandai Namco Filmworks, Sony Music Solutions, Bandai Spirits, Kodansha, MICRO MAGAZINE, Bandai Namco Music Live, BS11, ADK Marketing Solutions, Nippon Television Network Corporation, Lantis",
-      "boxOffice": "$11,628,645"
+      "boxOffice": "$11,628,645",
+      "trailer": "https://www.youtube.com/watch?v=fG8fUTen5NI"
     },
     {
       "slug": "star-wars",
@@ -680,7 +708,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd., 20th Century Fox",
-      "boxOffice": "$775,398,007"
+      "boxOffice": "$775,398,007",
+      "trailer": "https://www.youtube.com/watch?v=9gvqpFbRKtQ"
     },
     {
       "slug": "star-wars-episode-i-the-phantom-menace",
@@ -702,7 +731,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$924,317,558"
+      "boxOffice": "$924,317,558",
+      "trailer": "https://www.youtube.com/watch?v=I6hOlI9cg4o"
     },
     {
       "slug": "star-wars-episode-ii-attack-of-the-clones",
@@ -724,7 +754,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$649,398,328"
+      "boxOffice": "$649,398,328",
+      "trailer": "https://www.youtube.com/watch?v=lG8k-DkGfT4"
     },
     {
       "slug": "star-wars-episode-iii-revenge-of-the-sith",
@@ -746,7 +777,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$850,000,000"
+      "boxOffice": "$850,000,000",
+      "trailer": "https://www.youtube.com/watch?v=5UnjrG_N8hU"
     },
     {
       "slug": "rogue-one-a-star-wars-story",
@@ -768,7 +800,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$1,056,057,273"
+      "boxOffice": "$1,056,057,273",
+      "trailer": "https://www.youtube.com/watch?v=sC9abcLLQpI"
     },
     {
       "slug": "star-wars-the-force-awakens",
@@ -790,7 +823,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd., Bad Robot",
-      "boxOffice": "$2,068,223,624"
+      "boxOffice": "$2,068,223,624",
+      "trailer": "https://www.youtube.com/watch?v=79uryDzN5A4"
     },
     {
       "slug": "the-empire-strikes-back",
@@ -812,7 +846,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$538,400,000"
+      "boxOffice": "$538,400,000",
+      "trailer": "https://www.youtube.com/watch?v=xESiohGGP7g"
     },
     {
       "slug": "return-of-the-jedi",
@@ -834,7 +869,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lucasfilm Ltd.",
-      "boxOffice": "$572,700,000"
+      "boxOffice": "$572,700,000",
+      "trailer": "https://www.youtube.com/watch?v=5UfA_aKBGMc"
     },
     {
       "slug": "the-fast-and-the-furious-2001",
@@ -856,7 +892,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Ardustry Entertainment, Universal Pictures, Original Film, Mediastream Film",
-      "boxOffice": "$207,283,925"
+      "boxOffice": "$207,283,925",
+      "trailer": "https://www.youtube.com/watch?v=4bEMXlQXiS0"
     },
     {
       "slug": "2-fast-2-furious",
@@ -878,7 +915,8 @@
       "country": "Germany, United States of America",
       "language": "English, Español",
       "production": "Ardustry Entertainment, Mikona Productions, Original Film, Universal Pictures",
-      "boxOffice": "$236,350,661"
+      "boxOffice": "$236,350,661",
+      "trailer": "https://www.youtube.com/watch?v=t3vEkE_8S3w"
     },
     {
       "slug": "the-fast-and-the-furious-tokyo-drift",
@@ -900,7 +938,8 @@
       "country": "Germany, Japan, United States of America",
       "language": "English, 日本語",
       "production": "MP Munich Pape Filmproductions, Original Film, Relativity Media, Universal Pictures, Cine Bazar",
-      "boxOffice": "$158,964,610"
+      "boxOffice": "$158,964,610",
+      "trailer": "https://www.youtube.com/watch?v=K6RWbKMSDcg"
     },
     {
       "slug": "fast-furious-2009",
@@ -922,7 +961,8 @@
       "country": "Japan, United States of America",
       "language": "English, Español",
       "production": "dentsu, Universal Pictures, Relativity Media, Original Film, One Race",
-      "boxOffice": "$363,164,265"
+      "boxOffice": "$363,164,265",
+      "trailer": "https://www.youtube.com/watch?v=ne5E7hOQqn0"
     },
     {
       "slug": "fast-five",
@@ -944,7 +984,8 @@
       "country": "United States of America",
       "language": "English, Español, Português, Italiano",
       "production": "Original Film, Universal Pictures, One Race",
-      "boxOffice": "$626,100,000"
+      "boxOffice": "$626,100,000",
+      "trailer": "https://www.youtube.com/watch?v=P1UVXvKnCLM"
     },
     {
       "slug": "fast-furious-6",
@@ -966,7 +1007,8 @@
       "country": "United States of America",
       "language": "广州话 / 廣州話, Nederlands, English, 日本語, Pусский, Español",
       "production": "Relativity Media, Original Film, One Race",
-      "boxOffice": "$788,700,000"
+      "boxOffice": "$788,700,000",
+      "trailer": "https://www.youtube.com/watch?v=-1ysq_lKovg"
     },
     {
       "slug": "furious-7",
@@ -988,7 +1030,8 @@
       "country": "United States of America",
       "language": "العربية, English, Español, ภาษาไทย",
       "production": "Original Film, One Race, Universal Pictures",
-      "boxOffice": "$1,515,400,000"
+      "boxOffice": "$1,515,400,000",
+      "trailer": "https://www.youtube.com/watch?v=B3Ms2yFvus0"
     },
     {
       "slug": "the-fate-of-the-furious",
@@ -1010,7 +1053,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Original Film, One Race, Universal Pictures",
-      "boxOffice": "$1,236,000,000"
+      "boxOffice": "$1,236,000,000",
+      "trailer": "https://www.youtube.com/watch?v=iVdIiOKBPkg"
     },
     {
       "slug": "f9",
@@ -1032,7 +1076,8 @@
       "country": "United States of America",
       "language": "English, Français, Deutsch, Español",
       "production": "Original Film, One Race, Perfect Storm Entertainment, Universal Pictures, Roth-Kirschenbaum Films",
-      "boxOffice": "$726,229,501"
+      "boxOffice": "$726,229,501",
+      "trailer": "https://www.youtube.com/watch?v=jMV447gwrbs"
     },
     {
       "slug": "fast-x",
@@ -1054,7 +1099,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Universal Pictures, Original Film, One Race, Perfect Storm Entertainment",
-      "boxOffice": "$704,709,660"
+      "boxOffice": "$704,709,660",
+      "trailer": "https://www.youtube.com/watch?v=eoOaKN4qCKw"
     },
     {
       "slug": "fast-furious-presents-hobbs-shaw",
@@ -1076,7 +1122,8 @@
       "country": "United States of America",
       "language": "English, Pусский, ",
       "production": "Chris Morgan Productions, Seven Bucks Productions, Universal Pictures",
-      "boxOffice": "$760,098,996"
+      "boxOffice": "$760,098,996",
+      "trailer": "https://www.youtube.com/watch?v=b736ZM_KfEk"
     },
     {
       "slug": "iron-man-2008",
@@ -1098,7 +1145,8 @@
       "country": "United States of America",
       "language": "English, فارسی, اردو, العربية",
       "production": "Marvel Studios, Marvel Entertainment, Fairview Entertainment",
-      "boxOffice": "$585,174,222"
+      "boxOffice": "$585,174,222",
+      "trailer": "https://www.youtube.com/watch?v=KAE5ymVLmZg"
     },
     {
       "slug": "the-incredible-hulk-2008",
@@ -1120,7 +1168,8 @@
       "country": "United States of America",
       "language": "Português, Español, English",
       "production": "Marvel Studios, Valhalla Motion Pictures, Marvel Entertainment",
-      "boxOffice": "$264,770,996"
+      "boxOffice": "$264,770,996",
+      "trailer": "https://www.youtube.com/watch?v=7Z-tsPXi_qs"
     },
     {
       "slug": "iron-man-2",
@@ -1142,7 +1191,8 @@
       "country": "United States of America",
       "language": "English, Pусский, Français",
       "production": "Marvel Studios, Fairview Entertainment, Marvel Entertainment",
-      "boxOffice": "$623,933,331"
+      "boxOffice": "$623,933,331",
+      "trailer": "https://www.youtube.com/watch?v=BoohRoVA9WQ"
     },
     {
       "slug": "iron-man-3",
@@ -1164,7 +1214,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$1,215,577,205"
+      "boxOffice": "$1,215,577,205",
+      "trailer": "https://www.youtube.com/watch?v=tCGBaHVAHDg"
     },
     {
       "slug": "captain-america-the-first-avenger",
@@ -1186,7 +1237,8 @@
       "country": "United States of America",
       "language": "Français, Norsk, English",
       "production": "Marvel Studios, Marvel Entertainment",
-      "boxOffice": "$370,569,774"
+      "boxOffice": "$370,569,774",
+      "trailer": "https://www.youtube.com/watch?v=RfJrn8QcHdA"
     },
     {
       "slug": "captain-marvel",
@@ -1208,7 +1260,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$1,131,416,446"
+      "boxOffice": "$1,131,416,446",
+      "trailer": "https://www.youtube.com/watch?v=wTqUqYRoyNQ"
     },
     {
       "slug": "the-avengers-2012",
@@ -1230,7 +1283,8 @@
       "country": "United States of America",
       "language": "English, हिन्दी, Pусский",
       "production": "Marvel Studios",
-      "boxOffice": "$1,518,815,515"
+      "boxOffice": "$1,518,815,515",
+      "trailer": "https://www.youtube.com/watch?v=LpqmdmQWOew"
     },
     {
       "slug": "avengers-age-of-ultron",
@@ -1252,7 +1306,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$1,405,403,694"
+      "boxOffice": "$1,405,403,694",
+      "trailer": "https://www.youtube.com/watch?v=AsC_2_IsxKU"
     },
     {
       "slug": "avengers-infinity-war",
@@ -1274,7 +1329,8 @@
       "country": "United States of America",
       "language": "English, ",
       "production": "Marvel Studios",
-      "boxOffice": "$2,052,415,039"
+      "boxOffice": "$2,052,415,039",
+      "trailer": "https://www.youtube.com/watch?v=ILDUeEZ3l2c"
     },
     {
       "slug": "avengers-endgame",
@@ -1296,7 +1352,8 @@
       "country": "United States of America",
       "language": "English, 日本語, ",
       "production": "Marvel Studios",
-      "boxOffice": "$2,799,439,100"
+      "boxOffice": "$2,799,439,100",
+      "trailer": "https://www.youtube.com/watch?v=l0I9Qyn-l2M"
     },
     {
       "slug": "black-panther",
@@ -1318,7 +1375,8 @@
       "country": "United States of America",
       "language": "English, 한국어/조선말, Kiswahili, ",
       "production": "Marvel Studios",
-      "boxOffice": "$1,349,926,083"
+      "boxOffice": "$1,349,926,083",
+      "trailer": "https://www.youtube.com/watch?v=norjti4F2oM"
     },
     {
       "slug": "doctor-strange-2016",
@@ -1340,7 +1398,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$676,343,174"
+      "boxOffice": "$676,343,174",
+      "trailer": "https://www.youtube.com/watch?v=w4mQ0Pb2WYw"
     },
     {
       "slug": "thor",
@@ -1362,7 +1421,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios, Marvel Entertainment",
-      "boxOffice": "$449,326,618"
+      "boxOffice": "$449,326,618",
+      "trailer": "https://www.youtube.com/watch?v=uHBnrJowBZE"
     },
     {
       "slug": "thor-the-dark-world",
@@ -1384,7 +1444,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$644,783,140"
+      "boxOffice": "$644,783,140",
+      "trailer": "https://www.youtube.com/watch?v=bkSwVHxtlUM"
     },
     {
       "slug": "thor-ragnarok",
@@ -1406,7 +1467,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$855,301,806"
+      "boxOffice": "$855,301,806",
+      "trailer": "https://www.youtube.com/watch?v=eixY_YtDXDM"
     },
     {
       "slug": "guardians-of-the-galaxy",
@@ -1428,7 +1490,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$772,776,600"
+      "boxOffice": "$772,776,600",
+      "trailer": "https://www.youtube.com/watch?v=lQl530nGjMI"
     },
     {
       "slug": "guardians-of-the-galaxy-vol-2",
@@ -1450,7 +1513,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$863,756,051"
+      "boxOffice": "$863,756,051",
+      "trailer": "https://www.youtube.com/watch?v=5P9MpmKDnuk"
     },
     {
       "slug": "spider-man-homecoming",
@@ -1472,7 +1536,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios, Pascal Pictures, LStar Capital, Columbia Pictures",
-      "boxOffice": "$880,978,185"
+      "boxOffice": "$880,978,185",
+      "trailer": "https://www.youtube.com/watch?v=0nECpcfqkBU"
     },
     {
       "slug": "spider-man-far-from-home",
@@ -1494,7 +1559,8 @@
       "country": "United States of America",
       "language": "Český, Nederlands, English, Deutsch, Italiano",
       "production": "Marvel Studios, Pascal Pictures, Columbia Pictures",
-      "boxOffice": "$1,132,723,226"
+      "boxOffice": "$1,132,723,226",
+      "trailer": "https://www.youtube.com/watch?v=LFoz8ZJWmPs"
     },
     {
       "slug": "black-widow-2021",
@@ -1516,7 +1582,8 @@
       "country": "United States of America",
       "language": "English, Pусский",
       "production": "Marvel Studios",
-      "boxOffice": "$379,751,131"
+      "boxOffice": "$379,751,131",
+      "trailer": "https://www.youtube.com/watch?v=Fp9pNPdNwjI"
     },
     {
       "slug": "captain-america-civil-war",
@@ -1538,7 +1605,8 @@
       "country": "United States of America",
       "language": "Română, English, Deutsch, Pусский",
       "production": "Marvel Studios",
-      "boxOffice": "$1,155,046,416"
+      "boxOffice": "$1,155,046,416",
+      "trailer": "https://www.youtube.com/watch?v=kLLHJewNRlc"
     },
     {
       "slug": "captain-america-the-winter-soldier",
@@ -1560,7 +1628,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$714,766,572"
+      "boxOffice": "$714,766,572",
+      "trailer": "https://www.youtube.com/watch?v=VBxvGROjVUs"
     },
     {
       "slug": "ant-man",
@@ -1582,7 +1651,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$519,311,965"
+      "boxOffice": "$519,311,965",
+      "trailer": "https://www.youtube.com/watch?v=YscnAgGljT8"
     },
     {
       "slug": "ant-man-and-the-wasp",
@@ -1604,7 +1674,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Studios",
-      "boxOffice": "$622,674,139"
+      "boxOffice": "$622,674,139",
+      "trailer": "https://www.youtube.com/watch?v=M4msHA64Dv8"
     },
     {
       "slug": "x-men",
@@ -1626,7 +1697,8 @@
       "country": "United States of America",
       "language": "English, Français, Pусский, Tiếng Việt",
       "production": "Bad Hat Harry Productions, The Donners' Company, 20th Century Fox, Marvel Entertainment, TSG Entertainment, Genre Films",
-      "boxOffice": "$746,045,700"
+      "boxOffice": "$746,045,700",
+      "trailer": "https://www.youtube.com/watch?v=G6GWVc4prVQ"
     },
     {
       "slug": "x2",
@@ -1648,7 +1720,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, Italiano",
       "production": "The Donners' Company, Bad Hat Harry Productions, 20th Century Fox, Marvel Enterprises",
-      "boxOffice": "$407,711,549"
+      "boxOffice": "$407,711,549",
+      "trailer": "https://www.youtube.com/watch?v=yVzqz_zpP20"
     },
     {
       "slug": "x-men-the-last-stand",
@@ -1670,7 +1743,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "The Donners' Company, 20th Century Fox, Marvel Entertainment",
-      "boxOffice": "$459,359,555"
+      "boxOffice": "$459,359,555",
+      "trailer": "https://www.youtube.com/watch?v=X8ozc_dQprk"
     },
     {
       "slug": "x-men-origins-wolverine",
@@ -1692,7 +1766,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "The Donners' Company, Seed Productions, 20th Century Fox, Marvel Entertainment, Dune Entertainment",
-      "boxOffice": "$373,062,864"
+      "boxOffice": "$373,062,864",
+      "trailer": "https://www.youtube.com/watch?v=PzyjvWiigxg"
     },
     {
       "slug": "x-men-first-class",
@@ -1714,7 +1789,8 @@
       "country": "United States of America",
       "language": "Deutsch, English, Español, Français, Pусский",
       "production": "The Donners' Company, Bad Hat Harry Productions, 20th Century Fox, Marvel Entertainment",
-      "boxOffice": "$353,624,124"
+      "boxOffice": "$353,624,124",
+      "trailer": "https://www.youtube.com/watch?v=XKF6J6kgs0s"
     },
     {
       "slug": "the-wolverine",
@@ -1736,7 +1812,8 @@
       "country": "United States of America",
       "language": "English, 日本語",
       "production": "The Donners' Company, 20th Century Fox, Marvel Entertainment",
-      "boxOffice": "$415,440,673"
+      "boxOffice": "$415,440,673",
+      "trailer": "https://www.youtube.com/watch?v=-VxgDQCLHEE"
     },
     {
       "slug": "x-men-days-of-future-past",
@@ -1758,7 +1835,8 @@
       "country": "United States of America",
       "language": "English, Français, Pусский, Tiếng Việt",
       "production": "Bad Hat Harry Productions, The Donners' Company, 20th Century Fox, Marvel Entertainment, TSG Entertainment, Genre Films",
-      "boxOffice": "$746,045,700"
+      "boxOffice": "$746,045,700",
+      "trailer": "https://www.youtube.com/watch?v=G6GWVc4prVQ"
     },
     {
       "slug": "x-men-apocalypse",
@@ -1780,7 +1858,8 @@
       "country": "United States of America",
       "language": "العربية, English, Deutsch, Polski, Pусский, Kiswahili",
       "production": "The Donners' Company, Bad Hat Harry Productions, Genre Films, Hutch Parker Entertainment, 20th Century Fox, Marvel Entertainment, TSG Entertainment",
-      "boxOffice": "$543,934,787"
+      "boxOffice": "$543,934,787",
+      "trailer": "https://www.youtube.com/watch?v=U2oFGMML3TE"
     },
     {
       "slug": "logan-2017",
@@ -1802,7 +1881,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Hutch Parker Entertainment, The Donners' Company, Genre Films, 20th Century Fox, Marvel Entertainment, TSG Entertainment",
-      "boxOffice": "$619,021,436"
+      "boxOffice": "$619,021,436",
+      "trailer": "https://www.youtube.com/watch?v=ZEClW214jZ4"
     },
     {
       "slug": "dark-phoenix",
@@ -1824,7 +1904,8 @@
       "country": "United States of America",
       "language": "Pусский, English, Português",
       "production": "Genre Films, Hutch Parker Entertainment, 20th Century Fox, TSG Entertainment, Marvel Entertainment",
-      "boxOffice": "$252,442,974"
+      "boxOffice": "$252,442,974",
+      "trailer": "https://www.youtube.com/watch?v=azvR__GRQic"
     },
     {
       "slug": "harry-potter-and-the-philosophers-stone",
@@ -1846,7 +1927,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films, 1492 Pictures",
-      "boxOffice": "$976,475,550"
+      "boxOffice": "$976,475,550",
+      "trailer": "https://www.youtube.com/watch?v=l91Km49W9qI"
     },
     {
       "slug": "harry-potter-and-the-chamber-of-secrets",
@@ -1868,7 +1950,8 @@
       "country": "United Kingdom, United States of America, Germany",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films, 1492 Pictures, MIRACLE Productions",
-      "boxOffice": "$876,688,482"
+      "boxOffice": "$876,688,482",
+      "trailer": "https://www.youtube.com/watch?v=nE11U5iBnH0"
     },
     {
       "slug": "harry-potter-and-the-prisoner-of-azkaban",
@@ -1890,7 +1973,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, 1492 Pictures, Heyday Films, P of A Productions",
-      "boxOffice": "$789,804,554"
+      "boxOffice": "$789,804,554",
+      "trailer": "https://www.youtube.com/watch?v=VwErvYgoH70"
     },
     {
       "slug": "harry-potter-and-the-goblet-of-fire",
@@ -1912,7 +1996,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Français",
       "production": "Warner Bros. Pictures, Heyday Films, Patalex IV Productions",
-      "boxOffice": "$895,921,036"
+      "boxOffice": "$895,921,036",
+      "trailer": "https://www.youtube.com/watch?v=4xkFJgcCQRE"
     },
     {
       "slug": "harry-potter-and-the-order-of-the-phoenix",
@@ -1934,7 +2019,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films",
-      "boxOffice": "$938,212,738"
+      "boxOffice": "$938,212,738",
+      "trailer": "https://www.youtube.com/watch?v=47PHbQTmw5g"
     },
     {
       "slug": "harry-potter-and-the-half-blood-prince",
@@ -1956,7 +2042,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films",
-      "boxOffice": "$933,959,197"
+      "boxOffice": "$933,959,197",
+      "trailer": "https://www.youtube.com/watch?v=DgeDDXcw--I"
     },
     {
       "slug": "harry-potter-and-the-deathly-hallows-part-1",
@@ -1978,7 +2065,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films",
-      "boxOffice": "$954,305,868"
+      "boxOffice": "$954,305,868",
+      "trailer": "https://www.youtube.com/watch?v=ZZW4zmiR4ag"
     },
     {
       "slug": "harry-potter-and-the-deathly-hallows-part-2",
@@ -2000,7 +2088,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Heyday Films",
-      "boxOffice": "$1,341,511,219"
+      "boxOffice": "$1,341,511,219",
+      "trailer": "https://www.youtube.com/watch?v=ZIFONHPjxKw"
     },
     {
       "slug": "alien",
@@ -2022,7 +2111,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English, Español",
       "production": "Brandywine Productions, Twentieth Century-Fox Productions, Ronald Shusett Productions",
-      "boxOffice": "$104,931,801"
+      "boxOffice": "$104,931,801",
+      "trailer": "https://www.youtube.com/watch?v=bM01Al2SWx4"
     },
     {
       "slug": "aliens",
@@ -2044,7 +2134,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "SLM Production Group, 20th Century Fox, Brandywine Productions",
-      "boxOffice": "$183,316,455"
+      "boxOffice": "$183,316,455",
+      "trailer": "https://www.youtube.com/watch?v=8OxirbuHsBA"
     },
     {
       "slug": "alien-3",
@@ -2066,7 +2157,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "20th Century Fox, Brandywine Productions",
-      "boxOffice": "$159,773,545"
+      "boxOffice": "$159,773,545",
+      "trailer": "https://www.youtube.com/watch?v=e45rAwndek8"
     },
     {
       "slug": "alien-covenant",
@@ -2088,7 +2180,8 @@
       "country": "United States of America",
       "language": "English, Deutsch",
       "production": "20th Century Fox, Brandywine Productions, Scott Free Productions",
-      "boxOffice": "$240,891,763"
+      "boxOffice": "$240,891,763",
+      "trailer": "https://www.youtube.com/watch?v=svnAD0TApb8"
     },
     {
       "slug": "avp-alien-vs-predator",
@@ -2110,7 +2203,8 @@
       "country": "Czech Republic, Germany, United Kingdom, United States of America",
       "language": "Italiano, English",
       "production": "Studio Babelsberg, Davis Entertainment, Stillking Films, Lonlink Productions, Kut Productions, Inside Track 2, 20th Century Fox, Brandywine Productions",
-      "boxOffice": "$177,427,090"
+      "boxOffice": "$177,427,090",
+      "trailer": "https://www.youtube.com/watch?v=fQE62sQBkqA"
     },
     {
       "slug": "prometheus",
@@ -2132,7 +2226,8 @@
       "country": "United States of America, United Kingdom",
       "language": ", English",
       "production": "Dune Entertainment, 20th Century Fox, Brandywine Productions, Scott Free Productions",
-      "boxOffice": "$403,354,469"
+      "boxOffice": "$403,354,469",
+      "trailer": "https://www.youtube.com/watch?v=cJMIzdf1eo8"
     },
     {
       "slug": "the-terminator",
@@ -2154,7 +2249,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Español",
       "production": "Hemdale, Pacific Western",
-      "boxOffice": "$78,371,200"
+      "boxOffice": "$78,371,200",
+      "trailer": "https://www.youtube.com/watch?v=nGrW-OR2uDk"
     },
     {
       "slug": "terminator-2-judgment-day",
@@ -2176,7 +2272,8 @@
       "country": "France, United States of America",
       "language": "English, Español",
       "production": "Carolco Pictures, Pacific Western, Lightstorm Entertainment, Le Studio Canal+",
-      "boxOffice": "$517,778,573"
+      "boxOffice": "$517,778,573",
+      "trailer": "https://www.youtube.com/watch?v=hRrNL9bRPz0"
     },
     {
       "slug": "terminator-3-rise-of-the-machines",
@@ -2198,7 +2295,8 @@
       "country": "Germany, United Kingdom, United States of America",
       "language": "English",
       "production": "Intermedia Films, IMF Internationale Medien und Film 3 & Produktions, C2 Pictures, Mostow/Lieberman Productions",
-      "boxOffice": "$435,000,000"
+      "boxOffice": "$435,000,000",
+      "trailer": "https://www.youtube.com/watch?v=ysQizA7Una8"
     },
     {
       "slug": "terminator-salvation",
@@ -2220,7 +2318,8 @@
       "country": "United States of America",
       "language": "English, Italiano",
       "production": "The Halcyon Company, Moritz Borman Productions, Wonderland Sound and Vision, Mandate International, T Asset Acquisition Company, Columbia Pictures, Warner Bros. Pictures",
-      "boxOffice": "$371,353,001"
+      "boxOffice": "$371,353,001",
+      "trailer": "https://www.youtube.com/watch?v=MRN71NlONZU"
     },
     {
       "slug": "terminator-genisys",
@@ -2242,7 +2341,8 @@
       "country": "United States of America, Canada",
       "language": "English",
       "production": "Paramount Pictures, Skydance Media, Annapurna Pictures",
-      "boxOffice": "$440,603,537"
+      "boxOffice": "$440,603,537",
+      "trailer": "https://www.youtube.com/watch?v=_hLRtchRPE0"
     },
     {
       "slug": "terminator-dark-fate",
@@ -2264,7 +2364,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "20th Century Fox, Skydance Media, Paramount Pictures, Tencent Pictures, TSG Entertainment, Lightstorm Entertainment",
-      "boxOffice": "$261,119,292"
+      "boxOffice": "$261,119,292",
+      "trailer": "https://www.youtube.com/watch?v=yWS6578Yg1g"
     },
     {
       "slug": "mission-impossible",
@@ -2286,7 +2387,8 @@
       "country": "United States of America",
       "language": "English, Français, , Pусский",
       "production": "Paramount Pictures, Skydance Media, TC Productions",
-      "boxOffice": "$598,767,057"
+      "boxOffice": "$598,767,057",
+      "trailer": "https://www.youtube.com/watch?v=NfhG28auSdg"
     },
     {
       "slug": "mission-impossible-ii",
@@ -2308,7 +2410,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Cruise/Wagner Productions",
-      "boxOffice": "$546,388,108"
+      "boxOffice": "$546,388,108",
+      "trailer": "https://www.youtube.com/watch?v=hSPtsCQq52k"
     },
     {
       "slug": "mission-impossible-iii",
@@ -2330,7 +2433,8 @@
       "country": "United States of America",
       "language": "Deutsch, English, Italiano, 普通话, Český, 广州话 / 廣州話",
       "production": "Paramount Pictures, Cruise/Wagner Productions",
-      "boxOffice": "$398,479,497"
+      "boxOffice": "$398,479,497",
+      "trailer": "https://www.youtube.com/watch?v=4oVva0muTE8"
     },
     {
       "slug": "mission-impossible-ghost-protocol",
@@ -2352,7 +2456,8 @@
       "country": "United States of America",
       "language": "English, Pусский, Français, العربية, svenska",
       "production": "Paramount Pictures, Bad Robot, TC Productions, Skydance Media",
-      "boxOffice": "$694,713,380"
+      "boxOffice": "$694,713,380",
+      "trailer": "https://www.youtube.com/watch?v=7wkih9Yvxq0"
     },
     {
       "slug": "mission-impossible-rogue-nation",
@@ -2374,7 +2479,8 @@
       "country": "United States of America",
       "language": "Deutsch, English, svenska",
       "production": "Paramount Pictures, Bad Robot, Odin, Skydance Media",
-      "boxOffice": "$682,716,636"
+      "boxOffice": "$682,716,636",
+      "trailer": "https://www.youtube.com/watch?v=F-qBD17wwrQ"
     },
     {
       "slug": "mission-impossible-fallout",
@@ -2396,7 +2502,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "Paramount Pictures, Bad Robot, Skydance Media, TC Productions",
-      "boxOffice": "$791,658,205"
+      "boxOffice": "$791,658,205",
+      "trailer": "https://www.youtube.com/watch?v=MEOOas3JZt0"
     },
     {
       "slug": "mission-impossible-dead-reckoning",
@@ -2418,7 +2525,8 @@
       "country": "United States of America",
       "language": "Français, English, Italiano, Pусский",
       "production": "Paramount Pictures, Skydance Media, TC Productions",
-      "boxOffice": "$571,125,435"
+      "boxOffice": "$571,125,435",
+      "trailer": "https://www.youtube.com/watch?v=WWDgIkTDuOc"
     },
     {
       "slug": "john-wick-2014",
@@ -2440,7 +2548,8 @@
       "country": "United States of America",
       "language": "Magyar, English, Pусский",
       "production": "87Eleven, DefyNite Films, MJW Films, Thunder Road",
-      "boxOffice": "$88,761,661"
+      "boxOffice": "$88,761,661",
+      "trailer": "https://www.youtube.com/watch?v=6r0s41Ju5XA"
     },
     {
       "slug": "john-wick-chapter-2",
@@ -2462,7 +2571,8 @@
       "country": "United States of America",
       "language": "English, עִבְרִית, Italiano, Pусский",
       "production": "Thunder Road, 87Eleven, Summit Entertainment",
-      "boxOffice": "$171,539,887"
+      "boxOffice": "$171,539,887",
+      "trailer": "https://www.youtube.com/watch?v=LZrX9mffH8Y"
     },
     {
       "slug": "john-wick-chapter-3-parabellum",
@@ -2484,7 +2594,8 @@
       "country": "United States of America",
       "language": "العربية, 普通话, English, Bahasa indonesia, Italiano, 日本語, Latin, Pусский",
       "production": "Thunder Road, Lionsgate, 87Eleven",
-      "boxOffice": "$326,709,727"
+      "boxOffice": "$326,709,727",
+      "trailer": "https://www.youtube.com/watch?v=R8o4fjAP3wY"
     },
     {
       "slug": "john-wick-chapter-4",
@@ -2506,7 +2617,8 @@
       "country": "Germany, United States of America",
       "language": "العربية, 广州话 / 廣州話, English, Français, Deutsch, 日本語, Latin, Pусский, Español",
       "production": "Thunder Road, 87Eleven, Studio Babelsberg, Lionsgate",
-      "boxOffice": "$440,157,245"
+      "boxOffice": "$440,157,245",
+      "trailer": "https://www.youtube.com/watch?v=oa50LTsyCdY"
     },
     {
       "slug": "resident-evil",
@@ -2528,7 +2640,8 @@
       "country": "Canada, France, Germany, United Kingdom",
       "language": "English",
       "production": "Impact Pictures, Davis Films, New Legacy Film, Constantin Film",
-      "boxOffice": "$102,984,862"
+      "boxOffice": "$102,984,862",
+      "trailer": "https://www.youtube.com/watch?v=HhBAIDHvRTc"
     },
     {
       "slug": "resident-evil-apocalypse",
@@ -2550,7 +2663,8 @@
       "country": "Canada, United Kingdom, United States of America",
       "language": "English",
       "production": "Davis Films/Impact Pictures, Screen Gems, Constantin Film",
-      "boxOffice": "$129,342,769"
+      "boxOffice": "$129,342,769",
+      "trailer": "https://www.youtube.com/watch?v=PkutbYENBis"
     },
     {
       "slug": "resident-evil-extinction",
@@ -2572,29 +2686,29 @@
       "country": "Canada, France, Germany, United States of America",
       "language": "English",
       "production": "Screen Gems, Impact Pictures, Davis Films, Constantin Film",
-      "boxOffice": "$147,717,833"
+      "boxOffice": "$147,717,833",
+      "trailer": "https://www.youtube.com/watch?v=eDMjVARsCOk"
     },
     {
-      "slug": "resident-evil-afterlife",
+      "title": "Resident Evil 4: Recomeço",
+      "slug": "resident-evil-4-recomeço",
+      "year": "2010",
       "url": "https://letterboxd.com/film/resident-evil-afterlife/",
-      "title": "Back from the Afterlife: Making 'Resident Evil: Retribution'",
-      "original_title": "Back from the Afterlife: Making 'Resident Evil: Retribution'",
-      "year": "2012",
-      "released": "2012-12-18",
-      "runtime": "50 min",
-      "genre": "Documentário",
-      "director": "Jeffrey Schwarz",
-      "actors": "Paul W. S. Anderson, Dennis Berardi, Jeremy Bolt, Don Carmody, Aryana Engineer",
-      "plot": "",
-      "poster": "https://image.tmdb.org/t/p/w500/8rbvgYLHfaTixzJ9WE5L3qFuRoj.jpg",
-      "backdrop": null,
-      "imdbRating": "5.5",
-      "imdbVotes": "7",
-      "tmdb_slug": "back-from-the-afterlife-making-resident-evil-retribution",
-      "country": "United States of America",
-      "language": "English",
-      "production": "Automat Pictures",
-      "boxOffice": "N/A"
+      "trailer": "https://www.youtube.com/watch?v=SRRN6MvCdeg",
+      "plot": "Depois de atacar sozinha o forte da Umbrella, as habilidades sobre-humanas de Alice são neutralizados. Agora, fugindo dos zumbis criados pelo vírus T, Alice se reúne a Claire Redfield e a seu irmão, Chris. Juntos, eles se refugiam com outros sobreviventes numa prisão abandonada, onde um bando de zumbis selvagens se interpõem entre eles e a segurança de \"Arcadia\". Para fugir desses mutantes sedentos por sangue eles precisarão de um arsenal. Mas a fim de enfrentar Albert, Wesker e a Umbrella a luta pela sobrevivência escalará a um novo nível de perigo.",
+      "director": "Paul W. S. Anderson",
+      "actors": "Milla Jovovich, Wentworth Miller, Ali Larter, Kim Coates, Kacey Barnfield",
+      "genre": "Ação, Aventura, Terror, Ficção científica",
+      "runtime": "97 min",
+      "imdbRating": "6.1",
+      "poster": "https://image.tmdb.org/t/p/w500/eLUc5to0p5LhbXJMXtgltg7P4g4.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/jeocW9EgPraRqsUDb34NB8ft97v.jpg",
+      "imdbVotes": "4091",
+      "country": "Canada, Germany, United States of America",
+      "language": "English, Español, 日本語",
+      "production": "Screen Gems, Constantin Film, Davis Films/Impact Pictures",
+      "boxOffice": "$300,228,084",
+      "released": "2010-09-01"
     },
     {
       "slug": "resident-evil-retribution",
@@ -2616,29 +2730,29 @@
       "country": "Canada, Germany, United States of America",
       "language": "English",
       "production": "Davis Films/Impact Pictures, Constantin Film, Screen Gems",
-      "boxOffice": "$240,159,255"
+      "boxOffice": "$240,159,255",
+      "trailer": "https://www.youtube.com/watch?v=hoyMT-7wEqs"
     },
     {
-      "slug": "resident-evil-the-final-chapter",
+      "title": "Resident Evil 6: O Capítulo Final",
+      "slug": "resident-evil-6-o-capítulo-final",
+      "year": "2016",
       "url": "https://letterboxd.com/film/resident-evil-the-final-chapter/",
-      "title": "Resident Evil: The Final Chapter Retaliation Mode",
-      "original_title": "Resident Evil: The Final Chapter Retaliation Mode",
-      "year": "2017",
-      "released": "2017-05-16",
-      "runtime": "217 min",
+      "trailer": "https://www.youtube.com/watch?v=0i2cCVj5iNg",
+      "plot": "Sobrevivente do massacre zumbi, Alice retorna para onde o pesadelo começou, Raccoon City, em que a Umbrella Corporation reúne suas forças para um ataque final contra os remanescentes do apocalipse. Para vencer a dura batalha final e salvar a raça humana, a heroína recruta velhos e novos amigos.",
+      "director": "Paul W. S. Anderson",
+      "actors": "Milla Jovovich, Iain Glen, Ali Larter, Shawn Roberts, Eoin Macken",
       "genre": "Ação, Terror, Ficção científica",
-      "director": "N/A",
-      "actors": "Milla Jovovich, Iain Glen",
-      "plot": "",
-      "poster": null,
-      "backdrop": null,
-      "imdbRating": "0.0",
-      "imdbVotes": "0",
-      "tmdb_slug": "resident-evil-the-final-chapter-retaliation-mode",
-      "country": "",
+      "runtime": "107 min",
+      "imdbRating": "6.1",
+      "poster": "https://image.tmdb.org/t/p/w500/kgkPkKPjDOfBjlUyWBg3GQNwBer.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/sQRfWdDxH53Vk7ZJ1UqzcaBHocO.jpg",
+      "imdbVotes": "3387",
+      "country": "Canada, France, Germany, United States of America",
       "language": "English",
-      "production": "Screen Gems",
-      "boxOffice": "N/A"
+      "production": "Screen Gems, Constantin Film, Impact Pictures, Davis Films",
+      "boxOffice": "$312,242,626",
+      "released": "2016-12-23"
     },
     {
       "slug": "underworld-2003",
@@ -2660,7 +2774,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Screen Gems, Lakeshore Entertainment",
-      "boxOffice": "$95,708,457"
+      "boxOffice": "$95,708,457",
+      "trailer": "https://www.youtube.com/watch?v=2_IoL7g5Ub8"
     },
     {
       "slug": "underworld-evolution",
@@ -2682,7 +2797,8 @@
       "country": "United States of America",
       "language": "English, Français, Magyar",
       "production": "Screen Gems, Lakeshore Entertainment",
-      "boxOffice": "$111,476,513"
+      "boxOffice": "$111,476,513",
+      "trailer": "https://www.youtube.com/watch?v=kqu1uXXUMAc"
     },
     {
       "slug": "underworld-rise-of-the-lycans",
@@ -2704,7 +2820,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Screen Gems, Lakeshore Entertainment, Sketch Films, UW3 Film Productions",
-      "boxOffice": "$92,158,961"
+      "boxOffice": "$92,158,961",
+      "trailer": "https://www.youtube.com/watch?v=p3RoSaeaZlY"
     },
     {
       "slug": "underworld-awakening",
@@ -2726,7 +2843,8 @@
       "country": "United States of America",
       "language": "English, Pусский",
       "production": "Screen Gems, Lakeshore Entertainment, Sketch Films, UW4 Productions",
-      "boxOffice": "$160,112,671"
+      "boxOffice": "$160,112,671",
+      "trailer": "https://www.youtube.com/watch?v=I3onSu4xugs"
     },
     {
       "slug": "underworld-blood-wars",
@@ -2748,7 +2866,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lakeshore Entertainment, Screen Gems, Sketch Films",
-      "boxOffice": "$81,093,313"
+      "boxOffice": "$81,093,313",
+      "trailer": "https://www.youtube.com/watch?v=Jgj9Znp76PE"
     },
     {
       "slug": "pirates-of-the-caribbean-the-curse-of-the-black-pearl",
@@ -2770,7 +2889,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films",
-      "boxOffice": "$655,011,224"
+      "boxOffice": "$655,011,224",
+      "trailer": "https://www.youtube.com/watch?v=ATh8gJ9ddDo"
     },
     {
       "slug": "pirates-of-the-caribbean-dead-mans-chest",
@@ -2792,7 +2912,8 @@
       "country": "United States of America",
       "language": "English, Türkçe, ελληνικά, 普通话",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films, Second Mate Productions",
-      "boxOffice": "$1,066,179,747"
+      "boxOffice": "$1,066,179,747",
+      "trailer": "https://www.youtube.com/watch?v=ave4_LYWMNk"
     },
     {
       "slug": "pirates-of-the-caribbean-at-worlds-end",
@@ -2814,7 +2935,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Jerry Bruckheimer Films, Second Mate Productions, Walt Disney Pictures",
-      "boxOffice": "$961,691,209"
+      "boxOffice": "$961,691,209",
+      "trailer": "https://www.youtube.com/watch?v=Y9pLK1-_cFE"
     },
     {
       "slug": "pirates-of-the-caribbean-on-stranger-tides",
@@ -2836,7 +2958,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Español",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films, Moving Picture Company",
-      "boxOffice": "$1,046,721,266"
+      "boxOffice": "$1,046,721,266",
+      "trailer": "https://www.youtube.com/watch?v=x_JNwyXom94"
     },
     {
       "slug": "pirates-of-the-caribbean-dead-men-tell-no-tales",
@@ -2858,7 +2981,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films, Infinitum Nihil",
-      "boxOffice": "$795,922,298"
+      "boxOffice": "$795,922,298",
+      "trailer": "https://www.youtube.com/watch?v=oISaTMhyiR0"
     },
     {
       "slug": "the-hunger-games",
@@ -2880,7 +3004,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lionsgate, Color Force",
-      "boxOffice": "$694,000,000"
+      "boxOffice": "$694,000,000",
+      "trailer": "https://www.youtube.com/watch?v=39vXisiw5LM"
     },
     {
       "slug": "the-hunger-games-catching-fire",
@@ -2902,7 +3027,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lionsgate, Color Force",
-      "boxOffice": "$865,011,746"
+      "boxOffice": "$865,011,746",
+      "trailer": "https://www.youtube.com/watch?v=SYYPcugJjws"
     },
     {
       "slug": "the-hunger-games-mockingjay-part-1",
@@ -2924,7 +3050,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lionsgate, Color Force",
-      "boxOffice": "$755,356,711"
+      "boxOffice": "$755,356,711",
+      "trailer": "https://www.youtube.com/watch?v=tFCxKnPuHeM"
     },
     {
       "slug": "the-hunger-games-mockingjay-part-2",
@@ -2946,7 +3073,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Lionsgate, Color Force, Studio Babelsberg",
-      "boxOffice": "$653,428,261"
+      "boxOffice": "$653,428,261",
+      "trailer": "https://www.youtube.com/watch?v=SoKIqLEGhI0"
     },
     {
       "slug": "the-maze-runner",
@@ -2968,7 +3096,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English",
       "production": "Ingenious Media, The Gotham Group, Dayday Films, Temple Hill Entertainment, TSG Entertainment, 20th Century Fox",
-      "boxOffice": "$348,319,861"
+      "boxOffice": "$348,319,861",
+      "trailer": "https://www.youtube.com/watch?v=3b946aGm0zs"
     },
     {
       "slug": "maze-runner-the-scorch-trials",
@@ -2990,7 +3119,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Temple Hill Entertainment, The Gotham Group, TSG Entertainment, 20th Century Fox",
-      "boxOffice": "$312,296,056"
+      "boxOffice": "$312,296,056",
+      "trailer": "https://www.youtube.com/watch?v=SDofO3P2HpE"
     },
     {
       "slug": "maze-runner-the-death-cure",
@@ -3012,7 +3142,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "The Gotham Group, Temple Hill Entertainment, 20th Century Fox, Oddball Entertainment, TSG Entertainment",
-      "boxOffice": "$288,175,335"
+      "boxOffice": "$288,175,335",
+      "trailer": "https://www.youtube.com/watch?v=Ww1GiTIJF_Y"
     },
     {
       "slug": "divergent",
@@ -3034,7 +3165,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Summit Entertainment, Red Wagon Entertainment",
-      "boxOffice": "$288,885,818"
+      "boxOffice": "$288,885,818",
+      "trailer": "https://www.youtube.com/watch?v=EOdcTVRXa74"
     },
     {
       "slug": "insurgent",
@@ -3056,7 +3188,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Summit Entertainment, Red Wagon Entertainment, Mandeville Films",
-      "boxOffice": "$297,002,527"
+      "boxOffice": "$297,002,527",
+      "trailer": "https://www.youtube.com/watch?v=jfaqVegF2mo"
     },
     {
       "slug": "allegiant",
@@ -3078,7 +3211,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Mandeville Films, Summit Entertainment, Lionsgate, Red Wagon Entertainment",
-      "boxOffice": "$179,246,868"
+      "boxOffice": "$179,246,868",
+      "trailer": "https://www.youtube.com/watch?v=ESJBomF-9Y8"
     },
     {
       "slug": "shrek",
@@ -3100,7 +3234,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Pacific Data Images, DreamWorks Animation, DreamWorks Pictures",
-      "boxOffice": "$488,628,188"
+      "boxOffice": "$488,628,188",
+      "trailer": "https://www.youtube.com/watch?v=CwXOrWvPBPk"
     },
     {
       "slug": "shrek-2",
@@ -3122,7 +3257,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "DreamWorks Animation, Pacific Data Images",
-      "boxOffice": "$935,454,538"
+      "boxOffice": "$935,454,538",
+      "trailer": "https://www.youtube.com/watch?v=xBgSfhp5Fxo"
     },
     {
       "slug": "shrek-the-third",
@@ -3144,7 +3280,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "DreamWorks Animation, Pacific Data Images",
-      "boxOffice": "$813,367,380"
+      "boxOffice": "$813,367,380",
+      "trailer": "https://www.youtube.com/watch?v=ev8N_mGPqCI"
     },
     {
       "slug": "first-blood",
@@ -3166,7 +3303,8 @@
       "country": "United States of America, Netherlands Antilles",
       "language": "English",
       "production": "Carolco Pictures, Anabasis, Elcajo Productions",
-      "boxOffice": "$125,212,904"
+      "boxOffice": "$125,212,904",
+      "trailer": "https://www.youtube.com/watch?v=-dTDmrJXXoA"
     },
     {
       "slug": "rambo-first-blood-part-ii",
@@ -3188,7 +3326,8 @@
       "country": "United States of America, Mexico, Netherlands Antilles",
       "language": "English, Tiếng Việt",
       "production": "Carolco Pictures, Estudios Churubusco Azteca, Anabasis",
-      "boxOffice": "$300,400,432"
+      "boxOffice": "$300,400,432",
+      "trailer": "https://www.youtube.com/watch?v=TY8LVqaLHwY"
     },
     {
       "slug": "rambo-iii",
@@ -3210,7 +3349,8 @@
       "country": "United States of America, Netherlands, Thailand",
       "language": "English, Pусский",
       "production": "TriStar Pictures, Carolco Pictures",
-      "boxOffice": "$189,015,611"
+      "boxOffice": "$189,015,611",
+      "trailer": "https://www.youtube.com/watch?v=SMLUwNSVX5Y"
     },
     {
       "slug": "rambo",
@@ -3232,7 +3372,8 @@
       "country": "United States of America, Germany, Thailand",
       "language": "English, , ภาษาไทย",
       "production": "Millennium Media, Lionsgate, The Weinstein Company, Nu Image Entertainment",
-      "boxOffice": "$113,200,000"
+      "boxOffice": "$113,200,000",
+      "trailer": "https://www.youtube.com/watch?v=2oVMgRVk4lE"
     },
     {
       "slug": "rambo-last-blood",
@@ -3254,7 +3395,8 @@
       "country": "China, United States of America",
       "language": "English, Español",
       "production": "Millennium Media, Templeton Media, Campbell Grobman Films, Dadi Film Group, Balboa Productions",
-      "boxOffice": "$91,500,000"
+      "boxOffice": "$91,500,000",
+      "trailer": "https://www.youtube.com/watch?v=YPuhNtG47M0"
     },
     {
       "slug": "die-hard",
@@ -3276,7 +3418,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, Italiano",
       "production": "Gordon Company, Silver Pictures, 20th Century Fox",
-      "boxOffice": "$140,767,956"
+      "boxOffice": "$140,767,956",
+      "trailer": "https://www.youtube.com/watch?v=hTFH42VILVg"
     },
     {
       "slug": "die-hard-2",
@@ -3298,7 +3441,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Gordon Company, Silver Pictures, 20th Century Fox",
-      "boxOffice": "$240,031,094"
+      "boxOffice": "$240,031,094",
+      "trailer": "https://www.youtube.com/watch?v=gUg4gWjOgXs"
     },
     {
       "slug": "die-hard-with-a-vengeance",
@@ -3320,7 +3464,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, Română",
       "production": "20th Century Fox, Cinergi Pictures, Andrew G. Vajna Productions",
-      "boxOffice": "$366,101,666"
+      "boxOffice": "$366,101,666",
+      "trailer": "https://www.youtube.com/watch?v=aRQetHOPpKA"
     },
     {
       "slug": "live-free-or-die-hard",
@@ -3342,7 +3487,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Italiano, Français",
       "production": "Dune Entertainment, Cheyenne Enterprises, Wintergreen Productions, 20th Century Fox, Ingenious Film Partners",
-      "boxOffice": "$383,531,464"
+      "boxOffice": "$383,531,464",
+      "trailer": "https://www.youtube.com/watch?v=svIjk-nlh_c"
     },
     {
       "slug": "a-good-day-to-die-hard",
@@ -3364,7 +3510,8 @@
       "country": "United States of America",
       "language": "English, Pусский",
       "production": "Mid Atlantic Films, Ingenious Media, Dune Entertainment, Big Screen Productions, Temple Hill Entertainment, TSG Entertainment, Giant Pictures, Origo Film Group, 20th Century Fox",
-      "boxOffice": "$304,654,182"
+      "boxOffice": "$304,654,182",
+      "trailer": "https://www.youtube.com/watch?v=8r_Ax6t_39A"
     },
     {
       "slug": "jumanji",
@@ -3386,7 +3533,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "TriStar Pictures, Interscope Communications, Teitler Film, PolyGram Filmed Entertainment",
-      "boxOffice": "$262,821,940"
+      "boxOffice": "$262,821,940",
+      "trailer": "https://www.youtube.com/watch?v=veszTagaXik"
     },
     {
       "slug": "jumanji-welcome-to-the-jungle",
@@ -3408,7 +3556,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Matt Tolmach Productions, Seven Bucks Productions, Columbia Pictures",
-      "boxOffice": "$995,339,117"
+      "boxOffice": "$995,339,117",
+      "trailer": "https://www.youtube.com/watch?v=v_TJKwJwN0E"
     },
     {
       "slug": "jumanji-the-next-level",
@@ -3430,7 +3579,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Seven Bucks Productions, Matt Tolmach Productions, The Detective Agency",
-      "boxOffice": "$801,693,929"
+      "boxOffice": "$801,693,929",
+      "trailer": "https://www.youtube.com/watch?v=F6QaLsw8EWY"
     },
     {
       "slug": "the-mummy-1999",
@@ -3452,7 +3602,8 @@
       "country": "United States of America",
       "language": "English, العربية",
       "production": "Alphaville Films",
-      "boxOffice": "$415,885,488"
+      "boxOffice": "$415,885,488",
+      "trailer": "https://www.youtube.com/watch?v=gmtxy5FR__U"
     },
     {
       "slug": "the-mummy-returns",
@@ -3474,7 +3625,8 @@
       "country": "United States of America, Morocco, Jordan, United Kingdom",
       "language": "English, العربية",
       "production": "Universal Pictures, Alphaville Films, Imhotep Productions",
-      "boxOffice": "$443,280,904"
+      "boxOffice": "$443,280,904",
+      "trailer": "https://www.youtube.com/watch?v=ptmLrNpmcBo"
     },
     {
       "slug": "the-mummy-tomb-of-the-dragon-emperor",
@@ -3496,7 +3648,8 @@
       "country": "China, Germany, United States of America, Canada, United Kingdom, Hong Kong",
       "language": "English, 普通话, ",
       "production": "Universal Pictures, Relativity Media, The Sommers Company, Alphaville Films, Beijing Happy Pictures, Shanghai Film Group, Internationale Filmproduktion Blackbird Erste",
-      "boxOffice": "$403,449,830"
+      "boxOffice": "$403,449,830",
+      "trailer": "https://www.youtube.com/watch?v=lUVS8Y4hoik"
     },
     {
       "slug": "the-mummy-2017",
@@ -3518,7 +3671,8 @@
       "country": "United States of America",
       "language": "English, العربية",
       "production": "Secret Hideout, Universal Pictures, Conspiracy Factory, Sean Daniel Company",
-      "boxOffice": "$409,231,607"
+      "boxOffice": "$409,231,607",
+      "trailer": "https://www.youtube.com/watch?v=s4C1gnqdrew"
     },
     {
       "slug": "blade",
@@ -3540,7 +3694,8 @@
       "country": "United States of America",
       "language": "Pусский, English",
       "production": "New Line Cinema, Amen Ra Films, Imaginary Forces",
-      "boxOffice": "$131,183,530"
+      "boxOffice": "$131,183,530",
+      "trailer": "https://www.youtube.com/watch?v=O2Y3FFFIvRI"
     },
     {
       "slug": "blade-ii",
@@ -3562,7 +3717,8 @@
       "country": "United States of America",
       "language": "Český, Română, English",
       "production": "New Line Cinema, Amen Ra Films, Imaginary Forces",
-      "boxOffice": "$155,010,032"
+      "boxOffice": "$155,010,032",
+      "trailer": "https://www.youtube.com/watch?v=fcCQ7xk8zzM"
     },
     {
       "slug": "blade-trinity",
@@ -3584,7 +3740,8 @@
       "country": "United States of America",
       "language": "Esperanto, English",
       "production": "Marvel Enterprises, New Line Cinema, Amen Ra Films, Imaginary Forces, Peter Frankfurt Productions",
-      "boxOffice": "$128,905,366"
+      "boxOffice": "$128,905,366",
+      "trailer": "https://www.youtube.com/watch?v=qcHEDGs7eAY"
     },
     {
       "slug": "spider-man",
@@ -3606,7 +3763,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Marvel Enterprises, Laura Ziskin Productions, Columbia Pictures",
-      "boxOffice": "$821,708,551"
+      "boxOffice": "$821,708,551",
+      "trailer": "https://www.youtube.com/watch?v=TYMMOjBUPMM"
     },
     {
       "slug": "spider-man-2",
@@ -3628,7 +3786,8 @@
       "country": "United States of America",
       "language": "English, Pусский, 普通话",
       "production": "Marvel Enterprises, Laura Ziskin Productions, Columbia Pictures",
-      "boxOffice": "$788,976,453"
+      "boxOffice": "$788,976,453",
+      "trailer": "https://www.youtube.com/watch?v=8pSRBdt6ico"
     },
     {
       "slug": "spider-man-3",
@@ -3650,7 +3809,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "Laura Ziskin Productions, Marvel Studios, Columbia Pictures",
-      "boxOffice": "$894,983,373"
+      "boxOffice": "$894,983,373",
+      "trailer": "https://www.youtube.com/watch?v=MTIP-Ih_GR0"
     },
     {
       "slug": "fantastic-four-2005",
@@ -3672,7 +3832,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Kumar Mobiliengesellschaft mbH & Co. Projekt Nr. 3 KG, 1492 Pictures, Marvel Enterprises, 20th Century Fox, Bernd Eichinger Productions, Constantin Film",
-      "boxOffice": "$333,535,934"
+      "boxOffice": "$333,535,934",
+      "trailer": "https://www.youtube.com/watch?v=QIx2jkXYu34"
     },
     {
       "slug": "fantastic-four-rise-of-the-silver-surfer",
@@ -3694,7 +3855,8 @@
       "country": "Germany, United Kingdom, United States of America",
       "language": "English, 日本語, العربية, 普通话",
       "production": "1492 Pictures, Bernd Eichinger Productions, 20th Century Fox, Constantin Film, Marvel Studios, Ingenious Film Partners",
-      "boxOffice": "$301,913,131"
+      "boxOffice": "$301,913,131",
+      "trailer": "https://www.youtube.com/watch?v=7whodtti908"
     },
     {
       "slug": "the-expendables",
@@ -3716,7 +3878,8 @@
       "country": "United States of America, Bulgaria, Germany, Spain",
       "language": "English, Español",
       "production": "Nimar Studios, Rogue Marble, Millennium Media, Lionsgate, Nu Image Entertainment",
-      "boxOffice": "$274,470,394"
+      "boxOffice": "$274,470,394",
+      "trailer": "https://www.youtube.com/watch?v=G_OQpXk8vAQ"
     },
     {
       "slug": "the-expendables-2",
@@ -3738,7 +3901,8 @@
       "country": "United States of America, Bulgaria, Germany, China",
       "language": "English",
       "production": "Millennium Media, Lionsgate, Nu Boyana Film Studios, Nu Image Entertainment",
-      "boxOffice": "$314,975,955"
+      "boxOffice": "$314,975,955",
+      "trailer": "https://www.youtube.com/watch?v=ip_CYHdyUBs"
     },
     {
       "slug": "the-expendables-3",
@@ -3760,7 +3924,8 @@
       "country": "United States of America, France, Germany, Bulgaria",
       "language": "English",
       "production": "Davis Films, Ex3 Productions, Fipex Holding, Lionsgate, Millennium Media, Nu Image Entertainment",
-      "boxOffice": "$214,657,577"
+      "boxOffice": "$214,657,577",
+      "trailer": "https://www.youtube.com/watch?v=KATn_m-AX9I"
     },
     {
       "slug": "kick-ass",
@@ -3782,7 +3947,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Plan B Entertainment, Marv",
-      "boxOffice": "$96,188,903"
+      "boxOffice": "$96,188,903",
+      "trailer": "https://www.youtube.com/watch?v=5rdccGkj54s"
     },
     {
       "slug": "kick-ass-2",
@@ -3804,7 +3970,8 @@
       "country": "Japan, United Kingdom, United States of America",
       "language": "English",
       "production": "Marv, Universal Pictures, dentsu",
-      "boxOffice": "$60,795,985"
+      "boxOffice": "$60,795,985",
+      "trailer": "https://www.youtube.com/watch?v=1zcMLxIuuww"
     },
     {
       "slug": "now-you-see-me",
@@ -3826,7 +3993,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lionsgate, Cohen Pictures, Media Capital Technologies, Summit Entertainment",
-      "boxOffice": "$239,845,830"
+      "boxOffice": "$239,845,830",
+      "trailer": "https://www.youtube.com/watch?v=lLWESUfW-0A"
     },
     {
       "slug": "now-you-see-me-2",
@@ -3848,7 +4016,8 @@
       "country": "Hong Kong, United States of America",
       "language": "广州话 / 廣州話, 普通话, English",
       "production": "Summit Entertainment, K/O Paper Products, TIK Films, Lionsgate",
-      "boxOffice": "$334,897,606"
+      "boxOffice": "$334,897,606",
+      "trailer": "https://www.youtube.com/watch?v=JzZh8kJJwe4"
     },
     {
       "slug": "venom-2018",
@@ -3870,7 +4039,8 @@
       "country": "China, United States of America",
       "language": "普通话, English, Bahasa melayu",
       "production": "Matt Tolmach Productions, Pascal Pictures, Marvel Entertainment, Tencent Pictures, Arad Productions, Columbia Pictures",
-      "boxOffice": "$856,085,151"
+      "boxOffice": "$856,085,151",
+      "trailer": "https://www.youtube.com/watch?v=xLCn88bfW1o"
     },
     {
       "slug": "venom-let-there-be-carnage",
@@ -3892,7 +4062,8 @@
       "country": "United States of America",
       "language": "Español, English",
       "production": "Columbia Pictures, Pascal Pictures, Matt Tolmach Productions, Arad Productions",
-      "boxOffice": "$506,863,592"
+      "boxOffice": "$506,863,592",
+      "trailer": "https://www.youtube.com/watch?v=GVwq2HlKYpE"
     },
     {
       "slug": "venom-the-last-dance",
@@ -3914,7 +4085,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Pascal Pictures, Matt Tolmach Productions, Hutch Parker Entertainment, Arad Productions",
-      "boxOffice": "$478,937,618"
+      "boxOffice": "$478,937,618",
+      "trailer": "https://www.youtube.com/watch?v=FKBN1qAzW3s"
     },
     {
       "slug": "a-quiet-place-2018",
@@ -3936,7 +4108,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Platinum Dunes",
-      "boxOffice": "$340,955,294"
+      "boxOffice": "$340,955,294",
+      "trailer": "https://www.youtube.com/watch?v=rqEnM25BsNQ"
     },
     {
       "slug": "a-quiet-place-part-ii",
@@ -3958,7 +4131,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Platinum Dunes, Sunday Night Productions",
-      "boxOffice": "$297,372,261"
+      "boxOffice": "$297,372,261",
+      "trailer": "https://www.youtube.com/watch?v=BpdDN9d9Jio"
     },
     {
       "slug": "the-conjuring",
@@ -3980,7 +4154,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Evergreen Media Group, New Line Cinema, The Safran Company",
-      "boxOffice": "$321,293,998"
+      "boxOffice": "$321,293,998",
+      "trailer": "https://www.youtube.com/watch?v=k10ETZ41q5o"
     },
     {
       "slug": "the-conjuring-2",
@@ -4002,7 +4177,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "New Line Cinema, The Safran Company, Atomic Monster, RatPac Entertainment",
-      "boxOffice": "$322,819,915"
+      "boxOffice": "$322,819,915",
+      "trailer": "https://www.youtube.com/watch?v=VFsmuRPClr4"
     },
     {
       "slug": "sicario-2015",
@@ -4024,7 +4200,8 @@
       "country": "United States of America, Mexico, Hong Kong",
       "language": "Español, English",
       "production": "Lionsgate, Black Label Media, Thunder Road",
-      "boxOffice": "$84,997,446"
+      "boxOffice": "$84,997,446",
+      "trailer": "https://www.youtube.com/watch?v=Yfhu5JIxnZc"
     },
     {
       "slug": "sicario-day-of-the-soldado",
@@ -4046,7 +4223,8 @@
       "country": "Mexico, United States of America",
       "language": "English, Español",
       "production": "Thunder Road, Black Label Media, Columbia Pictures, Lionsgate, Redrum",
-      "boxOffice": "$75,836,683"
+      "boxOffice": "$75,836,683",
+      "trailer": "https://www.youtube.com/watch?v=sIMChzE_aCo"
     },
     {
       "slug": "the-butterfly-effect",
@@ -4068,7 +4246,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "FilmEngine, Katalyst Films, BenderSpink, New Line Cinema",
-      "boxOffice": "$96,800,000"
+      "boxOffice": "$96,800,000",
+      "trailer": "https://www.youtube.com/watch?v=Zn9FvJA4l5Q"
     },
     {
       "slug": "the-butterfly-effect-2",
@@ -4090,7 +4269,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "BenderSpink, New Line Cinema, FilmEngine",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=kMxLX25-yX0"
     },
     {
       "slug": "the-butterfly-effect-3-revelations",
@@ -4112,7 +4292,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "After Dark Films, BenderSpink, FilmEngine",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=4aamMJ_8qZ4"
     },
     {
       "slug": "escape-plan",
@@ -4134,7 +4315,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Deutsch, العربية, اردو",
       "production": "Knightsbridge Entertainment, Summit Entertainment, Atmosphere Entertainment MM, Envision Entertainment, Boies/Schiller Film Group, Lionsgate, Emmett/Furla Films",
-      "boxOffice": "$137,328,301"
+      "boxOffice": "$137,328,301",
+      "trailer": "https://www.youtube.com/watch?v=BrV-SXI6Nmo"
     },
     {
       "slug": "escape-plan-the-extractors",
@@ -4156,7 +4338,8 @@
       "country": "China, United States of America, United Kingdom",
       "language": "English",
       "production": "Twirly Films, Leomus Pictures, EFO Films, Summit Entertainment, The Fyzz, Diamond Film Productions, Grindstone Entertainment Group, Ingenious Media, MoviePass Films",
-      "boxOffice": "$1,766,092"
+      "boxOffice": "$1,766,092",
+      "trailer": "https://www.youtube.com/watch?v=9QX_HA97hOk"
     },
     {
       "slug": "jack-reacher",
@@ -4178,7 +4361,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Skydance Media, TC Productions",
-      "boxOffice": "$218,300,000"
+      "boxOffice": "$218,300,000",
+      "trailer": "https://www.youtube.com/watch?v=3zc_Emzd8Wo"
     },
     {
       "slug": "jack-reacher-never-go-back",
@@ -4200,7 +4384,8 @@
       "country": "China, United States of America",
       "language": "English",
       "production": "Skydance Media, Huahua Media, Shanghai Film Group, TC Productions, Paramount Pictures",
-      "boxOffice": "$162,100,000"
+      "boxOffice": "$162,100,000",
+      "trailer": "https://www.youtube.com/watch?v=DTBcGQWmQ1c"
     },
     {
       "slug": "the-accountant-2016",
@@ -4222,7 +4407,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Zero Gravity Management, Electric City Entertainment, RatPac Entertainment, Warner Bros. Pictures",
-      "boxOffice": "$155,160,045"
+      "boxOffice": "$155,160,045",
+      "trailer": "https://www.youtube.com/watch?v=pEd8xf7W4xw"
     },
     {
       "slug": "the-accountant-2025",
@@ -4244,7 +4430,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, Español",
       "production": "Artists Equity, 51 Entertainment, Zero Gravity Management, Filmtribe",
-      "boxOffice": "$103,223,366"
+      "boxOffice": "$103,223,366",
+      "trailer": "https://www.youtube.com/watch?v=-YDmOYHUDp0"
     },
     {
       "slug": "extraction-2020",
@@ -4266,7 +4453,8 @@
       "country": "United States of America",
       "language": "বাংলা, English, हिन्दी",
       "production": "AGBO, Thematic Entertainment, TGIM Films",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=g9jBZ_WzvQ4"
     },
     {
       "slug": "extraction-2",
@@ -4288,7 +4476,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, ქართული, Français",
       "production": "AGBO, TGIM Films, Wild State",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=Y274jZs5s7s"
     },
     {
       "slug": "percy-jackson-the-olympians-the-lightning-thief",
@@ -4310,7 +4499,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "1492 Pictures, Sunswept Entertainment, Dune Entertainment",
-      "boxOffice": "$226,497,209"
+      "boxOffice": "$226,497,209",
+      "trailer": "https://www.youtube.com/watch?v=R86InkfdboA"
     },
     {
       "slug": "percy-jackson-sea-of-monsters",
@@ -4332,7 +4522,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Fox 2000 Pictures, Sunswept Entertainment, 1492 Pictures, TSG Entertainment",
-      "boxOffice": "$199,850,315"
+      "boxOffice": "$199,850,315",
+      "trailer": "https://www.youtube.com/watch?v=mR6MYU4p_-U"
     },
     {
       "slug": "hellboy-2004",
@@ -4354,7 +4545,8 @@
       "country": "United States of America",
       "language": "Pусский, English",
       "production": "Revolution Studios, Dark Horse Entertainment, Lawrence Gordon Productions",
-      "boxOffice": "$99,318,987"
+      "boxOffice": "$99,318,987",
+      "trailer": "https://www.youtube.com/watch?v=qc4-3QmiFak"
     },
     {
       "slug": "hellboy-2019",
@@ -4376,7 +4568,8 @@
       "country": "Bulgaria, United States of America, France",
       "language": "English, Deutsch, Pусский, Türkçe",
       "production": "Campbell Grobman Films, Dark Horse Entertainment, Millennium Media, Boyana Film Studios, Lawrence Gordon Productions, Lloyd Levin Productions, Davis Films, Summit Entertainment",
-      "boxOffice": "$55,065,289"
+      "boxOffice": "$55,065,289",
+      "trailer": "https://www.youtube.com/watch?v=ZsBO4b3tyZg"
     },
     {
       "slug": "robin-hood-2010",
@@ -4398,7 +4591,8 @@
       "country": "United States of America",
       "language": "English, Français, Український",
       "production": "Imagine Entertainment, Relativity Media, Scott Free Productions",
-      "boxOffice": "$321,669,741"
+      "boxOffice": "$321,669,741",
+      "trailer": "https://www.youtube.com/watch?v=DJSsMR5NUuc"
     },
     {
       "slug": "robin-hood-2018",
@@ -4420,7 +4614,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Appian Way, Safehouse Pictures, Summit Entertainment, Thunder Road, TIK Films, EMG Management, Lionsgate",
-      "boxOffice": "$86,493,046"
+      "boxOffice": "$86,493,046",
+      "trailer": "https://www.youtube.com/watch?v=ne7eStct3Fc"
     },
     {
       "slug": "stalingrad",
@@ -4442,29 +4637,29 @@
       "country": "Germany",
       "language": "Deutsch, Pусский",
       "production": "B.A. Produktion, Bavaria Film, Perathon Film-und Fernsehproduktions, Royal Filmproduktions GmbH",
-      "boxOffice": "$152,972"
+      "boxOffice": "$152,972",
+      "trailer": "https://www.youtube.com/watch?v=3usU25Z9ICE"
     },
     {
-      "slug": "stalingrad-2013",
-      "url": "https://letterboxd.com/film/stalingrad-2013/",
-      "title": "Stalingrad Lovers",
-      "original_title": "Stalingrad Lovers",
+      "title": "Stalingrado: A Batalha Final",
+      "slug": "stalingrado-a-batalha-final",
       "year": "2013",
-      "released": "2013-12-11",
-      "runtime": "N/A",
-      "genre": "Drama",
-      "director": "Fleur Albert",
-      "actors": "Jean-Patrick Kone, Carole Eugenie, Jean-Paul Edwiges, Mehdi Kadri, Ériq Ebouaney",
-      "plot": "",
-      "poster": "https://image.tmdb.org/t/p/w500/sBjUAeXUD3ZJBQffa1wEd4Eaaf5.jpg",
-      "backdrop": null,
-      "imdbRating": "0.0",
-      "imdbVotes": "0",
-      "tmdb_slug": "stalingrad-lovers",
-      "country": "",
-      "language": "",
-      "production": "",
-      "boxOffice": "N/A"
+      "url": "https://letterboxd.com/film/stalingrad-2013/",
+      "trailer": "https://www.youtube.com/watch?v=GXpLfi7B-t0",
+      "plot": "Durante a sangrenta batalha de Stalingrado, no auge da Segunda Guerra Mundial, seis soldados amigos enfrentam os inimigos, vivem histórias de amor e lutam para manter as forças alemãs longe de seu território.",
+      "director": "Фёдор Бондарчук",
+      "actors": "Мария Смольникова, Янина Студилина, Пётр Фёдоров, Thomas Kretschmann, Сергей Бондарчук",
+      "genre": "Guerra, Ação, Drama",
+      "runtime": "131 min",
+      "imdbRating": "6.4",
+      "poster": "https://image.tmdb.org/t/p/w500/8GOOjgKSUGX6OrDeycPStRYYVm7.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/ltji3cISxWL83DW5ngYxI89MepJ.jpg",
+      "imdbVotes": "380",
+      "country": "Russia",
+      "language": "Deutsch, Pусский",
+      "production": "Art Pictures Studio, Non-Stop Productions, Russia 1",
+      "boxOffice": "$68,129,518",
+      "released": "2013-10-09"
     },
     {
       "slug": "The-Mist",
@@ -4486,7 +4681,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Darkwoods Productions, Dimension Films",
-      "boxOffice": "$57,470,220"
+      "boxOffice": "$57,470,220",
+      "trailer": "https://www.youtube.com/watch?v=NB1zark1ngs"
     },
     {
       "slug": "cloverfield",
@@ -4508,7 +4704,8 @@
       "country": "United States of America",
       "language": "Pусский, English",
       "production": "Bad Robot",
-      "boxOffice": "$170,764,026"
+      "boxOffice": "$170,764,026",
+      "trailer": "https://www.youtube.com/watch?v=wxqSIsxMlYQ"
     },
     {
       "slug": "10-cloverfield-lane",
@@ -4530,7 +4727,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Bad Robot",
-      "boxOffice": "$110,216,998"
+      "boxOffice": "$110,216,998",
+      "trailer": "https://www.youtube.com/watch?v=VogoqVwjtt0"
     },
     {
       "slug": "the-cloverfield-paradox",
@@ -4552,7 +4750,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Bad Robot",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=8brYvhEg5Aw"
     },
     {
       "slug": "21-jump-street",
@@ -4574,7 +4773,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Relativity Media, Original Film, Metro-Goldwyn-Mayer, Stephen J. Cannell Productions, SJC Studios",
-      "boxOffice": "$201,585,328"
+      "boxOffice": "$201,585,328",
+      "trailer": "https://www.youtube.com/watch?v=BjRs18rV1FI"
     },
     {
       "slug": "300",
@@ -4596,7 +4796,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Virtual Studios, Legendary Pictures, Hollywood Gang Productions, Atmosphere Entertainment MM, Warner Bros. Pictures, Cruel & Unusual Films",
-      "boxOffice": "$456,082,343"
+      "boxOffice": "$456,082,343",
+      "trailer": "https://www.youtube.com/watch?v=wDiUG52ZyHQ"
     },
     {
       "slug": "310-to-yuma-2007",
@@ -4618,7 +4819,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Lionsgate, Tree Line Films, Relativity Media, Yuma",
-      "boxOffice": "$70,000,000"
+      "boxOffice": "$70,000,000",
+      "trailer": "https://www.youtube.com/watch?v=Kv6apbWxb5M"
     },
     {
       "slug": "65",
@@ -4640,7 +4842,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "Raimi Productions, Beck/Woods, Bron Studios, Columbia Pictures, TSG Entertainment",
-      "boxOffice": "$60,730,568"
+      "boxOffice": "$60,730,568",
+      "trailer": "https://www.youtube.com/watch?v=M6YfhX83Cj8"
     },
     {
       "slug": "8-mile",
@@ -4662,7 +4865,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Mikona Productions, Imagine Entertainment",
-      "boxOffice": "$242,875,078"
+      "boxOffice": "$242,875,078",
+      "trailer": "https://www.youtube.com/watch?v=axGVrfwm9L4"
     },
     {
       "slug": "a-few-good-men",
@@ -4684,7 +4888,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "David Brown Productions, Castle Rock Entertainment",
-      "boxOffice": "$243,240,178"
+      "boxOffice": "$243,240,178",
+      "trailer": "https://www.youtube.com/watch?v=uTE592ryZx4"
     },
     {
       "slug": "a-thousand-words",
@@ -4706,7 +4911,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Saturn Films, Varsity Pictures, DreamWorks Pictures",
-      "boxOffice": "$22,044,277"
+      "boxOffice": "$22,044,277",
+      "trailer": "https://www.youtube.com/watch?v=BsohmWonrCg"
     },
     {
       "slug": "a-working-man",
@@ -4728,7 +4934,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Pусский, Español",
       "production": "Cedar Park Entertainment, BlockFilm, Punch Palace Productions, Balboa Productions, Black Bear Pictures, Fifth Season, CAT5",
-      "boxOffice": "$88,200,711"
+      "boxOffice": "$88,200,711",
+      "trailer": "https://www.youtube.com/watch?v=mdfrG2cLK58"
     },
     {
       "slug": "abraham-lincoln-vampire-hunter",
@@ -4750,7 +4957,8 @@
       "country": "Russia, United States of America",
       "language": "English",
       "production": "Bazelevs, Tim Burton Productions, Abraham Productions, Location Gourmet, 20th Century Fox, Dune Entertainment",
-      "boxOffice": "$116,500,000"
+      "boxOffice": "$116,500,000",
+      "trailer": "https://www.youtube.com/watch?v=2ilUeTRuDpY"
     },
     {
       "slug": "after-earth",
@@ -4772,7 +4980,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Overbrook Entertainment, Blinding Edge Pictures",
-      "boxOffice": "$243,843,127"
+      "boxOffice": "$243,843,127",
+      "trailer": "https://www.youtube.com/watch?v=MKIXQdv4G7o"
     },
     {
       "slug": "aftermath-2017",
@@ -4794,7 +5003,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Ingenious Media, Protozoa Pictures, The Fyzz, Oak Productions, Pacific View Management, Union Editorial, Hat and Coat Productions, EFO Films",
-      "boxOffice": "$840,809"
+      "boxOffice": "$840,809",
+      "trailer": "https://www.youtube.com/watch?v=oUXUm6he2-s"
     },
     {
       "slug": "alice-through-the-looking-glass-2016",
@@ -4816,7 +5026,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Legend3D, Walt Disney Pictures, Roth Films, Team Todd, Tim Burton Productions",
-      "boxOffice": "$299,457,024"
+      "boxOffice": "$299,457,024",
+      "trailer": "https://www.youtube.com/watch?v=anvGUW-vsLE"
     },
     {
       "slug": "alice-in-wonderland-2010",
@@ -4838,7 +5049,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Roth Films, Team Todd, Tim Burton Productions, The Zanuck Company",
-      "boxOffice": "$1,025,467,110"
+      "boxOffice": "$1,025,467,110",
+      "trailer": "https://www.youtube.com/watch?v=uJqMRLFezbo"
     },
     {
       "slug": "alpha-2018",
@@ -4860,7 +5072,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "Studio 8, Columbia Pictures",
-      "boxOffice": "$99,630,675"
+      "boxOffice": "$99,630,675",
+      "trailer": "https://www.youtube.com/watch?v=uIxnTi4GmCo"
     },
     {
       "slug": "american-made",
@@ -4882,7 +5095,8 @@
       "country": "United States of America, Luxembourg",
       "language": "Español, Français, English",
       "production": "Universal Pictures, Cross Creek Pictures, Imagine Entertainment, Vendian Entertainment, Quadrant Pictures, Hercules Film Fund",
-      "boxOffice": "$133,511,855"
+      "boxOffice": "$133,511,855",
+      "trailer": "https://www.youtube.com/watch?v=AEBIJRAkujM"
     },
     {
       "slug": "anchorman-2-the-legend-continues",
@@ -4904,7 +5118,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Gary Sanchez Productions, Paramount Pictures, Apatow Productions",
-      "boxOffice": "$173,700,000"
+      "boxOffice": "$173,700,000",
+      "trailer": "https://www.youtube.com/watch?v=6VdGI5-z_hg"
     },
     {
       "slug": "anchorman-the-legend-of-ron-burgundy",
@@ -4926,7 +5141,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "DreamWorks Pictures, Apatow Productions",
-      "boxOffice": "$90,574,188"
+      "boxOffice": "$90,574,188",
+      "trailer": "https://www.youtube.com/watch?v=-T3wnP91OnI"
     },
     {
       "slug": "angel-has-fallen",
@@ -4948,7 +5164,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Campbell Grobman Films, Eclectic Pictures, G-BASE, Millennium Media",
-      "boxOffice": "$146,661,977"
+      "boxOffice": "$146,661,977",
+      "trailer": "https://www.youtube.com/watch?v=l4AQchYSxwc"
     },
     {
       "slug": "argo",
@@ -4970,7 +5187,8 @@
       "country": "United Kingdom, United States of America",
       "language": "العربية, English, Deutsch, فارسی",
       "production": "GK Films, Warner Bros. Pictures, Smokehouse Pictures",
-      "boxOffice": "$232,300,000"
+      "boxOffice": "$232,300,000",
+      "trailer": "https://www.youtube.com/watch?v=3RrtxIci4T0"
     },
     {
       "slug": "armageddon",
@@ -4992,7 +5210,8 @@
       "country": "United States of America",
       "language": "English, Pусский",
       "production": "Touchstone Pictures, Jerry Bruckheimer Films, Valhalla Motion Pictures",
-      "boxOffice": "$553,799,566"
+      "boxOffice": "$553,799,566",
+      "trailer": "https://www.youtube.com/watch?v=nv5S3eun3uo"
     },
     {
       "slug": "baby-driver",
@@ -5014,7 +5233,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Big Talk Studios, Working Title Films, MRC",
-      "boxOffice": "$226,945,087"
+      "boxOffice": "$226,945,087",
+      "trailer": "https://www.youtube.com/watch?v=UnQhoPYEgoI"
     },
     {
       "slug": "batman-begins",
@@ -5036,7 +5256,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, اردو, 普通话",
       "production": "Warner Bros. Pictures, DC, Syncopy, Legendary Pictures, Patalex III Productions",
-      "boxOffice": "$374,218,673"
+      "boxOffice": "$374,218,673",
+      "trailer": "https://www.youtube.com/watch?v=lirBhHXvDSg"
     },
     {
       "slug": "batman-v-superman-dawn-of-justice",
@@ -5058,7 +5279,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, RatPac Entertainment, Atlas Entertainment, DC Entertainment, Cruel & Unusual Films",
-      "boxOffice": "$874,362,803"
+      "boxOffice": "$874,362,803",
+      "trailer": "https://www.youtube.com/watch?v=9zFE33cN65E"
     },
     {
       "slug": "battleship",
@@ -5080,7 +5302,8 @@
       "country": "Japan, United States of America",
       "language": "English, 日本語",
       "production": "Bluegrass Films, Film 44, dentsu, Universal Pictures, Hasbro Studios",
-      "boxOffice": "$303,025,485"
+      "boxOffice": "$303,025,485",
+      "trailer": "https://www.youtube.com/watch?v=wvXKvbIAq2k"
     },
     {
       "slug": "ben-hur-2016",
@@ -5102,7 +5325,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Metro-Goldwyn-Mayer, Paramount Pictures, LightWorkers Media, Sean Daniel Company",
-      "boxOffice": "$94,061,311"
+      "boxOffice": "$94,061,311",
+      "trailer": "https://www.youtube.com/watch?v=gLJdzky63BA"
     },
     {
       "slug": "birds-of-prey-and-the-fantabulous-emancipation-of-one-harley-quinn",
@@ -5124,7 +5348,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, DC Films, LuckyChap Entertainment, Clubhouse Pictures, Kroll & Co Entertainment",
-      "boxOffice": "$205,537,933"
+      "boxOffice": "$205,537,933",
+      "trailer": "https://www.youtube.com/watch?v=q2u2raiIlm0"
     },
     {
       "slug": "black-adam",
@@ -5146,7 +5371,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "New Line Cinema, Flynn Picture Company, DC Films, Seven Bucks Productions, Warner Bros. Pictures",
-      "boxOffice": "$393,452,111"
+      "boxOffice": "$393,452,111",
+      "trailer": "https://www.youtube.com/watch?v=mkomfZHG5q4"
     },
     {
       "slug": "brave-2012",
@@ -5168,7 +5394,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Pixar",
-      "boxOffice": "$538,983,207"
+      "boxOffice": "$538,983,207",
+      "trailer": "https://www.youtube.com/watch?v=5vw8UKDY1Xk"
     },
     {
       "slug": "bridge-of-spies",
@@ -5190,7 +5417,8 @@
       "country": "United States of America, Germany",
       "language": "Pусский, English, Deutsch",
       "production": "TSG Entertainment, Amblin Entertainment, Studio Babelsberg, Fox 2000 Pictures, Marc Platt Productions, Participant, Reliance Entertainment, DreamWorks Pictures",
-      "boxOffice": "$165,478,348"
+      "boxOffice": "$165,478,348",
+      "trailer": "https://www.youtube.com/watch?v=owhBnicLZt4"
     },
     {
       "slug": "bright",
@@ -5212,7 +5440,8 @@
       "country": "United States of America",
       "language": "Español, English",
       "production": "Clubhouse Pictures, Overbrook Entertainment",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=MUY3GVByRUs"
     },
     {
       "slug": "captain-phillips",
@@ -5234,7 +5463,8 @@
       "country": "United States of America",
       "language": "English, Somali",
       "production": "Columbia Pictures, Michael De Luca Productions, Scott Rudin Productions, Trigger Street Productions",
-      "boxOffice": "$218,791,811"
+      "boxOffice": "$218,791,811",
+      "trailer": "https://www.youtube.com/watch?v=sQkFFsmu2ng"
     },
     {
       "slug": "carrie-2013",
@@ -5256,7 +5486,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Misher Films, Screen Gems, Metro-Goldwyn-Mayer",
-      "boxOffice": "$84,790,678"
+      "boxOffice": "$84,790,678",
+      "trailer": "https://www.youtube.com/watch?v=zbdIXI1s3aU"
     },
     {
       "slug": "cast-away",
@@ -5278,7 +5509,8 @@
       "country": "United States of America",
       "language": "Pусский, English",
       "production": "20th Century Fox, DreamWorks Pictures, ImageMovers, Playtone",
-      "boxOffice": "$429,632,142"
+      "boxOffice": "$429,632,142",
+      "trailer": "https://www.youtube.com/watch?v=2dZvTscDGek"
     },
     {
       "slug": "central-intelligence",
@@ -5300,7 +5532,8 @@
       "country": "United States of America, China",
       "language": "English",
       "production": "New Line Cinema, Bluegrass Films, RatPac Entertainment, Principato-Young Entertainment, Perfect World Pictures",
-      "boxOffice": "$216,972,543"
+      "boxOffice": "$216,972,543",
+      "trailer": "https://www.youtube.com/watch?v=J_8OsnCTRx8"
     },
     {
       "slug": "chronicle",
@@ -5322,7 +5555,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Dune Entertainment, Davis Entertainment, Adam Schroeder Productions, 20th Century Fox",
-      "boxOffice": "$145,000,000"
+      "boxOffice": "$145,000,000",
+      "trailer": "https://www.youtube.com/watch?v=AQ9XG-j4kvU"
     },
     {
       "slug": "cinderella-man",
@@ -5344,7 +5578,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Universal Pictures, Miramax, Imagine Entertainment, Parkway Productions, Brian Grazer Productions",
-      "boxOffice": "$108,539,911"
+      "boxOffice": "$108,539,911",
+      "trailer": "https://www.youtube.com/watch?v=PpdRWplFjG8"
     },
     {
       "slug": "city-of-angels",
@@ -5366,7 +5601,8 @@
       "country": "Germany, United States of America",
       "language": "English",
       "production": "Atlas Entertainment, Monarchy Enterprises B.V., Regency Enterprises, Taurus Film, Warner Bros. Pictures",
-      "boxOffice": "$198,685,114"
+      "boxOffice": "$198,685,114",
+      "trailer": "https://www.youtube.com/watch?v=o_dAOSFvTLI"
     },
     {
       "slug": "clash-of-the-titans-2010",
@@ -5388,7 +5624,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English",
       "production": "The Zanuck Company, Legendary Pictures, Thunder Road, Moving Picture Company, Warner Bros. Pictures",
-      "boxOffice": "$493,214,993"
+      "boxOffice": "$493,214,993",
+      "trailer": "https://www.youtube.com/watch?v=TfyunOnMGqM"
     },
     {
       "slug": "wrath-of-the-titans",
@@ -5410,7 +5647,8 @@
       "country": "Spain, United States of America",
       "language": "English",
       "production": "Thunder Road, Legendary Pictures, Cott Productions, Furia de Titanes II, A.I.E., Warner Bros. Pictures",
-      "boxOffice": "$301,970,083"
+      "boxOffice": "$301,970,083",
+      "trailer": "https://www.youtube.com/watch?v=uMTCfKpfjxI"
     },
     {
       "slug": "commando",
@@ -5432,7 +5670,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "SLM Production Group, Silver Pictures, 20th Century Fox",
-      "boxOffice": "$57,500,000"
+      "boxOffice": "$57,500,000",
+      "trailer": "https://www.youtube.com/watch?v=VgDU6sOu334"
     },
     {
       "slug": "con-air",
@@ -5454,7 +5693,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Touchstone Pictures, Jerry Bruckheimer Films",
-      "boxOffice": "$224,012,234"
+      "boxOffice": "$224,012,234",
+      "trailer": "https://www.youtube.com/watch?v=QblYCxb02qs"
     },
     {
       "slug": "conan-the-barbarian-2011",
@@ -5476,7 +5716,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Dark Horse Entertainment, Nu Image, Paradox Entertainment, Nimar Studios, Cinema Vehicle Services, Millennium Media",
-      "boxOffice": "$63,523,283"
+      "boxOffice": "$63,523,283",
+      "trailer": "https://www.youtube.com/watch?v=aRVD3nURewE"
     },
     {
       "slug": "constantine",
@@ -5498,7 +5739,8 @@
       "country": "Germany, United States of America",
       "language": "English, Latin, Español, ",
       "production": "Village Roadshow Pictures, Lonely Film Productions, The Donners' Company, Batfilm Productions, Weed Road Pictures, Warner Bros. Pictures, 3 Arts Entertainment, DC Vertigo",
-      "boxOffice": "$230,900,000"
+      "boxOffice": "$230,900,000",
+      "trailer": "https://www.youtube.com/watch?v=819JCbGfZpg"
     },
     {
       "slug": "cowboys-aliens",
@@ -5520,7 +5762,8 @@
       "country": "India, United States of America",
       "language": "English",
       "production": "DreamWorks Pictures, Universal Pictures, Reliance Entertainment, Relativity Media, Imagine Entertainment, K/O Paper Products, Fairview Entertainment, Platinum Studios, Amblin Entertainment",
-      "boxOffice": "$174,822,325"
+      "boxOffice": "$174,822,325",
+      "trailer": "https://www.youtube.com/watch?v=0JlTboo4cPM"
     },
     {
       "slug": "creed",
@@ -5542,7 +5785,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Metro-Goldwyn-Mayer, New Line Cinema, Chartoff-Winkler Productions",
-      "boxOffice": "$173,600,000"
+      "boxOffice": "$173,600,000",
+      "trailer": "https://www.youtube.com/watch?v=JQ9OhBYjTds"
     },
     {
       "slug": "crimson-peak",
@@ -5564,7 +5808,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Double Dare You, Legendary Pictures",
-      "boxOffice": "$74,700,000"
+      "boxOffice": "$74,700,000",
+      "trailer": "https://www.youtube.com/watch?v=vLWsNDZqXpo"
     },
     {
       "slug": "darkness-falls-2003",
@@ -5586,7 +5831,8 @@
       "country": "Australia, United States of America",
       "language": "English",
       "production": "Revolution Studios, Distant Corners Entertainment Group Inc., Blue Star Productions, Village Roadshow Pictures, Morningstar Films",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=ofpBwmIPX7Y"
     },
     {
       "slug": "dawn-of-the-planet-of-the-apes",
@@ -5608,7 +5854,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "TSG Entertainment, Chernin Entertainment, Ingenious Media, 20th Century Fox",
-      "boxOffice": "$710,644,566"
+      "boxOffice": "$710,644,566",
+      "trailer": "https://www.youtube.com/watch?v=nQNfVj5_7FQ"
     },
     {
       "slug": "deadpool",
@@ -5630,7 +5877,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "20th Century Fox, The Donners' Company, Genre Films, Marvel Entertainment",
-      "boxOffice": "$782,837,347"
+      "boxOffice": "$782,837,347",
+      "trailer": "https://www.youtube.com/watch?v=L3IXZ3EJVfc"
     },
     {
       "slug": "death-wish-2018",
@@ -5652,7 +5900,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Metro-Goldwyn-Mayer, Cave 76 Productions",
-      "boxOffice": "$34,017,028"
+      "boxOffice": "$34,017,028",
+      "trailer": "https://www.youtube.com/watch?v=HzILu6yyA20"
     },
     {
       "slug": "django-unchained",
@@ -5674,7 +5923,8 @@
       "country": "United States of America",
       "language": "English, Français, Deutsch",
       "production": "The Weinstein Company, Columbia Pictures",
-      "boxOffice": "$425,368,238"
+      "boxOffice": "$425,368,238",
+      "trailer": "https://www.youtube.com/watch?v=_iH0UBYDI4g"
     },
     {
       "slug": "doom",
@@ -5696,7 +5946,8 @@
       "country": "Czech Republic, Germany, United Kingdom, United States of America",
       "language": "日本語, English",
       "production": "di Bonaventura Pictures, John Wells Productions, Reaper Productions, Stillking Films, Doom Productions, Distant Planet Productions, Babelsberg Film",
-      "boxOffice": "$58,100,000"
+      "boxOffice": "$58,100,000",
+      "trailer": "https://www.youtube.com/watch?v=LljkKoPs1Gg"
     },
     {
       "slug": "dungeons-dragons-honor-among-thieves",
@@ -5718,7 +5969,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "Entertainment One, Paramount Pictures",
-      "boxOffice": "$208,200,000"
+      "boxOffice": "$208,200,000",
+      "trailer": "https://www.youtube.com/watch?v=11jdz0d8pfk"
     },
     {
       "slug": "edge-of-tomorrow",
@@ -5740,7 +5992,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "RatPac Entertainment, Village Roadshow Pictures, VIZ Media, 3 Arts Entertainment, Warner Bros. Pictures",
-      "boxOffice": "$370,541,256"
+      "boxOffice": "$370,541,256",
+      "trailer": "https://www.youtube.com/watch?v=XAXchXuLELY"
     },
     {
       "slug": "elysium-2013",
@@ -5762,7 +6015,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "TriStar Pictures, MRC, QED International, Alphacore, Genre Films",
-      "boxOffice": "$286,140,700"
+      "boxOffice": "$286,140,700",
+      "trailer": "https://www.youtube.com/watch?v=oIBtePb-dGY"
     },
     {
       "slug": "eragon",
@@ -5784,7 +6038,8 @@
       "country": "United Kingdom, United States of America, Hungary",
       "language": "English",
       "production": "Fox 2000 Pictures, Davis Entertainment, Dune Entertainment, Major Studio Partners, Mid Atlantic Films, 20th Century Fox, Ingenious Media",
-      "boxOffice": "$250,425,512"
+      "boxOffice": "$250,425,512",
+      "trailer": "https://www.youtube.com/watch?v=b5eMJkuJHwo"
     },
     {
       "slug": "exodus-gods-and-kings",
@@ -5806,7 +6061,8 @@
       "country": "Spain, United States of America, United Kingdom",
       "language": "English",
       "production": "20th Century Fox, TSG Entertainment, Chernin Entertainment, Babieka Films, Volcano Films, Scott Free Productions",
-      "boxOffice": "$268,031,828"
+      "boxOffice": "$268,031,828",
+      "trailer": "https://www.youtube.com/watch?v=6k8qeqZycgE"
     },
     {
       "slug": "fantastic-beasts-and-where-to-find-them",
@@ -5828,7 +6084,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Heyday Films, Warner Bros. Pictures",
-      "boxOffice": "$809,342,332"
+      "boxOffice": "$809,342,332",
+      "trailer": "https://www.youtube.com/watch?v=gwTmUXgy71E"
     },
     {
       "slug": "fantastic-beasts-the-crimes-of-grindelwald",
@@ -5850,7 +6107,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Français",
       "production": "Warner Bros. Pictures, Heyday Films",
-      "boxOffice": "$654,900,000"
+      "boxOffice": "$654,900,000",
+      "trailer": "https://www.youtube.com/watch?v=KzgiwERlFwE"
     },
     {
       "slug": "ferris-buellers-day-off",
@@ -5872,7 +6130,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures",
-      "boxOffice": "$70,100,000"
+      "boxOffice": "$70,100,000",
+      "trailer": "https://www.youtube.com/watch?v=GDttaV80_BM"
     },
     {
       "slug": "ford-v-ferrari",
@@ -5894,7 +6153,8 @@
       "country": "United States of America",
       "language": "Français, 日本語, Italiano, English",
       "production": "20th Century Fox, TSG Entertainment, Chernin Entertainment, Turnpike Films",
-      "boxOffice": "$225,508,210"
+      "boxOffice": "$225,508,210",
+      "trailer": "https://www.youtube.com/watch?v=I3h9Z89U9ZA"
     },
     {
       "slug": "free-guy",
@@ -5916,7 +6176,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Berlanti Productions, 21 Laps Entertainment, Maximum Effort, Lit Entertainment Group, 20th Century Studios",
-      "boxOffice": "$331,526,598"
+      "boxOffice": "$331,526,598",
+      "trailer": "https://www.youtube.com/watch?v=cttnRmcr_ME"
     },
     {
       "slug": "frozen-2013",
@@ -5938,7 +6199,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Animation Studios",
-      "boxOffice": "$1,274,219,009"
+      "boxOffice": "$1,274,219,009",
+      "trailer": "https://www.youtube.com/watch?v=ipMUYPGUcas"
     },
     {
       "slug": "frozen-2",
@@ -5960,7 +6222,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Animation Studios",
-      "boxOffice": "$1,453,683,476"
+      "boxOffice": "$1,453,683,476",
+      "trailer": "https://www.youtube.com/watch?v=HJa0tMKvHRE"
     },
     {
       "slug": "fury-2014",
@@ -5982,7 +6245,8 @@
       "country": "United States of America",
       "language": "English, Deutsch, Español",
       "production": "Columbia Pictures, QED International, LStar Capital, Le Grisbi Productions, Crave Films",
-      "boxOffice": "$211,817,906"
+      "boxOffice": "$211,817,906",
+      "trailer": "https://www.youtube.com/watch?v=znp1ou7mSrE"
     },
     {
       "slug": "gemini-man-2019",
@@ -6004,7 +6268,8 @@
       "country": "United States of America, China, Colombia",
       "language": "English",
       "production": "Skydance Media, Jerry Bruckheimer Films, Fosun Pictures, Paramount Pictures, Alibaba Pictures Group",
-      "boxOffice": "$173,469,516"
+      "boxOffice": "$173,469,516",
+      "trailer": "https://www.youtube.com/watch?v=k7DaEsbfw7g"
     },
     {
       "slug": "ghost-rider",
@@ -6026,7 +6291,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Crystal Sky Pictures, Relativity Media, Columbia Pictures, Marvel Studios, Canarsie",
-      "boxOffice": "$228,738,393"
+      "boxOffice": "$228,738,393",
+      "trailer": "https://www.youtube.com/watch?v=nu6R7ypaz5g"
     },
     {
       "slug": "ghost-rider-spirit-of-vengeance",
@@ -6048,7 +6314,8 @@
       "country": "United Arab Emirates, United States of America",
       "language": "English",
       "production": "Columbia Pictures, Crystal Sky Pictures, Michael De Luca Productions, Hyde Park Entertainment, Arad Productions, Image Nation Abu Dhabi, Marvel Entertainment",
-      "boxOffice": "$132,563,930"
+      "boxOffice": "$132,563,930",
+      "trailer": "https://www.youtube.com/watch?v=ibZPd9MX0zg"
     },
     {
       "slug": "ghost-ship",
@@ -6070,7 +6337,8 @@
       "country": "Australia, United States of America",
       "language": "English, Italiano, Español",
       "production": "Village Roadshow Pictures, NPV Entertainment, Dark Castle Entertainment, Ghost Ship Films Pty. Ltd., Warner Bros. Pictures",
-      "boxOffice": "$71,142,361"
+      "boxOffice": "$71,142,361",
+      "trailer": "https://www.youtube.com/watch?v=22XdYRbFHoE"
     },
     {
       "slug": "gladiator-2000",
@@ -6092,7 +6360,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Universal Pictures, Scott Free Productions, Red Wagon Entertainment, Mill Film, DreamWorks Pictures",
-      "boxOffice": "$465,516,248"
+      "boxOffice": "$465,516,248",
+      "trailer": "https://www.youtube.com/watch?v=cXg62-t8BWs"
     },
     {
       "slug": "god-bless-america",
@@ -6114,7 +6383,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Darko Entertainment, Jerkschool Productions",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=yruArw21EGA"
     },
     {
       "slug": "godzilla-minus-one",
@@ -6136,7 +6406,8 @@
       "country": "Japan",
       "language": "English, 日本語",
       "production": "TOHO, TOHO Studios, Robot Communications",
-      "boxOffice": "$113,676,322"
+      "boxOffice": "$113,676,322",
+      "trailer": "https://www.youtube.com/watch?v=MSp68m8OJus"
     },
     {
       "slug": "godzilla-kong-the-new-empire",
@@ -6158,29 +6429,29 @@
       "country": "United States of America",
       "language": "English",
       "production": "Legendary Pictures",
-      "boxOffice": "$571,750,016"
+      "boxOffice": "$571,750,016",
+      "trailer": "https://www.youtube.com/watch?v=i9QdSVbCJLk"
     },
     {
-      "slug": "going-in-style-2017",
+      "title": "Despedida em Grande Estilo",
+      "slug": "despedida-em-grande-estilo",
+      "year": "2017",
       "url": "https://letterboxd.com/film/going-in-style-2017/",
-      "title": "Going in Style",
-      "original_title": "Going in Style",
-      "year": "1979",
-      "released": "1979-12-25",
-      "runtime": "97 min",
-      "genre": "Crime, Drama, Comédia",
-      "director": "Martin Brest",
-      "actors": "George Burns, Art Carney, Lee Strasberg, Charles Hallahan, Pamela Payton-Wright",
-      "plot": "",
-      "poster": "https://image.tmdb.org/t/p/w500/uwB9BQU2p0vcwlXTISyK6pz07lq.jpg",
-      "backdrop": "https://image.tmdb.org/t/p/original/bI6qOwa7yWb8bKX3wHnCYaA7H0Z.jpg",
-      "imdbRating": "6.9",
-      "imdbVotes": "58",
-      "tmdb_slug": "going-in-style",
+      "trailer": "https://www.youtube.com/watch?v=QOfpZb3UYsQ",
+      "plot": "Willie, Joe e Albert são amigos há décadas. Eles levam uma vida pacata, mas sofrem com problemas financeiros. Quando Willie testemunha o assalto milionário a um banco, decide chamar Joe e Albert para elaborarem o seu próprio assalto. É a vez de os idosos se rebelarem contra a exploração dos bancos.",
+      "director": "Zach Braff",
+      "actors": "Morgan Freeman, Michael Caine, Alan Arkin, Ann-Margret, John Ortiz",
+      "genre": "Crime, Comédia",
+      "runtime": "96 min",
+      "imdbRating": "6.7",
+      "poster": "https://image.tmdb.org/t/p/w500/6nge1qOYikif7e6dN80KOQuRTtT.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/uARnuPezr7eZkOsHj2ujFQz6EKE.jpg",
+      "imdbVotes": "2955",
       "country": "United States of America",
       "language": "English",
-      "production": "Warner Bros. Pictures",
-      "boxOffice": "$30,000,000"
+      "production": "Village Roadshow Pictures, New Line Cinema, De Line Pictures, RatPac Entertainment",
+      "boxOffice": "$84,618,541",
+      "released": "2017-04-06"
     },
     {
       "slug": "hancock",
@@ -6202,7 +6473,8 @@
       "country": "United States of America",
       "language": "English, Français, 日本語, Tiếng Việt",
       "production": "Columbia Pictures, Relativity Media, Blue Light, Weed Road Pictures, Overbrook Entertainment",
-      "boxOffice": "$629,400,000"
+      "boxOffice": "$629,400,000",
+      "trailer": "https://www.youtube.com/watch?v=9rLipkOWxno"
     },
     {
       "slug": "hansel-gretel-witch-hunters",
@@ -6224,7 +6496,8 @@
       "country": "United States of America, Germany",
       "language": "English",
       "production": "Paramount Pictures, MTV Films, Gary Sanchez Productions, Studio Babelsberg, Metro-Goldwyn-Mayer",
-      "boxOffice": "$226,349,749"
+      "boxOffice": "$226,349,749",
+      "trailer": "https://www.youtube.com/watch?v=ErGy23X0B9Q"
     },
     {
       "slug": "hercules-2014",
@@ -6246,7 +6519,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Radical Studios, Flynn Picture Company, Metro-Goldwyn-Mayer",
-      "boxOffice": "$244,819,862"
+      "boxOffice": "$244,819,862",
+      "trailer": "https://www.youtube.com/watch?v=HydiAICZq6I"
     },
     {
       "slug": "hitmans-wifes-bodyguard",
@@ -6268,7 +6542,8 @@
       "country": "Bulgaria, France, Sweden, United States of America, United Kingdom",
       "language": "English, 日本語, Pусский, Español",
       "production": "Nu Boyana Film Studios, Summit Entertainment, Lionsgate, Millennium Media, Davis Films, Campbell Grobman Films, Film i Väst, Filmgate Films",
-      "boxOffice": "$70,060,492"
+      "boxOffice": "$70,060,492",
+      "trailer": "https://www.youtube.com/watch?v=qRZYZ3g8l54"
     },
     {
       "slug": "homefront",
@@ -6290,7 +6565,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Open Road Films, Millennium Media, Universal Pictures",
-      "boxOffice": "$51,695,362"
+      "boxOffice": "$51,695,362",
+      "trailer": "https://www.youtube.com/watch?v=BjFTuZH7E2c"
     },
     {
       "slug": "hugo",
@@ -6312,7 +6588,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "GK Films, Infinitum Nihil",
-      "boxOffice": "$185,770,160"
+      "boxOffice": "$185,770,160",
+      "trailer": "https://www.youtube.com/watch?v=wOAABsOoblw"
     },
     {
       "slug": "hulk",
@@ -6334,7 +6611,8 @@
       "country": "United States of America",
       "language": "Español, English",
       "production": "Marvel Enterprises, Universal Pictures, Good Machine, Valhalla Motion Pictures",
-      "boxOffice": "$245,360,480"
+      "boxOffice": "$245,360,480",
+      "trailer": "https://www.youtube.com/watch?v=2ErnLuJKQA4"
     },
     {
       "slug": "i-am-legend",
@@ -6356,7 +6634,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English",
       "production": "Warner Bros. Pictures, Village Roadshow Pictures, Weed Road Pictures, Overbrook Entertainment, Heyday Films, Original Film",
-      "boxOffice": "$585,410,052"
+      "boxOffice": "$585,410,052",
+      "trailer": "https://www.youtube.com/watch?v=4uDU6SUpr8k"
     },
     {
       "slug": "i-frankenstein",
@@ -6378,7 +6657,8 @@
       "country": "Australia, United States of America",
       "language": "English",
       "production": "Lionsgate, Lakeshore Entertainment, Sidney Kimmel Entertainment, Hopscotch Features",
-      "boxOffice": "$76,801,179"
+      "boxOffice": "$76,801,179",
+      "trailer": "https://www.youtube.com/watch?v=ZtCUaCqdwPw"
     },
     {
       "slug": "i-robot",
@@ -6400,7 +6680,8 @@
       "country": "United States of America, Germany, Canada",
       "language": "English",
       "production": "Davis Entertainment, Laurence Mark Productions, Canlaws Productions, 20th Century Fox, Overbrook Entertainment, Mediastream Vierte Film",
-      "boxOffice": "$347,234,916"
+      "boxOffice": "$347,234,916",
+      "trailer": "https://www.youtube.com/watch?v=ry1N9lrzt7A"
     },
     {
       "slug": "immortals",
@@ -6422,7 +6703,8 @@
       "country": "United States of America",
       "language": "ελληνικά, English",
       "production": "Relativity Media, Virgin Produced, Hollywood Gang Productions, Atmosphere Entertainment MM, Mandate International, Rogue Pictures",
-      "boxOffice": "$226,904,017"
+      "boxOffice": "$226,904,017",
+      "trailer": "https://www.youtube.com/watch?v=pE3yR8bZ1pY"
     },
     {
       "slug": "in-the-heart-of-the-sea",
@@ -6444,7 +6726,8 @@
       "country": "Spain, United States of America",
       "language": "English",
       "production": "Imagine Entertainment, Spring Creek Pictures, Roth Films, Kjam Media, Cott Productions, Surf Film, Enelmar Productions, A.I.E., Warner Bros. Pictures, Village Roadshow Pictures",
-      "boxOffice": "$93,900,000"
+      "boxOffice": "$93,900,000",
+      "trailer": "https://www.youtube.com/watch?v=VewQ4Yv6304"
     },
     {
       "slug": "independence-day",
@@ -6466,7 +6749,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "20th Century Fox, Centropolis Entertainment",
-      "boxOffice": "$817,400,891"
+      "boxOffice": "$817,400,891",
+      "trailer": "https://www.youtube.com/watch?v=qHH7VxJJ2k8"
     },
     {
       "slug": "independence-day-resurgence",
@@ -6488,7 +6772,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "20th Century Fox, TSG Entertainment, Centropolis Entertainment, Stereo D",
-      "boxOffice": "$389,681,935"
+      "boxOffice": "$389,681,935",
+      "trailer": "https://www.youtube.com/watch?v=FrS7PThzR8s"
     },
     {
       "slug": "interstellar",
@@ -6510,51 +6795,50 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Legendary Pictures, Syncopy, Lynda Obst Productions",
-      "boxOffice": "$746,606,706"
+      "boxOffice": "$746,606,706",
+      "trailer": "https://www.youtube.com/watch?v=7WI532GLE3I"
     },
     {
-      "slug": "pitch-black",
-      "url": "https://letterboxd.com/film/pitch-black/",
-      "title": "Eclipse Mortal",
-      "original_title": "Pitch Black",
-      "year": "2000",
-      "released": "2000-02-18",
-      "runtime": "108 min",
-      "genre": "Thriller, Ficção científica, Ação",
+      "title": "A Batalha de Riddick",
+      "slug": "a-batalha-de-riddick",
+      "year": "2004",
+      "url": "https://letterboxd.com/film/the-chronicles-of-riddick/",
+      "trailer": "https://www.youtube.com/watch?v=6kVvQ1Rtb9k",
+      "plot": "Os Necromongers são guerreiros interplanetários que vivem de assolar novos mundos, oferecendo aos seus habitantes duas opções: se converter ou morrer. Os poucos que conseguem sobreviver a eles passam a acreditar em mitos e profecias, já que não vêem outra saída de salvação. Quem pode ajudá-los é Riddick, um homem solitário que vive exilado e fugindo de seus perseguidores.",
       "director": "David Twohy",
-      "actors": "Vin Diesel, Radha Mitchell, Cole Hauser, Lewis Fitz-Gerald, Claudia Black",
-      "plot": "No futuro, as viagens interplanetárias são corriqueiras e o homem conhece boa parte do universo. Durante uma viagem tripulada por centenas de pessoas rumo ao planeta New Mecca, um acidente ocorre e a nave é obrigada a pousar num planeta desconhecido. De toda a tripulação, apenas seis pessoas sobrevivem à queda, que descobrem estar num planeta povoado por milhares de criaturas carnívoras, que hibernam nas cavernas locais, mas que irão caçar em céu aberto com a chegada do próximo eclipse. A única arma que eles têm contra os monstros é a claridade, mas mesmo assim o planeta não possui eletricidade e as baterias de seus trajes estão esgotando.",
-      "poster": "https://image.tmdb.org/t/p/w500/7V4WfCUWYzMcBby8e6jAwVxw2Ai.jpg",
-      "backdrop": "https://image.tmdb.org/t/p/original/mZGwhwIwYuF0G9XLS8j23dhNfUC.jpg",
-      "imdbRating": "6.9",
-      "imdbVotes": "4681",
-      "tmdb_slug": "eclipse-mortal",
+      "actors": "Vin Diesel, Colm Feore, Thandiwe Newton, Judi Dench, Karl Urban",
+      "genre": "Ação, Ficção científica",
+      "runtime": "119 min",
+      "imdbRating": "6.5",
+      "poster": "https://image.tmdb.org/t/p/w500/dkl3u70N9aS16czdZyvKRlsbf6Y.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/lt3NqorBMWn786m9bzqM0OLdMS8.jpg",
+      "imdbVotes": "4360",
       "country": "United States of America",
-      "language": "العربية, English",
-      "production": "Interscope Communications",
-      "boxOffice": "$53,187,659"
+      "language": "English",
+      "production": "Radar Pictures, One Race, Primal Foe Productions",
+      "boxOffice": "$115,772,733",
+      "released": "2004-06-11"
     },
     {
-      "slug": "into-pitch-black",
-      "url": "https://letterboxd.com/film/into-pitch-black/",
       "title": "Eclipse Mortal",
-      "original_title": "Into Pitch Black",
+      "slug": "eclipse-mortal",
       "year": "2000",
-      "released": "2000-12-02",
-      "runtime": "44 min",
-      "genre": "Ação, Ficção científica, Crime, Cinema TV",
+      "url": "https://letterboxd.com/film/pitch-black/",
+      "trailer": "https://www.youtube.com/watch?v=mEJ8e8S4hOw",
+      "plot": "Acidente com espaçonave deixa os sobreviventes em um planeta até então inexplorado. A tripulação logo descobre que o planeta está povoado por criaturas carnívoras que hibernam nas cavernas locais, mas sairão para caçar em céu aberto com a chegada do próximo eclipse. Os sobreviventes agora lutam contra os monstros, e sua única arma é a claridade, já que o planeta não possui eletricidade e as baterias de suas roupas estão acabando.",
       "director": "M. David Melvin",
       "actors": "Vin Diesel, Lisa Saum, Brian Gant, William Roberts, Kevin Burnett",
-      "plot": "Acidente com espaçonave deixa os sobreviventes em um planeta até então inexplorado. A tripulação logo descobre que o planeta está povoado por criaturas carnívoras que hibernam nas cavernas locais, mas sairão para caçar em céu aberto com a chegada do próximo eclipse. Os sobreviventes agora lutam contra os monstros, e sua única arma é a claridade, já que o planeta não possui eletricidade e as baterias de suas roupas estão acabando.",
+      "genre": "Ação, Ficção científica, Crime, Cinema TV",
+      "runtime": "44 min",
+      "imdbRating": "6.1",
       "poster": "https://image.tmdb.org/t/p/w500/daB2WDVkOXzaWohtuxvOArpRF4X.jpg",
       "backdrop": "https://image.tmdb.org/t/p/original/bPw2N56vdHgAjgNAWBD68WYGFVU.jpg",
-      "imdbRating": "6.1",
       "imdbVotes": "93",
-      "tmdb_slug": "eclipse-mortal",
       "country": "United States of America",
       "language": "English",
       "production": "KG Productions, Universal Pictures",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "released": "2000-12-02"
     },
     {
       "slug": "into-the-storm-2014",
@@ -6576,7 +6860,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "New Line Cinema, Village Roadshow Pictures, RatPac Entertainment, Broken Road Productions, Warner Bros. Pictures",
-      "boxOffice": "$160,600,000"
+      "boxOffice": "$160,600,000",
+      "trailer": "https://www.youtube.com/watch?v=eierBlblwec"
     },
     {
       "slug": "jack-the-giant-slayer",
@@ -6598,7 +6883,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "New Line Cinema, Legendary Pictures, Original Film, Big Kid Pictures, Bad Hat Harry Productions, Warner Bros. Pictures",
-      "boxOffice": "$197,700,000"
+      "boxOffice": "$197,700,000",
+      "trailer": "https://www.youtube.com/watch?v=xpkcEIsgGmU"
     },
     {
       "slug": "john-carter",
@@ -6620,7 +6906,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures",
-      "boxOffice": "$284,100,000"
+      "boxOffice": "$284,100,000",
+      "trailer": "https://www.youtube.com/watch?v=WR6HUkzxjR0"
     },
     {
       "slug": "journey-2-the-mysterious-island",
@@ -6642,7 +6929,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walden Media, New Line Cinema, Contrafilm",
-      "boxOffice": "$355,692,760"
+      "boxOffice": "$355,692,760",
+      "trailer": "https://www.youtube.com/watch?v=9n0GhQrpSCc"
     },
     {
       "slug": "jumper",
@@ -6664,7 +6952,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Dune Entertainment, Hypnotic, New Regency Pictures",
-      "boxOffice": "$222,231,186"
+      "boxOffice": "$222,231,186",
+      "trailer": "https://www.youtube.com/watch?v=hY5vDXOW4Nk"
     },
     {
       "slug": "jungle-2017",
@@ -6686,7 +6975,8 @@
       "country": "Australia, Colombia, United Kingdom",
       "language": "English, Deutsch, עִבְרִית, Español",
       "production": "Screen Queensland, Screen Australia, Babber Films, Cutting Edge Group",
-      "boxOffice": "$1,906,640"
+      "boxOffice": "$1,906,640",
+      "trailer": "https://www.youtube.com/watch?v=ADjYDl1RCGs"
     },
     {
       "slug": "jungle-cruise",
@@ -6708,7 +6998,8 @@
       "country": "United States of America",
       "language": "Deutsch, Español, Français, English, Italiano, Latin, Polski, Português",
       "production": "Walt Disney Pictures, Seven Bucks Productions, Davis Entertainment, Flynn Picture Company",
-      "boxOffice": "$220,889,446"
+      "boxOffice": "$220,889,446",
+      "trailer": "https://www.youtube.com/watch?v=hJZ82pwwJqA"
     },
     {
       "slug": "justice-league",
@@ -6730,7 +7021,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "RatPac Entertainment, Cruel & Unusual Films, Atlas Entertainment, Warner Bros. Pictures, DC Films",
-      "boxOffice": "$661,326,987"
+      "boxOffice": "$661,326,987",
+      "trailer": "https://www.youtube.com/watch?v=mLtZD9lbNqs"
     },
     {
       "slug": "king-arthur-legend-of-the-sword",
@@ -6752,7 +7044,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Village Roadshow Pictures, Weed Road Pictures, Wigram Productions, Safehouse Pictures, Warner Bros. Pictures",
-      "boxOffice": "$149,175,066"
+      "boxOffice": "$149,175,066",
+      "trailer": "https://www.youtube.com/watch?v=SX9y5JPuRHY"
     },
     {
       "slug": "kingsman-the-secret-service",
@@ -6774,7 +7067,8 @@
       "country": "United Kingdom, United States of America",
       "language": "العربية, English",
       "production": "20th Century Fox, Marv, Cloudy Productions, TSG Entertainment",
-      "boxOffice": "$414,351,546"
+      "boxOffice": "$414,351,546",
+      "trailer": "https://www.youtube.com/watch?v=Th_KrhqmHk8"
     },
     {
       "slug": "kong-skull-island",
@@ -6796,7 +7090,8 @@
       "country": "China, United States of America",
       "language": "English, Tiếng Việt",
       "production": "Legendary Pictures, Tencent Pictures",
-      "boxOffice": "$566,652,812"
+      "boxOffice": "$566,652,812",
+      "trailer": "https://www.youtube.com/watch?v=KOTaGnFr0Bg"
     },
     {
       "slug": "legend-2015",
@@ -6818,7 +7113,8 @@
       "country": "France, United Kingdom, United States of America",
       "language": "English",
       "production": "Working Title Films, Anton Capital Entertainment, StudioCanal, Cross Creek Pictures",
-      "boxOffice": "$42,972,994"
+      "boxOffice": "$42,972,994",
+      "trailer": "https://www.youtube.com/watch?v=3pHZpqu8fes"
     },
     {
       "slug": "little-miss-sunshine",
@@ -6840,7 +7136,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Big Beach, Bona Fide Productions",
-      "boxOffice": "$100,523,181"
+      "boxOffice": "$100,523,181",
+      "trailer": "https://www.youtube.com/watch?v=VWyH_twcMl0"
     },
     {
       "slug": "looper",
@@ -6862,7 +7159,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Endgame Entertainment, DMG Entertainment, Ram Bergman Productions",
-      "boxOffice": "$47,042,000"
+      "boxOffice": "$47,042,000",
+      "trailer": "https://www.youtube.com/watch?v=eI3ju17W070"
     },
     {
       "slug": "lord-of-war",
@@ -6884,7 +7182,8 @@
       "country": "France, United States of America, Germany",
       "language": "العربية, Deutsch, English, Français, Pусский, Español, Український, Türkçe",
       "production": "Endgame Entertainment, Entertainment Manufacturing Company, Ascendant Pictures, Saturn Films, Rising Star Productions, Copag V, VIP Medienfonds 3, Majority Entertainment",
-      "boxOffice": "$72,600,000"
+      "boxOffice": "$72,600,000",
+      "trailer": "https://www.youtube.com/watch?v=UzLLhHtNyFc"
     },
     {
       "slug": "leon-the-professional",
@@ -6906,7 +7205,8 @@
       "country": "France",
       "language": "English, Français, Italiano",
       "production": "Gaumont, Les Films du Dauphin",
-      "boxOffice": "$45,284,974"
+      "boxOffice": "$45,284,974",
+      "trailer": "https://www.youtube.com/watch?v=DcsirofJrlM"
     },
     {
       "slug": "man-of-steel",
@@ -6928,7 +7228,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "DC Entertainment, Syncopy, Peters Entertainment, Warner Bros. Pictures",
-      "boxOffice": "$668,045,518"
+      "boxOffice": "$668,045,518",
+      "trailer": "https://www.youtube.com/watch?v=i-XfJiSZzoM"
     },
     {
       "slug": "film:151796",
@@ -6950,7 +7251,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Broadway Video, Relativity Media, Michaels-Goldwyn",
-      "boxOffice": "$29,200,000"
+      "boxOffice": "$29,200,000",
+      "trailer": "https://www.youtube.com/watch?v=zIkzuXDhCcQ"
     },
     {
       "slug": "men-in-black",
@@ -6972,7 +7274,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Columbia Pictures, Amblin Entertainment, Parkes+MacDonald Production",
-      "boxOffice": "$589,390,539"
+      "boxOffice": "$589,390,539",
+      "trailer": "https://www.youtube.com/watch?v=lVlv_BReCUE"
     },
     {
       "slug": "men-in-black-3",
@@ -6994,7 +7297,8 @@
       "country": "United Arab Emirates, United States of America",
       "language": "English",
       "production": "Columbia Pictures, Hemisphere Media Capital, Amblin Entertainment, Parkes+MacDonald Image Nation, Image Nation Abu Dhabi",
-      "boxOffice": "$654,213,485"
+      "boxOffice": "$654,213,485",
+      "trailer": "https://www.youtube.com/watch?v=PfaOtHt6ldQ"
     },
     {
       "slug": "men-in-black-ii",
@@ -7016,7 +7320,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Amblin Entertainment, Parkes+MacDonald Production",
-      "boxOffice": "$445,135,288"
+      "boxOffice": "$445,135,288",
+      "trailer": "https://www.youtube.com/watch?v=pA1xvze7yTQ"
     },
     {
       "slug": "men-in-black-international",
@@ -7038,7 +7343,8 @@
       "country": "China, United States of America",
       "language": "Français, English",
       "production": "Amblin Entertainment, Parkes+MacDonald Image Nation, Columbia Pictures, Tencent Pictures",
-      "boxOffice": "$253,890,701"
+      "boxOffice": "$253,890,701",
+      "trailer": "https://www.youtube.com/watch?v=Zkz6OA8dugQ"
     },
     {
       "slug": "minority-report",
@@ -7060,7 +7366,8 @@
       "country": "United States of America",
       "language": "English, svenska",
       "production": "Digital Image Associates, Cruise/Wagner Productions, Blue Tulip Productions, Ronald Shusett/Gary Goldman Productions, Amblin Entertainment, 20th Century Fox, DreamWorks Pictures",
-      "boxOffice": "$358,372,926"
+      "boxOffice": "$358,372,926",
+      "trailer": "https://www.youtube.com/watch?v=WncVJ0TNCDc"
     },
     {
       "slug": "need-for-speed",
@@ -7082,7 +7389,8 @@
       "country": "India, United States of America",
       "language": "English",
       "production": "DreamWorks Pictures, Reliance Entertainment, Bandito Brothers, Mark Sourian Productions, John Gatins Productions, Touchstone Pictures, Electronic Arts",
-      "boxOffice": "$203,277,636"
+      "boxOffice": "$203,277,636",
+      "trailer": "https://www.youtube.com/watch?v=e73J71RZRn8"
     },
     {
       "slug": "news-of-the-world",
@@ -7104,7 +7412,8 @@
       "country": "United States of America",
       "language": "Deutsch, English",
       "production": "Playtone, Pretty Pictures, Universal Pictures, Perfect World Pictures",
-      "boxOffice": "$12,700,000"
+      "boxOffice": "$12,700,000",
+      "trailer": "https://www.youtube.com/watch?v=zTZDb_iKooI"
     },
     {
       "slug": "noah",
@@ -7126,7 +7435,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Regency Enterprises, Protozoa Pictures",
-      "boxOffice": "$362,600,000"
+      "boxOffice": "$362,600,000",
+      "trailer": "https://www.youtube.com/watch?v=UKbp8O7PPnM"
     },
     {
       "slug": "oz-the-great-and-powerful",
@@ -7148,7 +7458,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Roth Films, Curtis-Donen Productions, Walt Disney Pictures",
-      "boxOffice": "$491,868,548"
+      "boxOffice": "$491,868,548",
+      "trailer": "https://www.youtube.com/watch?v=DylgNj4YQVc"
     },
     {
       "slug": "pacific-rim",
@@ -7170,7 +7481,8 @@
       "country": "United States of America",
       "language": "广州话 / 廣州話, English, 日本語, Pусский",
       "production": "Double Dare You, Legendary Pictures",
-      "boxOffice": "$411,000,000"
+      "boxOffice": "$411,000,000",
+      "trailer": "https://www.youtube.com/watch?v=hQAQxQop6Io"
     },
     {
       "slug": "pans-labyrinth",
@@ -7192,7 +7504,8 @@
       "country": "Mexico, Spain, United States of America",
       "language": "Español",
       "production": "Estudios Picasso, Esperanto Filmoj, Tequila Gang, Telecinco",
-      "boxOffice": "$83,258,226"
+      "boxOffice": "$83,258,226",
+      "trailer": "https://www.youtube.com/watch?v=6tYUOAMsydg"
     },
     {
       "slug": "pompeii",
@@ -7214,7 +7527,8 @@
       "country": "Germany, United Kingdom, Canada, United States of America",
       "language": "English",
       "production": "Constantin Film, Impact Pictures, Don Carmody Productions, FilmDistrict, TriStar Pictures",
-      "boxOffice": "$117,831,631"
+      "boxOffice": "$117,831,631",
+      "trailer": "https://www.youtube.com/watch?v=t6TRwfxDICM"
     },
     {
       "slug": "prince-of-persia-the-sands-of-time",
@@ -7236,7 +7550,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films",
-      "boxOffice": "$336,365,676"
+      "boxOffice": "$336,365,676",
+      "trailer": "https://www.youtube.com/watch?v=SOlc7fV9zL0"
     },
     {
       "slug": "puss-in-boots",
@@ -7258,7 +7573,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "DreamWorks Animation",
-      "boxOffice": "$554,987,477"
+      "boxOffice": "$554,987,477",
+      "trailer": "https://www.youtube.com/watch?v=9GFs-Up608w"
     },
     {
       "slug": "red-notice",
@@ -7280,7 +7596,8 @@
       "country": "United States of America",
       "language": "English, Bahasa indonesia, Italiano, Pусский, Español",
       "production": "Flynn Picture Company, Seven Bucks Productions, Bad Version",
-      "boxOffice": "$178,143"
+      "boxOffice": "$178,143",
+      "trailer": "https://www.youtube.com/watch?v=6l11nweXEO0"
     },
     {
       "slug": "rescue-dawn",
@@ -7302,7 +7619,8 @@
       "country": "Luxembourg, United States of America",
       "language": "English",
       "production": "Top Gun Productions, Thema Production, Gibraltar Films",
-      "boxOffice": "$7,177,143"
+      "boxOffice": "$7,177,143",
+      "trailer": "https://www.youtube.com/watch?v=oByaEHTGBUM"
     },
     {
       "slug": "rise-of-the-planet-of-the-apes",
@@ -7324,7 +7642,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Dune Entertainment, Chernin Entertainment, Ingenious Media, Big Screen Productions, 20th Century Fox",
-      "boxOffice": "$481,800,873"
+      "boxOffice": "$481,800,873",
+      "trailer": "https://www.youtube.com/watch?v=I2hqJdyHk34"
     },
     {
       "slug": "san-andreas",
@@ -7346,7 +7665,8 @@
       "country": "Canada, United States of America, Australia",
       "language": "English",
       "production": "New Line Cinema, Village Roadshow Pictures, Flynn Picture Company, Warner Bros. Pictures",
-      "boxOffice": "$473,990,832"
+      "boxOffice": "$473,990,832",
+      "trailer": "https://www.youtube.com/watch?v=F1ZewAPl7L0"
     },
     {
       "slug": "school-of-rock",
@@ -7368,7 +7688,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Scott Rudin Productions",
-      "boxOffice": "$131,100,000"
+      "boxOffice": "$131,100,000",
+      "trailer": "https://www.youtube.com/watch?v=KdzWQT0wLCY"
     },
     {
       "slug": "season-of-the-witch",
@@ -7390,7 +7711,8 @@
       "country": "United States of America",
       "language": "Latin, English",
       "production": "Atlas Entertainment, Relativity Media, Mandate International, Rogue Pictures",
-      "boxOffice": "$91,627,228"
+      "boxOffice": "$91,627,228",
+      "trailer": "https://www.youtube.com/watch?v=yjCg3WCzKaU"
     },
     {
       "slug": "seeking-justice",
@@ -7412,7 +7734,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Endgame Entertainment, Maguire Entertainment, Aura Film Partnership, Fierce Entertainment, Material Pictures, Ram Bergman Productions",
-      "boxOffice": "$14,089,528"
+      "boxOffice": "$14,089,528",
+      "trailer": "https://www.youtube.com/watch?v=bTAVMVJTrv0"
     },
     {
       "slug": "shangri-la-suite",
@@ -7434,7 +7757,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Painstaking Pictures, Anonymous Content, Bow + Arrow Entertainment, Haven Entertainment, Marlowe Pictures, Bona Fide Productions",
-      "boxOffice": "$14,073"
+      "boxOffice": "$14,073",
+      "trailer": "https://www.youtube.com/watch?v=xY2HSYeep88"
     },
     {
       "slug": "shazam",
@@ -7456,7 +7780,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "New Line Cinema, The Safran Company, Seven Bucks Productions, DC Films",
-      "boxOffice": "$367,799,011"
+      "boxOffice": "$367,799,011",
+      "trailer": "https://www.youtube.com/watch?v=uilJZZ_iVwY"
     },
     {
       "slug": "shot-caller",
@@ -7478,7 +7803,8 @@
       "country": "United States of America",
       "language": "Français, English",
       "production": "DirecTV, Bold Films, Participant, Relativity Media",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=Cxk_MZca53s"
     },
     {
       "slug": "skyscraper-2018",
@@ -7500,7 +7826,8 @@
       "country": "Japan, United States of America",
       "language": "广州话 / 廣州話, 普通话, English",
       "production": "Flynn Picture Company, Legendary Pictures, Seven Bucks Productions, Universal Pictures, dentsu, Fuji Television Network",
-      "boxOffice": "$304,870,828"
+      "boxOffice": "$304,870,828",
+      "trailer": "https://www.youtube.com/watch?v=_xcJyqwZxyQ"
     },
     {
       "slug": "source-code",
@@ -7522,7 +7849,8 @@
       "country": "United States of America, France",
       "language": "English",
       "production": "The Mark Gordon Company, Summit Entertainment, Vendôme Production",
-      "boxOffice": "$147,332,697"
+      "boxOffice": "$147,332,697",
+      "trailer": "https://www.youtube.com/watch?v=0dafmG_c8kc"
     },
     {
       "slug": "star-trek-2009",
@@ -7544,7 +7872,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Spyglass Entertainment, Bad Robot",
-      "boxOffice": "$386,839,614"
+      "boxOffice": "$386,839,614",
+      "trailer": "https://www.youtube.com/watch?v=af9OC6G7MT8"
     },
     {
       "slug": "star-trek-beyond",
@@ -7566,7 +7895,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Skydance Media, Paramount Pictures, Bad Robot, Perfect Storm Entertainment, Sneaky Shark",
-      "boxOffice": "$343,471,816"
+      "boxOffice": "$343,471,816",
+      "trailer": "https://www.youtube.com/watch?v=--HvNDnWOpA"
     },
     {
       "slug": "star-trek-into-darkness",
@@ -7588,7 +7918,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Bad Robot, Paramount Pictures, Skydance Media",
-      "boxOffice": "$467,381,584"
+      "boxOffice": "$467,381,584",
+      "trailer": "https://www.youtube.com/watch?v=eRnlHa9VcXE"
     },
     {
       "slug": "stargate",
@@ -7610,7 +7941,8 @@
       "country": "United States of America, France",
       "language": "English, Norsk, svenska",
       "production": "Le Studio Canal+, Centropolis Entertainment, Carolco Pictures, Metro-Goldwyn-Mayer",
-      "boxOffice": "$196,567,262"
+      "boxOffice": "$196,567,262",
+      "trailer": "https://www.youtube.com/watch?v=kiJtZUPvJxY"
     },
     {
       "slug": "starship-troopers-invasion",
@@ -7632,7 +7964,8 @@
       "country": "Japan, United States of America",
       "language": "English",
       "production": "Sola Digital Arts, Stage 6 Films",
-      "boxOffice": "$193,425"
+      "boxOffice": "$193,425",
+      "trailer": "https://www.youtube.com/watch?v=tCfmKj5w7RI"
     },
     {
       "slug": "stolen",
@@ -7654,7 +7987,8 @@
       "country": "United States of America",
       "language": "svenska, English",
       "production": "Saturn Films, Nu Image",
-      "boxOffice": "$2,106,557"
+      "boxOffice": "$2,106,557",
+      "trailer": "https://www.youtube.com/watch?v=Z7qlYZ1HBhg"
     },
     {
       "slug": "sully",
@@ -7676,7 +8010,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Malpaso Productions, RatPac Entertainment, Flashlight Films, The Kennedy/Marshall Company, Village Roadshow Pictures",
-      "boxOffice": "$240,800,000"
+      "boxOffice": "$240,800,000",
+      "trailer": "https://www.youtube.com/watch?v=6Tbkbx4Hz8Q"
     },
     {
       "slug": "summer-in-february",
@@ -7698,7 +8033,8 @@
       "country": "United Kingdom",
       "language": "Magyar, Italiano, English, Português",
       "production": "Marwood Pictures, Apart Films, CrossDay Productions",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=JulDCiXBx-s"
     },
     {
       "slug": "superman-returns",
@@ -7720,7 +8056,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Legendary Pictures, Peters Entertainment, Bad Hat Harry Productions, DC",
-      "boxOffice": "$391,081,192"
+      "boxOffice": "$391,081,192",
+      "trailer": "https://www.youtube.com/watch?v=gKrGjD7ItsQ"
     },
     {
       "slug": "taxi-driver",
@@ -7742,7 +8079,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Italo/Judeo Productions, Bill/Phillips, Columbia Pictures",
-      "boxOffice": "$28,579,636"
+      "boxOffice": "$28,579,636",
+      "trailer": "https://www.youtube.com/watch?v=PQhQWubUnws"
     },
     {
       "slug": "tenet",
@@ -7764,7 +8102,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, Eesti, Pусский, Український",
       "production": "Warner Bros. Pictures, Syncopy",
-      "boxOffice": "$365,304,105"
+      "boxOffice": "$365,304,105",
+      "trailer": "https://www.youtube.com/watch?v=KJP5RunZUKk"
     },
     {
       "slug": "the-autopsy-of-jane-doe",
@@ -7786,29 +8125,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "IM Global, Impostor Pictures, 42",
-      "boxOffice": "$6,170,043"
-    },
-    {
-      "slug": "the-chronicles-of-riddick",
-      "url": "https://letterboxd.com/film/the-chronicles-of-riddick/",
-      "title": "A Batalha de Riddick",
-      "original_title": "The Chronicles of Riddick",
-      "year": "2004",
-      "released": "2004-06-11",
-      "runtime": "119 min",
-      "genre": "Ação, Ficção científica",
-      "director": "David Twohy",
-      "actors": "Vin Diesel, Colm Feore, Thandiwe Newton, Judi Dench, Karl Urban",
-      "plot": "Os Necromongers são guerreiros interplanetários que vivem de assolar novos mundos, oferecendo aos seus habitantes duas opções: se converter ou morrer. Os poucos que conseguem sobreviver a eles passam a acreditar em mitos e profecias, já que não vêem outra saída de salvação. Quem pode ajudá-los é Riddick, um homem solitário que vive exilado e fugindo de seus perseguidores.",
-      "poster": "https://image.tmdb.org/t/p/w500/dkl3u70N9aS16czdZyvKRlsbf6Y.jpg",
-      "backdrop": "https://image.tmdb.org/t/p/original/lt3NqorBMWn786m9bzqM0OLdMS8.jpg",
-      "imdbRating": "6.5",
-      "imdbVotes": "4360",
-      "tmdb_slug": "a-batalha-de-riddick",
-      "country": "United States of America",
-      "language": "English",
-      "production": "Radar Pictures, One Race, Primal Foe Productions",
-      "boxOffice": "$115,772,733"
+      "boxOffice": "$6,170,043",
+      "trailer": "https://www.youtube.com/watch?v=BNxsaFCzqxc"
     },
     {
       "slug": "the-commuter",
@@ -7830,7 +8148,8 @@
       "country": "United States of America, France, Spain",
       "language": "English",
       "production": "StudioCanal, TF1 Films Production, The Picture Company, Ombra Films",
-      "boxOffice": "$119,942,387"
+      "boxOffice": "$119,942,387",
+      "trailer": "https://www.youtube.com/watch?v=4kwlqiJqALc"
     },
     {
       "slug": "the-dark-knight",
@@ -7852,7 +8171,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English, 普通话",
       "production": "Warner Bros. Pictures, Legendary Pictures, Syncopy, DC",
-      "boxOffice": "$1,004,558,444"
+      "boxOffice": "$1,004,558,444",
+      "trailer": "https://www.youtube.com/watch?v=vbjYVETxZqM"
     },
     {
       "slug": "the-dark-knight-rises",
@@ -7874,7 +8194,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Syncopy, Legendary Pictures, DC Entertainment, Warner Bros. Pictures",
-      "boxOffice": "$1,081,041,287"
+      "boxOffice": "$1,081,041,287",
+      "trailer": "https://www.youtube.com/watch?v=EeO0rvy9zfM"
     },
     {
       "slug": "the-dark-tower",
@@ -7896,7 +8217,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, MRC, Imagine Entertainment, Weed Road Pictures",
-      "boxOffice": "$113,231,078"
+      "boxOffice": "$113,231,078",
+      "trailer": "https://www.youtube.com/watch?v=wZC5FoJ-cPU"
     },
     {
       "slug": "the-day-after-tomorrow",
@@ -7918,7 +8240,8 @@
       "country": "United States of America",
       "language": "English, 日本語, Français, العربية, Español",
       "production": "20th Century Fox, Centropolis Entertainment, Lionsgate, The Mark Gordon Company",
-      "boxOffice": "$552,639,571"
+      "boxOffice": "$552,639,571",
+      "trailer": "https://www.youtube.com/watch?v=RpfjtcFH9zY"
     },
     {
       "slug": "the-fifth-element",
@@ -7940,7 +8263,8 @@
       "country": "France",
       "language": "English, svenska, Deutsch",
       "production": "Gaumont",
-      "boxOffice": "$263,920,180"
+      "boxOffice": "$263,920,180",
+      "trailer": "https://www.youtube.com/watch?v=5Sg2RkdkSvk"
     },
     {
       "slug": "the-green-mile",
@@ -7962,7 +8286,8 @@
       "country": "United States of America",
       "language": "Français, English",
       "production": "Castle Rock Entertainment, Darkwoods Productions",
-      "boxOffice": "$286,801,374"
+      "boxOffice": "$286,801,374",
+      "trailer": "https://www.youtube.com/watch?v=k9ABwUDje-w"
     },
     {
       "slug": "the-illusionist",
@@ -7984,7 +8309,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Contagious Entertainment, Michael London Productions, Koppelman-Levien",
-      "boxOffice": "$87,892,388"
+      "boxOffice": "$87,892,388",
+      "trailer": "https://www.youtube.com/watch?v=QngdF-55AGc"
     },
     {
       "slug": "the-impossible",
@@ -8006,7 +8332,8 @@
       "country": "Spain, United States of America",
       "language": "English, svenska, ภาษาไทย",
       "production": "Summit Entertainment, Apaches Films, Mediaset España, Telecinco Cinema",
-      "boxOffice": "$198,100,000"
+      "boxOffice": "$198,100,000",
+      "trailer": "https://www.youtube.com/watch?v=PaY8EeUYh10"
     },
     {
       "slug": "the-last-samurai",
@@ -8028,7 +8355,8 @@
       "country": "United States of America",
       "language": "English, 日本語",
       "production": "Radar Pictures, Bedford Falls Productions, Cruise/Wagner Productions, Warner Bros. Pictures",
-      "boxOffice": "$456,800,000"
+      "boxOffice": "$456,800,000",
+      "trailer": "https://www.youtube.com/watch?v=QZpQrc0R6J0"
     },
     {
       "slug": "the-last-stand-2013",
@@ -8050,7 +8378,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "di Bonaventura Pictures, CJ Entertainment, Lionsgate",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=BS-FyAh9cv8"
     },
     {
       "slug": "the-last-witch-hunter",
@@ -8072,7 +8401,8 @@
       "country": "Canada, Hong Kong, United States of America",
       "language": "English",
       "production": "NeoReel, Summit Entertainment, Atmosphere Entertainment MM, Goldmann Pictures, Aperture Entertainment, TIK Films, One Race, Lionsgate",
-      "boxOffice": "$146,936,910"
+      "boxOffice": "$146,936,910",
+      "trailer": "https://www.youtube.com/watch?v=QJDRdGxGw8U"
     },
     {
       "slug": "the-lone-ranger",
@@ -8094,29 +8424,29 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, Jerry Bruckheimer Films, Infinitum Nihil, Blind Wink",
-      "boxOffice": "$260,500,000"
+      "boxOffice": "$260,500,000",
+      "trailer": "https://www.youtube.com/watch?v=LoVhgaj6PiE"
     },
     {
-      "slug": "the-man-who-sued-god",
-      "url": "https://letterboxd.com/film/the-man-who-sued-god/",
       "title": "The Man Who Sued God",
-      "original_title": "The Man Who Sued God",
+      "slug": "the-man-who-sued-god",
       "year": "2001",
-      "released": "2001-10-25",
-      "runtime": "97 min",
-      "genre": "Comédia",
+      "url": "https://letterboxd.com/film/the-man-who-sued-god/",
+      "trailer": "https://www.youtube.com/watch?v=9ZfJywXiRyw",
+      "plot": "Um ex-advogado agora pescador vê seu barco de pesca afundado por um raio. Sua companhia de seguros alega \"Ato de Deus\". Processar a companhia de seguros ou Deus/igrejas?",
       "director": "Mark Joffe",
       "actors": "Billy Connolly, Judy Davis, Colin Friels, Wendy Hughes, Emily Browning",
-      "plot": "",
+      "genre": "Comédia",
+      "runtime": "97 min",
+      "imdbRating": "6.4",
       "poster": "https://image.tmdb.org/t/p/w500/4mB43zGijLyPZPgX9jC3oRtC4BY.jpg",
       "backdrop": "https://image.tmdb.org/t/p/original/ehLNVWeksv50rGuIt04JOApWkfT.jpg",
-      "imdbRating": "6.4",
       "imdbVotes": "70",
-      "tmdb_slug": "the-man-who-sued-god",
       "country": "Australia, United States of America",
       "language": "English",
       "production": "Empress Road Productions, New South Wales Film & Television Office, Showtime Australia, Gannon Films, Australian Film Finance Corporation, Film Victoria, Icon Productions",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "released": "2001-10-25"
     },
     {
       "slug": "the-martian",
@@ -8138,7 +8468,8 @@
       "country": "United States of America",
       "language": "English, 普通话",
       "production": "Genre Films, TSG Entertainment, 20th Century Fox, Scott Free Productions",
-      "boxOffice": "$631,058,917"
+      "boxOffice": "$631,058,917",
+      "trailer": "https://www.youtube.com/watch?v=gAI_4rRRvCo"
     },
     {
       "slug": "the-matrix",
@@ -8160,7 +8491,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Village Roadshow Pictures, Groucho II Film Partnership, Silver Pictures, Warner Bros. Pictures",
-      "boxOffice": "$463,517,383"
+      "boxOffice": "$463,517,383",
+      "trailer": "https://www.youtube.com/watch?v=d0XTFAMmhrE"
     },
     {
       "slug": "the-matrix-reloaded",
@@ -8182,7 +8514,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "Village Roadshow Pictures, Silver Pictures, NPV Entertainment",
-      "boxOffice": "$738,599,701"
+      "boxOffice": "$738,599,701",
+      "trailer": "https://www.youtube.com/watch?v=zmYE3tg26Qc"
     },
     {
       "slug": "the-matrix-revolutions",
@@ -8204,7 +8537,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "Village Roadshow Pictures, NPV Entertainment, Silver Pictures",
-      "boxOffice": "$424,988,211"
+      "boxOffice": "$424,988,211",
+      "trailer": "https://www.youtube.com/watch?v=Tq-pqMeuB-Y"
     },
     {
       "slug": "the-nice-guys",
@@ -8226,7 +8560,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Silver Pictures, Waypoint Entertainment",
-      "boxOffice": "$71,261,763"
+      "boxOffice": "$71,261,763",
+      "trailer": "https://www.youtube.com/watch?v=GQR5zsLHbYw"
     },
     {
       "slug": "the-possession",
@@ -8248,7 +8583,8 @@
       "country": "United States of America, Canada",
       "language": "English, , Polski",
       "production": "Ghost House Pictures, North Box Productions, Lionsgate",
-      "boxOffice": "$85,446,075"
+      "boxOffice": "$85,446,075",
+      "trailer": "https://www.youtube.com/watch?v=aLXW-oVbTxE"
     },
     {
       "slug": "the-predator",
@@ -8270,7 +8606,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Davis Entertainment, TSG Entertainment, 20th Century Fox",
-      "boxOffice": "$160,542,134"
+      "boxOffice": "$160,542,134",
+      "trailer": "https://www.youtube.com/watch?v=XY6d4LGd8YM"
     },
     {
       "slug": "the-rocker",
@@ -8292,7 +8629,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Fox Atomic, 21 Laps Entertainment",
-      "boxOffice": "$8,762,890"
+      "boxOffice": "$8,762,890",
+      "trailer": "https://www.youtube.com/watch?v=QFpOSZIegeg"
     },
     {
       "slug": "the-scorpion-king",
@@ -8314,7 +8652,8 @@
       "country": "United States of America, Germany, Belgium",
       "language": "English, Italiano, ภาษาไทย, Deutsch",
       "production": "Universal Pictures, Alphaville Films, Kalima Productions, WWE Studios, Alliance Films",
-      "boxOffice": "$165,333,180"
+      "boxOffice": "$165,333,180",
+      "trailer": "https://www.youtube.com/watch?v=LVhw9EAAP-8"
     },
     {
       "slug": "the-scorpion-king-3-battle-for-redemption",
@@ -8336,7 +8675,8 @@
       "country": "United States of America",
       "language": "English, Italiano",
       "production": "Universal 1440 Entertainment, Alphaville Films, The Sommers Company, Misher Films, A Grand Elephant",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=rld-6rRDb-k"
     },
     {
       "slug": "the-sixth-sense",
@@ -8358,7 +8698,8 @@
       "country": "United States of America",
       "language": "English, Latin, Español",
       "production": "Spyglass Entertainment, The Kennedy/Marshall Company, Hollywood Pictures, Barry Mendel Productions",
-      "boxOffice": "$672,800,000"
+      "boxOffice": "$672,800,000",
+      "trailer": "https://www.youtube.com/watch?v=HXG4HTIlc1U"
     },
     {
       "slug": "the-suicide-squad",
@@ -8380,7 +8721,8 @@
       "country": "United States of America",
       "language": "English, Français, Español",
       "production": "DC Films, Atlas Entertainment, The Safran Company, Warner Bros. Pictures",
-      "boxOffice": "$168,717,425"
+      "boxOffice": "$168,717,425",
+      "trailer": "https://www.youtube.com/watch?v=sCTTEVCWo70"
     },
     {
       "slug": "the-time-machine-2002",
@@ -8402,7 +8744,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "DreamWorks Pictures, Warner Bros. Pictures, Parkes+MacDonald Production",
-      "boxOffice": "$123,700,000"
+      "boxOffice": "$123,700,000",
+      "trailer": "https://www.youtube.com/watch?v=pC6Z6MGQr14"
     },
     {
       "slug": "the-tomorrow-war",
@@ -8424,7 +8767,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Skydance Media, Phantom Four, Lit Entertainment Group",
-      "boxOffice": "$14,400,000"
+      "boxOffice": "$14,400,000",
+      "trailer": "https://www.youtube.com/watch?v=RQjEbkV-9ZM"
     },
     {
       "slug": "the-uninvited-2009",
@@ -8446,7 +8790,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "DreamWorks Pictures, Cold Spring Pictures, Parkes+MacDonald Image Nation, The Montecito Picture Company, Vertigo Entertainment",
-      "boxOffice": "$41,624,046"
+      "boxOffice": "$41,624,046",
+      "trailer": "https://www.youtube.com/watch?v=8P_Ci3mq7_g"
     },
     {
       "slug": "thick-as-thieves-2009",
@@ -8468,7 +8813,8 @@
       "country": "United States of America, Germany",
       "language": "English, Nederlands, Pусский",
       "production": "Revelations Entertainment, Millennium Media, Grosvenor Park Media, Emmett/Furla Films, Nu Image Entertainment",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=arISa9gUnVg"
     },
     {
       "slug": "thunderbolts",
@@ -8490,7 +8836,8 @@
       "country": "United States of America",
       "language": "English, Italiano, Pусский",
       "production": "Marvel Studios, Kevin Feige Productions",
-      "boxOffice": "$382,436,917"
+      "boxOffice": "$382,436,917",
+      "trailer": "https://www.youtube.com/watch?v=qYtgJzK0mmM"
     },
     {
       "slug": "tomb-raider",
@@ -8512,7 +8859,8 @@
       "country": "Japan, United Kingdom, United States of America",
       "language": "English",
       "production": "Square Enix, GK Films, Metro-Goldwyn-Mayer, Warner Bros. Pictures",
-      "boxOffice": "$274,650,803"
+      "boxOffice": "$274,650,803",
+      "trailer": "https://www.youtube.com/watch?v=6ZbMR1Wiy-o"
     },
     {
       "slug": "tomorrowland",
@@ -8534,7 +8882,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Walt Disney Pictures, A113",
-      "boxOffice": "$209,200,000"
+      "boxOffice": "$209,200,000",
+      "trailer": "https://www.youtube.com/watch?v=lNzukD8pS_s"
     },
     {
       "slug": "top-gun",
@@ -8556,7 +8905,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Don Simpson/Jerry Bruckheimer Films",
-      "boxOffice": "$356,830,601"
+      "boxOffice": "$356,830,601",
+      "trailer": "https://www.youtube.com/watch?v=ArOMXELHiLw"
     },
     {
       "slug": "top-gun-maverick",
@@ -8578,7 +8928,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Skydance Media, Don Simpson/Jerry Bruckheimer Films, Paramount Pictures",
-      "boxOffice": "$1,488,732,821"
+      "boxOffice": "$1,488,732,821",
+      "trailer": "https://www.youtube.com/watch?v=ODZMo8HXqwA"
     },
     {
       "slug": "tropic-thunder",
@@ -8600,7 +8951,8 @@
       "country": "United States of America",
       "language": "普通话, English",
       "production": "DreamWorks Pictures, Red Hour",
-      "boxOffice": "$195,702,811"
+      "boxOffice": "$195,702,811",
+      "trailer": "https://www.youtube.com/watch?v=VsEdmjAudSI"
     },
     {
       "slug": "troy",
@@ -8622,7 +8974,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Plan B Entertainment, Radiant Productions, Helena Productions",
-      "boxOffice": "$497,409,852"
+      "boxOffice": "$497,409,852",
+      "trailer": "https://www.youtube.com/watch?v=lzyHXeMyI4Y"
     },
     {
       "slug": "twister",
@@ -8644,7 +8997,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Warner Bros. Pictures, Universal Pictures, Amblin Entertainment",
-      "boxOffice": "$494,471,524"
+      "boxOffice": "$494,471,524",
+      "trailer": "https://www.youtube.com/watch?v=OgG2jfBfLzI"
     },
     {
       "slug": "twisters",
@@ -8666,7 +9020,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Universal Pictures, Warner Bros. Pictures, Amblin Entertainment, Domain Entertainment",
-      "boxOffice": "$372,262,265"
+      "boxOffice": "$372,262,265",
+      "trailer": "https://www.youtube.com/watch?v=AZbEi95SuMg"
     },
     {
       "slug": "valerian-and-the-city-of-a-thousand-planets",
@@ -8688,7 +9043,8 @@
       "country": "France, Germany, United Arab Emirates, United States of America, Belgium, China",
       "language": "Français, English",
       "production": "Belga Films, River Road Entertainment, Grive Productions, EuropaCorp, UFA, Fundamental Films, Gulf Film, Novo Pictures, TF1 Films Production, Orange Studio, BNP Paribas Fortis",
-      "boxOffice": "$225,973,340"
+      "boxOffice": "$225,973,340",
+      "trailer": "https://www.youtube.com/watch?v=_shrCoqWh9k"
     },
     {
       "slug": "van-helsing",
@@ -8710,7 +9066,8 @@
       "country": "Czech Republic, United States of America",
       "language": "English, Latin",
       "production": "Universal Pictures, The Sommers Company, Stillking Films",
-      "boxOffice": "$300,257,475"
+      "boxOffice": "$300,257,475",
+      "trailer": "https://www.youtube.com/watch?v=3fdRKme00uI"
     },
     {
       "slug": "v-for-vendetta",
@@ -8732,7 +9089,8 @@
       "country": "Germany, United Kingdom, United States of America",
       "language": "English",
       "production": "Virtual Studios, Anarchos Productions, Silver Pictures, Fünfte Babelsberg Film, Warner Bros. Productions, DC Vertigo",
-      "boxOffice": "$134,686,457"
+      "boxOffice": "$134,686,457",
+      "trailer": "https://www.youtube.com/watch?v=3ge0navn9E0"
     },
     {
       "slug": "war-for-the-planet-of-the-apes",
@@ -8754,7 +9112,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "20th Century Fox, TSG Entertainment, Chernin Entertainment",
-      "boxOffice": "$490,719,763"
+      "boxOffice": "$490,719,763",
+      "trailer": "https://www.youtube.com/watch?v=OxdDaf9UxUw"
     },
     {
       "slug": "warriors-of-virtue",
@@ -8776,7 +9135,8 @@
       "country": "Canada, China, Hong Kong, United States of America",
       "language": "普通话, English",
       "production": "China Film Co-Production Corp., Law Brothers Entertainment, IJL Creations, Metro-Goldwyn-Mayer",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=I5NJbEU4jGQ"
     },
     {
       "slug": "waterworld",
@@ -8798,7 +9158,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Gordon Company, Davis Entertainment, Universal Pictures, Licht/Mueller Film Corporation",
-      "boxOffice": "$264,218,220"
+      "boxOffice": "$264,218,220",
+      "trailer": "https://www.youtube.com/watch?v=-GQZMdNtHNU"
     },
     {
       "slug": "world-war-z",
@@ -8820,7 +9181,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "GK Films, Paramount Pictures, Hemisphere Media Capital, 2DUX², Skydance Media, Plan B Entertainment",
-      "boxOffice": "$531,865,000"
+      "boxOffice": "$531,865,000",
+      "trailer": "https://www.youtube.com/watch?v=YOmEhIbMJU4"
     },
     {
       "slug": "yes-man",
@@ -8842,7 +9204,8 @@
       "country": "United Kingdom, United States of America",
       "language": "Eesti, English, 한국어/조선말",
       "production": "Warner Bros. Pictures, Village Roadshow Pictures, Heyday Films, The Zanuck Company",
-      "boxOffice": "$223,200,000"
+      "boxOffice": "$223,200,000",
+      "trailer": "https://www.youtube.com/watch?v=3la7QyMBvu8"
     },
     {
       "slug": "zodiac",
@@ -8864,7 +9227,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Paramount Pictures, Warner Bros. Pictures, Phoenix Pictures",
-      "boxOffice": "$84,785,914"
+      "boxOffice": "$84,785,914",
+      "trailer": "https://www.youtube.com/watch?v=yNncHPl1UXg"
     },
     {
       "slug": "zombieland",
@@ -8886,7 +9250,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Relativity Media, Pariah",
-      "boxOffice": "$102,391,540"
+      "boxOffice": "$102,391,540",
+      "trailer": "https://www.youtube.com/watch?v=8m9EVP8X7N8"
     },
     {
       "slug": "zombieland-double-tap",
@@ -8908,7 +9273,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, 2.0 Entertainment, Pariah",
-      "boxOffice": "$122,810,399"
+      "boxOffice": "$122,810,399",
+      "trailer": "https://www.youtube.com/watch?v=ZlW9yhUKlkQ"
     },
     {
       "slug": "miss-peregrines-home-for-peculiar-children",
@@ -8930,7 +9296,8 @@
       "country": "United States of America, United Kingdom, Belgium, Canada",
       "language": "English",
       "production": "Chernin Entertainment, Tim Burton Productions, TSG Entertainment, 20th Century Fox",
-      "boxOffice": "$296,482,446"
+      "boxOffice": "$296,482,446",
+      "trailer": "https://www.youtube.com/watch?v=EMNeogzc_bs"
     },
     {
       "slug": "monster-hunter-2020",
@@ -8952,7 +9319,8 @@
       "country": "China, Germany, Japan, Canada",
       "language": "English",
       "production": "Capcom, Constantin Film, Tencent Pictures, TOHO, AB² Digital Pictures",
-      "boxOffice": "$42,145,959"
+      "boxOffice": "$42,145,959",
+      "trailer": "https://www.youtube.com/watch?v=BeON-bSbrL4"
     },
     {
       "slug": "ned-kelly",
@@ -8974,7 +9342,8 @@
       "country": "Australia, France, United Kingdom, United States of America",
       "language": "English",
       "production": "Woss Group Film Productions, StudioCanal, Endymion Films, WTA, Working Title Films, Australian Film Commission, Australian Film Finance Corporation",
-      "boxOffice": "$6,585,516"
+      "boxOffice": "$6,585,516",
+      "trailer": "https://www.youtube.com/watch?v=9ABtlYVCiXg"
     },
     {
       "slug": "night-at-the-museum",
@@ -8996,7 +9365,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English, Italiano, עִבְרִית",
       "production": "1492 Pictures, 21 Laps Entertainment, 20th Century Fox, Ingenious Media, Sun Canada Productions",
-      "boxOffice": "$574,480,841"
+      "boxOffice": "$574,480,841",
+      "trailer": "https://www.youtube.com/watch?v=Ff4pXXsf2mE"
     },
     {
       "slug": "nobody-2021",
@@ -9018,7 +9388,8 @@
       "country": "United States of America",
       "language": "English, Pусский, Español",
       "production": "87North Productions, OPE Partners, Eighty Two Films",
-      "boxOffice": "$57,512,470"
+      "boxOffice": "$57,512,470",
+      "trailer": "https://www.youtube.com/watch?v=CPK5_qHJOns"
     },
     {
       "slug": "oblivion-2013",
@@ -9040,7 +9411,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Universal Pictures, Relativity Media, Monolith Pictures, Chernin Entertainment, Radical Studios, Anonymous Content",
-      "boxOffice": "$286,168,572"
+      "boxOffice": "$286,168,572",
+      "trailer": "https://www.youtube.com/watch?v=wvA98mPNhT8"
     },
     {
       "slug": "oppenheimer-2023",
@@ -9062,7 +9434,8 @@
       "country": "United Kingdom, United States of America",
       "language": "Nederlands, English",
       "production": "Syncopy, Universal Pictures, Atlas Entertainment, Breakheart Films, Peters Creek Entertainment",
-      "boxOffice": "$952,000,000"
+      "boxOffice": "$952,000,000",
+      "trailer": "https://www.youtube.com/watch?v=ILAwV65XuGA"
     },
     {
       "slug": "parasite-2019",
@@ -9084,7 +9457,8 @@
       "country": "South Korea",
       "language": "English, Deutsch, 한국어/조선말",
       "production": "Barunson E&A",
-      "boxOffice": "$257,591,776"
+      "boxOffice": "$257,591,776",
+      "trailer": "https://www.youtube.com/watch?v=70i6bf0WKTQ"
     },
     {
       "slug": "passengers-2016",
@@ -9106,7 +9480,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Columbia Pictures, Village Roadshow Pictures, Original Film, Company Films, Start Motion Pictures, LStar Capital, Wanda Pictures",
-      "boxOffice": "$303,144,152"
+      "boxOffice": "$303,144,152",
+      "trailer": "https://www.youtube.com/watch?v=sipflRaq2vg"
     },
     {
       "slug": "pixels-2015",
@@ -9128,29 +9503,29 @@
       "country": "China, France, India, United States of America",
       "language": "English",
       "production": "Columbia Pictures, Happy Madison Productions, 1492 Pictures, LStar Capital, China Film Group Corporation, Film Croppers Entertainment, Prime Focus",
-      "boxOffice": "$244,874,809"
+      "boxOffice": "$244,874,809",
+      "trailer": "https://www.youtube.com/watch?v=v5kTR1MGBuw"
     },
     {
-      "slug": "plush-2013",
-      "url": "https://letterboxd.com/film/plush-2013/",
       "title": "Plush",
-      "original_title": "Plush",
+      "slug": "plush",
       "year": "2013",
-      "released": "2013-09-13",
-      "runtime": "98 min",
-      "genre": "Thriller",
+      "url": "https://letterboxd.com/film/plush-2013/",
+      "trailer": "https://www.youtube.com/watch?v=pPD0PV9RblY",
+      "plot": "Uma jovem cantora/compositora, apesar de ser casada, se envolve com seu novo guitarrista, que ela logo descobre ter um passado sombrio e pode ser uma ameaça para ela e para aqueles próximos a ela.",
       "director": "Catherine Hardwicke",
       "actors": "Emily Browning, Cam Gigandet, Dawn Olivieri, Xavier Samuel, Frances Fisher",
-      "plot": "",
+      "genre": "Thriller",
+      "runtime": "98 min",
+      "imdbRating": "5.5",
       "poster": "https://image.tmdb.org/t/p/w500/iKtQbFwd72ZnXYbEIfEDVpHEJqo.jpg",
       "backdrop": "https://image.tmdb.org/t/p/original/xxuKnh4gPvaLEJfx0cpnXT2dvNQ.jpg",
-      "imdbRating": "5.5",
       "imdbVotes": "112",
-      "tmdb_slug": "plush",
       "country": "United States of America",
       "language": "English",
       "production": "Reliance, Blumhouse Productions, IM Global Octane",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "released": "2013-09-13"
     },
     {
       "slug": "predator",
@@ -9172,7 +9547,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "20th Century Fox, Lawrence Gordon Productions, Silver Pictures, Davis Entertainment, Amercent Films, American Entertainment Partners L.P.",
-      "boxOffice": "$98,267,558"
+      "boxOffice": "$98,267,558",
+      "trailer": "https://www.youtube.com/watch?v=XY6d4LGd8YM"
     },
     {
       "slug": "rampage-2018",
@@ -9194,7 +9570,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Wrigley Pictures, New Line Cinema, ASAP Entertainment, Flynn Picture Company, Twisted Media, Seven Bucks Productions, Access Entertainment",
-      "boxOffice": "$428,028,233"
+      "boxOffice": "$428,028,233",
+      "trailer": "https://www.youtube.com/watch?v=-nEB0oCwgxI"
     },
     {
       "slug": "ready-player-one",
@@ -9216,7 +9593,8 @@
       "country": "United States of America, India, Singapore, Canada, United Kingdom, Japan, Australia",
       "language": "English",
       "production": "Amblin Entertainment, Warner Bros. Pictures, Village Roadshow Pictures, De Line Pictures, Dune Entertainment",
-      "boxOffice": "$607,274,134"
+      "boxOffice": "$607,274,134",
+      "trailer": "https://www.youtube.com/watch?v=1hrwbc5qCZ4"
     },
     {
       "slug": "riddick",
@@ -9238,7 +9616,8 @@
       "country": "Canada, United States of America",
       "language": "English",
       "production": "One Race, Riddick Canada Productions, Radar Pictures, Universal Pictures, Mandate International",
-      "boxOffice": "$98,337,295"
+      "boxOffice": "$98,337,295",
+      "trailer": "https://www.youtube.com/watch?v=au2xw42-8IA"
     },
     {
       "slug": "road-house-2024",
@@ -9260,7 +9639,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Silver Pictures, Amazon MGM Studios",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=k0aYqqRenok"
     },
     {
       "slug": "safe-2012",
@@ -9282,7 +9662,8 @@
       "country": "India, United States of America",
       "language": "English, 普通话, Pусский",
       "production": "IM Global, Automatik Entertainment, Lawrence Bender Productions, Trigger Street Productions, Reliance Entertainment, Lionsgate",
-      "boxOffice": "$40,300,000"
+      "boxOffice": "$40,300,000",
+      "trailer": "https://www.youtube.com/watch?v=s3kTkk4k_5Q"
     },
     {
       "slug": "scott-pilgrim-vs-the-world",
@@ -9304,7 +9685,8 @@
       "country": "Japan, United Kingdom, United States of America",
       "language": "English",
       "production": "Marc Platt Productions, Big Talk Studios, Closed on Mondays Entertainment, dentsu",
-      "boxOffice": "$51,825,248"
+      "boxOffice": "$51,825,248",
+      "trailer": "https://www.youtube.com/watch?v=nKsGhF31oA8"
     },
     {
       "slug": "sherlock-holmes-2009",
@@ -9326,7 +9708,8 @@
       "country": "United States of America, Germany, United Kingdom",
       "language": "English, Français",
       "production": "Warner Bros. Pictures, Village Roadshow Pictures, Silver Pictures, Wigram Productions",
-      "boxOffice": "$524,028,679"
+      "boxOffice": "$524,028,679",
+      "trailer": "https://www.youtube.com/watch?v=zBQfbc1t_I8"
     },
     {
       "slug": "sherlock-holmes-a-game-of-shadows",
@@ -9348,7 +9731,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Village Roadshow Pictures, Silver Pictures, Wigram Productions, Lin Pictures",
-      "boxOffice": "$334,615,000"
+      "boxOffice": "$334,615,000",
+      "trailer": "https://www.youtube.com/watch?v=YAfWOC9Ylqo"
     },
     {
       "slug": "sisu-2022",
@@ -9370,7 +9754,8 @@
       "country": "Finland, United Kingdom, United States of America",
       "language": "English, suomi",
       "production": "Subzero Film Entertainment, Good Chaos, Stage 6 Films",
-      "boxOffice": "$14,281,199"
+      "boxOffice": "$14,281,199",
+      "trailer": "https://www.youtube.com/watch?v=d2k4QAItiSA"
     },
     {
       "slug": "suicide-squad-2016",
@@ -9392,7 +9777,8 @@
       "country": "United States of America",
       "language": "English, 日本語, Español",
       "production": "Warner Bros. Pictures, RatPac Entertainment, DC Films, Atlas Entertainment",
-      "boxOffice": "$749,200,054"
+      "boxOffice": "$749,200,054",
+      "trailer": "https://www.youtube.com/watch?v=m0Xb9BhfVjY"
     },
     {
       "slug": "super-2010",
@@ -9414,7 +9800,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "This is that, Ambush Entertainment, Crimson Bolt",
-      "boxOffice": "$1,185,012"
+      "boxOffice": "$1,185,012",
+      "trailer": "https://www.youtube.com/watch?v=F7g74Imj184"
     },
     {
       "slug": "the-40-year-old-virgin",
@@ -9436,7 +9823,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Universal Pictures, Apatow Productions",
-      "boxOffice": "$177,400,000"
+      "boxOffice": "$177,400,000",
+      "trailer": "https://www.youtube.com/watch?v=QVucTi58nA8"
     },
     {
       "slug": "the-bank-job-2008",
@@ -9458,7 +9846,8 @@
       "country": "Australia, United Kingdom, United States of America",
       "language": "English",
       "production": "Omnilab Media, Mosaic Media Group, Relativity Media, Skyline (Baker St), Arclight Films, Lionsgate",
-      "boxOffice": "$64,828,421"
+      "boxOffice": "$64,828,421",
+      "trailer": "https://www.youtube.com/watch?v=tdiWAhlVOBY"
     },
     {
       "slug": "the-beekeeper-2024",
@@ -9480,7 +9869,8 @@
       "country": "United Kingdom, United States of America",
       "language": "English",
       "production": "Miramax, Cedar Park Entertainment, Punch Palace Productions",
-      "boxOffice": "$152,720,535"
+      "boxOffice": "$152,720,535",
+      "trailer": "https://www.youtube.com/watch?v=TfFrH7_hErI"
     },
     {
       "slug": "the-dictator-2012",
@@ -9502,7 +9892,8 @@
       "country": "United States of America",
       "language": "English, עִבְרִית",
       "production": "Paramount Pictures, Berg Mandel Schaffer Productions, Scott Rudin Productions, Four by Two Films",
-      "boxOffice": "$179,379,533"
+      "boxOffice": "$179,379,533",
+      "trailer": "https://www.youtube.com/watch?v=cYplvwBvGA4"
     },
     {
       "slug": "the-fall-guy-2024",
@@ -9524,7 +9915,8 @@
       "country": "United States of America, Australia",
       "language": "English",
       "production": "87North Productions, Entertainment 360, Universal Pictures, Australian Government",
-      "boxOffice": "$181,073,291"
+      "boxOffice": "$181,073,291",
+      "trailer": "https://www.youtube.com/watch?v=EySdVK0NK1Y"
     },
     {
       "slug": "the-fault-in-our-stars",
@@ -9546,7 +9938,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "TSG Entertainment, Fox 2000 Pictures, Temple Hill Entertainment",
-      "boxOffice": "$307,166,834"
+      "boxOffice": "$307,166,834",
+      "trailer": "https://www.youtube.com/watch?v=L6fpXfQiC6g"
     },
     {
       "slug": "the-foreigner-2017",
@@ -9568,7 +9961,8 @@
       "country": "China, India, United Kingdom, United States of America, Switzerland",
       "language": "普通话, English",
       "production": "Sparkle Roll Media, STXfilms, Arthur Sarkissian Productions, The Entertainer Production Company, Orange Corp, Wanda Pictures, Huayi Brothers Pictures, Prosperity Pictures",
-      "boxOffice": "$145,374,099"
+      "boxOffice": "$145,374,099",
+      "trailer": "https://www.youtube.com/watch?v=r_rSAbYyIq0"
     },
     {
       "slug": "the-gorge-2025",
@@ -9590,7 +9984,8 @@
       "country": "United States of America",
       "language": "English, Lietuvių",
       "production": "Skydance Media, Crooked Highway, Apple Studios",
-      "boxOffice": "N/A"
+      "boxOffice": "N/A",
+      "trailer": "https://www.youtube.com/watch?v=rUSdnuOLebE"
     },
     {
       "slug": "the-great-wall-2016",
@@ -9612,7 +10007,8 @@
       "country": "China, United States of America",
       "language": "普通话, English, Español",
       "production": "Universal Pictures, Atlas Entertainment, Le Vision Pictures, China Film Group Corporation, Legendary Pictures, Legendary East",
-      "boxOffice": "$331,957,105"
+      "boxOffice": "$331,957,105",
+      "trailer": "https://www.youtube.com/watch?v=Bnsesxk5LF4"
     },
     {
       "slug": "the-imitation-game",
@@ -9634,7 +10030,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English",
       "production": "Bristol Automotive, Black Bear Pictures, FilmNation Entertainment",
-      "boxOffice": "$233,555,708"
+      "boxOffice": "$233,555,708",
+      "trailer": "https://www.youtube.com/watch?v=j2jRs4EAvWM"
     },
     {
       "slug": "the-italian-job-2003",
@@ -9656,7 +10053,8 @@
       "country": "France, United Kingdom, United States of America",
       "language": "Український, English, Italiano",
       "production": "De Line Pictures, Working Title Films, Paramount Pictures, Peninsula Films, Senator International",
-      "boxOffice": "$176,070,171"
+      "boxOffice": "$176,070,171",
+      "trailer": "https://www.youtube.com/watch?v=mJgGUnV9i54"
     },
     {
       "slug": "the-judge-2014",
@@ -9678,7 +10076,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Village Roadshow Pictures, Big Kid Pictures, Team Downey, Warner Bros. Pictures",
-      "boxOffice": "$84,419,388"
+      "boxOffice": "$84,419,388",
+      "trailer": "https://www.youtube.com/watch?v=ZBvK6ni97W8"
     },
     {
       "slug": "the-longest-yard-2005",
@@ -9700,7 +10099,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Callahan Filmworks, Paramount Pictures, MTV Films, Columbia Pictures, Happy Madison Productions",
-      "boxOffice": "$191,466,556"
+      "boxOffice": "$191,466,556",
+      "trailer": "https://www.youtube.com/watch?v=pKqv0NcaOak"
     },
     {
       "slug": "the-lord-of-the-rings-the-fellowship-of-the-ring",
@@ -9722,7 +10122,8 @@
       "country": "New Zealand, United States of America",
       "language": "English",
       "production": "New Line Cinema, WingNut Films, The Saul Zaentz Company",
-      "boxOffice": "$871,368,364"
+      "boxOffice": "$871,368,364",
+      "trailer": "https://www.youtube.com/watch?v=-L1bCeqxvY4"
     },
     {
       "slug": "the-lord-of-the-rings-the-return-of-the-king",
@@ -9744,7 +10145,8 @@
       "country": "New Zealand, United States of America",
       "language": "English",
       "production": "New Line Cinema, WingNut Films, The Saul Zaentz Company",
-      "boxOffice": "$1,118,888,979"
+      "boxOffice": "$1,118,888,979",
+      "trailer": "https://www.youtube.com/watch?v=zckJCxYxn1g"
     },
     {
       "slug": "the-lord-of-the-rings-the-two-towers",
@@ -9766,7 +10168,8 @@
       "country": "New Zealand, United States of America",
       "language": "English",
       "production": "New Line Cinema, WingNut Films, The Saul Zaentz Company",
-      "boxOffice": "$926,287,400"
+      "boxOffice": "$926,287,400",
+      "trailer": "https://www.youtube.com/watch?v=8uwJoAj3gt8"
     },
     {
       "slug": "the-machinist",
@@ -9788,7 +10191,8 @@
       "country": "Spain",
       "language": "English",
       "production": "Castelao Productions, Filmax",
-      "boxOffice": "$8,203,235"
+      "boxOffice": "$8,203,235",
+      "trailer": "https://www.youtube.com/watch?v=bAhBZXw1Kak"
     },
     {
       "slug": "the-magnificent-seven-2016",
@@ -9810,7 +10214,8 @@
       "country": "United States of America",
       "language": "English, Español",
       "production": "Alpha Productions, The Mirisch Company",
-      "boxOffice": "$4,905,000"
+      "boxOffice": "$4,905,000",
+      "trailer": "https://www.youtube.com/watch?v=SEgfAuFwads"
     },
     {
       "slug": "the-mechanic-2011",
@@ -9832,7 +10237,8 @@
       "country": "United States of America, Germany",
       "language": "English",
       "production": "CBS Films, Chartoff-Winkler Productions, Millennium Media, Nu Image Entertainment",
-      "boxOffice": "$51,070,807"
+      "boxOffice": "$51,070,807",
+      "trailer": "https://www.youtube.com/watch?v=CMklQNn0OH0"
     },
     {
       "slug": "the-revenant-2015",
@@ -9854,7 +10260,8 @@
       "country": "Canada, Hong Kong, Taiwan, United States of America",
       "language": "English, Français",
       "production": "Monarchy Enterprises S.a.r.l., Regency Enterprises, Appian Way, CatchPlay, Anonymous Content, New Regency Pictures, Hong Kong Alpha Motion Pictures Co., M Productions, RatPac Entertainment",
-      "boxOffice": "$532,950,503"
+      "boxOffice": "$532,950,503",
+      "trailer": "https://www.youtube.com/watch?v=LoebZZ8K5N0"
     },
     {
       "slug": "the-theory-of-everything-2014",
@@ -9876,7 +10283,8 @@
       "country": "United Kingdom, United States of America",
       "language": "Latin, English, Français, Italiano",
       "production": "Working Title Films, Working Title Films",
-      "boxOffice": "$123,726,688"
+      "boxOffice": "$123,726,688",
+      "trailer": "https://www.youtube.com/watch?v=EyhN1kXTEfA"
     },
     {
       "slug": "the-wolf-of-wall-street",
@@ -9898,7 +10306,8 @@
       "country": "United States of America",
       "language": "English, Français",
       "production": "Red Granite Pictures, Appian Way, Sikelia Productions, EMJAG Productions",
-      "boxOffice": "$407,038,432"
+      "boxOffice": "$407,038,432",
+      "trailer": "https://www.youtube.com/watch?v=THMvqEsX2rk"
     },
     {
       "slug": "the-woman-in-black-2012",
@@ -9920,7 +10329,8 @@
       "country": "Canada, United Kingdom",
       "language": "English",
       "production": "Hammer Film Productions, Alliance Films, Talisman Films, UK Film Council",
-      "boxOffice": "$129,000,000"
+      "boxOffice": "$129,000,000",
+      "trailer": "https://www.youtube.com/watch?v=brj7TpNFc-o"
     },
     {
       "slug": "the-x-files-i-want-to-believe",
@@ -9942,7 +10352,8 @@
       "country": "United States of America, Canada",
       "language": "English",
       "production": "Ten Thirteen Productions, Dune Entertainment III, Crying Box Productions, 20th Century Fox",
-      "boxOffice": "$69,363,381"
+      "boxOffice": "$69,363,381",
+      "trailer": "https://www.youtube.com/watch?v=_9KV4ESQ8HU"
     },
     {
       "slug": "the-x-files",
@@ -9964,7 +10375,8 @@
       "country": "United States of America, Canada",
       "language": "English",
       "production": "Ten Thirteen Productions, 20th Century Fox",
-      "boxOffice": "$189,198,313"
+      "boxOffice": "$189,198,313",
+      "trailer": "https://www.youtube.com/watch?v=NmVHEEogDII"
     },
     {
       "slug": "unhinged-2020",
@@ -9986,7 +10398,8 @@
       "country": "United States of America, United Kingdom",
       "language": "English",
       "production": "Solstice Studios, Burek Films, Ingenious Media, Altitude Film Entertainment",
-      "boxOffice": "$39,238,300"
+      "boxOffice": "$39,238,300",
+      "trailer": "https://www.youtube.com/watch?v=vNJ0szhjvdM"
     },
     {
       "slug": "warcraft",
@@ -10008,7 +10421,8 @@
       "country": "United States of America",
       "language": "English",
       "production": "Legendary Pictures, Atlas Entertainment, Blizzard Entertainment",
-      "boxOffice": "$433,677,183"
+      "boxOffice": "$433,677,183",
+      "trailer": "https://www.youtube.com/watch?v=65AjY_nRdqE"
     },
     {
       "slug": "wonder-woman-2017",
@@ -10030,7 +10444,8 @@
       "country": "United States of America",
       "language": "Deutsch, English",
       "production": "Atlas Entertainment, Cruel & Unusual Films, DC Films",
-      "boxOffice": "$823,970,682"
+      "boxOffice": "$823,970,682",
+      "trailer": "https://www.youtube.com/watch?v=ZYE9GVsIRp0"
     },
     {
       "slug": "xxx",
@@ -10052,7 +10467,8 @@
       "country": "United States of America",
       "language": "Český, English, Deutsch, Español, Pусский",
       "production": "Revolution Studios",
-      "boxOffice": "$277,448,382"
+      "boxOffice": "$277,448,382",
+      "trailer": "https://www.youtube.com/watch?v=NgPdDDzVhkA"
     },
     {
       "slug": "xxx-return-of-xander-cage",
@@ -10074,7 +10490,8 @@
       "country": "Canada, China, United States of America",
       "language": "English",
       "production": "Rox Productions, Revolution Studios, Maple Cage Productions, Huahua Media, Roth-Kirschenbaum Films, Shanghai Film Group, One Race, Paramount Pictures",
-      "boxOffice": "$346,118,277"
+      "boxOffice": "$346,118,277",
+      "trailer": "https://www.youtube.com/watch?v=3C11IiBn2SE"
     },
     {
       "title": "A Origem",
@@ -10094,7 +10511,8 @@
       "language": "English, Français, 日本語, Kiswahili",
       "production": "Legendary Pictures, Syncopy, Warner Bros. Pictures",
       "boxOffice": "$839,030,630",
-      "released": "2010-07-15"
+      "released": "2010-07-15",
+      "trailer": "https://www.youtube.com/watch?v=ThiCfS7aEBM"
     },
     {
       "title": "Deadpool & Wolverine",
@@ -10114,7 +10532,8 @@
       "language": "English",
       "production": "Marvel Studios, Maximum Effort, 21 Laps Entertainment, 20th Century Studios, Kevin Feige Productions, TSG Entertainment",
       "boxOffice": "$1,338,073,645",
-      "released": "2024-07-24"
+      "released": "2024-07-24",
+      "trailer": "https://www.youtube.com/watch?v=4waM47oGOjk"
     }
   ]
 }
