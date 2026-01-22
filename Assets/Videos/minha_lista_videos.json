@@ -305,6 +305,15 @@
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/Gomenasai_animated_t.A.T.u..jpg",
       "url": "https://www.youtube.com/embed/EpM8EuizLAw"
+    },
+    {
+      "id": "1769045519800",
+      "title": "Celestica",
+      "artist": "Crystal Castles",
+      "category": "Crystal Castles",
+      "url": "https://www.youtube.com/watch?v=IsxNUl1IHnE",
+      "thumbnail": "https://img.youtube.com/vi/IsxNUl1IHnE/maxresdefault.jpg",
+      "description": ""
     }
   ]
 }
