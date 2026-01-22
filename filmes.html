@@ -1229,6 +1229,7 @@
                 padding: 0;
             }
 
+
             .modal-content {
                 width: 100vw;
                 height: 100vh;
@@ -1240,38 +1241,71 @@
                 transform: none;
             }
 
+            /* Swap Backdrops */
+            #modalBackdrop {
+                display: none !important;
+            }
+
+            .modal-backdrop.mobile-only {
+                display: block !important;
+                object-fit: cover;
+                opacity: 1 !important;
+                filter: brightness(0.4);
+            }
+
             .modal-info {
-                grid-template-columns: 1fr;
+                display: flex;
+                /* Use Flexbox for ordering */
+                flex-direction: column;
                 gap: 20px;
                 padding-bottom: 40px;
-                /* Space for scrolling */
+            }
+
+            /* Reordering Sections */
+            .modal-header-title {
+                order: 1;
+            }
+
+            .modal-plot-section {
+                order: 2;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+            }
+
+            .modal-actions {
+                order: 3;
+                margin-top: 10px;
+                padding-top: 0;
+                border-top: none;
+            }
+
+            .info-grid {
+                order: 4;
+                margin-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 20px;
             }
 
             .modal-poster {
-                height: auto;
-                max-height: 35vh;
-                /* Limit poster height to save space */
-                width: auto;
-                max-width: 100%;
-                justify-self: center;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+                display: none;
+                /* Hide small poster since background is now the poster */
             }
 
             .modal-title {
-                font-size: 1.6rem;
-                text-align: center;
+                font-size: 1.8rem;
+                text-align: left;
+                margin-bottom: 10px;
             }
 
             .modal-body {
                 padding: 0 20px 20px;
                 height: calc(100% - 60px);
-                /* Adjust for smaller close button header */
             }
 
             .modal-header {
                 padding: 15px 15px 0;
                 justify-content: space-between;
-                /* Allow potential other header items */
             }
 
             .close {
@@ -1280,15 +1314,44 @@
                 height: 40px;
             }
 
+            /* 2-Column Info Grid for Mobile */
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                /* Force 2 columns */
+                gap: 15px 10px;
+            }
+
             .info-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
+                font-size: 0.85rem;
+            }
+
+            .info-item.full-width {
+                grid-column: span 2;
             }
 
             .info-item strong {
                 min-width: auto;
                 color: var(--primary-color);
+            }
+
+            /* Side-by-side Buttons */
+            .modal-actions {
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .modal-actions a,
+            .modal-actions button {
+                flex: 1;
+                justify-content: center;
+                padding: 12px 10px;
+                font-size: 0.9rem;
+                text-align: center;
             }
         }
 
@@ -2441,12 +2504,36 @@
                 modalBackdrop.src = '';
             }
 
+            // Mobile Backdrop (Poster)
+            let mobileBackdrop = document.getElementById('modalBackdropMobile');
+            if (!mobileBackdrop) {
+                mobileBackdrop = document.createElement('img');
+                mobileBackdrop.id = 'modalBackdropMobile';
+                mobileBackdrop.className = 'modal-backdrop mobile-only';
+                // Insert after the main backdrop
+                modalBackdrop.parentNode.insertBefore(mobileBackdrop, modalBackdrop.nextSibling);
+            }
+            mobileBackdrop.src = details.poster || details.backdrop || '';
+
             const rating = parseFloat(details.imdbRating) || 0;
             const stars = generateStars(rating);
 
+            // Re-structured layout for Flex ordering
             modalDetails.innerHTML = `
-                <h2 class="modal-title">${details.title}</h2>
+                <div class="modal-header-title">
+                    <h2 class="modal-title">${details.title}</h2>
+                </div>
                 
+                <div class="modal-plot-section">
+                    <h4>📖 Sinopse</h4>
+                    <p>${details.plot}</p>
+                </div>
+
+                <div class="modal-actions">
+                    <a href="${details.url}" target="_blank">🔗 Ver no Letterboxd</a>
+                    ${details.trailer ? `<button class="action-btn-trailer" onclick="playTrailer('${details.trailer}')">▶ Assistir Trailer</button>` : ''}
+                </div>
+
                 <div class="info-grid">
                     <div class="info-item">
                         <strong>📅 Ano:</strong> ${details.year}
@@ -2478,20 +2565,9 @@
                     <div class="info-item">
                         <strong>🗳️ Votos:</strong> ${details.imdbVotes}
                     </div>
-                </div>
-                
-                ${details.awards !== 'N/A' ? `<div class="info-item"><strong>🏆 Prêmios:</strong> ${details.awards}</div>` : ''}
-                ${details.boxOffice !== 'N/A' ? `<div class="info-item"><strong>💰 Bilheteria:</strong> ${details.boxOffice}</div>` : ''}
-                ${details.production !== 'N/A' ? `<div class="info-item"><strong>🏭 Produção:</strong> ${details.production}</div>` : ''}
-                
-                <div class="modal-plot-section">
-                    <h4>📖 Sinopse</h4>
-                    <p>${details.plot}</p>
-                </div>
-                
-                <div class="modal-actions">
-                    <a href="${details.url}" target="_blank">🔗 Ver no Letterboxd</a>
-                    ${details.trailer ? `<button class="action-btn-trailer" onclick="playTrailer('${details.trailer}')">▶ Assistir Trailer</button>` : ''}
+                    ${details.awards !== 'N/A' ? `<div class="info-item full-width"><strong>🏆 Prêmios:</strong> ${details.awards}</div>` : ''}
+                    ${details.boxOffice !== 'N/A' ? `<div class="info-item"><strong>💰 Bilheteria:</strong> ${details.boxOffice}</div>` : ''}
+                    ${details.production !== 'N/A' ? `<div class="info-item full-width"><strong>🏭 Produção:</strong> ${details.production}</div>` : ''}
                 </div>
             `;
 
