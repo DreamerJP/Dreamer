@@ -1,55 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dreamer - Portfolio Digital</title>
-    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --primary-color: #bb86fc;
-            --secondary-color: #03dac6;
-            --accent-color: #cf6679;
-            --text-primary: #e1e1e1;
-            --text-secondary: #b3b3b3;
-            --bg-main: rgba(18, 18, 35, 0.98);
-            --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --shadow-color-strong: rgba(0, 0, 0, 0.6);
-            --transition-speed: 0.3s;
-            --border-radius: 15px;
-        }
+      :root {
+        --primary-gradient: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
+        --primary-color: #bb86fc;
+        --secondary-color: #03dac6;
+        --accent-color: #cf6679;
+        --text-primary: #e1e1e1;
+        --text-secondary: #b3b3b3;
+        --bg-main: rgba(18, 18, 35, 0.98);
+        --bg-nav: rgba(18, 18, 35, 0.98);
+        --shadow-color: rgba(0, 0, 0, 0.4);
+        --shadow-color-strong: rgba(0, 0, 0, 0.6);
+        --transition-speed: 0.3s;
+        --border-radius: 15px;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        /* Novo fundo de estrelas */
-        .stars-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -3;
-            background: url('./Assets/Home/background.jpg') center center/cover no-repeat;
-        }
+      /* Novo fundo de estrelas */
+      .stars-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -3;
+        background: url("./Assets/Home/background.jpg") center center/cover
+          no-repeat;
+      }
 
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: #000;
-            color: var(--text-primary);
-            overflow-x: hidden;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'), auto;
-        }
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: #000;
+        color: var(--text-primary);
+        overflow-x: hidden;
+        cursor:
+          url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'),
+          auto;
+      }
 
-        /* Fallback para todos os elementos interativos */
+      /* Fallback para todos os elementos interativos */
+      *,
+      *:before,
+      *:after,
+      a,
+      button,
+      input,
+      textarea,
+      select {
+        cursor:
+          url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'),
+          auto !important;
+      }
+
+      /* Em dispositivos móveis, usar cursor padrão */
+      @media (max-width: 768px), (hover: none) {
+        body,
         *,
         *:before,
         *:after,
@@ -58,1542 +81,1631 @@
         input,
         textarea,
         select {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l20 10-8 2-2 8z" fill="%23e0e0e0" stroke="%23666666"/><path d="M2 2l18 9-7 1.8-1.8 7z" fill="%23ffffff" stroke="%23999999" stroke-width="0.5"/></svg>'), auto !important;
+          cursor: auto !important;
+        }
+      }
+
+      /* Campo de estrelas do tema padrão */
+      .starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: -2;
+        opacity: 0.8;
+        /* Mais visível */
+        overflow: hidden;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: star-travel linear infinite;
+      }
+
+      .star.distant {
+        width: 1px;
+        height: 1px;
+        animation-duration: 25s;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+
+      .star.medium {
+        width: 1.5px;
+        height: 1.5px;
+        animation-duration: 15s;
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+      }
+
+      .star.close {
+        width: 2px;
+        height: 2px;
+        animation-duration: 8s;
+        box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+      }
+
+      .star.blue {
+        background: #e6f3ff;
+        box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+      }
+
+      .star.yellow {
+        background: #fff8e1;
+        box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+      }
+
+      @keyframes star-travel {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0.5);
         }
 
-        /* Em dispositivos móveis, usar cursor padrão */
-        @media (max-width: 768px),
-        (hover: none) {
-
-            body,
-            *,
-            *:before,
-            *:after,
-            a,
-            button,
-            input,
-            textarea,
-            select {
-                cursor: auto !important;
-            }
+        10% {
+          opacity: 0.4;
         }
 
-        /* Campo de estrelas do tema padrão */
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -2;
-            opacity: 0.8;
-            /* Mais visível */
-            overflow: hidden;
+        50% {
+          opacity: 1;
+          transform: translate(var(--dx), var(--dy)) scale(1);
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: star-travel linear infinite;
+        90% {
+          opacity: 0.6;
         }
 
-        .star.distant {
-            width: 1px;
-            height: 1px;
-            animation-duration: 25s;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2))
+            scale(1.2);
+        }
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
         }
 
-        .star.medium {
-            width: 1.5px;
-            height: 1.5px;
-            animation-duration: 15s;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        text-align: center;
+        z-index: 10;
+        max-width: 800px;
+        padding: 0 20px;
+      }
+
+      .hero-title {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(3rem, 8vw, 8rem);
+        font-weight: 900;
+        margin-bottom: 40px;
+        background: linear-gradient(45deg, #4ecdc4, #ff6b6b, #4ecdc4);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textGradient 3s ease-in-out infinite;
+        text-shadow: 0 0 50px rgba(78, 205, 196, 0.5);
+        position: relative;
+        overflow: visible;
+      }
+
+      @keyframes textGradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
         }
 
-        .star.close {
-            width: 2px;
-            height: 2px;
-            animation-duration: 8s;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        opacity: 1;
+        animation: none;
+      }
+
+      .cta-button {
+        padding: 15px 35px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-primary {
+        background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+        color: white;
+        box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+      }
+
+      .cta-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(78, 205, 196, 0.5);
+      }
+
+      .cta-secondary {
+        background: transparent;
+        color: #4ecdc4;
+        border: 2px solid #4ecdc4;
+      }
+
+      .cta-secondary:hover {
+        background: #4ecdc4;
+        color: #0a0a0a;
+        transform: translateY(-3px);
+      }
+
+      /* Seções de conteúdo */
+      .content-section {
+        padding: 100px 0;
+        position: relative;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section-title {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(2rem, 5vw, 4rem);
+        text-align: center;
+        margin-bottom: 60px;
+        color: #4ecdc4;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+      }
+
+      /* Quote Section */
+      .quote-section {
+        padding: 80px 0;
+        background: rgba(255, 255, 255, 0.02);
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .quote-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(10, 10, 20, 0.55);
+        /* fundo escuro translúcido mais suave */
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .quote-video-bg {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.15;
+        filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
+      }
+
+      .quote-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .quote-text {
+        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+        line-height: 1.8;
+        color: #b0b0b0;
+        font-style: italic;
+        margin-bottom: 30px;
+        position: relative;
+        padding: 0 40px;
+      }
+
+      .quote-text::before,
+      .quote-text::after {
+        content: '"';
+        font-size: 4rem;
+        color: #4ecdc4;
+        position: absolute;
+        opacity: 0.3;
+      }
+
+      .quote-text::before {
+        top: -20px;
+        left: 0;
+      }
+
+      .quote-text::after {
+        bottom: -40px;
+        right: 0;
+      }
+
+      .quote-author {
+        font-size: 1rem;
+        color: #888;
+        font-weight: 500;
+      }
+
+      /* Grid de portfólio */
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 60px;
+      }
+
+      .portfolio-item {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(78, 205, 196, 0.2);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        min-height: 340px;
+      }
+
+      .portfolio-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .portfolio-item:hover::before {
+        transform: scaleX(1);
+      }
+
+      .portfolio-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+      }
+
+      .portfolio-icon {
+        font-size: 3em;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .portfolio-title {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        color: #4ecdc4;
+      }
+
+      .portfolio-description {
+        color: #b0b0b0;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .portfolio-link {
+        margin-top: auto;
+        display: inline-block;
+        padding: 16px 40px;
+        font-size: 1.15em;
+        font-weight: 700;
+        border: none;
+        border-radius: 40px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        color: #fff;
+        text-decoration: none;
+        box-shadow:
+          0 6px 24px rgba(78, 205, 196, 0.18),
+          0 1.5px 4px rgba(255, 107, 107, 0.1);
+        letter-spacing: 0.03em;
+        transition:
+          background 0.3s,
+          transform 0.2s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .portfolio-link:hover,
+      .portfolio-link:focus {
+        background: linear-gradient(
+          90deg,
+          var(--secondary-color) 0%,
+          var(--primary-color) 100%
+        );
+        color: #fff;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow:
+          0 12px 32px rgba(255, 107, 107, 0.18),
+          0 2px 8px rgba(78, 205, 196, 0.1);
+        text-decoration: none;
+      }
+
+      /* Footer */
+      .footer {
+        padding: 60px 0;
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(78, 205, 196, 0.2);
+        text-align: center;
+      }
+
+      .footer-quote {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(1.5rem, 4vw, 3rem);
+        color: #4ecdc4;
+        margin-bottom: 20px;
+        text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        font-style: italic;
+      }
+
+      .footer-subtext {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      /* Scroll indicator */
+      .scroll-indicator {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+      }
+
+      @media (max-width: 768px) {
+        .scroll-indicator {
+          display: none !important;
+        }
+      }
+
+      .scroll-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(78, 205, 196, 0.3);
+        margin: 15px 0;
+        cursor: pointer;
+        transition:
+          all 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.3s;
+        box-shadow: 0 0 0 rgba(78, 205, 196, 0);
+        position: relative;
+      }
+
+      .scroll-dot::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: transparent;
+        pointer-events: auto;
+      }
+
+      .scroll-dot:hover,
+      .scroll-dot.proximity {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #4ecdc4 60%, #ff6b6b 100%);
+        box-shadow:
+          0 0 30px 8px rgba(78, 205, 196, 0.3),
+          0 0 0 4px rgba(78, 205, 196, 0.15);
+        filter: brightness(1.2) saturate(1.3);
+        z-index: 101;
+      }
+
+      /* Estilos para os links de perfis sociais abaixo do botão "Explorar" */
+      .profile-links {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 200px;
+        flex-wrap: wrap;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .profile-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #4ecdc4;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background: rgba(78, 205, 196, 0.1);
+        border: 1px solid rgba(78, 205, 196, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .profile-link:hover {
+        background: rgba(78, 205, 196, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+      }
+
+      .profile-icon {
+        font-size: 1.2em;
+      }
+
+      @media (max-width: 768px) {
+        .profile-links {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* Glitch effect */
+      .glitch {
+        position: relative;
+      }
+
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .glitch::before {
+        animation: glitch-1 0.5s infinite linear alternate-reverse;
+      }
+
+      .glitch::after {
+        animation: glitch-2 0.5s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-1 {
+        0% {
+          transform: translate(0);
+          opacity: 1;
         }
 
-        .star.blue {
-            background: #e6f3ff;
-            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+        20% {
+          transform: translate(-2px, 2px);
+          opacity: 1;
         }
 
-        .star.yellow {
-            background: #fff8e1;
-            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+        40% {
+          transform: translate(-2px, -2px);
+          opacity: 1;
         }
 
-        @keyframes star-travel {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0.5);
-            }
-
-            10% {
-                opacity: 0.4;
-            }
-
-            50% {
-                opacity: 1;
-                transform: translate(var(--dx), var(--dy)) scale(1);
-            }
-
-            90% {
-                opacity: 0.6;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
-            }
+        60% {
+          transform: translate(2px, 2px);
+          opacity: 1;
         }
 
-        @keyframes twinkle {
-
-            0%,
-            100% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 0.8;
-            }
+        80% {
+          transform: translate(2px, -2px);
+          opacity: 1;
         }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+        100% {
+          transform: translate(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes glitch-2 {
+        0% {
+          transform: translate(0);
+          opacity: 0.8;
         }
 
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 800px;
-            padding: 0 20px;
+        20% {
+          transform: translate(2px, 2px);
+          opacity: 0.8;
+        }
+
+        40% {
+          transform: translate(2px, -2px);
+          opacity: 0.8;
+        }
+
+        60% {
+          transform: translate(-2px, 2px);
+          opacity: 0.8;
+        }
+
+        80% {
+          transform: translate(-2px, -2px);
+          opacity: 0.8;
+        }
+
+        100% {
+          transform: translate(0);
+          opacity: 0.8;
+        }
+      }
+
+      /* Epic mode filter - aplicado apenas ao conteúdo, não ao cursor */
+      body.epic-mode > *:not(.custom-cursor) {
+        filter: hue-rotate(300deg) saturate(2) contrast(1.5);
+        transition: filter 1s ease-in-out;
+      }
+
+      /* Remover áreas e dicas antigas */
+      .touch-area,
+      .touch-hint {
+        display: none !important;
+      }
+
+      /* Video background para quote section */
+      .quote-section {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quote-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.15;
+        filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
+        z-index: 1;
+      }
+
+      /* Controle de áudio */
+      .audio-control {
+        position: absolute;
+        bottom: 20px;
+        right: 300px;
+        z-index: 10;
+        background: rgba(78, 205, 196, 0.2);
+        border: 1px solid rgba(78, 205, 196, 0.5);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        font-size: 1.2rem;
+      }
+
+      .audio-control:hover {
+        background: rgba(78, 205, 196, 0.3);
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+      }
+
+      .audio-control.active {
+        background: rgba(78, 205, 196, 0.4);
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        animation: pulse-audio 2s infinite;
+      }
+
+      @keyframes pulse-audio {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        }
+
+        50% {
+          box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
+        }
+      }
+
+      /* Tooltip do áudio */
+      .audio-tooltip {
+        position: absolute;
+        bottom: 60px;
+        right: -10px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #4ecdc4;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        pointer-events: none;
+      }
+
+      .audio-control:hover .audio-tooltip {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        .audio-control {
+          bottom: 15px;
+          right: 15px;
+          width: 45px;
+          height: 45px;
+          font-size: 1rem;
+        }
+      }
+
+      .twinkle-star {
+        position: absolute;
+        border-radius: 50%;
+        background: white;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.7;
+        box-shadow:
+          0 0 8px 2px #fff,
+          0 0 16px 4px #fff2;
+        animation: twinkle-intense 2.5s infinite alternate;
+      }
+
+      @keyframes twinkle-intense {
+        0% {
+          opacity: 0.2;
+        }
+
+        30% {
+          opacity: 0.7;
+        }
+
+        60% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0.3;
+        }
+      }
+
+      /* Variações para diferentes intensidades */
+      .twinkle-star.weak {
+        opacity: 0.3;
+        animation-duration: 3.5s;
+      }
+
+      .twinkle-star.medium {
+        opacity: 0.6;
+        animation-duration: 2.2s;
+      }
+
+      .twinkle-star.strong {
+        opacity: 1;
+        animation-duration: 1.3s;
+      }
+
+      .twinkle-star.yellow {
+        background: #fff8e1;
+        box-shadow:
+          0 0 8px 2px #fff8e1,
+          0 0 16px 4px #fff8e155;
+      }
+
+      .twinkle-star.blue {
+        background: #e6f3ff;
+        box-shadow:
+          0 0 8px 2px #e6f3ff,
+          0 0 16px 4px #e6f3ff55;
+      }
+
+      /* Matrix Canvas */
+      .matrix-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        will-change: opacity;
+      }
+
+      .matrix-mode .matrix-canvas {
+        opacity: 1;
+      }
+
+      .matrix-mode {
+        background: #000;
+        color: #00ff41;
+      }
+
+      .matrix-mode .hero-title {
+        background: linear-gradient(45deg, #00ff41, #008f11);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: matrix-glow 2s ease-in-out infinite alternate;
+        transform: translateZ(0);
+        will-change: text-shadow, filter;
+      }
+
+      .matrix-mode .portfolio-item,
+      .matrix-mode .content-section,
+      .matrix-mode .quote-section,
+      .matrix-mode .footer {
+        background: rgba(0, 20, 0, 0.9) !important;
+        border: 1px solid #00ff41 !important;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3) !important;
+      }
+
+      @keyframes matrix-glow {
+        0% {
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+          filter: brightness(1);
+        }
+
+        100% {
+          text-shadow:
+            0 0 30px rgba(0, 255, 65, 1),
+            0 0 40px rgba(0, 255, 65, 0.8);
+          filter: brightness(1.2);
+        }
+      }
+
+      .hero-title.konami-loading {
+        animation: pulse-konami 0.5s infinite alternate;
+        transform: scale(1.05) translateZ(0);
+        will-change: transform, text-shadow;
+      }
+
+      @keyframes pulse-konami {
+        0% {
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+
+        100% {
+          text-shadow: 0 0 20px rgba(0, 255, 65, 1);
+        }
+      }
+
+      .achievement-popup {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 65, 0.9),
+          rgba(0, 143, 17, 0.9)
+        );
+        color: #000;
+        padding: 1rem;
+        border-radius: 10px;
+        z-index: 10001;
+        animation: slideIn 0.5s ease-out;
+        box-shadow: 0 4px 20px rgba(0, 255, 65, 0.4);
+        min-width: 250px;
+        will-change: transform, opacity;
+      }
+
+      .achievement-content h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.2rem;
+      }
+
+      .achievement-content p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .achievement-popup {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+          min-width: auto;
         }
 
         .hero-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 8vw, 8rem);
-            font-weight: 900;
-            margin-bottom: 40px;
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b, #4ecdc4);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGradient 3s ease-in-out infinite;
-            text-shadow: 0 0 50px rgba(78, 205, 196, 0.5);
-            position: relative;
-            overflow: visible;
+          font-size: 1.5rem;
         }
-
-        @keyframes textGradient {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 1;
-            animation: none;
-        }
-
-        .cta-button {
-            padding: 15px 35px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-primary {
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
-            color: white;
-            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(78, 205, 196, 0.5);
-        }
-
-        .cta-secondary {
-            background: transparent;
-            color: #4ecdc4;
-            border: 2px solid #4ecdc4;
-        }
-
-        .cta-secondary:hover {
-            background: #4ecdc4;
-            color: #0a0a0a;
-            transform: translateY(-3px);
-        }
-
-        /* Seções de conteúdo */
-        .content-section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2rem, 5vw, 4rem);
-            text-align: center;
-            margin-bottom: 60px;
-            color: #4ecdc4;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
-        }
-
-        /* Quote Section */
-        .quote-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.02);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
-
-        .quote-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 20, 0.55);
-            /* fundo escuro translúcido mais suave */
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .quote-video-bg {
-            z-index: 1;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.15;
-            filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
-        }
-
-        .quote-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .quote-text {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            line-height: 1.8;
-            color: #b0b0b0;
-            font-style: italic;
-            margin-bottom: 30px;
-            position: relative;
-            padding: 0 40px;
-        }
-
-        .quote-text::before,
-        .quote-text::after {
-            content: '"';
-            font-size: 4rem;
-            color: #4ecdc4;
-            position: absolute;
-            opacity: 0.3;
-        }
-
-        .quote-text::before {
-            top: -20px;
-            left: 0;
-        }
-
-        .quote-text::after {
-            bottom: -40px;
-            right: 0;
-        }
-
-        .quote-author {
-            font-size: 1rem;
-            color: #888;
-            font-weight: 500;
-        }
-
-        /* Grid de portfólio */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-        }
-
-        .portfolio-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(78, 205, 196, 0.2);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            min-height: 340px;
-        }
-
-        .portfolio-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover::before {
-            transform: scaleX(1);
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
-        }
-
-        .portfolio-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .portfolio-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            color: #4ecdc4;
-        }
-
-        .portfolio-description {
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .portfolio-link {
-            margin-top: auto;
-            display: inline-block;
-            padding: 16px 40px;
-            font-size: 1.15em;
-            font-weight: 700;
-            border: none;
-            border-radius: 40px;
-            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: #fff;
-            text-decoration: none;
-            box-shadow: 0 6px 24px rgba(78, 205, 196, 0.18), 0 1.5px 4px rgba(255, 107, 107, 0.10);
-            letter-spacing: 0.03em;
-            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-link:hover,
-        .portfolio-link:focus {
-            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            color: #fff;
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 12px 32px rgba(255, 107, 107, 0.18), 0 2px 8px rgba(78, 205, 196, 0.10);
-            text-decoration: none;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 60px 0;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(78, 205, 196, 0.2);
-            text-align: center;
-        }
-
-        .footer-quote {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            color: #4ecdc4;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
-            font-style: italic;
-        }
-
-        .footer-subtext {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-
-        @media (max-width: 768px) {
-            .scroll-indicator {
-                display: none !important;
-            }
-        }
-
-        .scroll-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(78, 205, 196, 0.3);
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s;
-            box-shadow: 0 0 0 rgba(78, 205, 196, 0.0);
-            position: relative;
-        }
-
-        .scroll-dot::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: transparent;
-            pointer-events: auto;
-        }
-
-        .scroll-dot:hover,
-        .scroll-dot.proximity {
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #4ecdc4 60%, #ff6b6b 100%);
-            box-shadow: 0 0 30px 8px rgba(78, 205, 196, 0.3), 0 0 0 4px rgba(78, 205, 196, 0.15);
-            filter: brightness(1.2) saturate(1.3);
-            z-index: 101;
-        }
-
-        /* Estilos para os links de perfis sociais abaixo do botão "Explorar" */
-        .profile-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 200px;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .profile-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #4ecdc4;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 50px;
-            background: rgba(78, 205, 196, 0.1);
-            border: 1px solid rgba(78, 205, 196, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .profile-link:hover {
-            background: rgba(78, 205, 196, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
-        }
-
-        .profile-icon {
-            font-size: 1.2em;
-        }
-
-        @media (max-width: 768px) {
-            .profile-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* Glitch effect */
-        .glitch {
-            position: relative;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch::before {
-            animation: glitch-1 0.5s infinite linear alternate-reverse;
-        }
-
-        .glitch::after {
-            animation: glitch-2 0.5s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-1 {
-            0% {
-                transform: translate(0);
-                opacity: 1;
-            }
-
-            20% {
-                transform: translate(-2px, 2px);
-                opacity: 1;
-            }
-
-            40% {
-                transform: translate(-2px, -2px);
-                opacity: 1;
-            }
-
-            60% {
-                transform: translate(2px, 2px);
-                opacity: 1;
-            }
-
-            80% {
-                transform: translate(2px, -2px);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translate(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes glitch-2 {
-            0% {
-                transform: translate(0);
-                opacity: 0.8;
-            }
-
-            20% {
-                transform: translate(2px, 2px);
-                opacity: 0.8;
-            }
-
-            40% {
-                transform: translate(2px, -2px);
-                opacity: 0.8;
-            }
-
-            60% {
-                transform: translate(-2px, 2px);
-                opacity: 0.8;
-            }
-
-            80% {
-                transform: translate(-2px, -2px);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: translate(0);
-                opacity: 0.8;
-            }
-        }
-
-        /* Epic mode filter - aplicado apenas ao conteúdo, não ao cursor */
-        body.epic-mode>*:not(.custom-cursor) {
-            filter: hue-rotate(300deg) saturate(2) contrast(1.5);
-            transition: filter 1s ease-in-out;
-        }
-
-        /* Remover áreas e dicas antigas */
-        .touch-area,
-        .touch-hint {
-            display: none !important;
-        }
-
-        /* Video background para quote section */
-        .quote-section {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quote-video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.15;
-            filter: sepia(100%) hue-rotate(180deg) saturate(200%) brightness(0.8);
-            z-index: 1;
-        }
-
-        /* Controle de áudio */
-        .audio-control {
-            position: absolute;
-            bottom: 20px;
-            right: 300px;
-            z-index: 10;
-            background: rgba(78, 205, 196, 0.2);
-            border: 1px solid rgba(78, 205, 196, 0.5);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            font-size: 1.2rem;
-        }
-
-        .audio-control:hover {
-            background: rgba(78, 205, 196, 0.3);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
-        }
-
-        .audio-control.active {
-            background: rgba(78, 205, 196, 0.4);
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
-            animation: pulse-audio 2s infinite;
-        }
-
-        @keyframes pulse-audio {
-
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
-            }
-        }
-
-        /* Tooltip do áudio */
-        .audio-tooltip {
-            position: absolute;
-            bottom: 60px;
-            right: -10px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #4ecdc4;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .audio-control:hover .audio-tooltip {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .audio-control {
-                bottom: 15px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-        }
-
-        .twinkle-star {
-            position: absolute;
-            border-radius: 50%;
-            background: white;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.7;
-            box-shadow: 0 0 8px 2px #fff, 0 0 16px 4px #fff2;
-            animation: twinkle-intense 2.5s infinite alternate;
-        }
-
-        @keyframes twinkle-intense {
-            0% {
-                opacity: 0.2;
-            }
-
-            30% {
-                opacity: 0.7;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.3;
-            }
-        }
-
-        /* Variações para diferentes intensidades */
-        .twinkle-star.weak {
-            opacity: 0.3;
-            animation-duration: 3.5s;
-        }
-
-        .twinkle-star.medium {
-            opacity: 0.6;
-            animation-duration: 2.2s;
-        }
-
-        .twinkle-star.strong {
-            opacity: 1;
-            animation-duration: 1.3s;
-        }
-
-        .twinkle-star.yellow {
-            background: #fff8e1;
-            box-shadow: 0 0 8px 2px #fff8e1, 0 0 16px 4px #fff8e155;
-        }
-
-        .twinkle-star.blue {
-            background: #e6f3ff;
-            box-shadow: 0 0 8px 2px #e6f3ff, 0 0 16px 4px #e6f3ff55;
-        }
-
-        /* Matrix Canvas */
-        .matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            will-change: opacity;
-        }
-
-        .matrix-mode .matrix-canvas {
-            opacity: 1;
-        }
-
-        .matrix-mode {
-            background: #000;
-            color: #00ff41;
-        }
-
-        .matrix-mode .hero-title {
-            background: linear-gradient(45deg, #00ff41, #008f11);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: matrix-glow 2s ease-in-out infinite alternate;
-            transform: translateZ(0);
-            will-change: text-shadow, filter;
-        }
-
-        .matrix-mode .portfolio-item,
-        .matrix-mode .content-section,
-        .matrix-mode .quote-section,
-        .matrix-mode .footer {
-            background: rgba(0, 20, 0, 0.9) !important;
-            border: 1px solid #00ff41 !important;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3) !important;
-        }
-
-        @keyframes matrix-glow {
-            0% {
-                text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
-                filter: brightness(1);
-            }
-
-            100% {
-                text-shadow: 0 0 30px rgba(0, 255, 65, 1), 0 0 40px rgba(0, 255, 65, 0.8);
-                filter: brightness(1.2);
-            }
-        }
-
-        .hero-title.konami-loading {
-            animation: pulse-konami 0.5s infinite alternate;
-            transform: scale(1.05) translateZ(0);
-            will-change: transform, text-shadow;
-        }
-
-        @keyframes pulse-konami {
-            0% {
-                text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-            }
-
-            100% {
-                text-shadow: 0 0 20px rgba(0, 255, 65, 1);
-            }
-        }
-
-        .achievement-popup {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.9), rgba(0, 143, 17, 0.9));
-            color: #000;
-            padding: 1rem;
-            border-radius: 10px;
-            z-index: 10001;
-            animation: slideIn 0.5s ease-out;
-            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.4);
-            min-width: 250px;
-            will-change: transform, opacity;
-        }
-
-        .achievement-content h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.2rem;
-        }
-
-        .achievement-content p {
-            margin: 0;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .achievement-popup {
-                top: 10px;
-                right: 10px;
-                left: 10px;
-                min-width: auto;
-            }
-
-            .hero-title {
-                font-size: 1.5rem;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <canvas class="matrix-canvas" id="matrixCanvas"></canvas>
     <div class="stars-background"></div>
     <div class="starfield" id="starfield" aria-hidden="true"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title glitch" data-text="DREAMER"><span class="progress-text">DREAMER</span><span
-                    class="progress-bar"></span></h1>
-            <div class="cta-buttons">
-                <a href="#portfolio" class="cta-button cta-primary">Explorar</a>
-            </div>
-            <!-- Seção de links de perfis -->
-            <div class="profile-links">
-                <a href="https://steamcommunity.com/id/SweetDreamsJP/" target="_blank" class="profile-link">
-                    <span class="profile-icon">🎮</span> Steam
-                </a>
-                <a href="https://github.com/DreamerJP" target="_blank" class="profile-link">
-                    <span class="profile-icon">💻</span> GitHub
-                </a>
-                <a href="https://www.youtube.com/@DreamerJP" target="_blank" class="profile-link">
-                    <span class="profile-icon">📺</span> YouTube
-                </a>
-            </div>
+      <div class="hero-content">
+        <h1 class="hero-title glitch" data-text="DREAMER">
+          <span class="progress-text">DREAMER</span
+          ><span class="progress-bar"></span>
+        </h1>
+        <div class="cta-buttons">
+          <a href="#portfolio" class="cta-button cta-primary">Explorar</a>
         </div>
+        <!-- Seção de links de perfis -->
+        <div class="profile-links">
+          <a
+            href="https://steamcommunity.com/id/SweetDreamsJP/"
+            target="_blank"
+            class="profile-link"
+          >
+            <span class="profile-icon">🎮</span> Steam
+          </a>
+          <a
+            href="https://github.com/DreamerJP"
+            target="_blank"
+            class="profile-link"
+          >
+            <span class="profile-icon">💻</span> GitHub
+          </a>
+          <a
+            href="https://www.youtube.com/@DreamerJP"
+            target="_blank"
+            class="profile-link"
+          >
+            <span class="profile-icon">📺</span> YouTube
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- Quote Section -->
     <section class="quote-section">
-        <video class="quote-video-bg" autoplay muted loop playsinline preload="metadata">
-            <source src="./Assets/Home/HSIN .mp4" type="video/mp4">
-        </video>
+      <video
+        class="quote-video-bg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      >
+        <source src="./Assets/Home/HSIN .mp4" type="video/mp4" />
+      </video>
 
-        <div class="audio-control" onclick="toggleAudio()" id="audioControl">
-            🔇
-            <div class="audio-tooltip">Clique para ouvir</div>
-        </div>
+      <div class="audio-control" onclick="toggleAudio()" id="audioControl">
+        🔇
+        <div class="audio-tooltip">Clique para ouvir</div>
+      </div>
 
-        <div class="quote-container">
-            <div class="quote-text">
-                I am the son<br>
-                And the heir<br>
-                Of a shyness that is criminally vulgar<br>
-                I am the son and heir<br>
-                Of nothing in particular<br>
-                You shut your mouth<br>
-                How can you say<br>
-                I go about things the wrong way?<br>
-                I am human and I need to be loved<br>
-                Just like everybody else does.
-            </div>
-            <div class="quote-author">— The Smiths</div>
+      <div class="quote-container">
+        <div class="quote-text">
+          I am the son<br />
+          And the heir<br />
+          Of a shyness that is criminally vulgar<br />
+          I am the son and heir<br />
+          Of nothing in particular<br />
+          You shut your mouth<br />
+          How can you say<br />
+          I go about things the wrong way?<br />
+          I am human and I need to be loved<br />
+          Just like everybody else does.
         </div>
+        <div class="quote-author">— The Smiths</div>
+      </div>
     </section>
 
     <!-- Portfolio Section -->
     <section class="content-section" id="portfolio">
-        <div class="container">
-            <h2 class="section-title">UNIVERSO CRIATIVO</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">🎌</span>
-                    <h3 class="portfolio-title">Animes</h3>
-                    <p class="portfolio-description">
-                        Animes com narrativas cativantes
-                    </p>
-                    <a href="animes.html" class="portfolio-link">Ver Animes →</a>
-                </div>
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">🎬</span>
-                    <h3 class="portfolio-title">Filmes</h3>
-                    <p class="portfolio-description">
-                        Uma curadoria cinematográfica pessoal com clássicos e descobertas modernas
-                    </p>
-                    <a href="filmes.html" class="portfolio-link">Ver Filmes →</a>
-                </div>
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">🎮</span>
-                    <h3 class="portfolio-title">Jogos</h3>
-                    <p class="portfolio-description">
-                        Mundos virtuais e aventuras digitais que expandem os limites da imaginação
-                    </p>
-                    <a href="jogos.html" class="portfolio-link">Ver Jogos →</a>
-                </div>
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">🎵</span>
-                    <h3 class="portfolio-title">Músicas</h3>
-                    <p class="portfolio-description">
-                        Playlists que marcaram momentos especiais
-                    </p>
-                    <a href="musicas.html" class="portfolio-link">Ver Músicas →</a>
-                </div>
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">🖼️</span>
-                    <h3 class="portfolio-title">Imagens</h3>
-                    <p class="portfolio-description">
-                        Uma Coleção de Fotos
-                    </p>
-                    <a href="imagens.html" class="portfolio-link">Ver Imagens →</a>
-                </div>
-                <div class="portfolio-item">
-                    <span class="portfolio-icon">📹</span>
-                    <h3 class="portfolio-title">Vídeos</h3>
-                    <p class="portfolio-description">
-                        Conteúdo Audiovisual: Música, Animações
-                    </p>
-                    <a href="videos.html" class="portfolio-link">Ver Vídeos →</a>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">UNIVERSO CRIATIVO</h2>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <span class="portfolio-icon">🎌</span>
+            <h3 class="portfolio-title">Animes</h3>
+            <p class="portfolio-description">
+              Animes com narrativas cativantes
+            </p>
+            <a href="animes.html" class="portfolio-link">Ver Animes →</a>
+          </div>
+          <div class="portfolio-item">
+            <span class="portfolio-icon">🎬</span>
+            <h3 class="portfolio-title">Filmes</h3>
+            <p class="portfolio-description">
+              Uma curadoria cinematográfica pessoal com clássicos e descobertas
+              modernas
+            </p>
+            <a href="filmes.html" class="portfolio-link">Ver Filmes →</a>
+          </div>
+          <div class="portfolio-item">
+            <span class="portfolio-icon">🎮</span>
+            <h3 class="portfolio-title">Jogos</h3>
+            <p class="portfolio-description">
+              Mundos virtuais e aventuras digitais que expandem os limites da
+              imaginação
+            </p>
+            <a href="jogos.html" class="portfolio-link">Ver Jogos →</a>
+          </div>
+          <div class="portfolio-item">
+            <span class="portfolio-icon">🎵</span>
+            <h3 class="portfolio-title">Músicas</h3>
+            <p class="portfolio-description">
+              Playlists que marcaram momentos especiais
+            </p>
+            <a href="musicas.html" class="portfolio-link">Ver Músicas →</a>
+          </div>
+          <div class="portfolio-item">
+            <span class="portfolio-icon">🖼️</span>
+            <h3 class="portfolio-title">Imagens</h3>
+            <p class="portfolio-description">Uma Coleção de Fotos</p>
+            <a href="imagens.html" class="portfolio-link">Ver Imagens →</a>
+          </div>
+          <div class="portfolio-item">
+            <span class="portfolio-icon">📹</span>
+            <h3 class="portfolio-title">Vídeos</h3>
+            <p class="portfolio-description">
+              Conteúdo Audiovisual: Música, Animações
+            </p>
+            <a href="videos.html" class="portfolio-link">Ver Vídeos →</a>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-quote">
-                "Dreams live on<br>
-                Even after the dreamer..."
-            </div>
-            <div class="footer-subtext">
-                dreamerjpmg@gmail.com
-            </div>
+      <div class="container">
+        <div class="footer-quote">
+          "Dreams live on<br />
+          Even after the dreamer..."
         </div>
+        <div class="footer-subtext">dreamerjpmg@gmail.com</div>
+      </div>
     </footer>
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
-        <div class="scroll-dot active"></div>
-        <div class="scroll-dot"></div>
-        <div class="scroll-dot"></div>
+      <div class="scroll-dot active"></div>
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
     </div>
 
     <script>
-        // Campo de estrelas do tema padrão
-        const performanceConfig = {
-            maxStars: window.innerWidth > 768 ? 60 : 24, // Mais estrelas
-            staticStars: window.innerWidth > 768 ? 20 : 8 // Mais estrelas estáticas
+      // Campo de estrelas do tema padrão
+      const performanceConfig = {
+        maxStars: window.innerWidth > 768 ? 60 : 24, // Mais estrelas
+        staticStars: window.innerWidth > 768 ? 20 : 8, // Mais estrelas estáticas
+      };
+
+      function createStarfield() {
+        const starfield = document.getElementById("starfield");
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        starfield.innerHTML = "";
+        const fragment = document.createDocumentFragment();
+
+        // Estrelas em movimento
+        for (let i = 0; i < performanceConfig.maxStars; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+
+          const angle = Math.random() * 2 * Math.PI;
+          const initialRadius = Math.random() * 50 + 10;
+          const startX = centerX + Math.cos(angle) * initialRadius;
+          const startY = centerY + Math.sin(angle) * initialRadius;
+
+          const directionX = Math.cos(angle);
+          const directionY = Math.sin(angle);
+
+          const maxDistance = Math.sqrt(
+            Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2),
+          );
+          const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+
+          // Tipos com probabilidades
+          const starType = Math.random();
+          if (starType < 0.7) {
+            star.classList.add("distant");
+          } else if (starType < 0.9) {
+            star.classList.add("medium");
+          } else {
+            star.classList.add("close");
+          }
+
+          // Cores especiais
+          const colorType = Math.random();
+          if (colorType < 0.1) {
+            star.classList.add("blue");
+          } else if (colorType < 0.2) {
+            star.classList.add("yellow");
+          }
+
+          star.style.left = startX + "px";
+          star.style.top = startY + "px";
+          star.style.setProperty("--dx", directionX * travelDistance + "px");
+          star.style.setProperty("--dy", directionY * travelDistance + "px");
+          star.style.animationDelay = Math.random() * 25 + "s";
+
+          fragment.appendChild(star);
+        }
+
+        // Estrelas estacionárias com twinkle
+        for (let i = 0; i < performanceConfig.staticStars; i++) {
+          const staticStar = document.createElement("div");
+          staticStar.className = "star distant";
+          staticStar.style.position = "absolute";
+          staticStar.style.left = Math.random() * window.innerWidth + "px";
+          staticStar.style.top = Math.random() * window.innerHeight + "px";
+          staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+          staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+          staticStar.style.animationDelay = Math.random() * 2 + "s";
+
+          fragment.appendChild(staticStar);
+        }
+
+        starfield.appendChild(fragment);
+      }
+
+      // Adiciona estrelas piscando em diferentes intensidades
+      function createTwinkleStars() {
+        const starfield = document.getElementById("starfield");
+        // Remove antigas
+        Array.from(starfield.querySelectorAll(".twinkle-star")).forEach((e) =>
+          e.remove(),
+        );
+        const twinkleCount = window.innerWidth > 768 ? 10 : 4;
+        for (let i = 0; i < twinkleCount; i++) {
+          const star = document.createElement("div");
+          star.classList.add("twinkle-star");
+          // Intensidade aleatória
+          const intensity = Math.random();
+          if (intensity < 0.33) star.classList.add("weak");
+          else if (intensity < 0.66) star.classList.add("medium");
+          else star.classList.add("strong");
+          // Cor aleatória
+          const color = Math.random();
+          if (color < 0.15) star.classList.add("yellow");
+          else if (color > 0.85) star.classList.add("blue");
+          // Tamanho aleatório (menor)
+          const size = 1.2 + Math.random() * 1.8;
+          star.style.width = size + "px";
+          star.style.height = size + "px";
+          // Posição aleatória
+          star.style.left = Math.random() * window.innerWidth + "px";
+          star.style.top = Math.random() * window.innerHeight + "px";
+          // Delay aleatório
+          star.style.animationDelay = Math.random() * 2 + "s";
+          starfield.appendChild(star);
+        }
+      }
+
+      // Navegação suave
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            // Offset especial para o botão 'Explorar' (portfolio)
+            const offset = targetId === "#portfolio" ? -90 : 0;
+            const elementTop =
+              targetElement.getBoundingClientRect().top +
+              window.scrollY -
+              offset;
+            window.scrollTo({
+              top: elementTop,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Scroll indicator
+      const scrollDots = document.querySelectorAll(".scroll-dot");
+      const sections = document.querySelectorAll("section, .quote-section");
+
+      window.addEventListener("scroll", () => {
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        sections.forEach((section, index) => {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+            scrollDots.forEach((dot) => dot.classList.remove("active"));
+            if (scrollDots[index]) {
+              scrollDots[index].classList.add("active");
+            }
+          }
+        });
+      });
+
+      // Clique nos pontos do scroll indicator para rolar até a seção correspondente
+      scrollDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          const targetSection = sections[index];
+          if (targetSection) {
+            let offset = 0;
+            if (index === 1) {
+              offset = -30; // segundo ponto: 10px acima
+            } else if (index === 2) {
+              offset = 100; // terceiro ponto: 20px abaixo
+            }
+            const sectionTop =
+              targetSection.getBoundingClientRect().top +
+              window.scrollY +
+              offset;
+            window.scrollTo({
+              top: sectionTop,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Animação de entrada dos elementos
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".portfolio-item").forEach((item) => {
+        item.style.opacity = "0";
+        item.style.transform = "translateY(50px)";
+        item.style.transition = "all 0.8s ease";
+        observer.observe(item);
+      });
+
+      // Fade in para profile-links
+      const profileLinks = document.querySelector(".profile-links");
+      profileLinks.style.opacity = "0";
+      profileLinks.style.transform = "translateY(50px)";
+      profileLinks.style.transition = "all 4s cubic-bezier(0.23, 1, 0.32, 1)";
+      observer.observe(profileLinks);
+
+      // Inicialização
+      document.addEventListener("DOMContentLoaded", () => {
+        createStarfield();
+        createTwinkleStars();
+
+        // Efeito de digitação no título
+        const title = document.querySelector(".hero-title");
+        const text = title.textContent;
+        title.textContent = "";
+
+        let i = 0;
+        const typeEffect = setInterval(() => {
+          if (i < text.length) {
+            title.textContent += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(typeEffect);
+          }
+        }, 150);
+      });
+
+      // --- MATRIX EASTER EGG ---
+      const CONFIG = {
+        MATRIX_CHARS:
+          "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?",
+        FONT_SIZE: 14,
+        HOLD_DURATION: 3500,
+        KONAMI_SEQUENCE: [
+          "ArrowUp",
+          "ArrowUp",
+          "ArrowDown",
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowLeft",
+          "ArrowRight",
+          "KeyB",
+          "KeyA",
+        ],
+        ACHIEVEMENT_DURATION: 4000,
+        RESIZE_DEBOUNCE: 100,
+      };
+      const isMobile = (() => {
+        if (navigator.maxTouchPoints > 0) return true;
+        if ("ontouchstart" in window) return true;
+        if (window.DocumentTouch && document instanceof DocumentTouch)
+          return true;
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+      })();
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
         };
-
-        function createStarfield() {
-            const starfield = document.getElementById('starfield');
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-
-            starfield.innerHTML = '';
-            const fragment = document.createDocumentFragment();
-
-            // Estrelas em movimento
-            for (let i = 0; i < performanceConfig.maxStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-
-                const angle = Math.random() * 2 * Math.PI;
-                const initialRadius = Math.random() * 50 + 10;
-                const startX = centerX + Math.cos(angle) * initialRadius;
-                const startY = centerY + Math.sin(angle) * initialRadius;
-
-                const directionX = Math.cos(angle);
-                const directionY = Math.sin(angle);
-
-                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
-                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
-
-                // Tipos com probabilidades
-                const starType = Math.random();
-                if (starType < 0.7) {
-                    star.classList.add('distant');
-                } else if (starType < 0.9) {
-                    star.classList.add('medium');
-                } else {
-                    star.classList.add('close');
-                }
-
-                // Cores especiais
-                const colorType = Math.random();
-                if (colorType < 0.1) {
-                    star.classList.add('blue');
-                } else if (colorType < 0.2) {
-                    star.classList.add('yellow');
-                }
-
-                star.style.left = startX + 'px';
-                star.style.top = startY + 'px';
-                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
-                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
-                star.style.animationDelay = Math.random() * 25 + 's';
-
-                fragment.appendChild(star);
-            }
-
-            // Estrelas estacionárias com twinkle
-            for (let i = 0; i < performanceConfig.staticStars; i++) {
-                const staticStar = document.createElement('div');
-                staticStar.className = 'star distant';
-                staticStar.style.position = 'absolute';
-                staticStar.style.left = Math.random() * window.innerWidth + 'px';
-                staticStar.style.top = Math.random() * window.innerHeight + 'px';
-                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
-                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
-                staticStar.style.animationDelay = Math.random() * 2 + 's';
-
-                fragment.appendChild(staticStar);
-            }
-
-            starfield.appendChild(fragment);
+      }
+      const canvas = document.getElementById("matrixCanvas");
+      const ctx = canvas ? canvas.getContext("2d") : null;
+      let drops = [];
+      let columns;
+      let animationId = null;
+      let isMatrixActive = false;
+      let isToggling = false;
+      if (!canvas || !ctx) {
+        console.warn("Canvas não suportado ou elemento não encontrado");
+      }
+      function resizeCanvas() {
+        if (!canvas || !ctx) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / CONFIG.FONT_SIZE);
+        drops = [];
+        for (let i = 0; i < columns; i++) {
+          drops[i] = Math.floor(
+            (Math.random() * canvas.height) / CONFIG.FONT_SIZE,
+          );
         }
-
-        // Adiciona estrelas piscando em diferentes intensidades
-        function createTwinkleStars() {
-            const starfield = document.getElementById('starfield');
-            // Remove antigas
-            Array.from(starfield.querySelectorAll('.twinkle-star')).forEach(e => e.remove());
-            const twinkleCount = window.innerWidth > 768 ? 10 : 4;
-            for (let i = 0; i < twinkleCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('twinkle-star');
-                // Intensidade aleatória
-                const intensity = Math.random();
-                if (intensity < 0.33) star.classList.add('weak');
-                else if (intensity < 0.66) star.classList.add('medium');
-                else star.classList.add('strong');
-                // Cor aleatória
-                const color = Math.random();
-                if (color < 0.15) star.classList.add('yellow');
-                else if (color > 0.85) star.classList.add('blue');
-                // Tamanho aleatório (menor)
-                const size = 1.2 + Math.random() * 1.8;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                // Posição aleatória
-                star.style.left = Math.random() * window.innerWidth + 'px';
-                star.style.top = Math.random() * window.innerHeight + 'px';
-                // Delay aleatório
-                star.style.animationDelay = (Math.random() * 2) + 's';
-                starfield.appendChild(star);
-            }
+      }
+      function drawMatrix() {
+        if (!isMatrixActive || !ctx) return;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `${CONFIG.FONT_SIZE}px monospace`;
+        for (let i = 0; i < drops.length; i++) {
+          const char =
+            CONFIG.MATRIX_CHARS[
+              Math.floor(Math.random() * CONFIG.MATRIX_CHARS.length)
+            ];
+          const x = i * CONFIG.FONT_SIZE;
+          const y = drops[i] * CONFIG.FONT_SIZE;
+          const rand = Math.random();
+          if (rand > 0.95) {
+            ctx.fillStyle = "#ffffff";
+          } else if (rand > 0.9) {
+            ctx.fillStyle = "#80ff80";
+          } else {
+            ctx.fillStyle = "#00ff41";
+          }
+          ctx.fillText(char, x, y);
+          if (y > canvas.height || Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
         }
-
-        // Navegação suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    // Offset especial para o botão 'Explorar' (portfolio)
-                    const offset = targetId === '#portfolio' ? -90 : 0;
-                    const elementTop = targetElement.getBoundingClientRect().top + window.scrollY - offset;
-                    window.scrollTo({
-                        top: elementTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Scroll indicator
-        const scrollDots = document.querySelectorAll('.scroll-dot');
-        const sections = document.querySelectorAll('section, .quote-section');
-
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-            sections.forEach((section, index) => {
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
-                    scrollDots.forEach(dot => dot.classList.remove('active'));
-                    if (scrollDots[index]) {
-                        scrollDots[index].classList.add('active');
-                    }
-                }
-            });
-        });
-
-        // Clique nos pontos do scroll indicator para rolar até a seção correspondente
-        scrollDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                const targetSection = sections[index];
-                if (targetSection) {
-                    let offset = 0;
-                    if (index === 1) {
-                        offset = -30; // segundo ponto: 10px acima
-                    } else if (index === 2) {
-                        offset = 100; // terceiro ponto: 20px abaixo
-                    }
-                    const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY + offset;
-                    window.scrollTo({
-                        top: sectionTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Animação de entrada dos elementos
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.portfolio-item').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(50px)';
-            item.style.transition = 'all 0.8s ease';
-            observer.observe(item);
-        });
-
-        // Fade in para profile-links
-        const profileLinks = document.querySelector('.profile-links');
-        profileLinks.style.opacity = '0';
-        profileLinks.style.transform = 'translateY(50px)';
-        profileLinks.style.transition = 'all 4s cubic-bezier(0.23, 1, 0.32, 1)';
-        observer.observe(profileLinks);
-
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', () => {
-            createStarfield();
-            createTwinkleStars();
-
-            // Efeito de digitação no título
-            const title = document.querySelector('.hero-title');
-            const text = title.textContent;
-            title.textContent = '';
-
-            let i = 0;
-            const typeEffect = setInterval(() => {
-                if (i < text.length) {
-                    title.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typeEffect);
-                }
-            }, 150);
-        });
-
-        // --- MATRIX EASTER EGG ---
-        const CONFIG = {
-            MATRIX_CHARS: "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?",
-            FONT_SIZE: 14,
-            HOLD_DURATION: 3500,
-            KONAMI_SEQUENCE: ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'],
-            ACHIEVEMENT_DURATION: 4000,
-            RESIZE_DEBOUNCE: 100
-        };
-        const isMobile = (() => {
-            if (navigator.maxTouchPoints > 0) return true;
-            if ('ontouchstart' in window) return true;
-            if (window.DocumentTouch && document instanceof DocumentTouch) return true;
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        })();
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+        animationId = requestAnimationFrame(drawMatrix);
+      }
+      function startMatrix() {
+        if (isMatrixActive || !canvas || !ctx) return;
+        isMatrixActive = true;
+        resizeCanvas();
+        drawMatrix();
+      }
+      function stopMatrix() {
+        if (!isMatrixActive) return;
+        isMatrixActive = false;
+        cleanup();
+      }
+      function cleanup() {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
         }
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas ? canvas.getContext('2d') : null;
-        let drops = [];
-        let columns;
-        let animationId = null;
-        let isMatrixActive = false;
-        let isToggling = false;
-        if (!canvas || !ctx) {
-            console.warn('Canvas não suportado ou elemento não encontrado');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
-        function resizeCanvas() {
-            if (!canvas || !ctx) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            columns = Math.floor(canvas.width / CONFIG.FONT_SIZE);
-            drops = [];
-            for (let i = 0; i < columns; i++) {
-                drops[i] = Math.floor(Math.random() * canvas.height / CONFIG.FONT_SIZE);
-            }
-        }
-        function drawMatrix() {
-            if (!isMatrixActive || !ctx) return;
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = `${CONFIG.FONT_SIZE}px monospace`;
-            for (let i = 0; i < drops.length; i++) {
-                const char = CONFIG.MATRIX_CHARS[Math.floor(Math.random() * CONFIG.MATRIX_CHARS.length)];
-                const x = i * CONFIG.FONT_SIZE;
-                const y = drops[i] * CONFIG.FONT_SIZE;
-                const rand = Math.random();
-                if (rand > 0.95) {
-                    ctx.fillStyle = '#ffffff';
-                } else if (rand > 0.9) {
-                    ctx.fillStyle = '#80ff80';
-                } else {
-                    ctx.fillStyle = '#00ff41';
-                }
-                ctx.fillText(char, x, y);
-                if (y > canvas.height || Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-            animationId = requestAnimationFrame(drawMatrix);
-        }
-        function startMatrix() {
-            if (isMatrixActive || !canvas || !ctx) return;
-            isMatrixActive = true;
-            resizeCanvas();
-            drawMatrix();
-        }
-        function stopMatrix() {
-            if (!isMatrixActive) return;
-            isMatrixActive = false;
-            cleanup();
-        }
-        function cleanup() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-            if (ctx) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-        if (canvas && ctx) {
-            resizeCanvas();
-            window.addEventListener('resize', debounce(resizeCanvas, CONFIG.RESIZE_DEBOUNCE));
-        }
-        function createAchievement(title, description) {
-            const achievement = document.createElement('div');
-            achievement.className = 'achievement-popup';
-            achievement.innerHTML = `
+      }
+      if (canvas && ctx) {
+        resizeCanvas();
+        window.addEventListener(
+          "resize",
+          debounce(resizeCanvas, CONFIG.RESIZE_DEBOUNCE),
+        );
+      }
+      function createAchievement(title, description) {
+        const achievement = document.createElement("div");
+        achievement.className = "achievement-popup";
+        achievement.innerHTML = `
                 <div class="achievement-content">
                     <h3>${title}</h3>
                     <p>${description}</p>
                 </div>
             `;
-            return achievement;
-        }
-        function showAchievement(title, description) {
-            const achievement = createAchievement(title, description);
-            document.body.appendChild(achievement);
-            const removeAchievement = () => {
-                if (achievement.parentNode) {
-                    achievement.style.animation = 'slideOut 0.5s ease-in-out forwards';
-                    setTimeout(() => {
-                        if (achievement.parentNode) {
-                            achievement.remove();
-                        }
-                    }, 500);
-                }
-            };
-            setTimeout(removeAchievement, CONFIG.ACHIEVEMENT_DURATION);
-        }
-        function playMatrixSound() {
-            if (!window.AudioContext && !window.webkitAudioContext) {
-                return;
-            }
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
-                oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.6);
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.6);
-                setTimeout(() => {
-                    if (audioContext.state !== 'closed') {
-                        audioContext.close();
-                    }
-                }, 1000);
-            } catch (e) {
-                console.debug('Audio não pôde ser reproduzido:', e.message);
-            }
-        }
-        function toggleMatrixMode() {
-            if (isToggling) return;
-            isToggling = true;
-            document.body.classList.toggle('matrix-mode');
-            if (document.body.classList.contains('matrix-mode')) {
-                startMatrix();
-                showAchievement('🟢 MATRIX MODE ATIVADO', 'Bem-vindo à Matrix, Neo!');
-                playMatrixSound();
-            } else {
-                stopMatrix();
-                showAchievement('⚫ MATRIX MODE DESATIVADO', 'Voltando à realidade...');
-            }
+        return achievement;
+      }
+      function showAchievement(title, description) {
+        const achievement = createAchievement(title, description);
+        document.body.appendChild(achievement);
+        const removeAchievement = () => {
+          if (achievement.parentNode) {
+            achievement.style.animation = "slideOut 0.5s ease-in-out forwards";
             setTimeout(() => {
-                isToggling = false;
-            }, 1000);
+              if (achievement.parentNode) {
+                achievement.remove();
+              }
+            }, 500);
+          }
+        };
+        setTimeout(removeAchievement, CONFIG.ACHIEVEMENT_DURATION);
+      }
+      function playMatrixSound() {
+        if (!window.AudioContext && !window.webkitAudioContext) {
+          return;
         }
-        let konamiCode = [];
-        document.addEventListener('keydown', (e) => {
-            konamiCode.push(e.code);
-            if (konamiCode.length > CONFIG.KONAMI_SEQUENCE.length) {
-                konamiCode.shift();
+        try {
+          const audioContext = new (
+            window.AudioContext || window.webkitAudioContext
+          )();
+          if (audioContext.state === "suspended") {
+            audioContext.resume();
+          }
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          oscillator.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(
+            800,
+            audioContext.currentTime + 0.3,
+          );
+          oscillator.frequency.exponentialRampToValueAtTime(
+            100,
+            audioContext.currentTime + 0.6,
+          );
+          gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioContext.currentTime + 0.6,
+          );
+          oscillator.start(audioContext.currentTime);
+          oscillator.stop(audioContext.currentTime + 0.6);
+          setTimeout(() => {
+            if (audioContext.state !== "closed") {
+              audioContext.close();
             }
-            if (konamiCode.join(',') === CONFIG.KONAMI_SEQUENCE.join(',')) {
-                toggleMatrixMode();
-                konamiCode = [];
-            }
-        });
-        function initializeMobileControls() {
-            const heroTitle = document.querySelector('.hero-title');
-            if (!heroTitle) {
-                console.warn('Elemento .hero-title não encontrado para controles mobile');
-                return;
-            }
-            let progressTimeout = null;
-            let isLoading = false;
-            function startProgress() {
-                if (isLoading) return;
-                isLoading = true;
-                heroTitle.classList.add('konami-loading');
-                progressTimeout = setTimeout(() => {
-                    toggleMatrixMode();
-                    heroTitle.classList.remove('konami-loading');
-                    isLoading = false;
-                    if (navigator.vibrate) {
-                        navigator.vibrate([100, 50, 100, 50, 200]);
-                    }
-                }, CONFIG.HOLD_DURATION);
-            }
-            function cancelProgress() {
-                if (!isLoading) return;
-                clearTimeout(progressTimeout);
-                heroTitle.classList.remove('konami-loading');
-                isLoading = false;
-            }
-            heroTitle.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 1) return;
-                e.preventDefault();
-                startProgress();
-            }, { passive: false });
-            heroTitle.addEventListener('touchend', cancelProgress);
-            heroTitle.addEventListener('touchcancel', cancelProgress);
-            heroTitle.addEventListener('contextmenu', (e) => e.preventDefault());
+          }, 1000);
+        } catch (e) {
+          console.debug("Audio não pôde ser reproduzido:", e.message);
         }
-        if (isMobile) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initializeMobileControls);
-            } else {
-                initializeMobileControls();
-            }
+      }
+      function toggleMatrixMode() {
+        if (isToggling) return;
+        isToggling = true;
+        document.body.classList.toggle("matrix-mode");
+        if (document.body.classList.contains("matrix-mode")) {
+          startMatrix();
+          showAchievement("🟢 MATRIX MODE ATIVADO", "Bem-vindo à Matrix, Neo!");
+          playMatrixSound();
+        } else {
+          stopMatrix();
+          showAchievement(
+            "⚫ MATRIX MODE DESATIVADO",
+            "Voltando à realidade...",
+          );
         }
-        window.addEventListener('beforeunload', cleanup);
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && isMatrixActive) {
-                cleanup();
-                isMatrixActive = true;
-            } else if (!document.hidden && isMatrixActive && !animationId) {
-                drawMatrix();
-            }
-        });
-        // --- FIM MATRIX EASTER EGG ---
-
-        // Controle de áudio do vídeo (simplificado)
-        function toggleAudio() {
-            const video = document.querySelector('.quote-video-bg');
-            const btn = document.getElementById('audioControl');
-            if (video.muted) {
-                video.muted = false;
-                btn.classList.add('active');
-                btn.innerHTML = '🔊<div class="audio-tooltip">Clique para silenciar</div>';
-                video.play().catch(e => console.log('Erro ao reproduzir:', e));
-            } else {
-                video.muted = true;
-                btn.classList.remove('active');
-                btn.innerHTML = '🔇<div class="audio-tooltip">Clique para ouvir</div>';
-            }
+        setTimeout(() => {
+          isToggling = false;
+        }, 1000);
+      }
+      let konamiCode = [];
+      document.addEventListener("keydown", (e) => {
+        konamiCode.push(e.code);
+        if (konamiCode.length > CONFIG.KONAMI_SEQUENCE.length) {
+          konamiCode.shift();
         }
-
-        // Garantir que o vídeo carregue corretamente
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.querySelector('.quote-video-bg');
-            if (video) {
-                video.addEventListener('loadeddata', () => {
-                    console.log('Vídeo carregado com sucesso');
-                });
-                video.addEventListener('error', (e) => {
-                    console.log('Erro ao carregar vídeo:', e);
-                    // Fallback: ocultar vídeo se não carregar
-                    video.style.display = 'none';
-                });
+        if (konamiCode.join(",") === CONFIG.KONAMI_SEQUENCE.join(",")) {
+          toggleMatrixMode();
+          konamiCode = [];
+        }
+      });
+      function initializeMobileControls() {
+        const heroTitle = document.querySelector(".hero-title");
+        if (!heroTitle) {
+          console.warn(
+            "Elemento .hero-title não encontrado para controles mobile",
+          );
+          return;
+        }
+        let progressTimeout = null;
+        let isLoading = false;
+        function startProgress() {
+          if (isLoading) return;
+          isLoading = true;
+          heroTitle.classList.add("konami-loading");
+          progressTimeout = setTimeout(() => {
+            toggleMatrixMode();
+            heroTitle.classList.remove("konami-loading");
+            isLoading = false;
+            if (navigator.vibrate) {
+              navigator.vibrate([100, 50, 100, 50, 200]);
             }
-        });
+          }, CONFIG.HOLD_DURATION);
+        }
+        function cancelProgress() {
+          if (!isLoading) return;
+          clearTimeout(progressTimeout);
+          heroTitle.classList.remove("konami-loading");
+          isLoading = false;
+        }
+        heroTitle.addEventListener(
+          "touchstart",
+          (e) => {
+            if (e.touches.length > 1) return;
+            e.preventDefault();
+            startProgress();
+          },
+          { passive: false },
+        );
+        heroTitle.addEventListener("touchend", cancelProgress);
+        heroTitle.addEventListener("touchcancel", cancelProgress);
+        heroTitle.addEventListener("contextmenu", (e) => e.preventDefault());
+      }
+      if (isMobile) {
+        if (document.readyState === "loading") {
+          document.addEventListener(
+            "DOMContentLoaded",
+            initializeMobileControls,
+          );
+        } else {
+          initializeMobileControls();
+        }
+      }
+      window.addEventListener("beforeunload", cleanup);
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isMatrixActive) {
+          cleanup();
+          isMatrixActive = true;
+        } else if (!document.hidden && isMatrixActive && !animationId) {
+          drawMatrix();
+        }
+      });
+      // --- FIM MATRIX EASTER EGG ---
 
-        // Debounce no resize para o campo de estrelas
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                createStarfield();
-                createTwinkleStars();
-            }, 250);
-        });
+      // Controle de áudio do vídeo (simplificado)
+      function toggleAudio() {
+        const video = document.querySelector(".quote-video-bg");
+        const btn = document.getElementById("audioControl");
+        if (video.muted) {
+          video.muted = false;
+          btn.classList.add("active");
+          btn.innerHTML =
+            '🔊<div class="audio-tooltip">Clique para silenciar</div>';
+          video.play().catch((e) => console.log("Erro ao reproduzir:", e));
+        } else {
+          video.muted = true;
+          btn.classList.remove("active");
+          btn.innerHTML =
+            '🔇<div class="audio-tooltip">Clique para ouvir</div>';
+        }
+      }
 
-        // Corrigir vídeo congelado ao voltar do histórico (bfcache)
-        window.addEventListener('pageshow', function (event) {
-            if (event.persisted) {
-                const video = document.querySelector('.quote-video-bg');
-                if (video) {
-                    video.pause();
-                    video.currentTime = 0;
-                    video.load();
-                    video.muted = true; // ou false, conforme seu padrão
-                    video.play().catch(() => { });
-                }
-            }
-        });
+      // Garantir que o vídeo carregue corretamente
+      document.addEventListener("DOMContentLoaded", () => {
+        const video = document.querySelector(".quote-video-bg");
+        if (video) {
+          video.addEventListener("loadeddata", () => {
+            console.log("Vídeo carregado com sucesso");
+          });
+          video.addEventListener("error", (e) => {
+            console.log("Erro ao carregar vídeo:", e);
+            // Fallback: ocultar vídeo se não carregar
+            video.style.display = "none";
+          });
+        }
+      });
+
+      // Debounce no resize para o campo de estrelas
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          createStarfield();
+          createTwinkleStars();
+        }, 250);
+      });
+
+      // Corrigir vídeo congelado ao voltar do histórico (bfcache)
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+          const video = document.querySelector(".quote-video-bg");
+          if (video) {
+            video.pause();
+            video.currentTime = 0;
+            video.load();
+            video.muted = true; // ou false, conforme seu padrão
+            video.play().catch(() => {});
+          }
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>

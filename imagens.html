@@ -1,1509 +1,1648 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=10">
-    <title> Galeria de Imagens</title>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=10"
+    />
+    <title>Galeria de Imagens</title>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --primary-color: #bb86fc;
-            --secondary-color: #03dac6;
-            --accent-color: #cf6679;
-            --text-primary: #e1e1e1;
-            --text-secondary: #b3b3b3;
-            --bg-main: rgba(18, 18, 35, 0.98);
-            --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --shadow-color-strong: rgba(0, 0, 0, 0.6);
-            --transition-speed: 0.3s;
-            --border-radius: 15px;
-            --main-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --button-gradient: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            --background-white: var(--bg-main);
-            --dark-text: var(--text-primary);
-            --light-text: var(--text-secondary);
-            --secondary-text: var(--text-secondary);
+      :root {
+        --primary-gradient: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
+        --primary-color: #bb86fc;
+        --secondary-color: #03dac6;
+        --accent-color: #cf6679;
+        --text-primary: #e1e1e1;
+        --text-secondary: #b3b3b3;
+        --bg-main: rgba(18, 18, 35, 0.98);
+        --bg-nav: rgba(18, 18, 35, 0.98);
+        --shadow-color: rgba(0, 0, 0, 0.4);
+        --shadow-color-strong: rgba(0, 0, 0, 0.6);
+        --transition-speed: 0.3s;
+        --border-radius: 15px;
+        --main-gradient: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
+        --button-gradient: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        --background-white: var(--bg-main);
+        --dark-text: var(--text-primary);
+        --light-text: var(--text-secondary);
+        --secondary-text: var(--text-secondary);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(
+          ellipse at center,
+          #0a0a0a 0%,
+          #000000 100%
+        );
+        min-height: 100vh;
+        color: var(--text-primary);
+        overflow-x: hidden;
+        padding: 20px;
+        overflow-y: scroll;
+      }
+
+      .starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.8;
+        overflow: hidden;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: star-travel linear infinite;
+      }
+
+      .star.distant {
+        width: 1px;
+        height: 1px;
+        animation-duration: 25s;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+
+      .star.medium {
+        width: 1.5px;
+        height: 1.5px;
+        animation-duration: 15s;
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+      }
+
+      .star.close {
+        width: 2px;
+        height: 2px;
+        animation-duration: 8s;
+        box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+      }
+
+      .star.blue {
+        background: #e6f3ff;
+        box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+      }
+
+      .star.yellow {
+        background: #fff8e1;
+        box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+      }
+
+      @keyframes star-travel {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        10% {
+          opacity: 0.4;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
-            min-height: 100vh;
-            color: var(--text-primary);
-            overflow-x: hidden;
-            padding: 20px;
-            overflow-y: scroll;
+        50% {
+          opacity: 1;
+          transform: translate(var(--dx), var(--dy)) scale(1);
         }
 
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.8;
-            overflow: hidden;
+        90% {
+          opacity: 0.6;
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: star-travel linear infinite;
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2))
+            scale(1.2);
+        }
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
         }
 
-        .star.distant {
-            width: 1px;
-            height: 1px;
-            animation-duration: 25s;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-nav);
+        backdrop-filter: blur(15px);
+        border-bottom: 2px solid var(--primary-color);
+        z-index: 1000;
+        padding: 15px 0;
+        box-shadow: 0 4px 20px var(--shadow-color-strong);
+        transition: all var(--transition-speed) ease;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-home {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .nav-home:hover {
+        color: var(--primary-color);
+        transform: scale(1.05);
+      }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.8em;
+        cursor: pointer;
+        color: var(--text-primary);
+        transition: color var(--transition-speed) ease;
+      }
+
+      .menu-toggle:hover {
+        color: var(--primary-color);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: white;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px var(--shadow-color);
+      }
+
+      .main-content {
+        margin-top: 100px;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
+        position: relative;
+        min-height: calc(100vh - 140px);
+      }
+
+      .main-content::before {
+        display: none;
+      }
+
+      .page-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 30px;
+        color: var(--text-primary);
+        text-shadow:
+          0 0 20px var(--primary-color),
+          2px 2px 8px var(--shadow-color);
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .gallery-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(187, 134, 252, 0.1),
+          rgba(3, 218, 198, 0.1)
+        );
+        border-radius: var(--border-radius);
+        backdrop-filter: blur(5px);
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb span {
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .breadcrumb span:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .view-controls {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .control-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .control-group label {
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      select,
+      input[type="range"],
+      input[type="text"] {
+        padding: 8px 12px;
+        border: 2px solid rgba(187, 134, 252, 0.3);
+        border-radius: 10px;
+        background: var(--bg-main);
+        color: var(--text-primary);
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]::placeholder {
+        color: var(--text-secondary);
+        opacity: 1;
+      }
+
+      select:focus,
+      input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
+      }
+
+      .size-slider {
+        width: 160px;
+        height: 6px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        border-radius: 10px;
+      }
+
+      .size-slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .size-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        cursor: grab;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        margin-top: -7px;
+      }
+
+      .size-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .size-slider::-webkit-slider-thumb:active {
+        cursor: grabbing;
+        transform: scale(1.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      .size-slider::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .size-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        cursor: grab;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .size-slider::-moz-range-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .size-slider::-moz-range-thumb:active {
+        cursor: grabbing;
+        transform: scale(1.1);
+      }
+
+      .size-slider::-moz-range-progress {
+        background: transparent;
+      }
+
+      .folder-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .folder-item {
+        background: linear-gradient(
+          135deg,
+          rgba(187, 134, 252, 0.1),
+          rgba(3, 218, 198, 0.1)
+        );
+        border-radius: var(--border-radius);
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .folder-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px var(--shadow-color-strong);
+        border-color: var(--primary-color);
+      }
+
+      .folder-preview {
+        width: 100%;
+        height: 120px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        position: relative;
+        background: var(--bg-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .folder-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+      }
+
+      .folder-item:hover .folder-preview img {
+        transform: scale(1.1);
+      }
+
+      .folder-icon-fallback {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .folder-name {
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+        font-size: 1rem;
+      }
+
+      .folder-count {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .image-grid {
+        display: grid;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .grid-small {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+
+      .grid-medium {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+
+      .grid-large {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      }
+
+      .grid-xlarge {
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      }
+
+      .image-item {
+        position: relative;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: var(--bg-main);
+        box-shadow: 0 5px 15px var(--shadow-color);
+        border: 1px solid rgba(187, 134, 252, 0.1);
+      }
+
+      .image-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px var(--shadow-color-strong);
+        border-color: var(--primary-color);
+      }
+
+      .image-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: all 0.5s ease;
+        opacity: 0;
+      }
+
+      .image-item img.loaded {
+        opacity: 1;
+      }
+
+      .image-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .image-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+        padding: 20px 15px 15px;
+        transform: translateY(100%);
+        transition: all 0.3s ease;
+      }
+
+      .image-item:hover .image-info {
+        transform: translateY(0);
+      }
+
+      .image-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+      }
+
+      .image-details {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+
+      .image-viewer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .viewer-content {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+      }
+
+      .viewer-image {
+        width: 100vw;
+        height: 100vh;
+        object-fit: contain;
+        display: block;
+        margin: 0;
+        padding: 0;
+        background: #000;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        pointer-events: auto;
+      }
+
+      .viewer-controls {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+        gap: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        z-index: 2500;
+        max-width: 95vw;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .viewer-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.1);
+        border-top: 5px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 2100;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
         }
 
-        .star.medium {
-            width: 1.5px;
-            height: 1.5px;
-            animation-duration: 15s;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
         }
+      }
 
-        .star.close {
-            width: 2px;
-            height: 2px;
-            animation-duration: 8s;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-        }
+      .viewer-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
 
-        .star.blue {
-            background: #e6f3ff;
-            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
-        }
+      .viewer-btn:hover {
+        transform: scale(1.15);
+        background: var(--primary-color);
+        box-shadow: 0 0 20px var(--primary-color);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
 
-        .star.yellow {
-            background: #fff8e1;
-            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
-        }
+      .close-viewer {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        font-size: 2.5rem;
+        line-height: 1;
+        font-weight: 300;
+        cursor: pointer;
+        backdrop-filter: blur(15px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 3000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        padding: 0;
+        margin: 0;
+      }
 
-        @keyframes star-travel {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0.5);
-            }
+      .close-viewer:hover {
+        background: var(--accent-color);
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 0 25px var(--accent-color);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
 
-            10% {
-                opacity: 0.4;
-            }
+      .nav-arrows {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        font-size: 3rem;
+        line-height: 1;
+        font-weight: 300;
+        cursor: pointer;
+        backdrop-filter: blur(15px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 3000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        opacity: 0;
+        padding: 0;
+        margin: 0;
+      }
 
-            50% {
-                opacity: 1;
-                transform: translate(var(--dx), var(--dy)) scale(1);
-            }
+      .nav-arrows:hover {
+        background: var(--secondary-color);
+        transform: translateY(-50%) scale(1.15);
+        box-shadow: 0 0 30px var(--secondary-color);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
 
-            90% {
-                opacity: 0.6;
-            }
+      .nav-prev {
+        left: 20px;
+      }
 
-            100% {
-                opacity: 0;
-                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.2);
-            }
-        }
+      .nav-next {
+        right: 20px;
+      }
 
-        @keyframes twinkle {
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
 
-            0%,
-            100% {
-                opacity: 0.2;
-            }
+      .page-btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(187, 134, 252, 0.1);
+        color: var(--primary-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
 
-            50% {
-                opacity: 0.8;
-            }
-        }
+      .page-btn:hover,
+      .page-btn.active {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+      }
 
-        .navigation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-nav);
-            backdrop-filter: blur(15px);
-            border-bottom: 2px solid var(--primary-color);
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 4px 20px var(--shadow-color-strong);
-            transition: all var(--transition-speed) ease;
-        }
+      .page-info {
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin: 0 15px;
+      }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-home {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-home:hover {
-            color: var(--primary-color);
-            transform: scale(1.05);
-        }
-
+      @media (max-width: 768px) {
         .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.8em;
-            cursor: pointer;
-            color: var(--text-primary);
-            transition: color var(--transition-speed) ease;
-        }
-
-        .menu-toggle:hover {
-            color: var(--primary-color);
+          display: block;
         }
 
         .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--bg-nav);
+          backdrop-filter: blur(15px);
+          flex-direction: column;
+          padding: 20px;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 8px 25px var(--shadow-color-strong);
+          border-radius: 0 0 var(--border-radius) var(--border-radius);
+          z-index: 1001;
         }
 
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: white;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
         }
 
         .main-content {
-            margin-top: 100px;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 20px;
-            position: relative;
-            min-height: calc(100vh - 140px);
+          margin-top: 80px;
+          padding: 0 10px;
         }
 
-        .main-content::before {
-            display: none;
-        }
-
-        .page-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 30px;
-            color: var(--text-primary);
-            text-shadow:
-                0 0 20px var(--primary-color),
-                2px 2px 8px var(--shadow-color);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .gallery-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            background: linear-gradient(135deg,
-                    rgba(187, 134, 252, 0.1),
-                    rgba(3, 218, 198, 0.1));
-            border-radius: var(--border-radius);
-            backdrop-filter: blur(5px);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .breadcrumb span {
-            cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .breadcrumb span:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .view-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .control-group label {
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        select,
-        input[type="range"],
-        input[type="text"] {
-            padding: 8px 12px;
-            border: 2px solid rgba(187, 134, 252, 0.3);
-            border-radius: 10px;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]::placeholder {
-            color: var(--text-secondary);
-            opacity: 1;
-        }
-
-        select:focus,
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
-        }
-
-        .size-slider {
-            width: 160px;
-            height: 6px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: transparent;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-            border-radius: 10px;
-        }
-
-        .size-slider::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .size-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            cursor: grab;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            margin-top: -7px;
-        }
-
-        .size-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .size-slider::-webkit-slider-thumb:active {
-            cursor: grabbing;
-            transform: scale(1.1);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-        }
-
-        .size-slider::-moz-range-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .size-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            cursor: grab;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .size-slider::-moz-range-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .size-slider::-moz-range-thumb:active {
-            cursor: grabbing;
-            transform: scale(1.1);
-        }
-
-        .size-slider::-moz-range-progress {
-            background: transparent;
-        }
-
-        .folder-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .folder-item {
-            background: linear-gradient(135deg,
-                    rgba(187, 134, 252, 0.1),
-                    rgba(3, 218, 198, 0.1));
-            border-radius: var(--border-radius);
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .folder-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px var(--shadow-color-strong);
-            border-color: var(--primary-color);
-        }
-
-        .folder-preview {
-            width: 100%;
-            height: 120px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            position: relative;
-            background: var(--bg-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .folder-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .folder-item:hover .folder-preview img {
-            transform: scale(1.1);
-        }
-
-        .folder-icon-fallback {
-            font-size: 3rem;
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        .folder-name {
-            font-weight: bold;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-
-        .folder-count {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-
-        .image-grid {
-            display: grid;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .grid-small {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        }
-
-        .grid-medium {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-
-        .grid-large {
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        }
-
-        .grid-xlarge {
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-        }
-
-        .image-item {
-            position: relative;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--bg-main);
-            box-shadow: 0 5px 15px var(--shadow-color);
-            border: 1px solid rgba(187, 134, 252, 0.1);
-        }
-
-        .image-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--shadow-color-strong);
-            border-color: var(--primary-color);
-        }
-
-        .image-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-
-        .image-item img.loaded {
-            opacity: 1;
-        }
-
-        .image-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .image-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: white;
-            padding: 20px 15px 15px;
-            transform: translateY(100%);
-            transition: all 0.3s ease;
-        }
-
-        .image-item:hover .image-info {
-            transform: translateY(0);
-        }
-
-        .image-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .image-details {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        .image-viewer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .viewer-content {
-            width: 100vw;
-            height: 100vh;
-            max-width: 100vw;
-            max-height: 100vh;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
-
-        .viewer-image {
-            width: 100vw;
-            height: 100vh;
-            object-fit: contain;
-            display: block;
-            margin: 0;
-            padding: 0;
-            background: #000;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            pointer-events: auto;
-        }
-
-        .viewer-controls {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            z-index: 2500;
-            max-width: 95vw;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .viewer-loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-top: 5px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            z-index: 2100;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-
-        .viewer-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .viewer-btn:hover {
-            transform: scale(1.15);
-            background: var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-color);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .close-viewer {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            font-size: 2.5rem;
-            line-height: 1;
-            font-weight: 300;
-            cursor: pointer;
-            backdrop-filter: blur(15px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 3000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto;
-            padding: 0;
-            margin: 0;
-        }
-
-        .close-viewer:hover {
-            background: var(--accent-color);
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 0 25px var(--accent-color);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-arrows {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            font-size: 3rem;
-            line-height: 1;
-            font-weight: 300;
-            cursor: pointer;
-            backdrop-filter: blur(15px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 3000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto;
-            opacity: 0;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav-arrows:hover {
-            background: var(--secondary-color);
-            transform: translateY(-50%) scale(1.15);
-            box-shadow: 0 0 30px var(--secondary-color);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-prev {
-            left: 20px;
-        }
-
-        .nav-next {
-            right: 20px;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .page-btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(187, 134, 252, 0.1);
-            color: var(--primary-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .page-btn:hover,
-        .page-btn.active {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .page-info {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin: 0 15px;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-nav);
-                backdrop-filter: blur(15px);
-                flex-direction: column;
-                padding: 20px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                box-shadow: 0 8px 25px var(--shadow-color-strong);
-                border-radius: 0 0 var(--border-radius) var(--border-radius);
-                z-index: 1001;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .main-content {
-                margin-top: 80px;
-                padding: 0 10px;
-            }
-
-            .unified-header {
-                min-height: auto !important;
-                padding: 30px 15px 15px 15px !important;
-                margin-bottom: 20px;
-                border-radius: 0 !important;
-            }
-
-            .header-overlay-fix {
-                border-radius: 0 !important;
-            }
-
-            .unified-header h1 {
-                font-size: 1.8em !important;
-                min-height: auto;
-                margin-bottom: 5px;
-                line-height: 1.2;
-            }
-
-            .unified-header p {
-                font-size: 0.9em !important;
-                margin-bottom: 15px;
-            }
-
-            .filters-stats-flex {
-                flex-direction: column;
-                gap: 15px;
-                align-items: stretch;
-            }
-
-            .filters {
-                width: 100%;
-                min-width: unset;
-                min-height: auto !important;
-                padding: 12px !important;
-            }
-
-            .stats-compact {
-                width: 100%;
-                min-width: unset;
-                min-height: auto !important;
-                padding: 12px !important;
-            }
-
-            .stats-compact h3 {
-                font-size: 1.1em !important;
-                margin-bottom: 15px !important;
-            }
-
-            .stat-card {
-                padding: 15px 5px !important;
-            }
-
-            .stat-value {
-                font-size: 1.5em !important;
-            }
-
-            .breadcrumb {
-                font-size: 0.8em !important;
-                padding: 8px 12px !important;
-                border-radius: 8px !important;
-            }
-
-            .folder-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
-            }
-
-            .folder-preview {
-                height: 90px;
-            }
-
-            .folder-name {
-                font-size: 0.85rem;
-            }
-
-            .grid-small {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-
-            .grid-medium {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            }
-
-            .grid-large {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            }
-
-            .grid-xlarge {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            }
-        }
-
-        .viewer-controls {
-            bottom: 10px;
-            padding: 10px;
-            max-width: 98vw;
-        }
-
-        .close-viewer {
-            top: 10px;
-            right: 10px;
-            width: 48px;
-            height: 48px;
-            font-size: 1.2rem;
-        }
-
-
-
-        @media (max-width: 480px) {
-            .unified-header h1 {
-                font-size: 1.5em !important;
-            }
-
-            .unified-header p {
-                font-size: 0.8em !important;
-            }
-
-            .folder-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 10px;
-            }
-
-            .folder-preview {
-                height: 70px;
-            }
-
-            .control-group {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .size-slider {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            .viewer-controls {
-                bottom: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-        }
-
-        .loading::after {
-            content: '...';
-            animation: dots 1.5s infinite;
-        }
-
-        @keyframes dots {
-
-            0%,
-            20% {
-                content: '';
-            }
-
-            40% {
-                content: '.';
-            }
-
-            60% {
-                content: '..';
-            }
-
-            80%,
-            100% {
-                content: '...';
-            }
-        }
-
-        .viewer-content:fullscreen {
-            max-width: 100vw !important;
-            max-height: 100vh !important;
-        }
-
-        .image-viewer:fullscreen {
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-arrows {
-            transition: opacity 0.4s;
-        }
-
-        .gallery-controls input[type="text"] {
-            background: var(--bg-main) !important;
-            color: var(--text-primary) !important;
-            border: 2px solid rgba(187, 134, 252, 0.3);
-        }
-
-        .gallery-controls input[type="text"]::placeholder {
-            color: var(--text-secondary);
-            opacity: 1;
-        }
-
-        .skeleton-grid {
-            display: grid;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .skeleton-item {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
-            background-size: 200% 100%;
-            animation: skeleton-loading 1.5s infinite;
-            border-radius: var(--border-radius);
-            height: 200px;
-            border: 1px solid rgba(187, 134, 252, 0.1);
-        }
-
-        @keyframes skeleton-loading {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header Unificado */
         .unified-header {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
-                url('./Assets/Imagens/imagens_background.png') center center/cover no-repeat;
-            position: relative;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
-            padding: 60px 60px 24px 60px;
-            margin-bottom: 40px;
-            min-height: 520px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .unified-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            z-index: 3;
-            border-radius: inherit;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .unified-header>* {
-            position: relative;
-            z-index: 2;
+          min-height: auto !important;
+          padding: 30px 15px 15px 15px !important;
+          margin-bottom: 20px;
+          border-radius: 0 !important;
         }
 
         .header-overlay-fix {
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 20px;
-            z-index: 1;
-            pointer-events: none;
+          border-radius: 0 !important;
         }
 
         .unified-header h1 {
-            color: #111 !important;
-            font-size: 3em;
-            margin-bottom: 15px;
-            text-align: center;
-            text-shadow:
-                0 0 20px var(--primary-color),
-                2px 2px 4px var(--shadow-color);
-            min-height: 76px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          font-size: 1.8em !important;
+          min-height: auto;
+          margin-bottom: 5px;
+          line-height: 1.2;
         }
 
         .unified-header p {
-            color: #111 !important;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            text-align: center;
-            text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
+          font-size: 0.9em !important;
+          margin-bottom: 15px;
         }
 
         .filters-stats-flex {
-            display: flex;
-            gap: 40px;
-            align-items: flex-end;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: auto;
-            margin-bottom: 0;
+          flex-direction: column;
+          gap: 15px;
+          align-items: stretch;
         }
 
         .filters {
-            flex: 2;
-            min-width: 320px;
-            border-radius: 18px !important;
-            padding: 10px 10px 8px 10px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong);
-            margin-bottom: 0;
-            background: rgba(18, 18, 35, 0.6);
-            backdrop-filter: blur(10px);
-            min-height: 188px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 120px;
-        }
-
-        .filter-group label {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9em;
-            text-align: left;
-        }
-
-        .filter-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-tag {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 11px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .filter-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
+          width: 100%;
+          min-width: unset;
+          min-height: auto !important;
+          padding: 12px !important;
         }
 
         .stats-compact {
-            flex: 1;
-            min-width: 220px;
-            background: rgba(18, 18, 35, 0.6);
-            border-radius: 18px !important;
-            padding: 8px 8px 4px 8px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong);
-            margin-bottom: 0;
-            backdrop-filter: blur(10px);
-            min-height: 181px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+          width: 100%;
+          min-width: unset;
+          min-height: auto !important;
+          padding: 12px !important;
         }
 
-        .stats-compact .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .stats-compact h3 {
+          font-size: 1.1em !important;
+          margin-bottom: 15px !important;
         }
 
         .stat-card {
-            background: rgba(187, 134, 252, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 2px 8px var(--shadow-color);
-            padding: 10px 0 6px 0;
-            text-align: center;
+          padding: 15px 5px !important;
         }
 
         .stat-value {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: var(--text-primary);
+          font-size: 1.5em !important;
         }
 
-        .stat-label {
-            font-size: 0.9em;
-            color: var(--text-secondary);
+        .breadcrumb {
+          font-size: 0.8em !important;
+          padding: 8px 12px !important;
+          border-radius: 8px !important;
         }
+
+        .folder-grid {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 15px;
+        }
+
+        .folder-preview {
+          height: 90px;
+        }
+
+        .folder-name {
+          font-size: 0.85rem;
+        }
+
+        .grid-small {
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+
+        .grid-medium {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        }
+
+        .grid-large {
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        }
+
+        .grid-xlarge {
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        }
+      }
+
+      .viewer-controls {
+        bottom: 10px;
+        padding: 10px;
+        max-width: 98vw;
+      }
+
+      .close-viewer {
+        top: 10px;
+        right: 10px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 480px) {
+        .unified-header h1 {
+          font-size: 1.5em !important;
+        }
+
+        .unified-header p {
+          font-size: 0.8em !important;
+        }
+
+        .folder-grid {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          gap: 10px;
+        }
+
+        .folder-preview {
+          height: 70px;
+        }
+
+        .control-group {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+
+        .size-slider {
+          width: 100%;
+          max-width: 200px;
+        }
+
+        .viewer-controls {
+          bottom: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 15px;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.6s ease;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 40px;
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+      }
+
+      .loading::after {
+        content: "...";
+        animation: dots 1.5s infinite;
+      }
+
+      @keyframes dots {
+        0%,
+        20% {
+          content: "";
+        }
+
+        40% {
+          content: ".";
+        }
+
+        60% {
+          content: "..";
+        }
+
+        80%,
+        100% {
+          content: "...";
+        }
+      }
+
+      .viewer-content:fullscreen {
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+      }
+
+      .image-viewer:fullscreen {
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-arrows {
+        transition: opacity 0.4s;
+      }
+
+      .gallery-controls input[type="text"] {
+        background: var(--bg-main) !important;
+        color: var(--text-primary) !important;
+        border: 2px solid rgba(187, 134, 252, 0.3);
+      }
+
+      .gallery-controls input[type="text"]::placeholder {
+        color: var(--text-secondary);
+        opacity: 1;
+      }
+
+      .skeleton-grid {
+        display: grid;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .skeleton-item {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.05) 75%
+        );
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s infinite;
+        border-radius: var(--border-radius);
+        height: 200px;
+        border: 1px solid rgba(187, 134, 252, 0.1);
+      }
+
+      @keyframes skeleton-loading {
+        0% {
+          background-position: 200% 0;
+        }
+
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Header Unificado */
+      .unified-header {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(26, 26, 46, 0.4) 0%,
+            rgba(22, 33, 62, 0.4) 50%,
+            rgba(15, 52, 96, 0.4) 100%
+          ),
+          url("./Assets/Imagens/imagens_background.png") center center/cover
+            no-repeat;
+        position: relative;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 60px 60px 24px 60px;
+        margin-bottom: 40px;
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .unified-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        z-index: 3;
+        border-radius: inherit;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .unified-header > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      .header-overlay-fix {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .unified-header h1 {
+        color: #111 !important;
+        font-size: 3em;
+        margin-bottom: 15px;
+        text-align: center;
+        text-shadow:
+          0 0 20px var(--primary-color),
+          2px 2px 4px var(--shadow-color);
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .unified-header p {
+        color: #111 !important;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        text-align: center;
+        text-shadow:
+          0 0 10px var(--primary-color),
+          1px 1px 2px var(--shadow-color);
+      }
+
+      .filters-stats-flex {
+        display: flex;
+        gap: 40px;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      .filters {
+        flex: 2;
+        min-width: 320px;
+        border-radius: 18px !important;
+        padding: 10px 10px 8px 10px !important;
+        box-shadow: 0 2px 6px var(--shadow-color-strong);
+        margin-bottom: 0;
+        background: rgba(18, 18, 35, 0.6);
+        backdrop-filter: blur(10px);
+        min-height: 188px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .filter-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 120px;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9em;
+        text-align: left;
+      }
+
+      .filter-tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-tag {
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 11px 16px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .filter-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px var(--shadow-color);
+      }
+
+      .stats-compact {
+        flex: 1;
+        min-width: 220px;
+        background: rgba(18, 18, 35, 0.6);
+        border-radius: 18px !important;
+        padding: 8px 8px 4px 8px !important;
+        box-shadow: 0 2px 6px var(--shadow-color-strong);
+        margin-bottom: 0;
+        backdrop-filter: blur(10px);
+        min-height: 181px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .stats-compact .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        background: rgba(187, 134, 252, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px var(--shadow-color);
+        padding: 10px 0 6px 0;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: var(--text-primary);
+      }
+
+      .stat-label {
+        font-size: 0.9em;
+        color: var(--text-secondary);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- CAMPO DE ESTRELAS -->
     <div class="starfield" id="starfield" aria-hidden="true"></div>
     <!-- NAVEGAÇÃO -->
     <nav class="navigation">
-        <div class="nav-container">
-            <a href="index.html" class="nav-home">🏠 Home</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="animes.html">🎌 Animes</a></li>
-                <li><a href="filmes.html">🎬 Filmes</a></li>
-                <li><a href="jogos.html">🎮 Jogos</a></li>
-                <li><a href="musicas.html">🎵 Músicas</a></li>
-                <li><a href="imagens.html" class="active">🖼️ Imagens</a></li>
-                <li><a href="videos.html">📹 Vídeos</a></li>
-            </ul>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        </div>
+      <div class="nav-container">
+        <a href="index.html" class="nav-home">🏠 Home</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="animes.html">🎌 Animes</a></li>
+          <li><a href="filmes.html">🎬 Filmes</a></li>
+          <li><a href="jogos.html">🎮 Jogos</a></li>
+          <li><a href="musicas.html">🎵 Músicas</a></li>
+          <li><a href="imagens.html" class="active">🖼️ Imagens</a></li>
+          <li><a href="videos.html">📹 Vídeos</a></li>
+        </ul>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      </div>
     </nav>
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
-        <div class="header unified-header">
-            <!-- BACKGROUND PLACEHOLDER - COLOQUE SUA IMAGEM AQUI -->
-            <div class="header-overlay-fix"></div>
-            <h1>🖼️ Galeria de Imagens</h1>
-            <p>MINHA COLEÇÃO DE IMAGENS</p>
+      <div class="header unified-header">
+        <!-- BACKGROUND PLACEHOLDER - COLOQUE SUA IMAGEM AQUI -->
+        <div class="header-overlay-fix"></div>
+        <h1>🖼️ Galeria de Imagens</h1>
+        <p>MINHA COLEÇÃO DE IMAGENS</p>
 
-            <div class="filters-stats-flex">
-                <div class="filters">
-                    <!-- Linha 1: Navegação (Breadcrumbs) -->
-                    <div class="filter-row" style="margin-bottom: 15px;">
-                        <div class="filter-group" style="width: 100%;">
-                            <label>📂 Navegação:</label>
-                            <div class="breadcrumb" id="breadcrumb"
-                                style="display: flex; flex-wrap: wrap; gap: 5px; background: rgba(0,0,0,0.2); padding: 8px 15px; border-radius: 10px; align-items: center;">
-                                <span onclick="navigateToFolder('/')" style="cursor: pointer;">🏠 Início</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Linha 2: Controles -->
-                    <div class="filter-row" id="imageControls" style="display: none;">
-                        <!-- Busca -->
-                        <div class="filter-group">
-                            <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Nome da imagem..."
-                                style="padding: 8px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; width: 100%; max-width: 200px;">
-                        </div>
-
-                        <!-- Tamanho -->
-                        <div class="filter-group">
-                            <label>🖼️ Tamanho:</label>
-                            <input type="range" class="size-slider" id="sizeSlider" min="1" max="4" value="2"
-                                oninput="changeImageSize(this.value)" style="width: 100px; height: 6px;">
-                        </div>
-
-                        <!-- Por Página -->
-                        <div class="filter-group">
-                            <label>📄 Por pág:</label>
-                            <select id="itemsPerPage" onchange="changeItemsPerPage(this.value)"
-                                style="padding: 5px 10px; border-radius: 15px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.1);">
-                                <option value="12">12</option>
-                                <option value="24" selected>24</option>
-                                <option value="48">48</option>
-                                <option value="96">96</option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="filters-stats-flex">
+          <div class="filters">
+            <!-- Linha 1: Navegação (Breadcrumbs) -->
+            <div class="filter-row" style="margin-bottom: 15px">
+              <div class="filter-group" style="width: 100%">
+                <label>📂 Navegação:</label>
+                <div
+                  class="breadcrumb"
+                  id="breadcrumb"
+                  style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 5px;
+                    background: rgba(0, 0, 0, 0.2);
+                    padding: 8px 15px;
+                    border-radius: 10px;
+                    align-items: center;
+                  "
+                >
+                  <span onclick="navigateToFolder('/')" style="cursor: pointer"
+                    >🏠 Início</span
+                  >
                 </div>
-                <div class="stats stats-compact">
-                    <h3 style="text-align: center; margin-bottom: 10px; font-size: 1.1em;">📊 Estatísticas da Coleção
-                    </h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="displayTotalImages">-</div>
-                            <div class="stat-label">Total</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="displayTotalFolders">-</div>
-                            <div class="stat-label">Pastas</div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+
+            <!-- Linha 2: Controles -->
+            <div class="filter-row" id="imageControls" style="display: none">
+              <!-- Busca -->
+              <div class="filter-group">
+                <label>🔍 Buscar:</label>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Nome da imagem..."
+                  style="
+                    padding: 8px 12px;
+                    border-radius: 20px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background: rgba(0, 0, 0, 0.3);
+                    color: white;
+                    width: 100%;
+                    max-width: 200px;
+                  "
+                />
+              </div>
+
+              <!-- Tamanho -->
+              <div class="filter-group">
+                <label>🖼️ Tamanho:</label>
+                <input
+                  type="range"
+                  class="size-slider"
+                  id="sizeSlider"
+                  min="1"
+                  max="4"
+                  value="2"
+                  oninput="changeImageSize(this.value)"
+                  style="width: 100px; height: 6px"
+                />
+              </div>
+
+              <!-- Por Página -->
+              <div class="filter-group">
+                <label>📄 Por pág:</label>
+                <select
+                  id="itemsPerPage"
+                  onchange="changeItemsPerPage(this.value)"
+                  style="
+                    padding: 5px 10px;
+                    border-radius: 15px;
+                    background: rgba(0, 0, 0, 0.3);
+                    color: white;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                  "
+                >
+                  <option value="12">12</option>
+                  <option value="24" selected>24</option>
+                  <option value="48">48</option>
+                  <option value="96">96</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="stats stats-compact">
+            <h3
+              style="text-align: center; margin-bottom: 10px; font-size: 1.1em"
+            >
+              📊 Estatísticas da Coleção
+            </h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-value" id="displayTotalImages">-</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="displayTotalFolders">-</div>
+                <div class="stat-label">Pastas</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- CONTEÚDO DA GALERIA -->
-        <div id="galleryContent">
-            <!-- Será preenchido pelo JavaScript -->
-        </div>
-        <!-- PAGINAÇÃO -->
-        <div class="pagination" id="pagination">
-            <!-- Será preenchida pelo JavaScript -->
-        </div>
+      </div>
+      <!-- CONTEÚDO DA GALERIA -->
+      <div id="galleryContent">
+        <!-- Será preenchido pelo JavaScript -->
+      </div>
+      <!-- PAGINAÇÃO -->
+      <div class="pagination" id="pagination">
+        <!-- Será preenchida pelo JavaScript -->
+      </div>
     </div>
     <!-- VISUALIZADOR DE IMAGEM -->
     <div class="image-viewer" id="imageViewer">
-        <button class="close-viewer" onclick="closeViewer()">✕</button>
-        <button class="nav-arrows nav-prev" onclick="prevImage()">‹</button>
-        <div class="viewer-content">
-            <div class="viewer-loader" id="viewerLoader"></div>
-            <img class="viewer-image" id="viewerImage" alt="Imagem ampliada">
-            <div class="viewer-controls">
-                <button class="viewer-btn" onclick="zoomIn()" title="Zoom In">+</button>
-                <button class="viewer-btn" onclick="zoomOut()" title="Zoom Out">-</button>
-                <button class="viewer-btn" onclick="resetZoom()" title="Tamanho Original">⌂</button>
-                <button class="viewer-btn" onclick="rotateImage()" title="Girar">↻</button>
-                <button class="viewer-btn" onclick="downloadImage()" title="Download">⬇</button>
-                <button class="viewer-btn" onclick="toggleFullscreenViewer()" title="Tela Cheia">⛶</button>
-            </div>
+      <button class="close-viewer" onclick="closeViewer()">✕</button>
+      <button class="nav-arrows nav-prev" onclick="prevImage()">‹</button>
+      <div class="viewer-content">
+        <div class="viewer-loader" id="viewerLoader"></div>
+        <img class="viewer-image" id="viewerImage" alt="Imagem ampliada" />
+        <div class="viewer-controls">
+          <button class="viewer-btn" onclick="zoomIn()" title="Zoom In">
+            +
+          </button>
+          <button class="viewer-btn" onclick="zoomOut()" title="Zoom Out">
+            -
+          </button>
+          <button
+            class="viewer-btn"
+            onclick="resetZoom()"
+            title="Tamanho Original"
+          >
+            ⌂
+          </button>
+          <button class="viewer-btn" onclick="rotateImage()" title="Girar">
+            ↻
+          </button>
+          <button class="viewer-btn" onclick="downloadImage()" title="Download">
+            ⬇
+          </button>
+          <button
+            class="viewer-btn"
+            onclick="toggleFullscreenViewer()"
+            title="Tela Cheia"
+          >
+            ⛶
+          </button>
         </div>
-        <button class="nav-arrows nav-next" onclick="nextImage()">›</button>
+      </div>
+      <button class="nav-arrows nav-next" onclick="nextImage()">›</button>
     </div>
     <script>
-        const performanceConfig = {
-            maxStars: window.innerWidth > 768 ? 150 : 80,
-            staticStars: window.innerWidth > 768 ? 40 : 20
-        };
-        function createStarfield() {
-            const starfield = document.getElementById('starfield');
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            starfield.innerHTML = '';
-            const fragment = document.createDocumentFragment();
-            for (let i = 0; i < performanceConfig.maxStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const angle = Math.random() * 2 * Math.PI;
-                const initialRadius = Math.random() * 50 + 10;
-                const startX = centerX + Math.cos(angle) * initialRadius;
-                const startY = centerY + Math.sin(angle) * initialRadius;
-                const directionX = Math.cos(angle);
-                const directionY = Math.sin(angle);
-                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
-                const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
-                const starType = Math.random();
-                if (starType < 0.7) {
-                    star.classList.add('distant');
-                } else if (starType < 0.9) {
-                    star.classList.add('medium');
-                } else {
-                    star.classList.add('close');
-                }
-                const colorType = Math.random();
-                if (colorType < 0.1) {
-                    star.classList.add('blue');
-                } else if (colorType < 0.2) {
-                    star.classList.add('yellow');
-                }
-                star.style.left = startX + 'px';
-                star.style.top = startY + 'px';
-                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
-                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
-                star.style.animationDelay = Math.random() * 25 + 's';
-                fragment.appendChild(star);
-            }
-            for (let i = 0; i < performanceConfig.staticStars; i++) {
-                const staticStar = document.createElement('div');
-                staticStar.className = 'star distant';
-                staticStar.style.position = 'absolute';
-                staticStar.style.left = Math.random() * window.innerWidth + 'px';
-                staticStar.style.top = Math.random() * window.innerHeight + 'px';
-                staticStar.style.opacity = Math.random() * 0.4 + 0.1;
-                staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
-                staticStar.style.animationDelay = Math.random() * 2 + 's';
-                fragment.appendChild(staticStar);
-            }
-            starfield.appendChild(fragment);
+      const performanceConfig = {
+        maxStars: window.innerWidth > 768 ? 150 : 80,
+        staticStars: window.innerWidth > 768 ? 40 : 20,
+      };
+      function createStarfield() {
+        const starfield = document.getElementById("starfield");
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        starfield.innerHTML = "";
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < performanceConfig.maxStars; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          const angle = Math.random() * 2 * Math.PI;
+          const initialRadius = Math.random() * 50 + 10;
+          const startX = centerX + Math.cos(angle) * initialRadius;
+          const startY = centerY + Math.sin(angle) * initialRadius;
+          const directionX = Math.cos(angle);
+          const directionY = Math.sin(angle);
+          const maxDistance = Math.sqrt(
+            Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2),
+          );
+          const travelDistance = maxDistance * (0.7 + Math.random() * 0.5);
+          const starType = Math.random();
+          if (starType < 0.7) {
+            star.classList.add("distant");
+          } else if (starType < 0.9) {
+            star.classList.add("medium");
+          } else {
+            star.classList.add("close");
+          }
+          const colorType = Math.random();
+          if (colorType < 0.1) {
+            star.classList.add("blue");
+          } else if (colorType < 0.2) {
+            star.classList.add("yellow");
+          }
+          star.style.left = startX + "px";
+          star.style.top = startY + "px";
+          star.style.setProperty("--dx", directionX * travelDistance + "px");
+          star.style.setProperty("--dy", directionY * travelDistance + "px");
+          star.style.animationDelay = Math.random() * 25 + "s";
+          fragment.appendChild(star);
         }
-        let currentFolder = '/';
-        let currentImages = [];
-        let currentPage = 1;
-        let itemsPerPage = 24;
-        let imageSize = 'medium';
-        let currentImageIndex = 0;
-        let viewerZoom = 1;
-        let viewerRotation = 0;
-        let viewMode = 'grid';
-        let isDragging = false;
-        let dragStartX = 0;
-        let dragStartY = 0;
-        let imageOffsetX = 0;
-        let imageOffsetY = 0;
-        let lastImageOffsetX = 0;
-        let lastImageOffsetY = 0;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let lastTouchDistance = 0;
-        let wasPinch = false;
-        let galleryData = {};
-        let rawImagesIndex = null;
-        let pathMap = {};
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            const isActive = navLinks.classList.toggle('active');
-            menuToggle.setAttribute('aria-expanded', isActive);
-            menuToggle.setAttribute('aria-label', isActive ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+        for (let i = 0; i < performanceConfig.staticStars; i++) {
+          const staticStar = document.createElement("div");
+          staticStar.className = "star distant";
+          staticStar.style.position = "absolute";
+          staticStar.style.left = Math.random() * window.innerWidth + "px";
+          staticStar.style.top = Math.random() * window.innerHeight + "px";
+          staticStar.style.opacity = Math.random() * 0.4 + 0.1;
+          staticStar.style.animation = `twinkle ${3 + Math.random() * 4}s ease-in-out infinite alternate`;
+          staticStar.style.animationDelay = Math.random() * 2 + "s";
+          fragment.appendChild(staticStar);
         }
-        document.addEventListener('click', function (e) {
-            const nav = document.querySelector('.navigation');
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.setAttribute('aria-label', 'Abrir menu de navegação');
+        starfield.appendChild(fragment);
+      }
+      let currentFolder = "/";
+      let currentImages = [];
+      let currentPage = 1;
+      let itemsPerPage = 24;
+      let imageSize = "medium";
+      let currentImageIndex = 0;
+      let viewerZoom = 1;
+      let viewerRotation = 0;
+      let viewMode = "grid";
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let imageOffsetX = 0;
+      let imageOffsetY = 0;
+      let lastImageOffsetX = 0;
+      let lastImageOffsetY = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let lastTouchDistance = 0;
+      let wasPinch = false;
+      let galleryData = {};
+      let rawImagesIndex = null;
+      let pathMap = {};
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const menuToggle = document.querySelector(".menu-toggle");
+        const isActive = navLinks.classList.toggle("active");
+        menuToggle.setAttribute("aria-expanded", isActive);
+        menuToggle.setAttribute(
+          "aria-label",
+          isActive ? "Fechar menu de navegação" : "Abrir menu de navegação",
+        );
+      }
+      document.addEventListener("click", function (e) {
+        const nav = document.querySelector(".navigation");
+        const navLinks = document.getElementById("navLinks");
+        const menuToggle = document.querySelector(".menu-toggle");
+        if (!nav.contains(e.target) && navLinks.classList.contains("active")) {
+          navLinks.classList.remove("active");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu de navegação");
+        }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (
+          e.key === "Escape" &&
+          document.getElementById("navLinks").classList.contains("active")
+        ) {
+          toggleMenu();
+        }
+      });
+      async function loadImagesData() {
+        try {
+          console.log("Iniciando carregamento do índice de imagens...");
+          const response = await fetch("./Assets/Imagens/images-index.json");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          rawImagesIndex = await response.json();
+          console.log("Índice carregado:", rawImagesIndex);
+
+          try {
+            let totalImagesCount = 0;
+            Object.values(rawImagesIndex).forEach(
+              (folder) => (totalImagesCount += countItemsInFolder(folder)),
+            );
+            const totalFoldersCount = Object.keys(rawImagesIndex).length;
+
+            const displayTotalImages =
+              document.getElementById("displayTotalImages");
+            const displayTotalFolders = document.getElementById(
+              "displayTotalFolders",
+            );
+
+            if (displayTotalImages)
+              displayTotalImages.textContent = totalImagesCount;
+            if (displayTotalFolders)
+              displayTotalFolders.textContent = totalFoldersCount;
+          } catch (e) {
+            console.warn("Erro ao calcular estatísticas:", e);
+          }
+          galleryData = { "/": { folders: [], images: [] } };
+          pathMap = { "/": { _root: true } };
+          galleryData["/"].folders = Object.keys(rawImagesIndex).map(
+            (folderName) => {
+              const folderData = rawImagesIndex[folderName];
+              const path = `/${folderName.toLowerCase().replace(/\s+/g, "-")}`;
+              pathMap[path] = folderData;
+              return {
+                name: folderName,
+                icon: getFolderIcon(folderName),
+                count: `${countItemsInFolder(folderData)} imagens`,
+                path: path,
+                preview:
+                  folderData._cover || getFirstImageFromFolder(folderData)
+                    ? convertGoogleDriveLink(
+                        folderData._cover ||
+                          getFirstImageFromFolder(folderData),
+                        "w600",
+                      )
+                    : null,
+              };
+            },
+          );
+          console.log("Menu principal pronto (Lazy Mode).");
+          const urlParams = new URLSearchParams(window.location.search);
+          const folderParam = urlParams.get("folder") || "/";
+          const pageParam = urlParams.get("page");
+          currentFolder = folderParam;
+          if (pageParam) {
+            currentPage = parseInt(pageParam) || 1;
+          }
+          window.history.replaceState(
+            { folder: currentFolder, page: currentPage },
+            "",
+            window.location.href,
+          );
+          if (currentFolder !== "/") {
+            ensurePathIsMapped(currentFolder, rawImagesIndex);
+          }
+          loadGalleryContent(false);
+          window.onpopstate = function (event) {
+            if (event.state) {
+              currentFolder = event.state.folder || "/";
+              currentPage = event.state.page || 1;
+              loadGalleryContent(false);
             }
-        });
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && document.getElementById('navLinks').classList.contains('active')) {
-                toggleMenu();
-            }
-        });
-        async function loadImagesData() {
-            try {
-                console.log('Iniciando carregamento do índice de imagens...');
-                const response = await fetch('./Assets/Imagens/images-index.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                rawImagesIndex = await response.json();
-                console.log('Índice carregado:', rawImagesIndex);
-
-                try {
-                    let totalImagesCount = 0;
-                    Object.values(rawImagesIndex).forEach(folder => totalImagesCount += countItemsInFolder(folder));
-                    const totalFoldersCount = Object.keys(rawImagesIndex).length;
-
-                    const displayTotalImages = document.getElementById('displayTotalImages');
-                    const displayTotalFolders = document.getElementById('displayTotalFolders');
-
-                    if (displayTotalImages) displayTotalImages.textContent = totalImagesCount;
-                    if (displayTotalFolders) displayTotalFolders.textContent = totalFoldersCount;
-                } catch (e) {
-                    console.warn('Erro ao calcular estatísticas:', e);
-                }
-                galleryData = { '/': { folders: [], images: [] } };
-                pathMap = { '/': { _root: true } };
-                galleryData['/'].folders = Object.keys(rawImagesIndex).map(folderName => {
-                    const folderData = rawImagesIndex[folderName];
-                    const path = `/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-                    pathMap[path] = folderData;
-                    return {
-                        name: folderName,
-                        icon: getFolderIcon(folderName),
-                        count: `${countItemsInFolder(folderData)} imagens`,
-                        path: path,
-                        preview: (folderData._cover || getFirstImageFromFolder(folderData)) ? convertGoogleDriveLink(folderData._cover || getFirstImageFromFolder(folderData), 'w600') : null
-                    };
-                });
-                console.log('Menu principal pronto (Lazy Mode).');
-                const urlParams = new URLSearchParams(window.location.search);
-                const folderParam = urlParams.get('folder') || '/';
-                const pageParam = urlParams.get('page');
-                currentFolder = folderParam;
-                if (pageParam) {
-                    currentPage = parseInt(pageParam) || 1;
-                }
-                window.history.replaceState({ folder: currentFolder, page: currentPage }, '', window.location.href);
-                if (currentFolder !== '/') {
-                    ensurePathIsMapped(currentFolder, rawImagesIndex);
-                }
-                loadGalleryContent(false);
-                window.onpopstate = function (event) {
-                    if (event.state) {
-                        currentFolder = event.state.folder || '/';
-                        currentPage = event.state.page || 1;
-                        loadGalleryContent(false);
-                    }
-                };
-            } catch (error) {
-                console.error('Erro ao carregar índice de imagens:', error);
-                const content = document.getElementById('galleryContent');
-                content.innerHTML = `
+          };
+        } catch (error) {
+          console.error("Erro ao carregar índice de imagens:", error);
+          const content = document.getElementById("galleryContent");
+          content.innerHTML = `
                     <div class="loading" style="color: var(--primary-coral);">
                         ❌ Erro ao carregar imagens<br>
                         <small>Verifique a conexão com a internet e tente novamente</small>
@@ -1511,153 +1650,188 @@
                         <button onclick="loadImagesData()" style="padding: 10px 20px; background: var(--button-gradient); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 14px;">🔄 Tentar Novamente</button>
                     </div>
                 `;
-            }
         }
-        function convertGoogleDriveLink(driveLink, size = 's0') {
-            const match = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) || driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
-            if (match) {
-                const fileId = match[1];
-                return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
-            }
-            return driveLink;
+      }
+      function convertGoogleDriveLink(driveLink, size = "s0") {
+        const match =
+          driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/) ||
+          driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+        if (match) {
+          const fileId = match[1];
+          return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
         }
-        function processFolderLevel(folderData, folderName, parentPath = '') {
-            const result = { folders: [], images: [] };
-            const currentPath = parentPath === '/' ? `/${folderName.toLowerCase().replace(/\s+/g, '-')}` : `${parentPath}/${folderName.toLowerCase().replace(/\s+/g, '-')}`;
-            if (folderData._files && folderData._files.length > 0) {
-                result.images = folderData._files.map((link, index) => ({
-                    id: `${folderName}_${index}`,
-                    name: `Imagem ${index + 1}`,
-                    url: convertGoogleDriveLink(link, 's0'),
-                    thumbnail: convertGoogleDriveLink(link, 'w600'),
-                    size: 'Desconhecido',
-                    type: 'JPG',
-                    date: new Date().toLocaleDateString('pt-BR'),
-                    resolution: ''
-                }));
-            }
-            Object.entries(folderData).forEach(([key, value]) => {
-                if (key !== '_files' && key !== '_cover' && typeof value === 'object') {
-                    const subPath = currentPath === '/' ? `/${key.toLowerCase().replace(/\s+/g, '-')}` : `${currentPath}/${key.toLowerCase().replace(/\s+/g, '-')}`;
-                    pathMap[subPath] = value;
-                    result.folders.push({
-                        name: key,
-                        icon: getFolderIcon(key),
-                        count: countItemsInFolder(value),
-                        path: subPath,
-                        preview: (value._cover || getFirstImageFromFolder(value)) ? convertGoogleDriveLink(value._cover || getFirstImageFromFolder(value), 'w600') : null
-                    });
-                }
+        return driveLink;
+      }
+      function processFolderLevel(folderData, folderName, parentPath = "") {
+        const result = { folders: [], images: [] };
+        const currentPath =
+          parentPath === "/"
+            ? `/${folderName.toLowerCase().replace(/\s+/g, "-")}`
+            : `${parentPath}/${folderName.toLowerCase().replace(/\s+/g, "-")}`;
+        if (folderData._files && folderData._files.length > 0) {
+          result.images = folderData._files.map((link, index) => ({
+            id: `${folderName}_${index}`,
+            name: `Imagem ${index + 1}`,
+            url: convertGoogleDriveLink(link, "s0"),
+            thumbnail: convertGoogleDriveLink(link, "w600"),
+            size: "Desconhecido",
+            type: "JPG",
+            date: new Date().toLocaleDateString("pt-BR"),
+            resolution: "",
+          }));
+        }
+        Object.entries(folderData).forEach(([key, value]) => {
+          if (
+            key !== "_files" &&
+            key !== "_cover" &&
+            typeof value === "object"
+          ) {
+            const subPath =
+              currentPath === "/"
+                ? `/${key.toLowerCase().replace(/\s+/g, "-")}`
+                : `${currentPath}/${key.toLowerCase().replace(/\s+/g, "-")}`;
+            pathMap[subPath] = value;
+            result.folders.push({
+              name: key,
+              icon: getFolderIcon(key),
+              count: countItemsInFolder(value),
+              path: subPath,
+              preview:
+                value._cover || getFirstImageFromFolder(value)
+                  ? convertGoogleDriveLink(
+                      value._cover || getFirstImageFromFolder(value),
+                      "w600",
+                    )
+                  : null,
             });
-            return result;
+          }
+        });
+        return result;
+      }
+      function getFirstImageFromFolder(folderData) {
+        if (folderData._files && folderData._files.length > 0)
+          return folderData._files[0];
+        for (const [key, value] of Object.entries(folderData)) {
+          if (key !== "_files" && typeof value === "object") {
+            const found = getFirstImageFromFolder(value);
+            if (found) return found;
+          }
         }
-        function getFirstImageFromFolder(folderData) {
-            if (folderData._files && folderData._files.length > 0) return folderData._files[0];
-            for (const [key, value] of Object.entries(folderData)) {
-                if (key !== '_files' && typeof value === 'object') {
-                    const found = getFirstImageFromFolder(value);
-                    if (found) return found;
-                }
-            }
-            return null;
+        return null;
+      }
+      function countItemsInFolder(folderData) {
+        let count = folderData._files ? folderData._files.length : 0;
+        for (const [key, value] of Object.entries(folderData)) {
+          if (key !== "_files" && typeof value === "object")
+            count += countItemsInFolder(value);
         }
-        function countItemsInFolder(folderData) {
-            let count = folderData._files ? folderData._files.length : 0;
-            for (const [key, value] of Object.entries(folderData)) {
-                if (key !== '_files' && typeof value === 'object') count += countItemsInFolder(value);
-            }
-            return count;
+        return count;
+      }
+      function ensurePathIsMapped(targetPath, rootData) {
+        const parts = targetPath.split("/").filter((p) => p);
+        let currentData = rootData;
+        let builtPath = "";
+        for (const part of parts) {
+          const keys = Object.keys(currentData);
+          const originalKey = keys.find(
+            (k) => k.toLowerCase().replace(/\s+/g, "-") === part,
+          );
+          if (originalKey) {
+            builtPath += `/${part}`;
+            currentData = currentData[originalKey];
+            pathMap[builtPath] = currentData;
+          } else break;
         }
-        function ensurePathIsMapped(targetPath, rootData) {
-            const parts = targetPath.split('/').filter(p => p);
-            let currentData = rootData;
-            let builtPath = '';
-            for (const part of parts) {
-                const keys = Object.keys(currentData);
-                const originalKey = keys.find(k => k.toLowerCase().replace(/\s+/g, '-') === part);
-                if (originalKey) {
-                    builtPath += `/${part}`;
-                    currentData = currentData[originalKey];
-                    pathMap[builtPath] = currentData;
-                } else break;
-            }
+      }
+      function getFolderIcon(folderName) {
+        const icons = {
+          Alessa: "🎭",
+          Aurora: "✨",
+          "Avril Lavigne": "🎤",
+          "Emily Browning": "🌟",
+          "Luna Lovegood": "🦅",
+          "Nier Automata": "🤖",
+          "t.A.T.u": "🎵",
+        };
+        return icons[folderName] || "📁";
+      }
+      function navigateToFolder(path) {
+        currentFolder = path;
+        currentPage = 1;
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+          searchInput.value = "";
         }
-        function getFolderIcon(folderName) {
-            const icons = {
-                'Alessa': '🎭',
-                'Aurora': '✨',
-                'Avril Lavigne': '🎤',
-                'Emily Browning': '🌟',
-                'Luna Lovegood': '🦅',
-                'Nier Automata': '🤖',
-                't.A.T.u': '🎵'
-            };
-            return icons[folderName] || '📁';
+        updateBreadcrumb();
+        loadGalleryContent(true);
+      }
+      function updateBreadcrumb() {
+        const breadcrumb = document.getElementById("breadcrumb");
+        const pathParts = currentFolder.split("/").filter((part) => part);
+        let html = "<span onclick=\"navigateToFolder('/')\">🏠 Início</span>";
+        let currentPath = "";
+        pathParts.forEach((part) => {
+          currentPath += "/" + part;
+          const displayName = part
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase());
+          html += ` › <span onclick="navigateToFolder('${currentPath}')">${displayName}</span>`;
+        });
+        breadcrumb.innerHTML = html;
+      }
+      function loadGalleryContent(shouldPushState = true) {
+        if (!galleryData[currentFolder]) {
+          const rawData = pathMap[currentFolder];
+          if (rawData) {
+            const folderName = currentFolder.split("/").pop() || "Root";
+            galleryData[currentFolder] = processFolderLevel(
+              rawData,
+              folderName,
+              currentFolder.split("/").slice(0, -1).join("/"),
+            );
+          } else {
+            console.error(
+              "Dados não encontrados para o caminho:",
+              currentFolder,
+            );
+          }
         }
-        function navigateToFolder(path) {
-            currentFolder = path;
-            currentPage = 1;
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.value = '';
-            }
-            updateBreadcrumb();
-            loadGalleryContent(true);
+        if (shouldPushState) {
+          const url = new URL(window.location);
+          url.searchParams.set("folder", currentFolder);
+          url.searchParams.set("page", currentPage);
+          window.history.pushState(
+            { folder: currentFolder, page: currentPage },
+            "",
+            url,
+          );
         }
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            const pathParts = currentFolder.split('/').filter(part => part);
-            let html = '<span onclick="navigateToFolder(\'/\')">🏠 Início</span>';
-            let currentPath = '';
-            pathParts.forEach(part => {
-                currentPath += '/' + part;
-                const displayName = part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                html += ` › <span onclick="navigateToFolder('${currentPath}')">${displayName}</span>`;
-            });
-            breadcrumb.innerHTML = html;
+        const content = document.getElementById("galleryContent");
+        const data = galleryData[currentFolder];
+        const pagination = document.getElementById("pagination");
+        if (!data) {
+          content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
+          pagination.innerHTML = "";
+          pagination.style.display = "none";
+          return;
         }
-        function loadGalleryContent(shouldPushState = true) {
-            if (!galleryData[currentFolder]) {
-                const rawData = pathMap[currentFolder];
-                if (rawData) {
-                    const folderName = currentFolder.split('/').pop() || 'Root';
-                    galleryData[currentFolder] = processFolderLevel(rawData, folderName, currentFolder.split('/').slice(0, -1).join('/'));
-                } else {
-                    console.error('Dados não encontrados para o caminho:', currentFolder);
-                }
-            }
-            if (shouldPushState) {
-                const url = new URL(window.location);
-                url.searchParams.set('folder', currentFolder);
-                url.searchParams.set('page', currentPage);
-                window.history.pushState({ folder: currentFolder, page: currentPage }, '', url);
-            }
-            const content = document.getElementById('galleryContent');
-            const data = galleryData[currentFolder];
-            const pagination = document.getElementById('pagination');
-            if (!data) {
-                content.innerHTML = '<div class="loading">Pasta não encontrada</div>';
-                pagination.innerHTML = '';
-                pagination.style.display = 'none';
-                return;
-            }
-            const skeletonHTML = `
+        const skeletonHTML = `
                 <div class="skeleton-grid grid-${imageSize}">
-                    ${Array(itemsPerPage).fill('<div class="skeleton-item"></div>').join('')}
+                    ${Array(itemsPerPage).fill('<div class="skeleton-item"></div>').join("")}
                 </div>
             `;
-            content.innerHTML = skeletonHTML;
-            setTimeout(() => {
-                let html = '';
-                let hasImages = data.images && data.images.length > 0;
-                const imageControls = document.getElementById('imageControls');
-                if (imageControls) {
-                    imageControls.style.display = hasImages ? 'flex' : 'none';
-                }
-                if (data.folders && data.folders.length > 0) {
-                    html += '<div class="folder-grid fade-in">';
-                    data.folders.forEach(folder => {
-                        html += `
+        content.innerHTML = skeletonHTML;
+        setTimeout(() => {
+          let html = "";
+          let hasImages = data.images && data.images.length > 0;
+          const imageControls = document.getElementById("imageControls");
+          if (imageControls) {
+            imageControls.style.display = hasImages ? "flex" : "none";
+          }
+          if (data.folders && data.folders.length > 0) {
+            html += '<div class="folder-grid fade-in">';
+            data.folders.forEach((folder) => {
+              html += `
                             <div class="folder-item" onclick="navigateToFolder('${folder.path}')">
                                 <div class="folder-preview">
                                     <img src="${folder.preview}" alt="${folder.name}" 
@@ -1669,413 +1843,441 @@
                                 <div class="folder-count">${folder.count}</div>
                             </div>
                         `;
-                    });
-                    html += '</div>';
-                }
-                if (hasImages) {
-                    currentImages = data.images;
-                    const startIndex = (currentPage - 1) * itemsPerPage;
-                    const endIndex = startIndex + itemsPerPage;
-                    const pageImages = currentImages.slice(startIndex, endIndex);
-                    if (viewMode === 'grid') {
-                        html += `<div class="image-grid grid-${imageSize} fade-in">`;
-                        pageImages.forEach((image, index) => {
-                            const globalIndex = startIndex + index;
-                            html += `
+            });
+            html += "</div>";
+          }
+          if (hasImages) {
+            currentImages = data.images;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageImages = currentImages.slice(startIndex, endIndex);
+            if (viewMode === "grid") {
+              html += `<div class="image-grid grid-${imageSize} fade-in">`;
+              pageImages.forEach((image, index) => {
+                const globalIndex = startIndex + index;
+                html += `
                                 <div class="image-item" onclick="openViewer(${globalIndex})">
                                     <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" 
                                         onload="this.classList.add('loaded')"
                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                                 </div>
                             `;
-                        });
-                        html += '</div>';
-                    }
-                    if (currentFolder === '/' || !hasImages) {
-                        pagination.innerHTML = '';
-                        pagination.style.display = 'none';
-                    } else {
-                        updatePagination();
-                        pagination.style.display = '';
-                    }
-                } else {
-                    pagination.innerHTML = '';
-                    pagination.style.display = 'none';
-                }
-                if (html === '') {
-                    html = '<div class="loading">Conteúdo não disponível</div>';
-                }
-                content.innerHTML = html;
-                preloadSubfolderContent(data);
-            }, 50);
+              });
+              html += "</div>";
+            }
+            if (currentFolder === "/" || !hasImages) {
+              pagination.innerHTML = "";
+              pagination.style.display = "none";
+            } else {
+              updatePagination();
+              pagination.style.display = "";
+            }
+          } else {
+            pagination.innerHTML = "";
+            pagination.style.display = "none";
+          }
+          if (html === "") {
+            html = '<div class="loading">Conteúdo não disponível</div>';
+          }
+          content.innerHTML = html;
+          preloadSubfolderContent(data);
+        }, 50);
+      }
+      function changeImageSize(size) {
+        const sizes = ["small", "medium", "large", "xlarge"];
+        imageSize = sizes[size - 1];
+        const imageGrid = document.querySelector(".image-grid");
+        if (imageGrid) {
+          imageGrid.className = `image-grid grid-${imageSize} fade-in`;
         }
-        function changeImageSize(size) {
-            const sizes = ['small', 'medium', 'large', 'xlarge'];
-            imageSize = sizes[size - 1];
-            const imageGrid = document.querySelector('.image-grid');
-            if (imageGrid) {
-                imageGrid.className = `image-grid grid-${imageSize} fade-in`;
-            }
+      }
+      function changeItemsPerPage(value) {
+        itemsPerPage = parseInt(value);
+        currentPage = 1;
+        loadGalleryContent();
+      }
+      function updatePagination(totalImages = currentImages.length) {
+        const pagination = document.getElementById("pagination");
+        const totalPages = Math.ceil(totalImages / itemsPerPage);
+        if (totalPages <= 1) {
+          pagination.innerHTML = "";
+          return;
         }
-        function changeItemsPerPage(value) {
-            itemsPerPage = parseInt(value);
-            currentPage = 1;
-            loadGalleryContent();
+        let html = "";
+        if (currentPage > 1) {
+          html += `<button class="page-btn" onclick="changePage(${currentPage - 1})">‹ Anterior</button>`;
         }
-        function updatePagination(totalImages = currentImages.length) {
-            const pagination = document.getElementById('pagination');
-            const totalPages = Math.ceil(totalImages / itemsPerPage);
-            if (totalPages <= 1) {
-                pagination.innerHTML = '';
-                return;
-            }
-            let html = '';
-            if (currentPage > 1) {
-                html += `<button class="page-btn" onclick="changePage(${currentPage - 1})">‹ Anterior</button>`;
-            }
-            const maxVisiblePages = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            if (endPage - startPage < maxVisiblePages - 1) {
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
-            }
-            if (startPage > 1) {
-                html += `<button class="page-btn" onclick="changePage(1)">1</button>`;
-                if (startPage > 2) html += '<span class="page-info">...</span>';
-            }
-            for (let i = startPage; i <= endPage; i++) {
-                const activeClass = i === currentPage ? 'active' : '';
-                html += `<button class="page-btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
-            }
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) html += '<span class="page-info">...</span>';
-                html += `<button class="page-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
-            }
-            if (currentPage < totalPages) {
-                html += `<button class="page-btn" onclick="changePage(${currentPage + 1})">Próximo ›</button>`;
-            }
-            const startItem = (currentPage - 1) * itemsPerPage + 1;
-            const endItem = Math.min(currentPage * itemsPerPage, totalImages);
-            html += `<span class="page-info">${startItem}-${endItem} de ${totalImages} imagens</span>`;
-            pagination.innerHTML = html;
+        const maxVisiblePages = 5;
+        let startPage = Math.max(
+          1,
+          currentPage - Math.floor(maxVisiblePages / 2),
+        );
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+        if (endPage - startPage < maxVisiblePages - 1) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
-        function changePage(page) {
-            currentPage = page;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            loadGalleryContent(true);
+        if (startPage > 1) {
+          html += `<button class="page-btn" onclick="changePage(1)">1</button>`;
+          if (startPage > 2) html += '<span class="page-info">...</span>';
         }
-        let globalViewerMouseMoveListener = null;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
-        let isMouseMoving = false;
-        let mouseIdleTimeout = null;
+        for (let i = startPage; i <= endPage; i++) {
+          const activeClass = i === currentPage ? "active" : "";
+          html += `<button class="page-btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
+        }
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1)
+            html += '<span class="page-info">...</span>';
+          html += `<button class="page-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+        }
+        if (currentPage < totalPages) {
+          html += `<button class="page-btn" onclick="changePage(${currentPage + 1})">Próximo ›</button>`;
+        }
+        const startItem = (currentPage - 1) * itemsPerPage + 1;
+        const endItem = Math.min(currentPage * itemsPerPage, totalImages);
+        html += `<span class="page-info">${startItem}-${endItem} de ${totalImages} imagens</span>`;
+        pagination.innerHTML = html;
+      }
+      function changePage(page) {
+        currentPage = page;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        loadGalleryContent(true);
+      }
+      let globalViewerMouseMoveListener = null;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      let isMouseMoving = false;
+      let mouseIdleTimeout = null;
 
-        function openViewer(imageIndex) {
-            currentImageIndex = imageIndex;
-            const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            const viewerLoader = document.getElementById('viewerLoader');
-            viewerImage.style.opacity = '0';
-            viewerLoader.style.display = 'block';
-            viewer.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+      function openViewer(imageIndex) {
+        currentImageIndex = imageIndex;
+        const viewer = document.getElementById("imageViewer");
+        const viewerImage = document.getElementById("viewerImage");
+        const viewerLoader = document.getElementById("viewerLoader");
+        viewerImage.style.opacity = "0";
+        viewerLoader.style.display = "block";
+        viewer.style.display = "flex";
+        document.body.style.overflow = "hidden";
 
-            isMouseMoving = false;
-            lastMouseX = 0;
-            lastMouseY = 0;
+        isMouseMoving = false;
+        lastMouseX = 0;
+        lastMouseY = 0;
 
-            if (globalViewerMouseMoveListener) {
-                document.removeEventListener('mousemove', globalViewerMouseMoveListener);
+        if (globalViewerMouseMoveListener) {
+          document.removeEventListener(
+            "mousemove",
+            globalViewerMouseMoveListener,
+          );
+        }
+
+        globalViewerMouseMoveListener = (e) => {
+          if (viewer.style.display === "flex") {
+            const threshold = 5;
+            const deltaX = Math.abs(e.clientX - lastMouseX);
+            const deltaY = Math.abs(e.clientY - lastMouseY);
+
+            if (deltaX > threshold || deltaY > threshold) {
+              lastMouseX = e.clientX;
+              lastMouseY = e.clientY;
+
+              if (!isMouseMoving) {
+                isMouseMoving = true;
+                showNavArrows();
+              }
+
+              clearTimeout(mouseIdleTimeout);
+
+              mouseIdleTimeout = setTimeout(() => {
+                isMouseMoving = false;
+                hideNavArrows();
+              }, 2500);
             }
-
-            globalViewerMouseMoveListener = (e) => {
-                if (viewer.style.display === 'flex') {
-                    const threshold = 5;
-                    const deltaX = Math.abs(e.clientX - lastMouseX);
-                    const deltaY = Math.abs(e.clientY - lastMouseY);
-
-                    if (deltaX > threshold || deltaY > threshold) {
-                        lastMouseX = e.clientX;
-                        lastMouseY = e.clientY;
-
-                        if (!isMouseMoving) {
-                            isMouseMoving = true;
-                            showNavArrows();
-                        }
-
-                        clearTimeout(mouseIdleTimeout);
-
-                        mouseIdleTimeout = setTimeout(() => {
-                            isMouseMoving = false;
-                            hideNavArrows();
-                        }, 2500);
-                    }
-                }
-            };
-            document.addEventListener('mousemove', globalViewerMouseMoveListener);
-            const newImg = new Image();
-            newImg.src = currentImages[imageIndex].url;
-            newImg.referrerPolicy = "no-referrer";
-            newImg.onload = function () {
-                viewerImage.src = newImg.src;
-                viewerImage.alt = currentImages[imageIndex].name;
-                setTimeout(() => {
-                    viewerImage.style.opacity = '1';
-                    viewerLoader.style.display = 'none';
-                    fitImageToScreen();
-                    preloadAdjacentImages();
-                    updateNavArrowsState();
-                }, 50);
-            };
-            newImg.onerror = function () {
-                viewerLoader.style.display = 'none';
-                viewerImage.style.opacity = '1';
-                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
-            };
+          }
+        };
+        document.addEventListener("mousemove", globalViewerMouseMoveListener);
+        const newImg = new Image();
+        newImg.src = currentImages[imageIndex].url;
+        newImg.referrerPolicy = "no-referrer";
+        newImg.onload = function () {
+          viewerImage.src = newImg.src;
+          viewerImage.alt = currentImages[imageIndex].name;
+          setTimeout(() => {
+            viewerImage.style.opacity = "1";
+            viewerLoader.style.display = "none";
+            fitImageToScreen();
+            preloadAdjacentImages();
             updateNavArrowsState();
-            showNavArrows();
+          }, 50);
+        };
+        newImg.onerror = function () {
+          viewerLoader.style.display = "none";
+          viewerImage.style.opacity = "1";
+          viewerImage.src =
+            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==";
+        };
+        updateNavArrowsState();
+        showNavArrows();
+      }
+      function closeViewer() {
+        const viewer = document.getElementById("imageViewer");
+        viewer.style.display = "none";
+        document.body.style.overflow = "auto";
+        resetZoom();
+        hideNavArrows();
+
+        if (globalViewerMouseMoveListener) {
+          document.removeEventListener(
+            "mousemove",
+            globalViewerMouseMoveListener,
+          );
+          globalViewerMouseMoveListener = null;
         }
-        function closeViewer() {
-            const viewer = document.getElementById('imageViewer');
-            viewer.style.display = 'none';
-            document.body.style.overflow = 'auto';
+
+        clearTimeout(navArrowsTimeout);
+        clearTimeout(mouseIdleTimeout);
+        isMouseMoving = false;
+      }
+      function prevImage() {
+        if (currentImageIndex > 0) {
+          currentImageIndex--;
+          updateViewerImage();
+        }
+      }
+      function nextImage() {
+        if (currentImageIndex < currentImages.length - 1) {
+          currentImageIndex++;
+          updateViewerImage();
+        }
+      }
+      function updateViewerImage() {
+        const viewerImage = document.getElementById("viewerImage");
+        const viewerLoader = document.getElementById("viewerLoader");
+        viewerImage.style.opacity = "0";
+        viewerLoader.style.display = "block";
+        const newImg = new Image();
+        newImg.src = currentImages[currentImageIndex].url;
+        newImg.referrerPolicy = "no-referrer";
+        newImg.onload = function () {
+          viewerImage.src = newImg.src;
+          viewerImage.alt = currentImages[currentImageIndex].name;
+          setTimeout(() => {
+            viewerImage.style.opacity = "1";
+            viewerLoader.style.display = "none";
             resetZoom();
-            hideNavArrows();
-
-            if (globalViewerMouseMoveListener) {
-                document.removeEventListener('mousemove', globalViewerMouseMoveListener);
-                globalViewerMouseMoveListener = null;
+            preloadAdjacentImages();
+            updateNavArrowsState();
+          }, 50);
+        };
+        newImg.onerror = function () {
+          viewerImage.src =
+            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==";
+          viewerLoader.style.display = "none";
+          viewerImage.style.opacity = "1";
+        };
+      }
+      function fitImageToScreen() {
+        viewerZoom = 1;
+        viewerRotation = 0;
+        imageOffsetX = 0;
+        imageOffsetY = 0;
+        lastImageOffsetX = 0;
+        lastImageOffsetY = 0;
+        applyImageTransform();
+      }
+      function applyImageTransform() {
+        const viewerImage = document.getElementById("viewerImage");
+        viewerImage.style.transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${viewerZoom}) rotate(${viewerRotation}deg)`;
+        viewerImage.style.transition = isDragging
+          ? "none"
+          : "transform 0.3s ease";
+      }
+      function preloadAdjacentImages() {
+        const preloadCount = 3;
+        for (let i = 1; i <= preloadCount; i++) {
+          const nextIdx = currentImageIndex + i;
+          if (nextIdx < currentImages.length) {
+            const img = new Image();
+            img.src = currentImages[nextIdx].url;
+          }
+        }
+        for (let i = 1; i <= preloadCount; i++) {
+          const prevIdx = currentImageIndex - i;
+          if (prevIdx >= 0) {
+            const img = new Image();
+            img.src = currentImages[prevIdx].url;
+          }
+        }
+      }
+      function preloadSubfolderContent(data) {
+        if (!data.folders || data.folders.length === 0) return;
+        const runPrefetch = () => {
+          data.folders.forEach((folder) => {
+            if (folder.preview) {
+              const imgPreview = new Image();
+              imgPreview.src = folder.preview;
             }
-
-            clearTimeout(navArrowsTimeout);
-            clearTimeout(mouseIdleTimeout);
-            isMouseMoving = false;
-        }
-        function prevImage() {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-                updateViewerImage();
+            const subfolderData = galleryData[folder.path];
+            if (subfolderData && subfolderData.images) {
+              subfolderData.images.slice(0, 5).forEach((img) => {
+                const preImg = new Image();
+                preImg.src = img.thumbnail;
+              });
             }
+          });
+        };
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(runPrefetch);
+        } else {
+          setTimeout(runPrefetch, 2000);
         }
-        function nextImage() {
-            if (currentImageIndex < currentImages.length - 1) {
-                currentImageIndex++;
-                updateViewerImage();
+      }
+      function zoomIn() {
+        viewerZoom = Math.min(viewerZoom * 1.2, 5);
+        applyImageTransform();
+      }
+      function zoomOut() {
+        viewerZoom = Math.max(viewerZoom / 1.2, 0.1);
+        if (viewerZoom <= 1) {
+          imageOffsetX = 0;
+          imageOffsetY = 0;
+          lastImageOffsetX = 0;
+          lastImageOffsetY = 0;
+        }
+        applyImageTransform();
+      }
+      function resetZoom() {
+        viewerZoom = 1;
+        viewerRotation = 0;
+        imageOffsetX = 0;
+        imageOffsetY = 0;
+        lastImageOffsetX = 0;
+        lastImageOffsetY = 0;
+        applyImageTransform();
+      }
+      function rotateImage() {
+        viewerRotation = (viewerRotation + 90) % 360;
+        applyImageTransform();
+      }
+      function downloadImage() {
+        const currentImage = currentImages[currentImageIndex];
+        const driveLink = currentImage.url;
+        const match =
+          driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/) ||
+          driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (match) {
+          const fileId = match[1];
+          window.open(
+            `https://drive.google.com/file/d/${fileId}/view?usp=drive_link`,
+            "_blank",
+          );
+        } else {
+          window.open(driveLink, "_blank");
+        }
+      }
+      function isMobile() {
+        return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+          navigator.userAgent,
+        );
+      }
+      if (!isMobile()) {
+        document.addEventListener("keydown", function (e) {
+          const viewer = document.getElementById("imageViewer");
+          if (viewer.style.display === "flex") {
+            switch (e.key) {
+              case "Escape":
+                closeViewer();
+                break;
+              case "ArrowLeft":
+                prevImage();
+                break;
+              case "ArrowRight":
+                nextImage();
+                break;
+              case "0":
+                resetZoom();
+                break;
+              case "r":
+              case "R":
+                rotateImage();
+                break;
             }
-        }
-        function updateViewerImage() {
-            const viewerImage = document.getElementById('viewerImage');
-            const viewerLoader = document.getElementById('viewerLoader');
-            viewerImage.style.opacity = '0';
-            viewerLoader.style.display = 'block';
-            const newImg = new Image();
-            newImg.src = currentImages[currentImageIndex].url;
-            newImg.referrerPolicy = "no-referrer";
-            newImg.onload = function () {
-                viewerImage.src = newImg.src;
-                viewerImage.alt = currentImages[currentImageIndex].name;
-                setTimeout(() => {
-                    viewerImage.style.opacity = '1';
-                    viewerLoader.style.display = 'none';
-                    resetZoom();
-                    preloadAdjacentImages();
-                    updateNavArrowsState();
-                }, 50);
-            };
-            newImg.onerror = function () {
-                viewerImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg==';
-                viewerLoader.style.display = 'none';
-                viewerImage.style.opacity = '1';
-            };
-        }
-        function fitImageToScreen() {
-            viewerZoom = 1;
-            viewerRotation = 0;
-            imageOffsetX = 0;
-            imageOffsetY = 0;
-            lastImageOffsetX = 0;
-            lastImageOffsetY = 0;
-            applyImageTransform();
-        }
-        function applyImageTransform() {
-            const viewerImage = document.getElementById('viewerImage');
-            viewerImage.style.transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${viewerZoom}) rotate(${viewerRotation}deg)`;
-            viewerImage.style.transition = isDragging ? 'none' : 'transform 0.3s ease';
-        }
-        function preloadAdjacentImages() {
-            const preloadCount = 3;
-            for (let i = 1; i <= preloadCount; i++) {
-                const nextIdx = currentImageIndex + i;
-                if (nextIdx < currentImages.length) {
-                    const img = new Image();
-                    img.src = currentImages[nextIdx].url;
+          }
+        });
+        document.addEventListener(
+          "wheel",
+          function (e) {
+            const viewer = document.getElementById("imageViewer");
+            const viewerImage = document.getElementById("viewerImage");
+            if (viewer.style.display === "flex") {
+              e.preventDefault();
+              const rect = viewerImage.getBoundingClientRect();
+              const mouseX = e.clientX - rect.left - rect.width / 2;
+              const mouseY = e.clientY - rect.top - rect.height / 2;
+              const relativeX = (mouseX - imageOffsetX) / viewerZoom;
+              const relativeY = (mouseY - imageOffsetY) / viewerZoom;
+              const oldZoom = viewerZoom;
+              if (e.deltaY < 0) {
+                viewerZoom = Math.min(viewerZoom * 1.1, 5);
+              } else {
+                viewerZoom = Math.max(viewerZoom / 1.1, 0.1);
+                if (viewerZoom <= 1) {
+                  imageOffsetX = 0;
+                  imageOffsetY = 0;
+                  lastImageOffsetX = 0;
+                  lastImageOffsetY = 0;
+                  applyImageTransform();
+                  return;
                 }
+              }
+              const zoomChange = viewerZoom / oldZoom;
+              imageOffsetX -= relativeX * (zoomChange - 1) * viewerZoom;
+              imageOffsetY -= relativeY * (zoomChange - 1) * viewerZoom;
+              applyImageTransform();
             }
-            for (let i = 1; i <= preloadCount; i++) {
-                const prevIdx = currentImageIndex - i;
-                if (prevIdx >= 0) {
-                    const img = new Image();
-                    img.src = currentImages[prevIdx].url;
-                }
+          },
+          { passive: false },
+        );
+        document.addEventListener("dblclick", function (e) {
+          const viewer = document.getElementById("imageViewer");
+          const viewerImage = document.getElementById("viewerImage");
+          if (viewer.style.display === "flex" && e.target === viewerImage) {
+            resetZoom();
+            e.preventDefault();
+          }
+        });
+      }
+      if (isMobile()) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        document.addEventListener("touchstart", function (e) {
+          const viewer = document.getElementById("imageViewer");
+          if (viewer.style.display === "flex" && e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          }
+        });
+        document.addEventListener("touchend", function (e) {
+          const viewer = document.getElementById("imageViewer");
+          if (
+            viewer.style.display === "flex" &&
+            e.changedTouches.length === 1
+          ) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+              if (deltaX > 0) {
+                prevImage();
+              } else {
+                nextImage();
+              }
             }
-        }
-        function preloadSubfolderContent(data) {
-            if (!data.folders || data.folders.length === 0) return;
-            const runPrefetch = () => {
-                data.folders.forEach(folder => {
-                    if (folder.preview) {
-                        const imgPreview = new Image();
-                        imgPreview.src = folder.preview;
-                    }
-                    const subfolderData = galleryData[folder.path];
-                    if (subfolderData && subfolderData.images) {
-                        subfolderData.images.slice(0, 5).forEach(img => {
-                            const preImg = new Image();
-                            preImg.src = img.thumbnail;
-                        });
-                    }
-                });
-            };
-            if ('requestIdleCallback' in window) {
-                window.requestIdleCallback(runPrefetch);
-            } else {
-                setTimeout(runPrefetch, 2000);
-            }
-        }
-        function zoomIn() {
-            viewerZoom = Math.min(viewerZoom * 1.2, 5);
-            applyImageTransform();
-        }
-        function zoomOut() {
-            viewerZoom = Math.max(viewerZoom / 1.2, 0.1);
-            if (viewerZoom <= 1) {
-                imageOffsetX = 0;
-                imageOffsetY = 0;
-                lastImageOffsetX = 0;
-                lastImageOffsetY = 0;
-            }
-            applyImageTransform();
-        }
-        function resetZoom() {
-            viewerZoom = 1;
-            viewerRotation = 0;
-            imageOffsetX = 0;
-            imageOffsetY = 0;
-            lastImageOffsetX = 0;
-            lastImageOffsetY = 0;
-            applyImageTransform();
-        }
-        function rotateImage() {
-            viewerRotation = (viewerRotation + 90) % 360;
-            applyImageTransform();
-        }
-        function downloadImage() {
-            const currentImage = currentImages[currentImageIndex];
-            const driveLink = currentImage.url;
-            const match = driveLink.match(/[?&]id=([a-zA-Z0-9-_]+)/) || driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
-            if (match) {
-                const fileId = match[1];
-                window.open(`https://drive.google.com/file/d/${fileId}/view?usp=drive_link`, '_blank');
-            } else {
-                window.open(driveLink, '_blank');
-            }
-        }
-        function isMobile() {
-            return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
-        }
-        if (!isMobile()) {
-            document.addEventListener('keydown', function (e) {
-                const viewer = document.getElementById('imageViewer');
-                if (viewer.style.display === 'flex') {
-                    switch (e.key) {
-                        case 'Escape':
-                            closeViewer();
-                            break;
-                        case 'ArrowLeft':
-                            prevImage();
-                            break;
-                        case 'ArrowRight':
-                            nextImage();
-                            break;
-                        case '0':
-                            resetZoom();
-                            break;
-                        case 'r':
-                        case 'R':
-                            rotateImage();
-                            break;
-                    }
-                }
-            });
-            document.addEventListener('wheel', function (e) {
-                const viewer = document.getElementById('imageViewer');
-                const viewerImage = document.getElementById('viewerImage');
-                if (viewer.style.display === 'flex') {
-                    e.preventDefault();
-                    const rect = viewerImage.getBoundingClientRect();
-                    const mouseX = e.clientX - rect.left - rect.width / 2;
-                    const mouseY = e.clientY - rect.top - rect.height / 2;
-                    const relativeX = (mouseX - imageOffsetX) / viewerZoom;
-                    const relativeY = (mouseY - imageOffsetY) / viewerZoom;
-                    const oldZoom = viewerZoom;
-                    if (e.deltaY < 0) {
-                        viewerZoom = Math.min(viewerZoom * 1.1, 5);
-                    } else {
-                        viewerZoom = Math.max(viewerZoom / 1.1, 0.1);
-                        if (viewerZoom <= 1) {
-                            imageOffsetX = 0;
-                            imageOffsetY = 0;
-                            lastImageOffsetX = 0;
-                            lastImageOffsetY = 0;
-                            applyImageTransform();
-                            return;
-                        }
-                    }
-                    const zoomChange = viewerZoom / oldZoom;
-                    imageOffsetX -= relativeX * (zoomChange - 1) * viewerZoom;
-                    imageOffsetY -= relativeY * (zoomChange - 1) * viewerZoom;
-                    applyImageTransform();
-                }
-            }, { passive: false });
-            document.addEventListener('dblclick', function (e) {
-                const viewer = document.getElementById('imageViewer');
-                const viewerImage = document.getElementById('viewerImage');
-                if (viewer.style.display === 'flex' && e.target === viewerImage) {
-                    resetZoom();
-                    e.preventDefault();
-                }
-            });
-        }
-        if (isMobile()) {
-            let touchStartX = 0;
-            let touchStartY = 0;
-            document.addEventListener('touchstart', function (e) {
-                const viewer = document.getElementById('imageViewer');
-                if (viewer.style.display === 'flex' && e.touches.length === 1) {
-                    touchStartX = e.touches[0].clientX;
-                    touchStartY = e.touches[0].clientY;
-                }
-            });
-            document.addEventListener('touchend', function (e) {
-                const viewer = document.getElementById('imageViewer');
-                if (viewer.style.display === 'flex' && e.changedTouches.length === 1) {
-                    const touchEndX = e.changedTouches[0].clientX;
-                    const touchEndY = e.changedTouches[0].clientY;
-                    const deltaX = touchEndX - touchStartX;
-                    const deltaY = touchEndY - touchStartY;
-                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-                        if (deltaX > 0) {
-                            prevImage();
-                        } else {
-                            nextImage();
-                        }
-                    }
-                }
-            });
-        }
-        function initSearchAndFilters() {
-            const controls = document.querySelector('.gallery-controls');
-            const searchHTML = `
+          }
+        });
+      }
+      function initSearchAndFilters() {
+        const controls = document.querySelector(".gallery-controls");
+        const searchHTML = `
                 <div class="control-group">
                     <label>🔍 Buscar:</label>
                     <input type="text" id="searchInput" placeholder="Nome da imagem..." 
@@ -2084,335 +2286,376 @@
                                     border-radius: 10px; background: white; color: var(--dark-text);">
                 </div>
             `;
-            const searchDiv = document.createElement('div');
-            searchDiv.innerHTML = searchHTML;
-            controls.appendChild(searchDiv.firstElementChild);
+        const searchDiv = document.createElement("div");
+        searchDiv.innerHTML = searchHTML;
+        controls.appendChild(searchDiv.firstElementChild);
+      }
+      function searchImages(query) {
+        const galleryControls = document.querySelector(".gallery-controls");
+        if (!query.trim()) {
+          loadGalleryContent();
+          return;
         }
-        function searchImages(query) {
-            const galleryControls = document.querySelector('.gallery-controls');
-            if (!query.trim()) {
-                loadGalleryContent();
-                return;
-            }
-            const data = galleryData[currentFolder] || { folders: [], images: [] };
-            const filteredImages = data.images.filter(image =>
-                image.name.toLowerCase().includes(query.toLowerCase())
-            );
-            galleryControls.style.display = 'flex';
-            displayFilteredImages(filteredImages);
+        const data = galleryData[currentFolder] || { folders: [], images: [] };
+        const filteredImages = data.images.filter((image) =>
+          image.name.toLowerCase().includes(query.toLowerCase()),
+        );
+        galleryControls.style.display = "flex";
+        displayFilteredImages(filteredImages);
+      }
+      function displayFilteredImages(images) {
+        const content = document.getElementById("galleryContent");
+        const galleryControls = document.querySelector(".gallery-controls");
+        currentImages = images;
+        currentPage = 1;
+        if (images.length === 0) {
+          content.innerHTML =
+            '<div class="loading">Nenhuma imagem encontrada</div>';
+          galleryControls.style.display = "flex";
+          updatePagination(0);
+          return;
         }
-        function displayFilteredImages(images) {
-            const content = document.getElementById('galleryContent');
-            const galleryControls = document.querySelector('.gallery-controls');
-            currentImages = images;
-            currentPage = 1;
-            if (images.length === 0) {
-                content.innerHTML = '<div class="loading">Nenhuma imagem encontrada</div>';
-                galleryControls.style.display = 'flex';
-                updatePagination(0);
-                return;
-            }
-            galleryControls.style.display = 'flex';
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const pageImages = images.slice(startIndex, endIndex);
-            let html = '';
-            if (viewMode === 'grid') {
-                html = `<div class="image-grid grid-${imageSize} fade-in">`;
-                pageImages.forEach((image, index) => {
-                    const globalIndex = startIndex + index;
-                    html += `
+        galleryControls.style.display = "flex";
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageImages = images.slice(startIndex, endIndex);
+        let html = "";
+        if (viewMode === "grid") {
+          html = `<div class="image-grid grid-${imageSize} fade-in">`;
+          pageImages.forEach((image, index) => {
+            const globalIndex = startIndex + index;
+            html += `
                         <div class="image-item" onclick="openViewer(${globalIndex})">
                             <img src="${image.thumbnail}" alt="${image.name}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('loaded')" 
                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                         </div>
                     `;
-                });
-                html += '</div>';
-            }
-            content.innerHTML = html;
-            updatePagination(images.length);
+          });
+          html += "</div>";
         }
-        function initLazyLoading() {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        observer.unobserve(img);
-                    }
-                });
-            });
-            document.querySelectorAll('img.lazy').forEach(img => {
-                imageObserver.observe(img);
-            });
+        content.innerHTML = html;
+        updatePagination(images.length);
+      }
+      function initLazyLoading() {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove("lazy");
+              observer.unobserve(img);
+            }
+          });
+        });
+        document.querySelectorAll("img.lazy").forEach((img) => {
+          imageObserver.observe(img);
+        });
+      }
+      document.addEventListener("mousedown", function (e) {
+        const viewer = document.getElementById("imageViewer");
+        const viewerImage = document.getElementById("viewerImage");
+        if (viewer.style.display === "flex" && e.target === viewerImage) {
+          const viewerContent = document.querySelector(".viewer-content");
+          const containerWidth = viewerContent.clientWidth;
+          const containerHeight = viewerContent.clientHeight;
+          const imageWidth = viewerImage.naturalWidth * viewerZoom;
+          const imageHeight = viewerImage.naturalHeight * viewerZoom;
+          const canDrag =
+            imageWidth > containerWidth ||
+            imageHeight > containerHeight ||
+            viewerZoom > 1;
+          if (canDrag) {
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            lastImageOffsetX = imageOffsetX;
+            lastImageOffsetY = imageOffsetY;
+            e.preventDefault();
+            document.body.style.userSelect = "none";
+          }
         }
-        document.addEventListener('mousedown', function (e) {
-            const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            if (viewer.style.display === 'flex' && e.target === viewerImage) {
-                const viewerContent = document.querySelector('.viewer-content');
-                const containerWidth = viewerContent.clientWidth;
-                const containerHeight = viewerContent.clientHeight;
-                const imageWidth = viewerImage.naturalWidth * viewerZoom;
-                const imageHeight = viewerImage.naturalHeight * viewerZoom;
-                const canDrag = (imageWidth > containerWidth) || (imageHeight > containerHeight) || (viewerZoom > 1);
-                if (canDrag) {
-                    isDragging = true;
-                    dragStartX = e.clientX;
-                    dragStartY = e.clientY;
-                    lastImageOffsetX = imageOffsetX;
-                    lastImageOffsetY = imageOffsetY;
-                    e.preventDefault();
-                    document.body.style.userSelect = 'none';
-                }
-            }
-        });
-        document.addEventListener('mousemove', function (e) {
-            if (isDragging) {
-                const deltaX = e.clientX - dragStartX;
-                const deltaY = e.clientY - dragStartY;
-                imageOffsetX = lastImageOffsetX + deltaX;
-                imageOffsetY = lastImageOffsetY + deltaY;
-                applyImageTransform();
-                e.preventDefault();
-            }
-        });
-        document.addEventListener('mouseup', function (e) {
-            if (isDragging) {
-                isDragging = false;
-                document.body.style.userSelect = '';
-                applyImageTransform();
-            }
-        });
-        document.addEventListener('touchstart', function (e) {
-            const viewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            if (viewer.style.display === 'flex') {
-                if (e.touches.length === 1 && e.target === viewerImage && viewerZoom > 1) {
-                    isDragging = true;
-                    dragStartX = e.touches[0].clientX;
-                    dragStartY = e.touches[0].clientY;
-                    lastImageOffsetX = imageOffsetX;
-                    lastImageOffsetY = imageOffsetY;
-                    e.preventDefault();
-                } else if (e.touches.length === 1) {
-                    touchStartX = e.touches[0].clientX;
-                    touchStartY = e.touches[0].clientY;
-                } else if (e.touches.length === 2) {
-                    lastTouchDistance = getTouchDistance(e.touches);
-                    const rect = viewerImage.getBoundingClientRect();
-                    const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                    const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                    const relativeX = (centerX - rect.left - rect.width / 2) / viewerZoom;
-                    const relativeY = (centerY - rect.top - rect.height / 2) / viewerZoom;
-                    e.focalPointX = relativeX;
-                    e.focalPointY = relativeY;
-                }
-            }
-        }, { passive: false });
-        document.addEventListener('touchend', function (e) {
-            const viewer = document.getElementById('imageViewer');
-            if (viewer.style.display === 'flex') {
-                if (isDragging) {
-                    isDragging = false;
-                    applyImageTransform();
-                } else if (e.changedTouches.length === 1 && !isDragging) {
-                    const touchEndX = e.changedTouches[0].clientX;
-                    const touchEndY = e.changedTouches[0].clientY;
-                    const deltaX = touchEndX - touchStartX;
-                    const deltaY = touchEndY - touchStartY;
-                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50 && viewerZoom <= 1.1) {
-                        if (deltaX > 0) {
-                            prevImage();
-                        } else {
-                            nextImage();
-                        }
-                    }
-                }
-            }
-        });
-        let viewerControlsTimeout;
-        function showViewerControls() {
-            if (window.innerWidth <= 768) return;
-            const controls = document.querySelector('.viewer-controls');
-            if (controls) {
-                controls.style.display = 'flex';
-                clearTimeout(viewerControlsTimeout);
-                viewerControlsTimeout = setTimeout(() => {
-                    controls.style.display = 'none';
-                }, 2500);
-            }
+      });
+      document.addEventListener("mousemove", function (e) {
+        if (isDragging) {
+          const deltaX = e.clientX - dragStartX;
+          const deltaY = e.clientY - dragStartY;
+          imageOffsetX = lastImageOffsetX + deltaX;
+          imageOffsetY = lastImageOffsetY + deltaY;
+          applyImageTransform();
+          e.preventDefault();
         }
-        document.getElementById('viewerImage').addEventListener('mouseenter', showViewerControls);
-        document.getElementById('viewerImage').addEventListener('click', showViewerControls);
-        document.getElementById('viewerImage').addEventListener('mousedown', showViewerControls);
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('DOM carregado, iniciando aplicação...');
-            createStarfield();
-            loadImagesData();
-            initSearchAndFilters();
-            const currentLink = document.querySelector('.nav-links a[href="imagens.html"]');
-            if (currentLink) {
-                currentLink.classList.add('active');
-            }
-            addNavArrowsInteractionListeners();
-            const sizeSlider = document.getElementById('sizeSlider');
-            if (sizeSlider) {
-                updateSliderBackground(sizeSlider);
-                sizeSlider.addEventListener('input', function () {
-                    updateSliderBackground(this);
-                });
-            }
-        });
-        function formatFileSize(bytes) {
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            if (bytes === 0) return '0 Bytes';
-            const i = Math.floor(Math.log(bytes) / Math.log(1024));
-            return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+      });
+      document.addEventListener("mouseup", function (e) {
+        if (isDragging) {
+          isDragging = false;
+          document.body.style.userSelect = "";
+          applyImageTransform();
         }
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+      });
+      document.addEventListener(
+        "touchstart",
+        function (e) {
+          const viewer = document.getElementById("imageViewer");
+          const viewerImage = document.getElementById("viewerImage");
+          if (viewer.style.display === "flex") {
+            if (
+              e.touches.length === 1 &&
+              e.target === viewerImage &&
+              viewerZoom > 1
+            ) {
+              isDragging = true;
+              dragStartX = e.touches[0].clientX;
+              dragStartY = e.touches[0].clientY;
+              lastImageOffsetX = imageOffsetX;
+              lastImageOffsetY = imageOffsetY;
+              e.preventDefault();
+            } else if (e.touches.length === 1) {
+              touchStartX = e.touches[0].clientX;
+              touchStartY = e.touches[0].clientY;
+            } else if (e.touches.length === 2) {
+              lastTouchDistance = getTouchDistance(e.touches);
+              const rect = viewerImage.getBoundingClientRect();
+              const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+              const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+              const relativeX =
+                (centerX - rect.left - rect.width / 2) / viewerZoom;
+              const relativeY =
+                (centerY - rect.top - rect.height / 2) / viewerZoom;
+              e.focalPointX = relativeX;
+              e.focalPointY = relativeY;
+            }
+          }
+        },
+        { passive: false },
+      );
+      document.addEventListener("touchend", function (e) {
+        const viewer = document.getElementById("imageViewer");
+        if (viewer.style.display === "flex") {
+          if (isDragging) {
+            isDragging = false;
+            applyImageTransform();
+          } else if (e.changedTouches.length === 1 && !isDragging) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            if (
+              Math.abs(deltaX) > Math.abs(deltaY) &&
+              Math.abs(deltaX) > 50 &&
+              viewerZoom <= 1.1
+            ) {
+              if (deltaX > 0) {
+                prevImage();
+              } else {
+                nextImage();
+              }
+            }
+          }
+        }
+      });
+      let viewerControlsTimeout;
+      function showViewerControls() {
+        if (window.innerWidth <= 768) return;
+        const controls = document.querySelector(".viewer-controls");
+        if (controls) {
+          controls.style.display = "flex";
+          clearTimeout(viewerControlsTimeout);
+          viewerControlsTimeout = setTimeout(() => {
+            controls.style.display = "none";
+          }, 2500);
+        }
+      }
+      document
+        .getElementById("viewerImage")
+        .addEventListener("mouseenter", showViewerControls);
+      document
+        .getElementById("viewerImage")
+        .addEventListener("click", showViewerControls);
+      document
+        .getElementById("viewerImage")
+        .addEventListener("mousedown", showViewerControls);
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM carregado, iniciando aplicação...");
+        createStarfield();
+        loadImagesData();
+        initSearchAndFilters();
+        const currentLink = document.querySelector(
+          '.nav-links a[href="imagens.html"]',
+        );
+        if (currentLink) {
+          currentLink.classList.add("active");
+        }
+        addNavArrowsInteractionListeners();
+        const sizeSlider = document.getElementById("sizeSlider");
+        if (sizeSlider) {
+          updateSliderBackground(sizeSlider);
+          sizeSlider.addEventListener("input", function () {
+            updateSliderBackground(this);
+          });
+        }
+      });
+      function formatFileSize(bytes) {
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        if (bytes === 0) return "0 Bytes";
+        const i = Math.floor(Math.log(bytes) / Math.log(1024));
+        return (
+          Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + " " + sizes[i]
+        );
+      }
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
         };
-        function saveSettings() {
-            const settings = {
-                imageSize: imageSize,
-                itemsPerPage: itemsPerPage,
-                currentFolder: currentFolder
-            };
-            console.log('Configurações salvas:', settings);
+      }
+      function saveSettings() {
+        const settings = {
+          imageSize: imageSize,
+          itemsPerPage: itemsPerPage,
+          currentFolder: currentFolder,
+        };
+        console.log("Configurações salvas:", settings);
+      }
+      function loadSettings() {
+        console.log("Configurações carregadas");
+      }
+      function toggleFullscreenViewer() {
+        const viewer = document.getElementById("imageViewer");
+        if (!document.fullscreenElement) {
+          viewer.requestFullscreen();
+        } else {
+          document.exitFullscreen();
         }
-        function loadSettings() {
-            console.log('Configurações carregadas');
+      }
+      function exportImageList() {
+        const data = galleryData[currentFolder] || { images: [] };
+        const csvContent =
+          "data:text/csv;charset=utf-8," +
+          "Nome,Tamanho,Tipo,Data,URL\n" +
+          data.images
+            .map(
+              (img) =>
+                `"${img.name}","${img.size}","${img.type}","${img.date}","${img.url}"`,
+            )
+            .join("\n");
+        const link = document.createElement("a");
+        link.setAttribute("href", encodeURI(csvContent));
+        link.setAttribute(
+          "download",
+          `imagens_${currentFolder.replace(/\//g, "_")}.csv`,
+        );
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+      }
+      function showNavArrows() {
+        console.log("showNavArrows called");
+        const prevArrow = document.querySelector(".nav-arrows.nav-prev");
+        const nextArrow = document.querySelector(".nav-arrows.nav-next");
+        console.log("Indices:", currentImageIndex, currentImages.length);
+        if (prevArrow && currentImageIndex > 0) {
+          prevArrow.style.opacity = "1";
+          console.log("Prev arrow opacity set to 1");
         }
-        function toggleFullscreenViewer() {
-            const viewer = document.getElementById('imageViewer');
-            if (!document.fullscreenElement) {
-                viewer.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
+        if (nextArrow && currentImageIndex < currentImages.length - 1) {
+          nextArrow.style.opacity = "1";
+          console.log("Next arrow opacity set to 1");
         }
-        function exportImageList() {
-            const data = galleryData[currentFolder] || { images: [] };
-            const csvContent = "data:text/csv;charset=utf-8," +
-                "Nome,Tamanho,Tipo,Data,URL\n" +
-                data.images.map(img =>
-                    `"${img.name}","${img.size}","${img.type}","${img.date}","${img.url}"`
-                ).join("\n");
-            const link = document.createElement("a");
-            link.setAttribute("href", encodeURI(csvContent));
-            link.setAttribute("download", `imagens_${currentFolder.replace(/\//g, '_')}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+      }
+      function hideNavArrows() {
+        console.log("hideNavArrows called");
+        const prevArrow = document.querySelector(".nav-arrows.nav-prev");
+        const nextArrow = document.querySelector(".nav-arrows.nav-next");
+        if (prevArrow) prevArrow.style.opacity = "0";
+        if (nextArrow) nextArrow.style.opacity = "0";
+      }
+      function updateNavArrowsState() {
+        const prevArrow = document.querySelector(".nav-arrows.nav-prev");
+        const nextArrow = document.querySelector(".nav-arrows.nav-next");
+        if (prevArrow) {
+          const canGoBack = currentImageIndex > 0;
+          prevArrow.style.display = canGoBack ? "flex" : "none";
+          if (!canGoBack) prevArrow.style.opacity = "0";
         }
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+        if (nextArrow) {
+          const canGoForward = currentImageIndex < currentImages.length - 1;
+          nextArrow.style.display = canGoForward ? "flex" : "none";
+          if (!canGoForward) nextArrow.style.opacity = "0";
         }
-        function showNavArrows() {
-            console.log('showNavArrows called');
-            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
-            const nextArrow = document.querySelector('.nav-arrows.nav-next');
-            console.log('Indices:', currentImageIndex, currentImages.length);
-            if (prevArrow && currentImageIndex > 0) {
-                prevArrow.style.opacity = '1';
-                console.log('Prev arrow opacity set to 1');
-            }
-            if (nextArrow && currentImageIndex < currentImages.length - 1) {
-                nextArrow.style.opacity = '1';
-                console.log('Next arrow opacity set to 1');
-            }
-        }
-        function hideNavArrows() {
-            console.log('hideNavArrows called');
-            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
-            const nextArrow = document.querySelector('.nav-arrows.nav-next');
-            if (prevArrow) prevArrow.style.opacity = '0';
-            if (nextArrow) nextArrow.style.opacity = '0';
-        }
-        function updateNavArrowsState() {
-            const prevArrow = document.querySelector('.nav-arrows.nav-prev');
-            const nextArrow = document.querySelector('.nav-arrows.nav-next');
-            if (prevArrow) {
-                const canGoBack = currentImageIndex > 0;
-                prevArrow.style.display = canGoBack ? 'flex' : 'none';
-                if (!canGoBack) prevArrow.style.opacity = '0';
-            }
-            if (nextArrow) {
-                const canGoForward = currentImageIndex < currentImages.length - 1;
-                nextArrow.style.display = canGoForward ? 'flex' : 'none';
-                if (!canGoForward) nextArrow.style.opacity = '0';
-            }
-        }
-        function addNavArrowsInteractionListeners() {
-            const viewer = document.getElementById('imageViewer');
-            const viewerContent = document.querySelector('.viewer-content');
-            const viewerImage = document.getElementById('viewerImage');
-            const arrows = document.querySelectorAll('.nav-arrows');
+      }
+      function addNavArrowsInteractionListeners() {
+        const viewer = document.getElementById("imageViewer");
+        const viewerContent = document.querySelector(".viewer-content");
+        const viewerImage = document.getElementById("viewerImage");
+        const arrows = document.querySelectorAll(".nav-arrows");
 
-            const handleInteraction = () => {
-                if (viewer.style.display === 'flex') {
-                    showNavArrows();
-                }
-            };
+        const handleInteraction = () => {
+          if (viewer.style.display === "flex") {
+            showNavArrows();
+          }
+        };
 
-            if (viewer) {
-                viewer.addEventListener('mousemove', handleInteraction);
-                viewer.addEventListener('click', handleInteraction);
-                viewer.addEventListener('touchstart', handleInteraction, { passive: true });
-                viewer.addEventListener('touchmove', handleInteraction, { passive: true });
-            }
-            if (viewerContent) {
-                viewerContent.addEventListener('mousemove', handleInteraction);
-            }
-            if (viewerImage) {
-                viewerImage.addEventListener('mousemove', handleInteraction);
-                viewerImage.addEventListener('click', handleInteraction);
-            }
+        if (viewer) {
+          viewer.addEventListener("mousemove", handleInteraction);
+          viewer.addEventListener("click", handleInteraction);
+          viewer.addEventListener("touchstart", handleInteraction, {
+            passive: true,
+          });
+          viewer.addEventListener("touchmove", handleInteraction, {
+            passive: true,
+          });
+        }
+        if (viewerContent) {
+          viewerContent.addEventListener("mousemove", handleInteraction);
+        }
+        if (viewerImage) {
+          viewerImage.addEventListener("mousemove", handleInteraction);
+          viewerImage.addEventListener("click", handleInteraction);
+        }
 
-            arrows.forEach(arrow => {
-                arrow.addEventListener('mouseenter', () => {
-                    clearTimeout(navArrowsTimeout);
-                    const isPrev = arrow.classList.contains('nav-prev');
-                    if (isPrev && currentImageIndex > 0) arrow.style.opacity = '1';
-                    if (!isPrev && currentImageIndex < currentImages.length - 1) arrow.style.opacity = '1';
-                });
-                arrow.addEventListener('mousemove', (e) => {
-                    e.stopPropagation();
-                    clearTimeout(navArrowsTimeout);
-                    const isPrev = arrow.classList.contains('nav-prev');
-                    if (isPrev && currentImageIndex > 0) arrow.style.opacity = '1';
-                    if (!isPrev && currentImageIndex < currentImages.length - 1) arrow.style.opacity = '1';
-                    navArrowsTimeout = setTimeout(hideNavArrows, 2500);
-                });
-                arrow.addEventListener('mouseleave', () => {
-                    clearTimeout(navArrowsTimeout);
-                    navArrowsTimeout = setTimeout(hideNavArrows, 2500);
-                });
-            });
-        }
-        function updateSliderBackground(slider) {
-            const min = slider.min ? parseFloat(slider.min) : 1;
-            const max = slider.max ? parseFloat(slider.max) : 4;
-            const val = parseFloat(slider.value);
-            const percent = ((val - min) / (max - min)) * 100;
-            const thumbWidth = 22;
-            const sliderWidth = slider.offsetWidth;
-            const thumbOffset = (thumbWidth / sliderWidth) * 100;
-            const adjustedPercent = percent - (thumbOffset / 2) + (percent * thumbOffset / 100);
-            slider.style.background = `linear-gradient(90deg, var(--primary-color) ${adjustedPercent}%, rgba(255, 255, 255, 0.1) ${adjustedPercent}%)`;
-        }
+        arrows.forEach((arrow) => {
+          arrow.addEventListener("mouseenter", () => {
+            clearTimeout(navArrowsTimeout);
+            const isPrev = arrow.classList.contains("nav-prev");
+            if (isPrev && currentImageIndex > 0) arrow.style.opacity = "1";
+            if (!isPrev && currentImageIndex < currentImages.length - 1)
+              arrow.style.opacity = "1";
+          });
+          arrow.addEventListener("mousemove", (e) => {
+            e.stopPropagation();
+            clearTimeout(navArrowsTimeout);
+            const isPrev = arrow.classList.contains("nav-prev");
+            if (isPrev && currentImageIndex > 0) arrow.style.opacity = "1";
+            if (!isPrev && currentImageIndex < currentImages.length - 1)
+              arrow.style.opacity = "1";
+            navArrowsTimeout = setTimeout(hideNavArrows, 2500);
+          });
+          arrow.addEventListener("mouseleave", () => {
+            clearTimeout(navArrowsTimeout);
+            navArrowsTimeout = setTimeout(hideNavArrows, 2500);
+          });
+        });
+      }
+      function updateSliderBackground(slider) {
+        const min = slider.min ? parseFloat(slider.min) : 1;
+        const max = slider.max ? parseFloat(slider.max) : 4;
+        const val = parseFloat(slider.value);
+        const percent = ((val - min) / (max - min)) * 100;
+        const thumbWidth = 22;
+        const sliderWidth = slider.offsetWidth;
+        const thumbOffset = (thumbWidth / sliderWidth) * 100;
+        const adjustedPercent =
+          percent - thumbOffset / 2 + (percent * thumbOffset) / 100;
+        slider.style.background = `linear-gradient(90deg, var(--primary-color) ${adjustedPercent}%, rgba(255, 255, 255, 0.1) ${adjustedPercent}%)`;
+      }
     </script>
-</body>
-
+  </body>
 </html>

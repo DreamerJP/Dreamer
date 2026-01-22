@@ -1,1692 +1,1818 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Animes</title>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --primary-color: #bb86fc;
-            --secondary-color: #03dac6;
-            --accent-color: #cf6679;
-            --text-primary: #e1e1e1;
-            --text-secondary: #b3b3b3;
-            --bg-main: rgba(18, 18, 35, 0.98);
-            --bg-nav: rgba(18, 18, 35, 0.98);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --shadow-color-strong: rgba(0, 0, 0, 0.6);
-            --transition-speed: 0.8s;
+      :root {
+        --primary-gradient: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
+        --primary-color: #bb86fc;
+        --secondary-color: #03dac6;
+        --accent-color: #cf6679;
+        --text-primary: #e1e1e1;
+        --text-secondary: #b3b3b3;
+        --bg-main: rgba(18, 18, 35, 0.98);
+        --bg-nav: rgba(18, 18, 35, 0.98);
+        --shadow-color: rgba(0, 0, 0, 0.4);
+        --shadow-color-strong: rgba(0, 0, 0, 0.6);
+        --transition-speed: 0.8s;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: radial-gradient(
+          ellipse at center,
+          #0a0a0a 0%,
+          #000000 100%
+        );
+        min-height: 100vh;
+        color: var(--text-primary);
+        overflow-x: hidden;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+      }
+
+      /* Campo de Estrelas */
+      .starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 1;
+        overflow: hidden;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: star-travel linear infinite;
+      }
+
+      .star.distant {
+        width: 1px;
+        height: 1px;
+        animation-duration: 25s;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+
+      .star.medium {
+        width: 1.5px;
+        height: 1.5px;
+        animation-duration: 15s;
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+      }
+
+      .star.close {
+        width: 2px;
+        height: 2px;
+        animation-duration: 8s;
+        box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+      }
+
+      .star.blue {
+        background: #e6f3ff;
+        box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
+      }
+
+      .star.yellow {
+        background: #fff8e1;
+        box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
+      }
+
+      @keyframes star-travel {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        10% {
+          opacity: 0.3;
         }
 
-        body {
-            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
-            min-height: 100vh;
-            color: var(--text-primary);
-            overflow-x: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+        50% {
+          opacity: 1;
+          transform: translate(var(--dx), var(--dy)) scale(1);
         }
 
-        /* Campo de Estrelas */
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 1;
-            overflow: hidden;
+        90% {
+          opacity: 0.8;
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: star-travel linear infinite;
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2))
+            scale(1.5);
+        }
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.3;
         }
 
-        .star.distant {
-            width: 1px;
-            height: 1px;
-            animation-duration: 25s;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+        100% {
+          opacity: 0.8;
         }
+      }
 
-        .star.medium {
-            width: 1.5px;
-            height: 1.5px;
-            animation-duration: 15s;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-        }
+      /* Navegação */
+      .navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-nav);
+        backdrop-filter: blur(10px);
+        border-bottom: 2px solid var(--primary-color);
+        z-index: 1000;
+        padding: 15px 0;
+        box-shadow: 0 2px 20px var(--shadow-color-strong);
+      }
 
-        .star.close {
-            width: 2px;
-            height: 2px;
-            animation-duration: 8s;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-        }
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
 
-        .star.blue {
-            background: #e6f3ff;
-            box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
-        }
+      .nav-home {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
 
-        .star.yellow {
-            background: #fff8e1;
-            box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
-        }
+      .nav-home:hover {
+        color: var(--primary-color);
+        transform: scale(1.05);
+      }
 
-        @keyframes star-travel {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0.5);
-            }
+      .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+      }
 
-            10% {
-                opacity: 0.3;
-            }
+      .nav-links a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
 
-            50% {
-                opacity: 1;
-                transform: translate(var(--dx), var(--dy)) scale(1);
-            }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: white;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px var(--shadow-color);
+      }
 
-            90% {
-                opacity: 0.8;
-            }
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: var(--text-primary);
+      }
 
-            100% {
-                opacity: 0;
-                transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(1.5);
-            }
-        }
-
-        @keyframes twinkle {
-            0% {
-                opacity: 0.3;
-            }
-
-            100% {
-                opacity: 0.8;
-            }
-        }
-
-        /* Navegação */
-        .navigation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-nav);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--primary-color);
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 20px var(--shadow-color-strong);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .nav-home {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-home:hover {
-            color: var(--primary-color);
-            transform: scale(1.05);
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
         }
 
         .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--bg-nav);
+          flex-direction: column;
+          padding: 20px;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 5px 20px var(--shadow-color-strong);
+          border-radius: 0 0 15px 15px;
         }
 
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: white;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-nav);
-                flex-direction: column;
-                padding: 20px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 20px var(--shadow-color-strong);
-                border-radius: 0 0 15px 15px;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .container {
-                margin-top: 80px;
-                padding: 0 10px;
-            }
-
-            .unified-header {
-                min-height: auto !important;
-                padding: 30px 15px 15px 15px !important;
-                margin-bottom: 20px;
-            }
-
-            .unified-header h1 {
-                font-size: 1.8em !important;
-                min-height: auto;
-                margin-bottom: 5px;
-            }
-
-            .unified-header p {
-                font-size: 0.9em !important;
-                margin-bottom: 15px;
-            }
-
-            .filters-stats-flex {
-                flex-direction: column;
-                gap: 15px;
-                align-items: stretch;
-            }
-
-            .filters {
-                min-height: auto !important;
-                padding: 12px !important;
-            }
-
-            .stats-compact {
-                min-height: auto !important;
-                padding: 10px !important;
-            }
-
-            .stats-compact h3 {
-                font-size: 0.9em !important;
-                margin-bottom: 8px !important;
-            }
-
-            .animes-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-container {
-                padding: 0 15px;
-            }
-        }
-
-        /* Container Principal */
         .container {
-            max-width: 1400px;
-            margin: 100px auto 0 auto;
-            padding: 0 20px;
-            position: relative;
+          margin-top: 80px;
+          padding: 0 10px;
         }
 
-        /* Elementos Flutuantes */
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            font-size: 2em;
-            opacity: 0.3;
-            animation: float 6s ease-in-out infinite;
-            text-shadow: 0 0 10px var(--secondary-color);
-        }
-
-        .floating-element:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            top: 20%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            bottom: 20%;
-            left: 15%;
-            animation-delay: 4s;
-        }
-
-        .floating-element:nth-child(4) {
-            bottom: 30%;
-            right: 20%;
-            animation-delay: 1s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            33% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-
-            66% {
-                transform: translateY(-10px) rotate(-3deg);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: var(--text-primary);
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow:
-                0 0 20px var(--primary-color),
-                2px 2px 4px var(--shadow-color);
-        }
-
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        /* Unificar header, filtros e estatísticas */
         .unified-header {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(22, 33, 62, 0.4) 50%, rgba(15, 52, 96, 0.4) 100%),
-                url('./Assets/Animes/anime_background.jpg') center center/cover no-repeat;
-            position: relative;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
-            padding: 60px 60px 24px 60px;
-            margin-bottom: 40px;
-            min-height: 520px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: hidden;
-        }
-
-        .unified-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            z-index: 3;
-            border-radius: inherit;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .unified-header>* {
-            position: relative;
-            z-index: 2;
-        }
-
-        .header-overlay-fix {
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 20px;
-            z-index: 1;
-            pointer-events: none;
+          min-height: auto !important;
+          padding: 30px 15px 15px 15px !important;
+          margin-bottom: 20px;
         }
 
         .unified-header h1 {
-            color: #111 !important;
-            font-size: 3em;
-            margin-bottom: 15px;
-            text-shadow:
-                0 0 20px var(--primary-color),
-                2px 2px 4px var(--shadow-color);
+          font-size: 1.8em !important;
+          min-height: auto;
+          margin-bottom: 5px;
         }
 
         .unified-header p {
-            color: #111 !important;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
+          font-size: 0.9em !important;
+          margin-bottom: 15px;
         }
 
         .filters-stats-flex {
-            display: flex;
-            gap: 40px;
-            align-items: flex-end;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: auto;
-            margin-bottom: 0;
+          flex-direction: column;
+          gap: 15px;
+          align-items: stretch;
         }
 
         .filters {
-            flex: 2;
-            min-width: 320px;
-            border-radius: 18px !important;
-            padding: 10px 10px 10px 10px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong);
-            margin-bottom: 0;
-            background: rgba(18, 18, 35, 0.6);
-            backdrop-filter: blur(10px);
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 120px;
-        }
-
-        .filter-group label {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9em;
-            text-align: left;
-        }
-
-        .filter-group select,
-        .filter-group input {
-            padding: 10px;
-            border: 2px solid rgba(187, 134, 252, 0.3);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: rgba(18, 18, 35, 0.8);
-            color: var(--text-primary);
-        }
-
-        .filter-group select:focus,
-        .filter-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
-        }
-
-        .filter-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-tag {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .filter-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-
-        .filter-tag.active {
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-            box-shadow: 0 5px 15px rgba(207, 102, 121, 0.4);
+          min-height: auto !important;
+          padding: 12px !important;
         }
 
         .stats-compact {
-            flex: 1;
-            min-width: 220px;
-            background: rgba(18, 18, 35, 0.6);
-            border-radius: 18px !important;
-            padding: 8px 8px 4px 8px !important;
-            box-shadow: 0 2px 6px var(--shadow-color-strong);
-            margin-bottom: 0;
-            backdrop-filter: blur(10px);
+          min-height: auto !important;
+          padding: 10px !important;
         }
 
-        .stats-compact .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .stat-card {
-            background: rgba(187, 134, 252, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 2px 8px var(--shadow-color);
-            padding: 10px 0 6px 0;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: var(--text-primary);
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: var(--text-secondary);
-        }
-
-        @media (max-width: 900px) {
-            .filters-stats-flex {
-                flex-direction: column;
-                gap: 20px;
-                align-items: stretch;
-            }
-
-            .filters,
-            .stats-compact {
-                width: 100%;
-                min-width: unset;
-                margin-bottom: 0;
-                margin-top: 0;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .header-overlay-fix {
-                border-radius: 0 !important;
-            }
-
-            .unified-header {
-                border-radius: 0 !important;
-            }
-
-            .filters,
-            .stats-compact {
-                padding: 6px 4px 4px 4px !important;
-                border-radius: 12px !important;
-            }
-
-            .filter-tag,
-            .stat-value,
-            .stat-label {
-                font-size: 0.95em;
-            }
-
-            .filters .filter-group label {
-                font-size: 0.85em;
-            }
-        }
-
-        .filter-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
-        }
-
-        .filter-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .filter-btn:hover::before {
-            left: 100%;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-        }
-
-        .filter-btn .count {
-            background: rgba(255, 255, 255, 0.3);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-            margin-left: 8px;
-        }
-
-        /* Campo de busca específico */
-        #searchInput {
-            min-width: 250px;
-            width: 100%;
-            max-width: 350px;
-        }
-
-        /* Responsividade para o campo de busca */
-        @media (max-width: 768px) {
-            #searchInput {
-                min-width: 200px;
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #searchInput {
-                min-width: 180px;
-                max-width: 100%;
-            }
+        .stats-compact h3 {
+          font-size: 0.9em !important;
+          margin-bottom: 8px !important;
         }
 
         .animes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 30px;
-            margin-top: 0;
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-container {
+          padding: 0 15px;
+        }
+      }
+
+      /* Container Principal */
+      .container {
+        max-width: 1400px;
+        margin: 100px auto 0 auto;
+        padding: 0 20px;
+        position: relative;
+      }
+
+      /* Elementos Flutuantes */
+      .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .floating-element {
+        position: absolute;
+        font-size: 2em;
+        opacity: 0.3;
+        animation: float 6s ease-in-out infinite;
+        text-shadow: 0 0 10px var(--secondary-color);
+      }
+
+      .floating-element:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .floating-element:nth-child(2) {
+        top: 20%;
+        right: 10%;
+        animation-delay: 2s;
+      }
+
+      .floating-element:nth-child(3) {
+        bottom: 20%;
+        left: 15%;
+        animation-delay: 4s;
+      }
+
+      .floating-element:nth-child(4) {
+        bottom: 30%;
+        right: 20%;
+        animation-delay: 1s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
         }
 
-        .anime-card {
-            background: var(--bg-main);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            /* Alinhamento para o botão na base */
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        33% {
+          transform: translateY(-20px) rotate(5deg);
         }
 
-        .anime-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px var(--shadow-color-strong);
-            border-color: var(--primary-color);
+        66% {
+          transform: translateY(-10px) rotate(-3deg);
+        }
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        color: var(--text-primary);
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow:
+          0 0 20px var(--primary-color),
+          2px 2px 4px var(--shadow-color);
+      }
+
+      .header p {
+        color: var(--text-secondary);
+        font-size: 1.1em;
+        line-height: 1.6;
+      }
+
+      /* Unificar header, filtros e estatísticas */
+      .unified-header {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(26, 26, 46, 0.4) 0%,
+            rgba(22, 33, 62, 0.4) 50%,
+            rgba(15, 52, 96, 0.4) 100%
+          ),
+          url("./Assets/Animes/anime_background.jpg") center center/cover
+            no-repeat;
+        position: relative;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 60px 60px 24px 60px;
+        margin-bottom: 40px;
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+      }
+
+      .unified-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        z-index: 3;
+        border-radius: inherit;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .unified-header > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      .header-overlay-fix {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .unified-header h1 {
+        color: #111 !important;
+        font-size: 3em;
+        margin-bottom: 15px;
+        text-shadow:
+          0 0 20px var(--primary-color),
+          2px 2px 4px var(--shadow-color);
+      }
+
+      .unified-header p {
+        color: #111 !important;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        text-shadow:
+          0 0 10px var(--primary-color),
+          1px 1px 2px var(--shadow-color);
+      }
+
+      .filters-stats-flex {
+        display: flex;
+        gap: 40px;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      .filters {
+        flex: 2;
+        min-width: 320px;
+        border-radius: 18px !important;
+        padding: 10px 10px 10px 10px !important;
+        box-shadow: 0 2px 6px var(--shadow-color-strong);
+        margin-bottom: 0;
+        background: rgba(18, 18, 35, 0.6);
+        backdrop-filter: blur(10px);
+      }
+
+      .filter-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 120px;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9em;
+        text-align: left;
+      }
+
+      .filter-group select,
+      .filter-group input {
+        padding: 10px;
+        border: 2px solid rgba(187, 134, 252, 0.3);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: rgba(18, 18, 35, 0.8);
+        color: var(--text-primary);
+      }
+
+      .filter-group select:focus,
+      .filter-group input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
+      }
+
+      .filter-tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-tag {
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .filter-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px var(--shadow-color);
+      }
+
+      .filter-tag.active {
+        background: linear-gradient(
+          45deg,
+          var(--accent-color),
+          var(--primary-color)
+        );
+        box-shadow: 0 5px 15px rgba(207, 102, 121, 0.4);
+      }
+
+      .stats-compact {
+        flex: 1;
+        min-width: 220px;
+        background: rgba(18, 18, 35, 0.6);
+        border-radius: 18px !important;
+        padding: 8px 8px 4px 8px !important;
+        box-shadow: 0 2px 6px var(--shadow-color-strong);
+        margin-bottom: 0;
+        backdrop-filter: blur(10px);
+      }
+
+      .stats-compact .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        background: rgba(187, 134, 252, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px var(--shadow-color);
+        padding: 10px 0 6px 0;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: var(--text-primary);
+      }
+
+      .stat-label {
+        font-size: 0.9em;
+        color: var(--text-secondary);
+      }
+
+      @media (max-width: 900px) {
+        .filters-stats-flex {
+          flex-direction: column;
+          gap: 20px;
+          align-items: stretch;
         }
 
-        .anime-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        .filters,
+        .stats-compact {
+          width: 100%;
+          min-width: unset;
+          margin-bottom: 0;
+          margin-top: 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .header-overlay-fix {
+          border-radius: 0 !important;
         }
 
-        .anime-images {
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .unified-header {
+          border-radius: 0 !important;
         }
 
-        .anime-images.has-images {
-            background: none;
+        .filters,
+        .stats-compact {
+          padding: 6px 4px 4px 4px !important;
+          border-radius: 12px !important;
         }
 
-        .image-slider {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
+        .filter-tag,
+        .stat-value,
+        .stat-label {
+          font-size: 0.95em;
         }
 
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        .filters .filter-group label {
+          font-size: 0.85em;
+        }
+      }
+
+      .filter-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        background: linear-gradient(
+          45deg,
+          var(--accent-color),
+          var(--primary-color)
+        );
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+      }
+
+      .filter-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .filter-btn:hover::before {
+        left: 100%;
+      }
+
+      .filter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(
+          45deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+      }
+
+      .filter-btn .count {
+        background: rgba(255, 255, 255, 0.3);
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+        margin-left: 8px;
+      }
+
+      /* Campo de busca específico */
+      #searchInput {
+        min-width: 250px;
+        width: 100%;
+        max-width: 350px;
+      }
+
+      /* Responsividade para o campo de busca */
+      @media (max-width: 768px) {
+        #searchInput {
+          min-width: 200px;
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #searchInput {
+          min-width: 180px;
+          max-width: 100%;
+        }
+      }
+
+      .animes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 30px;
+        margin-top: 0;
+      }
+
+      .anime-card {
+        background: var(--bg-main);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px var(--shadow-color);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+        /* Alinhamento para o botão na base */
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .anime-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px var(--shadow-color-strong);
+        border-color: var(--primary-color);
+      }
+
+      .anime-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      .anime-images {
+        width: 100%;
+        height: 220px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .anime-images.has-images {
+        background: none;
+      }
+
+      .image-slider {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .slide.active {
+        opacity: 1;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .slide-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        color: white;
+        text-shadow: 2px 2px 4px var(--shadow-color-strong);
+      }
+
+      .slide-controls {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        opacity: 0;
+        z-index: 10;
+      }
+
+      .anime-images:hover .slide-controls {
+        opacity: 1;
+      }
+
+      .slide-controls:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .slide-controls.prev {
+        left: 10px;
+      }
+
+      .slide-controls.next {
+        right: 10px;
+      }
+
+      .slide-indicators {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+      }
+
+      .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .indicator.active {
+        background: white;
+      }
+
+      .anime-title {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: calc(1.3em * 2);
+      }
+
+      .anime-category {
+        display: inline-block;
+        background: var(--accent-color);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.8em;
+        margin-bottom: 12px;
+        text-transform: capitalize;
+        align-self: flex-start;
+      }
+
+      .anime-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 15px;
+      }
+
+      .stars {
+        color: #f39c12;
+        font-size: 1.2em;
+      }
+
+      .anime-synopsis {
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .anime-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 0.85em;
+        color: var(--text-secondary);
+      }
+
+      .anime-episodes {
+        background: var(--primary-color);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+      }
+
+      .anime-status {
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+        font-weight: 500;
+      }
+
+      .anime-status.ongoing {
+        background: #27ae60;
+        color: white;
+      }
+
+      .anime-status.completed {
+        background: #3498db;
+        color: white;
+      }
+
+      .anime-status.hiatus {
+        background: #f39c12;
+        color: white;
+      }
+
+      .anime-genres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .genre-tag {
+        background: var(--secondary-color);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.75em;
+        text-transform: capitalize;
+      }
+
+      .anime-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: auto;
+      }
+
+      .action-btn {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+      }
+
+      .action-btn.watch {
+        background: linear-gradient(
+          45deg,
+          var(--accent-color),
+          var(--primary-color)
+        );
+        color: white;
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .action-btn.watch::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .action-btn.watch:hover::before {
+        left: 100%;
+      }
+
+      .action-btn.watch:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
+      }
+
+      .action-btn.info {
+        background: var(--secondary-color);
+        color: white;
+      }
+
+      .action-btn.info:hover {
+        background: #02c4b3;
+        transform: translateY(-2px);
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 50px 20px;
+        color: var(--text-secondary);
+        font-size: 1.2em;
+      }
+
+      .no-results .icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+        opacity: 0.5;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+        .container {
+          margin-top: 80px;
+          padding: 0 10px;
         }
 
-        .slide.active {
-            opacity: 1;
+        .unified-header {
+          min-height: auto !important;
+          padding: 30px 15px 15px 15px !important;
+          margin-bottom: 20px;
         }
 
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
+        .unified-header h1 {
+          font-size: 1.8em !important;
+          min-height: auto;
+          margin-bottom: 5px;
         }
 
-        .slide-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            color: white;
-            text-shadow: 2px 2px 4px var(--shadow-color-strong);
+        .unified-header p {
+          font-size: 0.9em !important;
+          margin-bottom: 15px;
         }
 
-        .slide-controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            opacity: 0;
-            z-index: 10;
+        .floating-element {
+          font-size: 1.5em;
         }
 
-        .anime-images:hover .slide-controls {
-            opacity: 1;
+        .animes-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .unified-header h1 {
+          font-size: 1.6em !important;
         }
 
-        .slide-controls:hover {
-            background: rgba(0, 0, 0, 0.8);
-            transform: translateY(-50%) scale(1.1);
+        .unified-header p {
+          font-size: 0.85em !important;
         }
 
-        .slide-controls.prev {
-            left: 10px;
+        .filter-btn {
+          padding: 8px 16px;
+          font-size: 0.9em;
+        }
+      }
+
+      .star-special {
+        color: #ffd700;
+        text-shadow:
+          0 0 8px #fff700,
+          0 0 16px #ffec80;
+        animation: star-glow 1.2s infinite alternate;
+      }
+
+      @keyframes star-glow {
+        0% {
+          filter: brightness(1.2) drop-shadow(0 0 2px #fff700);
         }
 
-        .slide-controls.next {
-            right: 10px;
+        100% {
+          filter: brightness(2) drop-shadow(0 0 8px #fff700);
         }
-
-        .slide-indicators {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-        }
-
-        .indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .indicator.active {
-            background: white;
-        }
-
-        .anime-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-height: calc(1.3em * 2);
-        }
-
-        .anime-category {
-            display: inline-block;
-            background: var(--accent-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            margin-bottom: 12px;
-            text-transform: capitalize;
-            align-self: flex-start;
-        }
-
-        .anime-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .stars {
-            color: #f39c12;
-            font-size: 1.2em;
-        }
-
-        .anime-synopsis {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .anime-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.85em;
-            color: var(--text-secondary);
-        }
-
-        .anime-episodes {
-            background: var(--primary-color);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-        }
-
-        .anime-status {
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-            font-weight: 500;
-        }
-
-        .anime-status.ongoing {
-            background: #27ae60;
-            color: white;
-        }
-
-        .anime-status.completed {
-            background: #3498db;
-            color: white;
-        }
-
-        .anime-status.hiatus {
-            background: #f39c12;
-            color: white;
-        }
-
-        .anime-genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .genre-tag {
-            background: var(--secondary-color);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.75em;
-            text-transform: capitalize;
-        }
-
-        .anime-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: auto;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .action-btn.watch {
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-            color: white;
-            border: none;
-            border-radius: 25px;
-            box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .action-btn.watch::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .action-btn.watch:hover::before {
-            left: 100%;
-        }
-
-        .action-btn.watch:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
-        }
-
-        .action-btn.info {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .action-btn.info:hover {
-            background: #02c4b3;
-            transform: translateY(-2px);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-secondary);
-            font-size: 1.2em;
-        }
-
-        .no-results .icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .container {
-                margin-top: 80px;
-                padding: 0 10px;
-            }
-
-            .unified-header {
-                min-height: auto !important;
-                padding: 30px 15px 15px 15px !important;
-                margin-bottom: 20px;
-            }
-
-            .unified-header h1 {
-                font-size: 1.8em !important;
-                min-height: auto;
-                margin-bottom: 5px;
-            }
-
-            .unified-header p {
-                font-size: 0.9em !important;
-                margin-bottom: 15px;
-            }
-
-            .floating-element {
-                font-size: 1.5em;
-            }
-
-            .animes-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .unified-header h1 {
-                font-size: 1.6em !important;
-            }
-
-            .unified-header p {
-                font-size: 0.85em !important;
-            }
-
-            .filter-btn {
-                padding: 8px 16px;
-                font-size: 0.9em;
-            }
-        }
-
-        .star-special {
-            color: #ffd700;
-            text-shadow: 0 0 8px #fff700, 0 0 16px #ffec80;
-            animation: star-glow 1.2s infinite alternate;
-        }
-
-        @keyframes star-glow {
-            0% {
-                filter: brightness(1.2) drop-shadow(0 0 2px #fff700);
-            }
-
-            100% {
-                filter: brightness(2) drop-shadow(0 0 8px #fff700);
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Campo de Estrelas -->
     <div class="starfield" id="starfield"></div>
 
     <!-- Navegação -->
     <nav class="navigation">
-        <div class="nav-container">
-            <a href="index.html" class="nav-home">🏠 Home</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="animes.html" class="active">🎌 Animes</a></li>
-                <li><a href="filmes.html">🎬 Filmes</a></li>
-                <li><a href="jogos.html">🎮 Jogos</a></li>
-                <li><a href="musicas.html">🎵 Músicas</a></li>
-                <li><a href="imagens.html">🖼️ Imagens</a></li>
-                <li><a href="videos.html">📹 Vídeos</a></li>
-            </ul>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        </div>
+      <div class="nav-container">
+        <a href="index.html" class="nav-home">🏠 Home</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="animes.html" class="active">🎌 Animes</a></li>
+          <li><a href="filmes.html">🎬 Filmes</a></li>
+          <li><a href="jogos.html">🎮 Jogos</a></li>
+          <li><a href="musicas.html">🎵 Músicas</a></li>
+          <li><a href="imagens.html">🖼️ Imagens</a></li>
+          <li><a href="videos.html">📹 Vídeos</a></li>
+        </ul>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      </div>
     </nav>
 
     <!-- Container Principal -->
     <div class="container">
-        <!-- Header Unificado com Filtros e Estatísticas -->
-        <div class="header unified-header">
-            <div class="header-overlay-fix"></div>
-            <h1><span style="font-size:1.2em;">🎌</span> Animes</h1>
-            <p>ANIMES ASSISTIDOS E RECOMENDADOS</p>
-            <div class="filters-stats-flex">
-                <div class="filters">
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label>Categoria:</label>
-                            <div class="filter-tags" id="filters">
-                                <!-- Botões serão inseridos aqui pelo JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label>🔍 Buscar:</label>
-                            <input type="text" id="searchInput" placeholder="Digite o Título ou Sinopse"
-                                oninput="searchAnimes()">
-                        </div>
-                    </div>
+      <!-- Header Unificado com Filtros e Estatísticas -->
+      <div class="header unified-header">
+        <div class="header-overlay-fix"></div>
+        <h1><span style="font-size: 1.2em">🎌</span> Animes</h1>
+        <p>ANIMES ASSISTIDOS E RECOMENDADOS</p>
+        <div class="filters-stats-flex">
+          <div class="filters">
+            <div class="filter-row">
+              <div class="filter-group">
+                <label>Categoria:</label>
+                <div class="filter-tags" id="filters">
+                  <!-- Botões serão inseridos aqui pelo JavaScript -->
                 </div>
-                <div class="stats stats-compact">
-                    <h3 style="font-size:1.1em; margin-bottom:10px; text-align:center;">📊 Estatísticas da Coleção</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="totalAnimes">0</div>
-                            <div class="stat-label">Total de Animes</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="currentAnimes">0</div>
-                            <div class="stat-label">Exibindo</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="genresCount">0</div>
-                            <div class="stat-label">Categorias</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="avgRating">0</div>
-                            <div class="stat-label">Nota Média</div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+            <div class="filter-row">
+              <div class="filter-group">
+                <label>🔍 Buscar:</label>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Digite o Título ou Sinopse"
+                  oninput="searchAnimes()"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="stats stats-compact">
+            <h3
+              style="font-size: 1.1em; margin-bottom: 10px; text-align: center"
+            >
+              📊 Estatísticas da Coleção
+            </h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-value" id="totalAnimes">0</div>
+                <div class="stat-label">Total de Animes</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="currentAnimes">0</div>
+                <div class="stat-label">Exibindo</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="genresCount">0</div>
+                <div class="stat-label">Categorias</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="avgRating">0</div>
+                <div class="stat-label">Nota Média</div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="animes-grid" id="animesGrid">
-            <div class="loading">Carregando animes...</div>
-        </div>
+      <div class="animes-grid" id="animesGrid">
+        <div class="loading">Carregando animes...</div>
+      </div>
     </div>
 
     <script>
-        // Dados dos animes (carregados via JSON)
-        let animes = [];
-        let favorites = new Set();
+      // Dados dos animes (carregados via JSON)
+      let animes = [];
+      let favorites = new Set();
 
-        async function fetchAnimes() {
-            try {
-                const response = await fetch('./Assets/Animes/animes.json');
-                if (!response.ok) throw new Error('Network response was not ok');
-                animes = await response.json();
+      async function fetchAnimes() {
+        try {
+          const response = await fetch("./Assets/Animes/animes.json");
+          if (!response.ok) throw new Error("Network response was not ok");
+          animes = await response.json();
 
-                // Inicialização dependente dos dados
-                updateFilterCounts();
-                renderAnimes();
-            } catch (error) {
-                console.error('Falha ao carregar animes:', error);
-                const grid = document.getElementById('animesGrid');
-                if (grid) {
-                    grid.innerHTML = `
+          // Inicialização dependente dos dados
+          updateFilterCounts();
+          renderAnimes();
+        } catch (error) {
+          console.error("Falha ao carregar animes:", error);
+          const grid = document.getElementById("animesGrid");
+          if (grid) {
+            grid.innerHTML = `
                         <div class="empty-state">
                             <h3>⚠️ Erro ao carregar dados</h3>
                             <p>Não foi possível carregar a lista de animes. Verifique o arquivo animes.json.</p>
                         </div>
                     `;
-                }
-                updateStats();
-            }
+          }
+          updateStats();
         }
+      }
 
-        let currentSlides = {};
-        let sliderIntervals = {};
-        let currentFilter = 'todos';
-        let searchQuery = '';
+      let currentSlides = {};
+      let sliderIntervals = {};
+      let currentFilter = "todos";
+      let searchQuery = "";
 
-        // Variável para animes filtrados/exibidos
-        let filteredAnimes = [];
+      // Variável para animes filtrados/exibidos
+      let filteredAnimes = [];
 
-        // Atualizar estatísticas
-        function updateStats() {
-            const totalAnimes = animes.length;
-            const currentAnimes = filteredAnimes.length || animes.length;
+      // Atualizar estatísticas
+      function updateStats() {
+        const totalAnimes = animes.length;
+        const currentAnimes = filteredAnimes.length || animes.length;
 
-            // Calcular categorias únicas
-            const categories = new Set();
-            animes.forEach(anime => {
-                if (anime.category) {
-                    categories.add(anime.category);
-                }
-            });
+        // Calcular categorias únicas
+        const categories = new Set();
+        animes.forEach((anime) => {
+          if (anime.category) {
+            categories.add(anime.category);
+          }
+        });
 
-            // Calcular nota média (rating de 1 a 5, converter para 0-10)
-            let totalRating = 0;
-            let ratedAnimes = 0;
-            animes.forEach(anime => {
-                if (anime.rating && anime.rating > 0) {
-                    // Converter rating de 1-5 para 0-10 (rating * 2)
-                    totalRating += anime.rating * 2;
-                    ratedAnimes++;
-                }
-            });
-            const avgRating = ratedAnimes > 0 ? (totalRating / ratedAnimes).toFixed(1) : 0;
+        // Calcular nota média (rating de 1 a 5, converter para 0-10)
+        let totalRating = 0;
+        let ratedAnimes = 0;
+        animes.forEach((anime) => {
+          if (anime.rating && anime.rating > 0) {
+            // Converter rating de 1-5 para 0-10 (rating * 2)
+            totalRating += anime.rating * 2;
+            ratedAnimes++;
+          }
+        });
+        const avgRating =
+          ratedAnimes > 0 ? (totalRating / ratedAnimes).toFixed(1) : 0;
 
-            // Atualizar DOM
-            const totalEl = document.getElementById('totalAnimes');
-            const currentEl = document.getElementById('currentAnimes');
-            const genresEl = document.getElementById('genresCount');
-            const avgEl = document.getElementById('avgRating');
+        // Atualizar DOM
+        const totalEl = document.getElementById("totalAnimes");
+        const currentEl = document.getElementById("currentAnimes");
+        const genresEl = document.getElementById("genresCount");
+        const avgEl = document.getElementById("avgRating");
 
-            if (totalEl) totalEl.textContent = totalAnimes;
-            if (currentEl) currentEl.textContent = currentAnimes;
-            if (genresEl) genresEl.textContent = categories.size;
-            if (avgEl) avgEl.textContent = avgRating;
-        }
+        if (totalEl) totalEl.textContent = totalAnimes;
+        if (currentEl) currentEl.textContent = currentAnimes;
+        if (genresEl) genresEl.textContent = categories.size;
+        if (avgEl) avgEl.textContent = avgRating;
+      }
 
-        // Atualizar contadores dos filtros
-        function updateFilterCounts() {
-            const categories = {};
-            animes.forEach(anime => {
-                categories[anime.category] = (categories[anime.category] || 0) + 1;
-            });
+      // Atualizar contadores dos filtros
+      function updateFilterCounts() {
+        const categories = {};
+        animes.forEach((anime) => {
+          categories[anime.category] = (categories[anime.category] || 0) + 1;
+        });
 
-            const filtersContainer = document.getElementById('filters');
-            filtersContainer.innerHTML = '';
+        const filtersContainer = document.getElementById("filters");
+        filtersContainer.innerHTML = "";
 
-            // Adicionar botão "Todos"
-            const todosButton = document.createElement('button');
-            todosButton.className = `filter-tag ${currentFilter === 'todos' ? 'active' : ''}`;
-            todosButton.dataset.category = 'todos';
-            todosButton.innerHTML = `Todos`;
-            todosButton.onclick = function () {
-                document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentFilter = 'todos';
-                if (window._cancelPreloadTabs) window._cancelPreloadTabs();
-                renderAnimes();
+        // Adicionar botão "Todos"
+        const todosButton = document.createElement("button");
+        todosButton.className = `filter-tag ${currentFilter === "todos" ? "active" : ""}`;
+        todosButton.dataset.category = "todos";
+        todosButton.innerHTML = `Todos`;
+        todosButton.onclick = function () {
+          document
+            .querySelectorAll(".filter-tag")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          currentFilter = "todos";
+          if (window._cancelPreloadTabs) window._cancelPreloadTabs();
+          renderAnimes();
+        };
+        filtersContainer.appendChild(todosButton);
+
+        Object.keys(categories)
+          .sort()
+          .forEach((category) => {
+            const button = document.createElement("button");
+            button.className = `filter-tag ${currentFilter === category ? "active" : ""}`;
+            button.dataset.category = category;
+            button.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
+            button.onclick = function () {
+              document
+                .querySelectorAll(".filter-tag")
+                .forEach((b) => b.classList.remove("active"));
+              this.classList.add("active");
+              currentFilter = this.dataset.category;
+              if (window._cancelPreloadTabs) window._cancelPreloadTabs();
+              renderAnimes();
             };
-            filtersContainer.appendChild(todosButton);
+            filtersContainer.appendChild(button);
+          });
 
-            Object.keys(categories).sort().forEach(category => {
-                const button = document.createElement('button');
-                button.className = `filter-tag ${currentFilter === category ? 'active' : ''}`;
-                button.dataset.category = category;
-                button.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
-                button.onclick = function () {
-                    document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.category;
-                    if (window._cancelPreloadTabs) window._cancelPreloadTabs();
-                    renderAnimes();
-                };
-                filtersContainer.appendChild(button);
-            });
+        // Atualizar estatísticas após atualizar filtros
+        updateStats();
+      }
 
-            // Atualizar estatísticas após atualizar filtros
-            updateStats();
+      // Toggle favorito
+      function toggleFavorite(animeId) {
+        if (favorites.has(animeId)) {
+          favorites.delete(animeId);
+        } else {
+          favorites.add(animeId);
         }
 
-        // Toggle favorito
-        function toggleFavorite(animeId) {
-            if (favorites.has(animeId)) {
-                favorites.delete(animeId);
-            } else {
-                favorites.add(animeId);
-            }
-
-            // Atualizar o anime no array
-            const anime = animes.find(a => a.id === animeId);
-            if (anime) {
-                anime.favorite = favorites.has(animeId);
-            }
-
-            renderAnimes(); // Re-render para atualizar o botão
+        // Atualizar o anime no array
+        const anime = animes.find((a) => a.id === animeId);
+        if (anime) {
+          anime.favorite = favorites.has(animeId);
         }
 
-        // Inicializar slider de imagens
-        function initSlider(animeId, images) {
-            if (images.length <= 1) return;
+        renderAnimes(); // Re-render para atualizar o botão
+      }
 
-            currentSlides[animeId] = 0;
+      // Inicializar slider de imagens
+      function initSlider(animeId, images) {
+        if (images.length <= 1) return;
 
-            if (sliderIntervals[animeId]) {
-                clearInterval(sliderIntervals[animeId]);
-            }
+        currentSlides[animeId] = 0;
 
-            sliderIntervals[animeId] = setInterval(() => {
-                const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
-                if (!slider) {
-                    clearInterval(sliderIntervals[animeId]);
-                    return;
-                }
-
-                nextSlide(animeId);
-            }, 4000);
+        if (sliderIntervals[animeId]) {
+          clearInterval(sliderIntervals[animeId]);
         }
 
-        // Navegar para próximo slide
-        function nextSlide(animeId) {
-            const anime = animes.find(a => a.id === animeId);
-            if (!anime || !anime.images || anime.images.length <= 1) return;
+        sliderIntervals[animeId] = setInterval(() => {
+          const slider = document.querySelector(
+            `[data-anime-id="${animeId}"] .image-slider`,
+          );
+          if (!slider) {
+            clearInterval(sliderIntervals[animeId]);
+            return;
+          }
 
-            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
-            if (!slider) return;
+          nextSlide(animeId);
+        }, 4000);
+      }
 
-            const slides = slider.querySelectorAll('.slide');
-            const indicators = slider.querySelectorAll('.indicator');
-            if (slides.length === 0) return;
+      // Navegar para próximo slide
+      function nextSlide(animeId) {
+        const anime = animes.find((a) => a.id === animeId);
+        if (!anime || !anime.images || anime.images.length <= 1) return;
 
-            // Calcula o próximo índice
-            let nextIndex = (currentSlides[animeId] + 1) % anime.images.length;
-            const nextImg = slides[nextIndex].querySelector('img');
-            // Se a imagem já está carregada (complete e naturalWidth > 0), troca normalmente
-            if (nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
-                slides[currentSlides[animeId]].classList.remove('active');
-                if (indicators.length > 0) {
-                    indicators[currentSlides[animeId]].classList.remove('active');
-                }
-                currentSlides[animeId] = nextIndex;
-                slides[currentSlides[animeId]].classList.add('active');
-                if (indicators.length > 0) {
-                    indicators[currentSlides[animeId]].classList.add('active');
-                }
-            } else if (nextImg) {
-                // Se não está carregada, aguarda o carregamento e só então troca
-                const onImgLoad = function () {
-                    nextImg.removeEventListener('load', onImgLoad);
-                    // Chama novamente para garantir a troca
-                    nextSlide(animeId);
-                };
-                nextImg.addEventListener('load', onImgLoad);
-                // Opcional: pode mostrar um loader ou feedback visual aqui
-            }
+        const slider = document.querySelector(
+          `[data-anime-id="${animeId}"] .image-slider`,
+        );
+        if (!slider) return;
+
+        const slides = slider.querySelectorAll(".slide");
+        const indicators = slider.querySelectorAll(".indicator");
+        if (slides.length === 0) return;
+
+        // Calcula o próximo índice
+        let nextIndex = (currentSlides[animeId] + 1) % anime.images.length;
+        const nextImg = slides[nextIndex].querySelector("img");
+        // Se a imagem já está carregada (complete e naturalWidth > 0), troca normalmente
+        if (nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
+          slides[currentSlides[animeId]].classList.remove("active");
+          if (indicators.length > 0) {
+            indicators[currentSlides[animeId]].classList.remove("active");
+          }
+          currentSlides[animeId] = nextIndex;
+          slides[currentSlides[animeId]].classList.add("active");
+          if (indicators.length > 0) {
+            indicators[currentSlides[animeId]].classList.add("active");
+          }
+        } else if (nextImg) {
+          // Se não está carregada, aguarda o carregamento e só então troca
+          const onImgLoad = function () {
+            nextImg.removeEventListener("load", onImgLoad);
+            // Chama novamente para garantir a troca
+            nextSlide(animeId);
+          };
+          nextImg.addEventListener("load", onImgLoad);
+          // Opcional: pode mostrar um loader ou feedback visual aqui
+        }
+      }
+
+      // Navegar para slide anterior
+      function prevSlide(animeId) {
+        const anime = animes.find((a) => a.id === animeId);
+        if (!anime || !anime.images || anime.images.length <= 1) return;
+
+        const slider = document.querySelector(
+          `[data-anime-id="${animeId}"] .image-slider`,
+        );
+        if (!slider) return;
+
+        const slides = slider.querySelectorAll(".slide");
+        const indicators = slider.querySelectorAll(".indicator");
+
+        if (slides.length === 0) return;
+
+        slides[currentSlides[animeId]].classList.remove("active");
+        if (indicators.length > 0) {
+          indicators[currentSlides[animeId]].classList.remove("active");
         }
 
-        // Navegar para slide anterior
-        function prevSlide(animeId) {
-            const anime = animes.find(a => a.id === animeId);
-            if (!anime || !anime.images || anime.images.length <= 1) return;
+        currentSlides[animeId] =
+          currentSlides[animeId] === 0
+            ? anime.images.length - 1
+            : currentSlides[animeId] - 1;
 
-            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
-            if (!slider) return;
+        slides[currentSlides[animeId]].classList.add("active");
+        if (indicators.length > 0) {
+          indicators[currentSlides[animeId]].classList.add("active");
+        }
+      }
 
-            const slides = slider.querySelectorAll('.slide');
-            const indicators = slider.querySelectorAll('.indicator');
+      // Renderizar animes
+      function renderAnimes() {
+        const grid = document.getElementById("animesGrid");
+        Object.values(sliderIntervals).forEach((interval) =>
+          clearInterval(interval),
+        );
+        sliderIntervals = {};
 
-            if (slides.length === 0) return;
-
-            slides[currentSlides[animeId]].classList.remove('active');
-            if (indicators.length > 0) {
-                indicators[currentSlides[animeId]].classList.remove('active');
-            }
-
-            currentSlides[animeId] = currentSlides[animeId] === 0 ? anime.images.length - 1 : currentSlides[animeId] - 1;
-
-            slides[currentSlides[animeId]].classList.add('active');
-            if (indicators.length > 0) {
-                indicators[currentSlides[animeId]].classList.add('active');
-            }
+        filteredAnimes = animes;
+        if (searchQuery) {
+          filteredAnimes = filteredAnimes.filter(
+            (anime) =>
+              anime.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              anime.synopsis.toLowerCase().includes(searchQuery.toLowerCase()),
+          );
+        } else if (currentFilter !== "todos") {
+          filteredAnimes = filteredAnimes.filter(
+            (anime) =>
+              anime.category.toLowerCase() === currentFilter.toLowerCase(),
+          );
         }
 
-        // Renderizar animes
-        function renderAnimes() {
-            const grid = document.getElementById('animesGrid');
-            Object.values(sliderIntervals).forEach(interval => clearInterval(interval));
-            sliderIntervals = {};
+        // Atualizar estatísticas após filtrar
+        updateStats();
 
-            filteredAnimes = animes;
-            if (searchQuery) {
-                filteredAnimes = filteredAnimes.filter(anime =>
-                    anime.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    anime.synopsis.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-            } else if (currentFilter !== 'todos') {
-                filteredAnimes = filteredAnimes.filter(anime =>
-                    anime.category.toLowerCase() === currentFilter.toLowerCase()
-                );
-            }
-
-            // Atualizar estatísticas após filtrar
-            updateStats();
-
-            if (filteredAnimes.length === 0) {
-                grid.innerHTML = `
+        if (filteredAnimes.length === 0) {
+          grid.innerHTML = `
                     <div class="empty-state">
                         <h3>🍥 Nenhum anime encontrado</h3>
-                        <p>${searchQuery ? 'Tente uma pesquisa diferente.' : 'Tente outro filtro.'}</p>
+                        <p>${searchQuery ? "Tente uma pesquisa diferente." : "Tente outro filtro."}</p>
                     </div>
                 `;
-                updateStats(); // Atualizar estatísticas mesmo quando não há resultados
-                return;
-            }
+          updateStats(); // Atualizar estatísticas mesmo quando não há resultados
+          return;
+        }
 
-            // Renderiza apenas a primeira imagem de cada anime
-            grid.innerHTML = filteredAnimes.map(anime => {
-                const images = anime.images || [];
-                const hasImages = images.length > 0;
-                let imageContent = '';
-                if (hasImages) {
-                    // Apenas a primeira imagem é renderizada inicialmente
-                    imageContent = `
+        // Renderiza apenas a primeira imagem de cada anime
+        grid.innerHTML = filteredAnimes
+          .map((anime) => {
+            const images = anime.images || [];
+            const hasImages = images.length > 0;
+            let imageContent = "";
+            if (hasImages) {
+              // Apenas a primeira imagem é renderizada inicialmente
+              imageContent = `
                         <div class="image-slider">
                             <div class="slide active">
                                 <img src="${images[0]}" alt="${anime.title}" data-anime-id="${anime.id}" data-slide-index="0" style="opacity: 0; transition: opacity 0.3s ease;" onload="this.style.opacity='1';window.lazyLoadAnimeSlides && window.lazyLoadAnimeSlides('${anime.id}')" onerror="this.style.display='none';">
                             </div>
                         </div>
                     `;
-                } else {
-                    imageContent = '<div class="slide-placeholder">🎌</div>';
-                }
-                return `
+            } else {
+              imageContent = '<div class="slide-placeholder">🎌</div>';
+            }
+            return `
                     <div class="anime-card" data-anime-id="${anime.id}">
-                        <div class="anime-images ${hasImages ? 'has-images' : ''}">
+                        <div class="anime-images ${hasImages ? "has-images" : ""}">
                             ${imageContent}
                         </div>
                         <div class="anime-title">${anime.title}</div>
                         <!--<div class="anime-category">${anime.category}</div>-->
                         <div class="anime-rating">
                             <span class="stars">
-                                ${[1, 2, 3, 4, 5].map(i => {
-                    if (i <= anime.rating) {
-                        if (anime.rating === 5 && i === 5) {
-                            return '<span class="star-special">⭐</span>';
-                        } else {
-                            return '⭐';
-                        }
-                    } else {
-                        return '';
-                    }
-                }).join('')}
+                                ${[1, 2, 3, 4, 5]
+                                  .map((i) => {
+                                    if (i <= anime.rating) {
+                                      if (anime.rating === 5 && i === 5) {
+                                        return '<span class="star-special">⭐</span>';
+                                      } else {
+                                        return "⭐";
+                                      }
+                                    } else {
+                                      return "";
+                                    }
+                                  })
+                                  .join("")}
                             </span>
                             <span>(${anime.rating}/5)</span>
                         </div>
                         <div class="anime-synopsis">${anime.synopsis}</div>
-                        ${anime.episodes ? `<div class="anime-info">${anime.episodes}</div>` : ''}
+                        ${anime.episodes ? `<div class="anime-info">${anime.episodes}</div>` : ""}
                         <div class="anime-actions">
                             <a href="${anime.watchUrl}" target="_blank" class="action-btn watch">🎬 Assistir</a>
                         </div>
                     </div>
                 `;
-            }).join('');
+          })
+          .join("");
 
-            // Lazy load dos slides restantes após a primeira imagem carregar
-            window.lazyLoadAnimeSlides = function (animeId) {
-                const anime = animes.find(a => a.id === animeId);
-                if (!anime || !anime.images || anime.images.length <= 1) return;
-                const card = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
-                if (!card) return;
-                // Evita duplicar slides
-                if (card.querySelectorAll('.slide').length > 1) return;
-                // Adiciona os slides restantes
-                for (let i = 1; i < anime.images.length; i++) {
-                    const slide = document.createElement('div');
-                    slide.className = 'slide';
-                    slide.innerHTML = `<img src="${anime.images[i]}" alt="${anime.title}" style="opacity: 0; transition: opacity 0.3s ease;" onload=\"this.style.opacity='1';\" onerror=\"this.style.display='none';\">`;
-                    card.appendChild(slide);
-                }
-                // Adiciona controles e indicadores se necessário
-                if (anime.images.length > 1 && !card.querySelector('.slide-controls')) {
-                    const prevBtn = document.createElement('button');
-                    prevBtn.className = 'slide-controls prev';
-                    prevBtn.innerHTML = '‹';
-                    prevBtn.onclick = function () { prevSlide(animeId); };
-                    card.appendChild(prevBtn);
-                    const nextBtn = document.createElement('button');
-                    nextBtn.className = 'slide-controls next';
-                    nextBtn.innerHTML = '›';
-                    nextBtn.onclick = function () { nextSlide(animeId); };
-                    card.appendChild(nextBtn);
-                    // Indicadores
-                    const indicators = document.createElement('div');
-                    indicators.className = 'slide-indicators';
-                    for (let i = 0; i < anime.images.length; i++) {
-                        const indicator = document.createElement('div');
-                        indicator.className = 'indicator' + (i === 0 ? ' active' : '');
-                        indicator.onclick = function () { changeSlide(animeId, i); };
-                        indicators.appendChild(indicator);
-                    }
-                    card.appendChild(indicators);
-                }
-                // Inicializa o slider automático
-                setTimeout(() => {
-                    initSlider(animeId, anime.images);
-                }, 100);
-                // Após carregar todos os slides da aba, dispara o pré-carregamento das outras abas
-                lazyLoadOtherTabs();
+        // Lazy load dos slides restantes após a primeira imagem carregar
+        window.lazyLoadAnimeSlides = function (animeId) {
+          const anime = animes.find((a) => a.id === animeId);
+          if (!anime || !anime.images || anime.images.length <= 1) return;
+          const card = document.querySelector(
+            `[data-anime-id="${animeId}"] .image-slider`,
+          );
+          if (!card) return;
+          // Evita duplicar slides
+          if (card.querySelectorAll(".slide").length > 1) return;
+          // Adiciona os slides restantes
+          for (let i = 1; i < anime.images.length; i++) {
+            const slide = document.createElement("div");
+            slide.className = "slide";
+            slide.innerHTML = `<img src="${anime.images[i]}" alt="${anime.title}" style="opacity: 0; transition: opacity 0.3s ease;" onload=\"this.style.opacity='1';\" onerror=\"this.style.display='none';\">`;
+            card.appendChild(slide);
+          }
+          // Adiciona controles e indicadores se necessário
+          if (
+            anime.images.length > 1 &&
+            !card.querySelector(".slide-controls")
+          ) {
+            const prevBtn = document.createElement("button");
+            prevBtn.className = "slide-controls prev";
+            prevBtn.innerHTML = "‹";
+            prevBtn.onclick = function () {
+              prevSlide(animeId);
             };
-        }
-
-        // Pré-carregar imagens das outras abas
-        function lazyLoadOtherTabs() {
-            // Só executa se não estiver carregando outra aba
-            if (window._preloadingTabs) return;
-            window._preloadingTabs = true;
-            let cancelled = false;
-            window._cancelPreloadTabs = function () {
-                cancelled = true;
-                window._preloadingTabs = false;
+            card.appendChild(prevBtn);
+            const nextBtn = document.createElement("button");
+            nextBtn.className = "slide-controls next";
+            nextBtn.innerHTML = "›";
+            nextBtn.onclick = function () {
+              nextSlide(animeId);
             };
-            const categories = [...new Set(animes.map(a => a.category))];
-            const current = currentFilter;
-            let idx = 0;
-            function preloadNextCategory() {
-                if (cancelled) { window._preloadingTabs = false; return; }
-                if (idx >= categories.length) { window._preloadingTabs = false; return; }
-                const cat = categories[idx++];
-                if (cat === current || cat === 'todos') { preloadNextCategory(); return; }
-                const animesCat = animes.filter(a => a.category === cat);
-                let loaded = 0;
-                if (animesCat.length === 0) { preloadNextCategory(); return; }
-                animesCat.forEach(anime => {
-                    if (cancelled) return;
-                    const img = new window.Image();
-                    img.src = anime.images[0];
-                    img.onload = img.onerror = function () {
-                        if (cancelled) return;
-                        loaded++;
-                        if (loaded === animesCat.length) {
-                            let loadedSlides = 0;
-                            if (!anime.images || anime.images.length <= 1) { loadedSlides++; }
-                            for (let i = 1; i < anime.images.length; i++) {
-                                if (cancelled) return;
-                                const slideImg = new window.Image();
-                                slideImg.src = anime.images[i];
-                                slideImg.onload = slideImg.onerror = function () {
-                                    if (cancelled) return;
-                                    loadedSlides++;
-                                    if (loadedSlides === anime.images.length - 1) {
-                                        preloadNextCategory();
-                                    }
-                                };
-                            }
-                            if (anime.images.length <= 1) preloadNextCategory();
-                        }
-                    };
-                });
+            card.appendChild(nextBtn);
+            // Indicadores
+            const indicators = document.createElement("div");
+            indicators.className = "slide-indicators";
+            for (let i = 0; i < anime.images.length; i++) {
+              const indicator = document.createElement("div");
+              indicator.className = "indicator" + (i === 0 ? " active" : "");
+              indicator.onclick = function () {
+                changeSlide(animeId, i);
+              };
+              indicators.appendChild(indicator);
             }
+            card.appendChild(indicators);
+          }
+          // Inicializa o slider automático
+          setTimeout(() => {
+            initSlider(animeId, anime.images);
+          }, 100);
+          // Após carregar todos os slides da aba, dispara o pré-carregamento das outras abas
+          lazyLoadOtherTabs();
+        };
+      }
+
+      // Pré-carregar imagens das outras abas
+      function lazyLoadOtherTabs() {
+        // Só executa se não estiver carregando outra aba
+        if (window._preloadingTabs) return;
+        window._preloadingTabs = true;
+        let cancelled = false;
+        window._cancelPreloadTabs = function () {
+          cancelled = true;
+          window._preloadingTabs = false;
+        };
+        const categories = [...new Set(animes.map((a) => a.category))];
+        const current = currentFilter;
+        let idx = 0;
+        function preloadNextCategory() {
+          if (cancelled) {
+            window._preloadingTabs = false;
+            return;
+          }
+          if (idx >= categories.length) {
+            window._preloadingTabs = false;
+            return;
+          }
+          const cat = categories[idx++];
+          if (cat === current || cat === "todos") {
             preloadNextCategory();
-        }
-
-        // Mudar slide manualmente
-        function changeSlide(animeId, slideIndex) {
-            const slider = document.querySelector(`[data-anime-id="${animeId}"] .image-slider`);
-            if (!slider) return;
-
-            const slides = slider.querySelectorAll('.slide');
-            const indicators = slider.querySelectorAll('.indicator');
-
-            slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-
-            if (slides[slideIndex]) {
-                slides[slideIndex].classList.add('active');
-            }
-            if (indicators[slideIndex]) {
-                indicators[slideIndex].classList.add('active');
-            }
-
-            currentSlides[animeId] = slideIndex;
-
-            // Reiniciar o timer do slider automático
-            if (sliderIntervals[animeId]) {
-                clearInterval(sliderIntervals[animeId]);
-                const images = animes.find(anime => anime.id === animeId)?.images || [];
-                if (images.length > 1) {
-                    initSlider(animeId, images);
+            return;
+          }
+          const animesCat = animes.filter((a) => a.category === cat);
+          let loaded = 0;
+          if (animesCat.length === 0) {
+            preloadNextCategory();
+            return;
+          }
+          animesCat.forEach((anime) => {
+            if (cancelled) return;
+            const img = new window.Image();
+            img.src = anime.images[0];
+            img.onload = img.onerror = function () {
+              if (cancelled) return;
+              loaded++;
+              if (loaded === animesCat.length) {
+                let loadedSlides = 0;
+                if (!anime.images || anime.images.length <= 1) {
+                  loadedSlides++;
                 }
-            }
+                for (let i = 1; i < anime.images.length; i++) {
+                  if (cancelled) return;
+                  const slideImg = new window.Image();
+                  slideImg.src = anime.images[i];
+                  slideImg.onload = slideImg.onerror = function () {
+                    if (cancelled) return;
+                    loadedSlides++;
+                    if (loadedSlides === anime.images.length - 1) {
+                      preloadNextCategory();
+                    }
+                  };
+                }
+                if (anime.images.length <= 1) preloadNextCategory();
+              }
+            };
+          });
+        }
+        preloadNextCategory();
+      }
+
+      // Mudar slide manualmente
+      function changeSlide(animeId, slideIndex) {
+        const slider = document.querySelector(
+          `[data-anime-id="${animeId}"] .image-slider`,
+        );
+        if (!slider) return;
+
+        const slides = slider.querySelectorAll(".slide");
+        const indicators = slider.querySelectorAll(".indicator");
+
+        slides.forEach((slide) => slide.classList.remove("active"));
+        indicators.forEach((indicator) => indicator.classList.remove("active"));
+
+        if (slides[slideIndex]) {
+          slides[slideIndex].classList.add("active");
+        }
+        if (indicators[slideIndex]) {
+          indicators[slideIndex].classList.add("active");
         }
 
-        // Função de busca
-        function searchAnimes() {
-            const searchInput = document.getElementById('searchInput');
-            searchQuery = searchInput.value.trim();
-            renderAnimes();
+        currentSlides[animeId] = slideIndex;
+
+        // Reiniciar o timer do slider automático
+        if (sliderIntervals[animeId]) {
+          clearInterval(sliderIntervals[animeId]);
+          const images =
+            animes.find((anime) => anime.id === animeId)?.images || [];
+          if (images.length > 1) {
+            initSlider(animeId, images);
+          }
+        }
+      }
+
+      // Função de busca
+      function searchAnimes() {
+        const searchInput = document.getElementById("searchInput");
+        searchQuery = searchInput.value.trim();
+        renderAnimes();
+      }
+
+      // Configurar pesquisa
+      function setupSearch() {
+        const searchInput = document.getElementById("searchInput");
+        let searchTimeout;
+
+        searchInput.addEventListener("input", function () {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            searchAnimes();
+          }, 300);
+        });
+      }
+
+      // Inicializar aplicação
+      function init() {
+        setupSearch();
+        fetchAnimes();
+      }
+
+      // Inicializar quando a página carregar
+      init();
+
+      // Função para criar campo de estrelas
+      function createStarfield() {
+        const starfield = document.getElementById("starfield");
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        starfield.innerHTML = "";
+
+        // Estrelas em movimento
+        for (let i = 0; i < 200; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+
+          const angle = Math.random() * 2 * Math.PI;
+          const initialRadius = Math.random() * 50 + 10;
+          const startX = centerX + Math.cos(angle) * initialRadius;
+          const startY = centerY + Math.sin(angle) * initialRadius;
+
+          const directionX = Math.cos(angle);
+          const directionY = Math.sin(angle);
+
+          const maxDistance = Math.sqrt(
+            Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2),
+          );
+          const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
+
+          const starType = Math.random();
+          if (starType < 0.6) {
+            star.classList.add("distant");
+          } else if (starType < 0.85) {
+            star.classList.add("medium");
+          } else {
+            star.classList.add("close");
+          }
+
+          const colorType = Math.random();
+          if (colorType < 0.1) {
+            star.classList.add("blue");
+          } else if (colorType < 0.2) {
+            star.classList.add("yellow");
+          }
+
+          star.style.left = startX + "px";
+          star.style.top = startY + "px";
+          star.style.setProperty("--dx", directionX * travelDistance + "px");
+          star.style.setProperty("--dy", directionY * travelDistance + "px");
+          star.style.animationDelay = Math.random() * 20 + "s";
+
+          starfield.appendChild(star);
         }
 
-        // Configurar pesquisa
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            let searchTimeout;
+        // Estrelas estacionárias
+        for (let i = 0; i < 50; i++) {
+          const staticStar = document.createElement("div");
+          staticStar.className = "star distant";
+          staticStar.style.position = "absolute";
+          staticStar.style.left = Math.random() * window.innerWidth + "px";
+          staticStar.style.top = Math.random() * window.innerHeight + "px";
+          staticStar.style.opacity = Math.random() * 0.3 + 0.1;
+          staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
 
-            searchInput.addEventListener('input', function () {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    searchAnimes();
-                }, 300);
-            });
+          starfield.appendChild(staticStar);
         }
+      }
 
-        // Inicializar aplicação
-        function init() {
-            setupSearch();
-            fetchAnimes();
+      // Menu mobile
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        navLinks.classList.toggle("active");
+      }
+
+      // Fechar menu ao clicar fora
+      document.addEventListener("click", function (e) {
+        const nav = document.querySelector(".navigation");
+        const navLinks = document.getElementById("navLinks");
+        if (!nav.contains(e.target)) {
+          navLinks.classList.remove("active");
         }
+      });
 
-        // Inicializar quando a página carregar
+      // Efeito paralaxe nos elementos flutuantes
+      document.addEventListener("mousemove", function (e) {
+        const floatingElements = document.querySelectorAll(".floating-element");
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+
+        floatingElements.forEach((element, index) => {
+          const speed = (index + 1) * 0.5;
+          const xPos = (x - 0.5) * speed * 20;
+          const yPos = (y - 0.5) * speed * 20;
+
+          element.style.transform = `translate(${xPos}px, ${yPos}px)`;
+        });
+      });
+
+      // Inicialização quando o DOM estiver carregado
+      document.addEventListener("DOMContentLoaded", function () {
+        createStarfield();
+
+        // Recriar estrelas no resize
+        window.addEventListener("resize", createStarfield);
+
+        // Inicializar a aplicação
         init();
-
-        // Função para criar campo de estrelas
-        function createStarfield() {
-            const starfield = document.getElementById('starfield');
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-
-            starfield.innerHTML = '';
-
-            // Estrelas em movimento
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-
-                const angle = Math.random() * 2 * Math.PI;
-                const initialRadius = Math.random() * 50 + 10;
-                const startX = centerX + Math.cos(angle) * initialRadius;
-                const startY = centerY + Math.sin(angle) * initialRadius;
-
-                const directionX = Math.cos(angle);
-                const directionY = Math.sin(angle);
-
-                const maxDistance = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
-                const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
-
-                const starType = Math.random();
-                if (starType < 0.6) {
-                    star.classList.add('distant');
-                } else if (starType < 0.85) {
-                    star.classList.add('medium');
-                } else {
-                    star.classList.add('close');
-                }
-
-                const colorType = Math.random();
-                if (colorType < 0.1) {
-                    star.classList.add('blue');
-                } else if (colorType < 0.2) {
-                    star.classList.add('yellow');
-                }
-
-                star.style.left = startX + 'px';
-                star.style.top = startY + 'px';
-                star.style.setProperty('--dx', (directionX * travelDistance) + 'px');
-                star.style.setProperty('--dy', (directionY * travelDistance) + 'px');
-                star.style.animationDelay = Math.random() * 20 + 's';
-
-                starfield.appendChild(star);
-            }
-
-            // Estrelas estacionárias
-            for (let i = 0; i < 50; i++) {
-                const staticStar = document.createElement('div');
-                staticStar.className = 'star distant';
-                staticStar.style.position = 'absolute';
-                staticStar.style.left = Math.random() * window.innerWidth + 'px';
-                staticStar.style.top = Math.random() * window.innerHeight + 'px';
-                staticStar.style.opacity = Math.random() * 0.3 + 0.1;
-                staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
-
-                starfield.appendChild(staticStar);
-            }
-        }
-
-        // Menu mobile
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Fechar menu ao clicar fora
-        document.addEventListener('click', function (e) {
-            const nav = document.querySelector('.navigation');
-            const navLinks = document.getElementById('navLinks');
-            if (!nav.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Efeito paralaxe nos elementos flutuantes
-        document.addEventListener('mousemove', function (e) {
-            const floatingElements = document.querySelectorAll('.floating-element');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            floatingElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.5;
-                const xPos = (x - 0.5) * speed * 20;
-                const yPos = (y - 0.5) * speed * 20;
-
-                element.style.transform = `translate(${xPos}px, ${yPos}px)`;
-            });
-        });
-
-        // Inicialização quando o DOM estiver carregado
-        document.addEventListener('DOMContentLoaded', function () {
-            createStarfield();
-
-            // Recriar estrelas no resize
-            window.addEventListener('resize', createStarfield);
-
-            // Inicializar a aplicação
-            init();
-        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
