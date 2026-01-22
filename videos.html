@@ -557,9 +557,6 @@
         }
 
         .video-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(187, 134, 252, 0.1);
@@ -933,7 +930,7 @@
         let currentFilter = 'Todos';
 
         // Função para renderizar vídeos
-        
+
         async function fetchVideos() {
             try {
                 const response = await fetch('./Assets/Videos/minha_lista_videos.json');
@@ -965,8 +962,8 @@
                     <div class="video-info">
                         <h3 class="video-title">${video.title}</h3>
                         <p class="video-artist">${video.artist}</p>
-                        <p class="video-description">${video.description}</p>
                         <div class="video-stats">
+                            <p class="video-description">${video.description}</p>
                         </div>
                     </div>
                 `;
@@ -1050,7 +1047,7 @@
                 // Tratamento especial para YouTube
                 if (url.includes('youtube.com') || url.includes('youtu.be')) {
                     let videoId = '';
-                    
+
                     // Extrair ID de diferentes formatos
                     if (url.includes('/embed/')) {
                         videoId = url.split('/embed/')[1].split('?')[0];
