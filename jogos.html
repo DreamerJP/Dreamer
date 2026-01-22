@@ -275,6 +275,147 @@
             .unified-header p {
                 font-size: 1em;
             }
+
+            .games-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                padding: 0 15px;
+            }
+
+            .game-card {
+                margin: 0;
+                border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .modal-content {
+                width: 100vw;
+                height: 100vh;
+                max-width: 100%;
+                max-height: 100%;
+                margin: 0;
+                border-radius: 0;
+                top: 0;
+                transform: none;
+            }
+
+            /* Swap Backdrops */
+            #modalBackdrop {
+                display: none !important;
+            }
+
+            .modal-backdrop.mobile-only {
+                display: block !important;
+                object-fit: contain;
+                /* Ensures the whole poster is visible without cropping */
+                opacity: 1 !important;
+                filter: brightness(0.4);
+                background-color: #000;
+                /* Fill empty space with black */
+            }
+
+            .modal-info {
+                display: flex;
+                /* Use Flexbox for ordering */
+                flex-direction: column;
+                gap: 20px;
+                padding-bottom: 40px;
+            }
+
+            /* Reordering Sections */
+            .modal-header-title {
+                order: 1;
+            }
+
+            .modal-plot-section {
+                order: 2;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+            }
+
+            .modal-actions {
+                order: 3;
+                margin-top: 10px;
+                padding-top: 0;
+                border-top: none;
+            }
+
+            .info-grid {
+                order: 4;
+                margin-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 20px;
+            }
+
+            .modal-poster {
+                display: none;
+                /* Hide small poster since background is now the poster */
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+                text-align: left;
+                margin-bottom: 10px;
+            }
+
+            .modal-body {
+                padding: 0 20px 20px;
+                height: calc(100% - 60px);
+            }
+
+            .modal-header {
+                padding: 15px 15px 0;
+                justify-content: flex-end;
+                /* Align close button to the right */
+            }
+
+            .close {
+                font-size: 24px;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* 2-Column Info Grid for Mobile */
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                /* Force 2 columns */
+                gap: 15px 10px;
+            }
+
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                font-size: 0.85rem;
+            }
+
+            .info-item.full-width {
+                grid-column: span 2;
+            }
+
+            .info-item strong {
+                min-width: auto;
+                color: var(--primary-color);
+            }
+
+            /* Side-by-side Buttons */
+            .modal-actions {
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .modal-actions a,
+            .modal-actions button {
+                flex: 1;
+                justify-content: center;
+                padding: 12px 10px;
+                font-size: 0.9rem;
+                text-align: center;
+            }
         }
 
         .menu-toggle {
@@ -730,6 +871,10 @@
             z-index: 0;
         }
 
+        .modal-backdrop.mobile-only {
+            display: none;
+        }
+
 
         .modal-content::before {
             content: '';
@@ -798,6 +943,16 @@
             gap: 40px;
             align-items: start;
             min-height: 500px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 30px;
+            margin-bottom: 30px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(187, 134, 252, 0.2);
         }
 
 
@@ -2206,6 +2361,17 @@
             const modalBackdrop = document.getElementById('modalBackdrop');
             const modalDetails = document.getElementById('modalDetails');
 
+            // Mobile Backdrop (Poster)
+            let mobileBackdrop = document.getElementById('modalBackdropMobile');
+            if (!mobileBackdrop) {
+                mobileBackdrop = document.createElement('img');
+                mobileBackdrop.id = 'modalBackdropMobile';
+                mobileBackdrop.className = 'modal-backdrop mobile-only';
+                // Insert after the main backdrop
+                modalBackdrop.parentNode.insertBefore(mobileBackdrop, modalBackdrop.nextSibling);
+            }
+            mobileBackdrop.src = details.cover || details.background || '';
+
             modalPoster.src = details.cover || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjhmOWZhIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiM2Yzc1N2QiPvCfjoY8L3RleHQ+Cjwvc3ZnPg==';
 
 
@@ -2222,8 +2388,21 @@
             const rating = parseFloat(details.rating) || 0;
             const stars = generateStars(rating);
 
+            // Re-structured layout for Flex ordering
             modalDetails.innerHTML = `
-                <h2 class="modal-title">${details.title}</h2>
+                <div class="modal-header-title">
+                    <h2 class="modal-title">${details.title}</h2>
+                </div>
+
+                <div class="modal-plot-section">
+                    <h4>📖 Sinopse <small style="color: #888; font-size: 0.8em;">(em inglês)</small></h4>
+                    <p>${details.summary}</p>
+                </div>
+
+                <div class="modal-actions">
+                    ${details.trailer ? `<a href="#" onclick="openTrailerModal('${details.trailer}', '${details.title.replace(/'/g, "\\'")}')" class="trailer-btn">🎬 Ver Trailer</a>` : ''}
+                    <a href="${details.url}" target="_blank">🔗 Ver no IGDB</a>
+                </div>
 
                 <div class="info-grid">
                     <div class="info-item">
@@ -2245,20 +2424,15 @@
                         <strong>⭐ Avaliação:</strong> ${normalizeRating(details.rating)}/10 <span class="stars">${stars}</span>
                     </div>
                 </div>
-
-                <div class="modal-plot-section">
-                    <h4>📖 Sinopse <small style="color: #888; font-size: 0.8em;">(em inglês)</small></h4>
-                    <p>${details.summary}</p>
-                </div>
-
-                <div class="modal-actions">
-                    ${details.trailer ? `<a href="#" onclick="openTrailerModal('${details.trailer}', '${details.title.replace(/'/g, "\\'")}')" class="trailer-btn">🎬 Ver Trailer</a>` : ''}
-                    <a href="${details.url}" target="_blank">🔗 Ver no IGDB</a>
-                </div>
             `;
 
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+
+            // Push history state to allow back button closing
+            if (window.innerWidth <= 768) {
+                history.pushState({ modalOpen: true }, '', '#game-modal');
+            }
         }
 
         // Fechar modal
@@ -2350,6 +2524,14 @@
             if (e.key === '/' && !e.ctrlKey && !e.altKey) {
                 e.preventDefault();
                 document.getElementById('searchInput').focus();
+            }
+        });
+
+        // Handle Back Button closing
+        window.addEventListener('popstate', function (event) {
+            const modal = document.getElementById('gameModal');
+            if (modal.style.display === 'block') {
+                closeModal();
             }
         });
 
