@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogos</title>
     <style>
+        /* ========================================
+           VARIÁVEIS CSS
+           ======================================== */
         :root {
             --primary-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             --primary-color: #bb86fc;
@@ -21,6 +24,9 @@
             --transition-speed: 0.8s;
         }
 
+        /* ========================================
+           RESET E ESTILOS BASE
+           ======================================== */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +42,9 @@
             padding: 20px;
         }
 
-        /* Campo de Estrelas */
+        /* ========================================
+           ANIMAÇÃO DE FUNDO - CAMPO DE ESTRELAS
+           ======================================== */
         .starfield {
             position: fixed;
             top: 0;
@@ -123,7 +131,9 @@
             }
         }
 
-        /* Navegação */
+        /* ========================================
+           NAVEGAÇÃO
+           ======================================== */
         .navigation {
             position: fixed;
             top: 0;
@@ -293,7 +303,6 @@
                 width: 100vw;
                 height: 100vh;
                 height: 100dvh;
-                /* Use dynamic viewport height for mobile browsers */
                 max-width: 100%;
                 max-height: 100%;
                 margin: 0;
@@ -304,16 +313,13 @@
                 flex-direction: column;
             }
 
-            /* Mobile Poster - Hide the mini inline poster as requested */
             .modal-poster {
                 display: none;
             }
 
-            /* Show backdrop on mobile as the main visual */
             .modal-backdrop.mobile-only {
                 display: block !important;
                 object-fit: cover;
-                /* Fill the screen */
                 opacity: 1 !important;
                 filter: brightness(0.4);
                 background-color: #000;
@@ -332,7 +338,7 @@
                 padding-bottom: 40px;
             }
 
-            /* Reordering Sections */
+
             .modal-header-title {
                 order: 1;
             }
@@ -370,15 +376,13 @@
                 flex: 1;
                 overflow-y: auto;
                 z-index: 2;
-                /* Ensure above backdrop */
+
             }
 
             .modal-header {
                 padding: 15px 15px 0;
                 justify-content: flex-end;
-                /* Align close button to the right */
                 flex-shrink: 0;
-                /* Prevent header from shrinking */
                 z-index: 3;
             }
 
@@ -388,7 +392,7 @@
                 height: 40px;
             }
 
-            /* Single Column Info List for Mobile */
+
             .info-grid {
                 display: flex;
                 flex-direction: column;
@@ -405,7 +409,6 @@
 
             .info-item.full-width {
                 grid-column: auto;
-                /* Reset grid property */
             }
 
             .info-item strong {
@@ -414,7 +417,7 @@
                 flex-shrink: 0;
             }
 
-            /* Side-by-side Buttons */
+
             .modal-actions {
                 display: flex;
                 flex-direction: row;
@@ -440,14 +443,16 @@
             color: var(--text-primary);
         }
 
-        /* Container principal */
+        /* ========================================
+           LAYOUT PRINCIPAL
+           ======================================== */
         .main-container {
             max-width: 1400px;
             margin: 100px auto 0 auto;
             padding: 0 20px;
         }
 
-        /* Header */
+        /* Header Unificado */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -486,7 +491,9 @@
             text-shadow: 0 0 10px var(--primary-color), 1px 1px 2px var(--shadow-color);
         }
 
-        /* Filtros */
+        /* ========================================
+           FILTROS E CONTROLES
+           ======================================== */
         .filters {
             flex: 2;
             min-width: 320px;
@@ -568,7 +575,9 @@
             box-shadow: 0 5px 15px rgba(207, 102, 121, 0.4);
         }
 
-        /* Loading */
+        /* ========================================
+           ESTADOS DE CARREGAMENTO
+           ======================================== */
         .loading {
             text-align: center;
             padding: 60px;
@@ -597,7 +606,9 @@
             }
         }
 
-        /* Grid de jogos */
+        /* ========================================
+           GRID DE JOGOS
+           ======================================== */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -605,7 +616,7 @@
             margin-bottom: 40px;
         }
 
-        /* Separadores de página */
+        /* Separadores de Página */
         .page-separator {
             grid-column: 1 / -1;
             display: flex;
@@ -657,7 +668,9 @@
             }
         }
 
-        /* Paginação */
+        /* ========================================
+           PAGINAÇÃO
+           ======================================== */
         .pagination-container {
             grid-column: 1 / -1;
             display: flex;
@@ -847,7 +860,10 @@
             white-space: nowrap;
         }
 
-        /* Modal */
+        /* ========================================
+           MODAL DE DETALHES DO JOGO
+           ======================================== */
+        /* Container Principal do Modal */
         .modal {
             display: none;
             position: fixed;
@@ -871,7 +887,7 @@
             max-height: none;
             overflow: hidden;
             position: absolute;
-            /* Changed to absolute for centering */
+
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -879,6 +895,7 @@
         }
 
 
+        /* Backdrop (Imagem de Fundo) */
         .modal-backdrop {
             position: absolute;
             top: 0;
@@ -894,6 +911,7 @@
         }
 
 
+        /* Overlay de Gradiente para Legibilidade */
         .modal-content::before {
             content: '';
             position: absolute;
@@ -912,6 +930,7 @@
         }
 
 
+        /* Cabeçalho do Modal (Botão Fechar) */
         .modal-header {
             position: relative;
             z-index: 3;
@@ -935,7 +954,7 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             padding-bottom: 4px;
-            /* Compensação visual para o caractere multiplication */
+
             line-height: 1;
         }
 
@@ -945,6 +964,7 @@
         }
 
 
+        /* Corpo do Modal (Conteúdo Rolável) */
         .modal-body {
             position: relative;
             z-index: 2;
@@ -955,6 +975,7 @@
         }
 
 
+        /* Layout de Informações (Poster + Detalhes) */
         .modal-info {
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -1089,7 +1110,7 @@
             margin-left: 5px;
         }
 
-        /* Scrollbar customizada */
+        /* Scrollbar Customizada */
         .modal-body::-webkit-scrollbar {
             width: 8px;
         }
@@ -1108,7 +1129,9 @@
             background: rgba(187, 134, 252, 0.5);
         }
 
-        /* Stats */
+        /* ========================================
+           ESTATÍSTICAS
+           ======================================== */
         .stats {
             background: var(--bg-main);
             border-radius: 15px;
@@ -1150,7 +1173,9 @@
             opacity: 0.9;
         }
 
-        /* Responsivo */
+        /* ========================================
+           RESPONSIVIDADE - TABLET
+           ======================================== */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1491,7 +1516,7 @@
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             }
 
-            /* Mobile Modal Full Screen Fix */
+            /* Modal Mobile - Tela Cheia */
             .modal-content {
                 width: 100vw;
                 height: 100vh;
@@ -1525,10 +1550,10 @@
                 flex-direction: column;
                 gap: 20px;
                 padding-bottom: 100px;
-                /* Increased padding to safely show all content */
+
             }
 
-            /* Backdrop & Poster */
+            /* Backdrop Mobile (Imagem de Fundo) */
             #modalBackdrop {
                 display: none !important;
             }
