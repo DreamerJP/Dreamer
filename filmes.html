@@ -708,14 +708,18 @@
 
         .modal-content {
             background: transparent;
-            margin: 2% auto;
+            margin: auto;
             padding: 0;
             border-radius: 24px;
-            width: 98%;
-            max-width: 1400px;
-            max-height: 96vh;
+            width: 95vw;
+            max-width: 1800px;
+            /* Increased limit for ultra-wide screens */
+            height: 95vh;
+            max-height: 95vh;
             overflow: hidden;
             position: relative;
+            top: 50%;
+            transform: translateY(-50%);
             box-shadow: 0 30px 60px var(--shadow-color-strong);
         }
 
@@ -784,8 +788,9 @@
             position: relative;
             z-index: 2;
             padding: 0 30px 30px;
-            height: calc(100vh - 140px);
-            max-height: calc(96vh - 140px);
+            height: calc(100% - 80px);
+            /* Adjust based on header height, assumes header is ~80px max */
+            max-height: none;
             overflow-y: auto;
         }
 
@@ -1225,28 +1230,65 @@
             }
 
             .modal-content {
-                width: 100%;
+                width: 100vw;
+                height: 100vh;
+                max-width: 100%;
+                max-height: 100%;
                 margin: 0;
                 border-radius: 0;
+                top: 0;
+                transform: none;
             }
 
             .modal-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
+                padding-bottom: 40px;
+                /* Space for scrolling */
             }
 
             .modal-poster {
-                height: 300px;
+                height: auto;
+                max-height: 35vh;
+                /* Limit poster height to save space */
+                width: auto;
                 max-width: 100%;
                 justify-self: center;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             }
 
             .modal-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+                text-align: center;
             }
 
             .modal-body {
                 padding: 0 20px 20px;
+                height: calc(100% - 60px);
+                /* Adjust for smaller close button header */
+            }
+
+            .modal-header {
+                padding: 15px 15px 0;
+                justify-content: space-between;
+                /* Allow potential other header items */
+            }
+
+            .close {
+                font-size: 24px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .info-item strong {
+                min-width: auto;
+                color: var(--primary-color);
             }
         }
 
