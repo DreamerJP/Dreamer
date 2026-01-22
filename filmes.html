@@ -1318,7 +1318,8 @@
 
             .modal-header {
                 padding: 15px 15px 0;
-                justify-content: space-between;
+                justify-content: flex-end;
+                /* Align close button to the right */
             }
 
             .close {
@@ -2586,6 +2587,11 @@
 
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+
+            // Push history state to allow back button closing
+            if (window.innerWidth <= 768) {
+                history.pushState({ modalOpen: true }, '', '#movie-modal');
+            }
         }
 
         // Fechar modal
@@ -2626,6 +2632,14 @@
             if (e.key === '/' && !e.ctrlKey && !e.altKey) {
                 e.preventDefault();
                 document.getElementById('searchInput').focus();
+            }
+        });
+
+        // Handle Back Button closing
+        window.addEventListener('popstate', function (event) {
+            const modal = document.getElementById('movieModal');
+            if (modal.style.display === 'block') {
+                closeModal();
             }
         });
 
