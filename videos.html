@@ -1047,10 +1047,36 @@
                 // Legado (YouTube ID)
                 player.src = `https://www.youtube.com/embed/${url}?autoplay=1&rel=0`;
             } else {
-                // URL completa (YouTube Embed ou Drive)
-                if (url.includes('youtube.com/embed') && !url.includes('autoplay')) {
-                    player.src = url + "?autoplay=1&rel=0";
+                // Tratamento especial para YouTube
+                if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    let videoId = '';
+                    
+                    // Extrair ID de diferentes formatos
+                    if (url.includes('/embed/')) {
+                        videoId = url.split('/embed/')[1].split('?')[0];
+                    } else if (url.includes('v=')) {
+                        videoId = url.split('v=')[1].split('&')[0];
+                    } else if (url.includes('youtu.be/')) {
+                        videoId = url.split('youtu.be/')[1].split('?')[0];
+                    }
+
+                    if (videoId) {
+                        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                    } else {
+                        // Fallback: usar URL original se não conseguir extrair ID (pode ser embed direto)
+                        if (!url.includes('autoplay')) {
+                            // Adicionar autoplay se for embed e não tiver
+                            if (url.includes('/embed/')) {
+                                player.src = url + (url.includes('?') ? '&' : '?') + "autoplay=1&rel=0";
+                            } else {
+                                player.src = url;
+                            }
+                        } else {
+                            player.src = url;
+                        }
+                    }
                 } else {
+                    // Outros tipos de vídeo (Drive, etc)
                     player.src = url;
                 }
             }
