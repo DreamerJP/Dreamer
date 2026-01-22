@@ -2374,6 +2374,8 @@
 
             let baseList = allGames;
             if (searchTerm === '') {
+                displayedGames = baseList;
+                currentCategory = 'all';
                 renderGamesSmart(baseList);
                 updateCurrentCount(baseList.length);
                 return;
@@ -2386,6 +2388,8 @@
                     (details.genre && details.genre.toLowerCase().includes(searchTerm));
             });
 
+            displayedGames = filteredGames;
+            currentCategory = 'search';
             renderGamesSmart(filteredGames);
             updateCurrentCount(filteredGames.length);
         }
@@ -2416,6 +2420,8 @@
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
 
+            displayedGames = filteredGames;
+            currentCategory = 'filtered';
             renderGamesSmart(filteredGames);
             updateCurrentCount(filteredGames.length);
         }

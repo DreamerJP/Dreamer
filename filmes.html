@@ -2339,6 +2339,8 @@
 
             let baseList = allMovies;
             if (searchTerm === '') {
+                displayedMovies = baseList;
+                currentCategory = 'all';
                 renderMoviesSmart(baseList);
                 updateCurrentCount(baseList.length);
                 return;
@@ -2352,6 +2354,7 @@
             });
 
             displayedMovies = filteredMovies;
+            currentCategory = 'search';
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
@@ -2383,6 +2386,7 @@
             });
 
             displayedMovies = filteredMovies;
+            currentCategory = 'filtered';
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
