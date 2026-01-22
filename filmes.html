@@ -2351,6 +2351,7 @@
                     (details.actors && details.actors.toLowerCase().includes(searchTerm));
             });
 
+            displayedMovies = filteredMovies;
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
@@ -2381,6 +2382,7 @@
                 return matchesSearch && matchesGenre && matchesYear && matchesRating;
             });
 
+            displayedMovies = filteredMovies;
             renderMoviesSmart(filteredMovies);
             updateCurrentCount(filteredMovies.length);
         }
