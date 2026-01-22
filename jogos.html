@@ -1838,10 +1838,13 @@
     </div>
 
     <script>
+        // ========================================
+        // VARIÁVEIS GLOBAIS E CONFIGURAÇÕES
+        // ========================================
         // Variável global para quantidade de jogos por página
         const gamesPerPage = 24;
 
-        // Função auxiliar para extrair o ano do jogo
+        // Auxiliares para extração de dados
         const getGameYear = (game) => {
             const details = gamesWithDetails.get(game.slug);
             if (details && details.year && details.year !== 'N/A') {
@@ -1946,6 +1949,9 @@
         }
 
         // Dados globais
+        // ========================================
+        // INICIALIZAÇÃO E CARREGAMENTO DE DADOS
+        // ========================================
         let allGames = [];
         let displayedGames = [];
         let currentCategory = 'favorites';
@@ -2303,7 +2309,9 @@
             return stars;
         }
 
-        // Filtrar por categoria
+        // ========================================
+        // FILTROS E BUSCA
+        // ========================================
         async function filterByCategory(category, clickedButton = null) {
             currentCategory = category;
 
@@ -2498,7 +2506,9 @@
             document.getElementById('currentGames').textContent = count;
         }
 
-        // Abrir modal do jogo
+        // ========================================
+        // MODAL E INTERAÇÕES
+        // ========================================
         function openGameModal(slug) {
             const details = gamesWithDetails.get(slug);
             if (!details) return;
@@ -2657,7 +2667,9 @@
             }
         });
 
-        // Atalhos do teclado
+        // ========================================
+        // EVENT LISTENERS E ATALHOS
+        // ========================================
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
 
