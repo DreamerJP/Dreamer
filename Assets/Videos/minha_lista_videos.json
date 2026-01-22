@@ -1,0 +1,310 @@
+{
+  "videos": [
+    {
+      "id": "wULeXeQkqd0",
+      "title": "Queendom",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "./Assets/Videos/Capas/Queendom_Aurora.jpg",
+      "url": "https://www.youtube.com/embed/wULeXeQkqd0"
+    },
+    {
+      "id": "PYdm_Z1wnQ0",
+      "title": "Winter Bird",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/PYdm_Z1wnQ0/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/PYdm_Z1wnQ0"
+    },
+    {
+      "id": "SYKU7DfEJT4",
+      "title": "Half The World Away",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/SYKU7DfEJT4/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/SYKU7DfEJT4"
+    },
+    {
+      "id": "jTwdGRHl5Mw",
+      "title": "Murder Song (5, 4, 3, 2, 1)",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/jTwdGRHl5Mw/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/jTwdGRHl5Mw"
+    },
+    {
+      "id": "eT6dLJd3rYk",
+      "title": "I Went Too Far",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/eT6dLJd3rYk/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/eT6dLJd3rYk"
+    },
+    {
+      "id": "06ht9MyJLT4",
+      "title": "Running With The Wolves",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/06ht9MyJLT4/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/06ht9MyJLT4"
+    },
+    {
+      "id": "d_HlPboLRL8",
+      "title": "Runaway",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/d_HlPboLRL8/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/d_HlPboLRL8"
+    },
+    {
+      "id": "dmVAmlpbnD4",
+      "title": "Conqueror",
+      "artist": "Aurora",
+      "description": "",
+      "category": "Aurora",
+      "thumbnail": "https://img.youtube.com/vi/dmVAmlpbnD4/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/dmVAmlpbnD4"
+    },
+    {
+      "id": "aeH2cfNRMiw",
+      "title": "Act of the Apostle",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "./Assets/Videos/Capas/Act_of_the_Apostle_Emily_Browning.jpg",
+      "url": "https://drive.google.com/file/d/1d2wAW6StAgl0UI4aRoBXJ4mbmJH8b3OR/preview"
+    },
+    {
+      "id": "n0aOSIgOsRE",
+      "title": "Come Monday Night",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/n0aOSIgOsRE/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1cyA_smqZJLGacjv4p04PTj34LtUAgf9N/preview"
+    },
+    {
+      "id": "5m6JYEJmRIk",
+      "title": "Down and Dusky Blonde",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/5m6JYEJmRIk/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1cxGnKR0acL59vXk8Xijtp6jrDy8txx8U/preview"
+    },
+    {
+      "id": "VNGvzu51zsw",
+      "title": "God Help the Girl",
+      "artist": "Emily Browning",
+      "description": "",
+      "category": "Emily Browning",
+      "thumbnail": "./Assets/Videos/Capas/God_Help_the_Girl_Emily_Browning.png",
+      "url": "https://drive.google.com/file/d/1cyWc0xQh80APGup6qrhD6s5UTjJjj-o6/preview"
+    },
+    {
+      "id": "VcSeUHScWWk",
+      "title": "I Just Want Your Jeans Hannah Murray",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/VcSeUHScWWk/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1d3s6MVbu6Wkc-QNvjyGqUra9m4A1SD3i/preview"
+    },
+    {
+      "id": "cNzjkm3agq0",
+      "title": "I'll Have to Dance with Cassie",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/cNzjkm3agq0/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1d-7lGdmdfaLpLfwrWq6ifcEAsJ4emf69/preview"
+    },
+    {
+      "id": "aacAT1i2SnY",
+      "title": "Musician, Please Take Heed",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1cySwaUlN1TDyV2OLzulJXLk1c7V2ueMp/preview"
+    },
+    {
+      "id": "mVeW2_t4gRg",
+      "title": "Pretty Eve in the Tub",
+      "artist": "Olly Alexander",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/mVeW2_t4gRg/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1d1kC_WMJ7Vo_cgw4F9hzbD1fwfn1DbKB/preview"
+    },
+    {
+      "id": "InGXbmScabQ",
+      "title": "The Psychiatrist Is In",
+      "artist": "Emily Browning",
+      "description": "God Help the Girl",
+      "category": "Emily Browning",
+      "thumbnail": "https://img.youtube.com/vi/InGXbmScabQ/maxresdefault.jpg",
+      "url": "https://drive.google.com/file/d/1cwwgkOKutAOSn7x8ncGOzpgnQd_aBfjS/preview"
+    },
+    {
+      "id": "2vNeBRMVCoU",
+      "title": "Empty Threat",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "./Assets/Videos/Capas/Empty_Threat_Chvrches.jpg",
+      "url": "https://www.youtube.com/embed/2vNeBRMVCoU"
+    },
+    {
+      "id": "A2LtxHS9p44",
+      "title": "Leave A Trace",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "./Assets/Videos/Capas/Leave_A_Trace_Chvrches.jpg",
+      "url": "https://www.youtube.com/embed/A2LtxHS9p44"
+    },
+    {
+      "id": "rUEmoxoOt9A",
+      "title": "Miracle",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "./Assets/Videos/Capas/Miracle_Chvrches.webp",
+      "url": "https://www.youtube.com/embed/rUEmoxoOt9A"
+    },
+    {
+      "id": "gk4kbLYdg8U",
+      "title": "The Mother We Share - Live",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "https://img.youtube.com/vi/gk4kbLYdg8U/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/gk4kbLYdg8U"
+    },
+    {
+      "id": "BeyA8si0tyI",
+      "title": "Now is Not The Time",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "./Assets/Videos/Capas/Now_is_Not_The_Time_Chvrches.jpg",
+      "url": "https://www.youtube.com/embed/BeyA8si0tyI"
+    },
+    {
+      "id": "G_eWRlXFvAk",
+      "title": "Clearest Blue",
+      "artist": "Chvrches",
+      "description": "",
+      "category": "Chvrches",
+      "thumbnail": "./Assets/Videos/Capas/Clearest_Blue_Chvrches.jpg",
+      "url": "https://www.youtube.com/embed/G_eWRlXFvAk"
+    },
+    {
+      "id": "1TO48Cnl66w",
+      "title": "Thank You",
+      "artist": "Dido",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "https://img.youtube.com/vi/1TO48Cnl66w/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/1TO48Cnl66w"
+    },
+    {
+      "id": "oofSnsGkops",
+      "title": "You\\",
+      "artist": "James Blunt",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "https://img.youtube.com/vi/oofSnsGkops/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/oofSnsGkops"
+    },
+    {
+      "id": "smKf_cQCdeo",
+      "title": "With Every Heartbeat",
+      "artist": "Robyn",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "https://img.youtube.com/vi/smKf_cQCdeo/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/smKf_cQCdeo"
+    },
+    {
+      "id": "ADBKdSCbmiM",
+      "title": "What Else Is There ?",
+      "artist": "Röyksopp",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "https://img.youtube.com/vi/ADBKdSCbmiM/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/ADBKdSCbmiM"
+    },
+    {
+      "id": "hPC2Fp7IT7o",
+      "title": "Broken ft. Amy Lee",
+      "artist": "Seether",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "https://img.youtube.com/vi/hPC2Fp7IT7o/maxresdefault.jpg",
+      "url": "https://www.youtube.com/embed/hPC2Fp7IT7o"
+    },
+    {
+      "id": "8N-qO3sPMjc",
+      "title": "Kiss Me",
+      "artist": "Sixpence None The Richer",
+      "description": "",
+      "category": "Variado",
+      "thumbnail": "./Assets/Videos/Capas/Kiss_Me_-__Sixpence_None_The_Richer.jpg",
+      "url": "https://www.youtube.com/embed/8N-qO3sPMjc"
+    },
+    {
+      "id": "haYYbQSLa8o",
+      "title": "Golden Leaves",
+      "artist": "Noemi Smorra ft Lena Katina",
+      "description": "",
+      "category": "t.A.T.u.",
+      "thumbnail": "./Assets/Videos/Capas/Golden_LeavesNoemi_Smorra_ft_Lena_Katina.avif",
+      "url": "https://www.youtube.com/embed/haYYbQSLa8o"
+    },
+    {
+      "id": "OcwZKz46Jb4",
+      "title": "Lift Me Up",
+      "artist": "Lena Katina",
+      "description": "",
+      "category": "t.A.T.u.",
+      "thumbnail": "./Assets/Videos/Capas/Lift_Me_Up_Lena_Katina.png",
+      "url": "https://www.youtube.com/embed/OcwZKz46Jb4"
+    },
+    {
+      "id": "L2Lmt_2ksNU",
+      "title": "Not gonna get us",
+      "artist": "t.A.T.u.",
+      "description": "",
+      "category": "t.A.T.u.",
+      "thumbnail": "./Assets/Videos/Capas/Not_gonna_get_us_t.A.T.u..jpg",
+      "url": "https://www.youtube.com/embed/L2Lmt_2ksNU"
+    },
+    {
+      "id": "KtD_gVNy_rA",
+      "title": "All about us",
+      "artist": "t.A.T.u.",
+      "description": "",
+      "category": "t.A.T.u.",
+      "thumbnail": "./Assets/Videos/Capas/All_about_us_t.A.T.u..jpg",
+      "url": "https://www.youtube.com/embed/KtD_gVNy_rA"
+    },
+    {
+      "id": "EpM8EuizLAw",
+      "title": "Gomenasai animated",
+      "artist": "t.A.T.u.",
+      "description": "",
+      "category": "t.A.T.u.",
+      "thumbnail": "./Assets/Videos/Capas/Gomenasai_animated_t.A.T.u..jpg",
+      "url": "https://www.youtube.com/embed/EpM8EuizLAw"
+    }
+  ]
+}

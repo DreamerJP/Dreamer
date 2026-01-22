@@ -928,357 +928,26 @@
 
     <script>
         // Dados dos vídeos com mais informações
-        const videosData = [
-            // Aurora
-            {
-                id: 'wULeXeQkqd0',
-                title: 'Queendom',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: './Assets/Videos/Queendom_Aurora.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'PYdm_Z1wnQ0',
-                title: 'Winter Bird',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/PYdm_Z1wnQ0/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'SYKU7DfEJT4',
-                title: 'Half The World Away',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/SYKU7DfEJT4/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'jTwdGRHl5Mw',
-                title: 'Murder Song (5, 4, 3, 2, 1)',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/jTwdGRHl5Mw/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'eT6dLJd3rYk',
-                title: 'I Went Too Far',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/eT6dLJd3rYk/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: '06ht9MyJLT4',
-                title: 'Running With The Wolves',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/06ht9MyJLT4/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'd_HlPboLRL8',
-                title: 'Runaway',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/d_HlPboLRL8/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'dmVAmlpbnD4',
-                title: 'Conqueror',
-                artist: 'Aurora',
-                description: '',
-                category: 'Aurora',
-                thumbnail: 'https://img.youtube.com/vi/dmVAmlpbnD4/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            // Emily Browning / God Help the Girl
-            {
-                id: 'aeH2cfNRMiw',
-                title: 'Act of the Apostle',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: './Assets/Videos/Act_of_the_Apostle_Emily_Browning.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'n0aOSIgOsRE',
-                title: 'Come Monday Night',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/n0aOSIgOsRE/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: '5m6JYEJmRIk',
-                title: 'Down and Dusky Blonde',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/5m6JYEJmRIk/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'VNGvzu51zsw',
-                title: 'God Help the Girl',
-                artist: 'Emily Browning',
-                description: '',
-                category: 'Emily Browning',
-                thumbnail: './Assets/Videos/God_Help_the_Girl_Emily_Browning.png',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'VcSeUHScWWk',
-                title: 'I Just Want Your Jeans Hannah Murray',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/VcSeUHScWWk/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'cNzjkm3agq0',
-                title: "I'll Have to Dance with Cassie",
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/cNzjkm3agq0/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'aacAT1i2SnY',
-                title: 'Musician, Please Take Heed',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'mVeW2_t4gRg',
-                title: 'Pretty Eve in the Tub',
-                artist: 'Olly Alexander',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/mVeW2_t4gRg/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'InGXbmScabQ',
-                title: 'The Psychiatrist Is In',
-                artist: 'Emily Browning',
-                description: 'God Help the Girl',
-                category: 'Emily Browning',
-                thumbnail: 'https://img.youtube.com/vi/InGXbmScabQ/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            // Chvrches
-            {
-                id: '2vNeBRMVCoU',
-                title: 'Empty Threat',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: './Assets/Videos/Empty_Threat_Chvrches.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'A2LtxHS9p44',
-                title: 'Leave A Trace',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: './Assets/Videos/Leave_A_Trace_Chvrches.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'rUEmoxoOt9A',
-                title: 'Miracle',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: './Assets/Videos/Miracle_Chvrches.webp',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'gk4kbLYdg8U',
-                title: 'The Mother We Share - Live',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: 'https://img.youtube.com/vi/gk4kbLYdg8U/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'BeyA8si0tyI',
-                title: 'Now is Not The Time',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: './Assets/Videos/Now_is_Not_The_Time_Chvrches.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'G_eWRlXFvAk',
-                title: 'Clearest Blue',
-                artist: 'Chvrches',
-                description: '',
-                category: 'Chvrches',
-                thumbnail: './Assets/Videos/Clearest_Blue_Chvrches.jpg',
-                duration: '',
-                views: ''
-            },
-            // Variado
-            {
-                id: '1TO48Cnl66w',
-                title: 'Thank You',
-                artist: 'Dido',
-                description: '',
-                category: 'Variado',
-                thumbnail: 'https://img.youtube.com/vi/1TO48Cnl66w/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'oofSnsGkops',
-                title: 'You\'re Beautiful',
-                artist: 'James Blunt',
-                description: '',
-                category: 'Variado',
-                thumbnail: 'https://img.youtube.com/vi/oofSnsGkops/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'smKf_cQCdeo',
-                title: 'With Every Heartbeat',
-                artist: 'Robyn',
-                description: '',
-                category: 'Variado',
-                thumbnail: 'https://img.youtube.com/vi/smKf_cQCdeo/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'ADBKdSCbmiM',
-                title: 'What Else Is There ?',
-                artist: 'Röyksopp',
-                description: '',
-                category: 'Variado',
-                thumbnail: 'https://img.youtube.com/vi/ADBKdSCbmiM/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'hPC2Fp7IT7o',
-                title: 'Broken ft. Amy Lee',
-                artist: 'Seether',
-                description: '',
-                category: 'Variado',
-                thumbnail: 'https://img.youtube.com/vi/hPC2Fp7IT7o/maxresdefault.jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: '8N-qO3sPMjc',
-                title: 'Kiss Me',
-                artist: 'Sixpence None The Richer',
-                description: '',
-                category: 'Variado',
-                thumbnail: './Assets/Videos/Kiss_Me_-__Sixpence_None_The_Richer.jpg',
-                duration: '',
-                views: ''
-            },
-            // t.A.T.u.
-            {
-                id: 'haYYbQSLa8o',
-                title: 'Golden Leaves',
-                artist: 'Noemi Smorra ft Lena Katina',
-                description: '',
-                category: 't.A.T.u.',
-                thumbnail: './Assets/Videos/Golden_LeavesNoemi_Smorra_ft_Lena_Katina.avif',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'OcwZKz46Jb4',
-                title: 'Lift Me Up',
-                artist: 'Lena Katina',
-                description: '',
-                category: 't.A.T.u.',
-                thumbnail: './Assets/Videos/Lift_Me_Up_Lena_Katina.png',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'L2Lmt_2ksNU',
-                title: 'Not gonna get us',
-                artist: 't.A.T.u.',
-                description: '',
-                category: 't.A.T.u.',
-                thumbnail: './Assets/Videos/Not_gonna_get_us_t.A.T.u..jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'KtD_gVNy_rA',
-                title: 'All about us',
-                artist: 't.A.T.u.',
-                description: '',
-                category: 't.A.T.u.',
-                thumbnail: './Assets/Videos/All_about_us_t.A.T.u..jpg',
-                duration: '',
-                views: ''
-            },
-            {
-                id: 'EpM8EuizLAw',
-                title: 'Gomenasai animated',
-                artist: 't.A.T.u.',
-                description: '',
-                category: 't.A.T.u.',
-                thumbnail: './Assets/Videos/Gomenasai_animated_t.A.T.u..jpg',
-                duration: '',
-                views: ''
-            }
-        ];
+        let videosData = [];
 
         let currentFilter = 'Todos';
 
         // Função para renderizar vídeos
+        
+        async function fetchVideos() {
+            try {
+                const response = await fetch('./Assets/Videos/minha_lista_videos.json');
+                const data = await response.json();
+                videosData = data.videos || [];
+                renderVideos(videosData);
+                createFilters();
+                updateStats();
+            } catch (err) {
+                console.error("Erro ao carregar vídeos:", err);
+            }
+        }
+
+
         function renderVideos(videos = videosData) {
             const grid = document.getElementById('videosGrid');
             grid.innerHTML = '';
@@ -1287,7 +956,7 @@
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
                 videoCard.dataset.category = video.category;
-                videoCard.onclick = () => playVideo(video.id);
+                videoCard.onclick = () => playVideo(video.url);
 
                 videoCard.innerHTML = `
                     <div class="video-thumbnail" style="background-image: url('${video.thumbnail}')">
@@ -1369,34 +1038,24 @@
         }
 
         // Função para tocar vídeo
-        function playVideo(videoId) {
+        function playVideo(url) {
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
 
-            // Mapeamento de vídeos do Google Drive
-            const googleDriveVideos = {
-                'aeH2cfNRMiw': 'https://drive.google.com/file/d/1d2wAW6StAgl0UI4aRoBXJ4mbmJH8b3OR/preview', // Act of the Apostle
-                'cNzjkm3agq0': 'https://drive.google.com/file/d/1d-7lGdmdfaLpLfwrWq6ifcEAsJ4emf69/preview', // I'll Have to Dance with Cassie
-                'mVeW2_t4gRg': 'https://drive.google.com/file/d/1d1kC_WMJ7Vo_cgw4F9hzbD1fwfn1DbKB/preview', // Pretty Eve in the Tub
-                'aacAT1i2SnY': 'https://drive.google.com/file/d/1cySwaUlN1TDyV2OLzulJXLk1c7V2ueMp/preview', // Musician, Please Take Heed
-                'n0aOSIgOsRE': 'https://drive.google.com/file/d/1cyA_smqZJLGacjv4p04PTj34LtUAgf9N/preview', // Come Monday Night
-                'VcSeUHScWWk': 'https://drive.google.com/file/d/1d3s6MVbu6Wkc-QNvjyGqUra9m4A1SD3i/preview', // I Just Want Your Jeans Hannah Murray
-                'VNGvzu51zsw': 'https://drive.google.com/file/d/1cyWc0xQh80APGup6qrhD6s5UTjJjj-o6/preview', // God Help the Girl
-                'InGXbmScabQ': 'https://drive.google.com/file/d/1cwwgkOKutAOSn7x8ncGOzpgnQd_aBfjS/preview', // The Psychiatrist Is In
-                '5m6JYEJmRIk': 'https://drive.google.com/file/d/1cxGnKR0acL59vXk8Xijtp6jrDy8txx8U/preview'  // Down and Dusky Blonde
-            };
-
-            // Verificar se é um vídeo do Google Drive
-            if (googleDriveVideos[videoId]) {
-                player.src = googleDriveVideos[videoId];
+            // Verifica se é URL completa ou ID legado
+            if (!url.includes('http')) {
+                // Legado (YouTube ID)
+                player.src = `https://www.youtube.com/embed/${url}?autoplay=1&rel=0`;
             } else {
-                // Vídeo do YouTube (padrão)
-                player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                // URL completa (YouTube Embed ou Drive)
+                if (url.includes('youtube.com/embed') && !url.includes('autoplay')) {
+                    player.src = url + "?autoplay=1&rel=0";
+                } else {
+                    player.src = url;
+                }
             }
 
             modal.style.display = 'flex';
-
-            // Prevent body scroll
             document.body.style.overflow = 'hidden';
         }
 
@@ -1548,7 +1207,7 @@
             const filtersContainer = document.getElementById('filters');
             filtersContainer.innerHTML = '';
 
-            const categories = ['Todos', 'Aurora', 'Emily Browning', 'Chvrches', 't.A.T.u.', 'Variado'];
+            const categories = ['Todos', ...new Set(videosData.map(v => v.category))];
 
             categories.forEach(category => {
                 const button = document.createElement('button');
@@ -1566,7 +1225,7 @@
             createStarfield();
             setupParallax();
             createFilters();
-            renderVideos(videosData); // Por padrão mostra todos
+            fetchVideos();
             updateStats();
         });
     </script>
