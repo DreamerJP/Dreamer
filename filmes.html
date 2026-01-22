@@ -734,6 +734,10 @@
             z-index: 0;
         }
 
+        .modal-backdrop.mobile-only {
+            display: none;
+        }
+
         /* Overlay gradiente para melhor legibilidade */
         .modal-content::before {
             content: '';
@@ -1248,9 +1252,12 @@
 
             .modal-backdrop.mobile-only {
                 display: block !important;
-                object-fit: cover;
+                object-fit: contain;
+                /* Ensures the whole poster is visible without cropping */
                 opacity: 1 !important;
                 filter: brightness(0.4);
+                background-color: #000;
+                /* Fill empty space with black */
             }
 
             .modal-info {
