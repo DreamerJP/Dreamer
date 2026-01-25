@@ -1358,18 +1358,20 @@
 
         // Efeito de digitação no título
         const title = document.querySelector(".hero-title");
-        const text = title.textContent;
+        const text = title.getAttribute("data-text");
         title.textContent = "";
+        title.setAttribute("data-text", "");
 
         let i = 0;
-        const typeEffect = setInterval(() => {
+        function typeWriter() {
           if (i < text.length) {
             title.textContent += text.charAt(i);
+            title.setAttribute("data-text", title.textContent);
             i++;
-          } else {
-            clearInterval(typeEffect);
+            setTimeout(typeWriter, 200);
           }
-        }, 150);
+        }
+        typeWriter();
       });
 
       // --- MATRIX EASTER EGG ---
