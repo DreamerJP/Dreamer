@@ -1667,25 +1667,199 @@
           /* Extra safety for very small screens */
         }
       }
-    </style>
+    
+    /* SVG Icon System */
+    .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.125em;
+      fill: currentColor;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+    .icon-stroke {
+      fill: none;
+    }
+</style>
   </head>
 
   <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- Navigation -->
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+  </symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+  </symbol>
+  <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.2 6L3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/><path d="M6.2 5.3l3.1 3.9"/><path d="M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  </symbol>
+  <symbol id="i-gamepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="2"/>
+  </symbol>
+  <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+  </symbol>
+  <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+  </symbol>
+  <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+  </symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+  </symbol>
+
+  <!-- UI General -->
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </symbol>
+  <symbol id="i-bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>
+  </symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+  <symbol id="i-star-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+  <symbol id="i-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+  </symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+  </symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+  </symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+  </symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </symbol>
+  <symbol id="i-masks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 4a2 2 0 0 1 2-2h5.5a2 2 0 0 1 1.6.8L12 4"/><path d="M2 4v9a7 7 0 0 0 7 7 6.97 6.97 0 0 0 4-1.26"/><circle cx="6" cy="9" r="1"/><path d="M22 8a2 2 0 0 0-2-2h-5.5a2 2 0 0 0-1.6.8L12 8"/><path d="M22 8v5a7 7 0 0 1-14 0"/><circle cx="18" cy="11" r="1"/>
+  </symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+  </symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </symbol>
+  <symbol id="i-speech" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </symbol>
+  <symbol id="i-vote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3a2 2 0 0 0-2 2v2"/><path d="M19 3a2 2 0 0 1 2 2v2"/><path d="M21 17a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 21h6"/>
+  </symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+  </symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><line x1="7" y1="6" x2="7.01" y2="6"/><line x1="9" y1="10" x2="9.01" y2="10"/>
+  </symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>
+  </symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/>
+  </symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
+  </symbol>
+
+  <!-- Music Player -->
+  <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>
+  </symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+  </symbol>
+  <symbol id="i-volume-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+  </symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor">
+    <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+  </symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
+  </symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+  </symbol>
+  <symbol id="i-repeat-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="12" y="14" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">1</text>
+  </symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+  </symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+  </symbol>
+  <symbol id="i-folder-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 14l1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v2"/>
+  </symbol>
+  <symbol id="i-maximize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+  </symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+  </symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+  </symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+  </symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275z"/>
+  </symbol>
+  <symbol id="i-glow-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0.5">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    <line x1="12" y1="0" x2="12" y2="2" stroke="currentColor" stroke-width="1"/><line x1="24" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1"/><line x1="12" y1="24" x2="12" y2="22" stroke="currentColor" stroke-width="1"/><line x1="0" y1="12" x2="2" y2="12" stroke="currentColor" stroke-width="1"/>
+  </symbol>
+  <symbol id="i-bird" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/>
+  </symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+  </symbol>
+  <symbol id="i-narutomaki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><path d="M12 8a4 4 0 0 1 2.83 6.83"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-home-alt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
+    <polygon points="5 3 19 12 5 21 5 3"/>
+  </symbol>
+</svg>
+
+
     <div class="starfield" id="starfield" aria-hidden="true"></div>
 
     <!-- Navigation -->
     <nav class="navigation">
       <div class="nav-container">
-        <a href="index.html" class="nav-home">🏠 Home</a>
+        <a href="index.html" class="nav-home"><svg class="icon icon-stroke"><use href="#i-home"/></svg> Home</a>
         <ul class="nav-links" id="navLinks">
-          <li><a href="animes.html">🎌 Animes</a></li>
-          <li><a href="filmes.html">🎬 Filmes</a></li>
-          <li><a href="jogos.html">🎮 Jogos</a></li>
-          <li><a href="musicas.html" class="active">🎵 Músicas</a></li>
-          <li><a href="imagens.html">🖼️ Imagens</a></li>
-          <li><a href="videos.html">📹 Vídeos</a></li>
+          <li><a href="animes.html"><svg class="icon icon-stroke"><use href="#i-flag"/></svg> Animes</a></li>
+          <li><a href="filmes.html"><svg class="icon icon-stroke"><use href="#i-clapperboard"/></svg> Filmes</a></li>
+          <li><a href="jogos.html"><svg class="icon icon-stroke"><use href="#i-gamepad"/></svg> Jogos</a></li>
+          <li><a href="musicas.html" class="active"><svg class="icon icon-stroke"><use href="#i-music"/></svg> Músicas</a></li>
+          <li><a href="imagens.html"><svg class="icon icon-stroke"><use href="#i-image"/></svg> Imagens</a></li>
+          <li><a href="videos.html"><svg class="icon icon-stroke"><use href="#i-video"/></svg> Vídeos</a></li>
         </ul>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <button class="menu-toggle" onclick="toggleMenu()"><svg class="icon icon-stroke"><use href="#i-menu"/></svg></button>
       </div>
     </nav>
 
@@ -1693,7 +1867,7 @@
     <div class="main-content">
       <div class="header unified-header">
         <div class="header-overlay-fix"></div>
-        <h1>🎵 Galeria Musical</h1>
+        <h1><svg class="icon icon-stroke"><use href="#i-music"/></svg> Galeria Musical</h1>
         <p>MINHA COLEÇÃO DE MÚSICAS</p>
 
         <div class="filters-stats-flex">
@@ -1736,7 +1910,7 @@
                     "
                   >
                     <span onclick="navigateToFolder('/')" class="crumb-item"
-                      >🏠 Início</span
+                      ><svg class="icon icon-stroke"><use href="#i-home"/></svg> Início</span
                     >
                   </div>
                 </div>
@@ -1744,11 +1918,11 @@
                 <!-- Actions Section -->
                 <div style="display: flex; gap: 10px; align-items: center">
                   <button onclick="playAll()" class="action-btn-nav">
-                    🔀 <span class="btn-text">Tocar Tudo</span>
+                    <svg class="icon icon-stroke"><use href="#i-shuffle"/></svg> <span class="btn-text">Tocar Tudo</span>
                   </button>
 
                   <div class="search-container">
-                    <span class="search-icon">🔍</span>
+                    <span class="search-icon"><svg class="icon icon-stroke"><use href="#i-search"/></svg></span>
                     <input
                       type="text"
                       id="searchInput"
@@ -1871,7 +2045,7 @@
             <h3
               style="font-size: 1.1em; margin-bottom: 10px; text-align: center"
             >
-              📊 Estatísticas da Coleção
+              <svg class="icon icon-stroke"><use href="#i-bar-chart"/></svg> Estatísticas da Coleção
             </h3>
             <div class="stats-grid">
               <div class="stat-card">
@@ -2006,7 +2180,7 @@
           onclick="toggleMute()"
           id="muteBtn"
         >
-          🔊
+          <svg class="icon icon-stroke"><use href="#i-volume"/></svg>
         </button>
         <input
           type="range"
@@ -2024,7 +2198,7 @@
     <div id="nowPlayingOverlay" class="now-playing-overlay">
       <div class="np-background" id="npBackground"></div>
       <button class="np-close-panel" onclick="closeNowPlaying()" title="Fechar">
-        ✕
+        <svg class="icon icon-stroke"><use href="#i-x"/></svg>
       </button>
 
       <div class="np-container">
@@ -2295,7 +2469,7 @@
 
             const iconHtml = coverUrl
               ? `<img src="${coverUrl}" loading="lazy" alt="${folder}" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">`
-              : `<div class="folder-icon">📁</div>`;
+              : `<div class="folder-icon"><svg class="icon icon-stroke"><use href="#i-folder"/></svg></div>`;
 
             item.innerHTML = `
                         ${iconHtml}
@@ -2332,7 +2506,7 @@
 
             item.setAttribute("data-url", file);
 
-            let iconHtml = '<span class="track-icon">🎵</span>';
+            let iconHtml = '<span class="track-icon"><svg class="icon icon-stroke"><use href="#i-music"/></svg></span>';
             if (currentCover) {
               iconHtml = `<div class="track-icon has-cover" style="
                             background-image: url('${currentCover}');
@@ -2385,7 +2559,7 @@
 
         const homeCrumb = document.createElement("span");
         homeCrumb.className = "crumb-item";
-        homeCrumb.innerHTML = "🏠 Início";
+        homeCrumb.innerHTML = '<svg class="icon icon-stroke"><use href="#i-home"/></svg> Início';
         homeCrumb.onclick = () => navigateToFolder("/");
         breadcrumb.appendChild(homeCrumb);
 
@@ -2616,7 +2790,7 @@
         audio.onerror = (e) => {
           if (audio.src.includes("cdn.jsdelivr.net")) {
             console.warn(
-              "⚠️ Media load failed (likely >20MB), switching to Raw GitHub...",
+              `<svg class="icon icon-stroke"><use href="#i-alert"/></svg> Media load failed (likely >20MB), switching to Raw GitHub...`,
             );
             const rawUrl = audio.src
               .replace("cdn.jsdelivr.net/gh", "raw.githubusercontent.com")
@@ -2685,7 +2859,7 @@
               item.classList.add("paused");
             }
 
-            btn.innerHTML = isPlaying ? "⏸" : "▶";
+            btn.innerHTML = isPlaying ? '<svg class="icon"><use href="#i-pause"/></svg>' : "▶";
 
             if (!iconContainer.querySelector(".playing-wave")) {
               iconContainer.innerHTML = `
@@ -2706,7 +2880,7 @@
               if (iconContainer.classList.contains("has-cover")) {
                 iconContainer.innerHTML = "";
               } else {
-                iconContainer.innerHTML = "🎵";
+                iconContainer.innerHTML = '<svg class="icon icon-stroke"><use href="#i-music"/></svg>';
               }
             }
           }
@@ -2754,7 +2928,7 @@
 
         if (isLoading) {
           btn.innerHTML =
-            '<span class="spin" style="font-size: 24px;">⏳</span>';
+            '<span class="spin" style="font-size: 24px;"><svg class="icon icon-stroke"><use href="#i-hourglass"/></svg></span>';
           btn.style.paddingLeft = "0";
         } else if (isPlaying) {
           btn.innerHTML =
@@ -2810,13 +2984,13 @@
 
         if (repeatMode === 0) {
           text = "Repetir: Desligado";
-          subtext = "Clique para repetir a lista 🔁";
+          subtext = `Clique para repetir a lista <svg class="icon icon-stroke"><use href="#i-repeat"/></svg>`;
         } else if (repeatMode === 1) {
           text = "Repetir: Tudo";
-          subtext = "Clique para repetir apenas uma 🔂";
+          subtext = `Clique para repetir apenas uma <svg class="icon icon-stroke"><use href="#i-repeat-1"/></svg>`;
         } else {
           text = "Repetir: Uma";
-          subtext = "Clique para desligar ➡️";
+          subtext = `Clique para desligar <svg class="icon icon-stroke"><use href="#i-arrow-right"/></svg>`;
         }
 
         tt.innerHTML = `<div>${text}</div><div style='font-weight:normal; font-size:0.8em; color:#ccc; margin-top:2px;'>${subtext}</div>`;
@@ -3031,9 +3205,9 @@
         audio.volume = val;
         const btn = document.getElementById("muteBtn");
         if (val == 0) {
-          btn.innerHTML = "🔇";
+          btn.innerHTML = '<svg class="icon icon-stroke"><use href="#i-volume-x"/></svg>';
         } else {
-          btn.innerHTML = "🔊";
+          btn.innerHTML = '<svg class="icon icon-stroke"><use href="#i-volume"/></svg>';
           // If user moves slider, ensuring we unmute if it was muted
           if (audio.muted) audio.muted = false;
         }
@@ -3042,7 +3216,7 @@
       function toggleMute() {
         audio.muted = !audio.muted;
         const btn = document.getElementById("muteBtn");
-        btn.innerHTML = audio.muted ? "🔇" : "🔊";
+        btn.innerHTML = audio.muted ? '<svg class="icon icon-stroke"><use href="#i-volume-x"/></svg>' : '<svg class="icon icon-stroke"><use href="#i-volume"/></svg>';
       }
 
       /* --- Sistema de Em Execução (Now Playing Overlay) --- */
@@ -3451,7 +3625,7 @@
           const item = document.createElement("div");
           item.className = "track-item";
 
-          let iconHtml = '<span class="track-icon">🎵</span>';
+          let iconHtml = '<span class="track-icon"><svg class="icon icon-stroke"><use href="#i-music"/></svg></span>';
           if (track.artwork) {
             iconHtml = `<div class="track-icon has-cover" style="background-image: url('${track.artwork}');"></div>`;
           }
@@ -3640,7 +3814,7 @@
     <div id="nowPlayingOverlay" class="now-playing-overlay">
       <div id="npBackground" class="np-background"></div>
       <button class="np-close" onclick="closeNowPlaying()" title="Fechar">
-        ✕
+        <svg class="icon icon-stroke"><use href="#i-x"/></svg>
       </button>
 
       <div class="np-container">
@@ -3663,7 +3837,7 @@
         <div class="np-right">
           <div class="np-queue-header">
             <div style="display: flex; align-items: center; gap: 10px">
-              <span>📂</span> Fila de Reprodução
+              <span><svg class="icon icon-stroke"><use href="#i-folder-open"/></svg></span> Fila de Reprodução
             </div>
             <span
               id="npQueueCount"
