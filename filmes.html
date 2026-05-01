@@ -495,10 +495,11 @@
       aspect-ratio: 2 / 3;
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: var(--bg-2);
-      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-2);
       background-size: cover;
       background-position: center;
+      background-clip: padding-box;
+      border: 1px solid var(--border-subtle);
       margin-bottom: 12px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
