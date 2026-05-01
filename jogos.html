@@ -1558,6 +1558,38 @@
       return Math.round((n / 10) * 10) / 10;
     }
 
+    // ============================================================
+    // IGDB COVER — alta resolução com fallback automático
+    //
+    // O IGDB fornece capas em t_cover_big (264x374px), que fica
+    // abaixo do ideal em telas Retina. Aqui trocamos por
+    // t_cover_big_2x (528x748px) para dobrar a nitidez.
+    //
+    // Se a URL 2x falhar (404 ou erro de rede), o onerror do
+    // elemento dispara upgradeCoverFallback(), que restaura
+    // silenciosamente a URL original sem quebrar nada.
+    //
+    // Para desativar o upgrade e usar sempre t_cover_big,
+    // basta setar IGDB_COVER_UPGRADE = false abaixo.
+    // ============================================================
+    const IGDB_COVER_UPGRADE = true; // ← altere para false para desativar
+
+    function upgradeCoverUrl(url) {
+      if (!IGDB_COVER_UPGRADE) return url;
+      if (!url || !url.includes("t_cover_big/")) return url;
+      return url.replace("t_cover_big/", "t_cover_big_2x/");
+    }
+
+    function upgradeCoverFallback(el, originalUrl) {
+      // Chamado via onerror quando a URL 2x não carrega
+      el.onerror = null; // evita loop infinito
+      if (el.tagName === "IMG") {
+        el.src = originalUrl;
+      } else {
+        el.style.backgroundImage = `url('${originalUrl}')`;
+      }
+    }
+
     function getGameYear(game) {
       const details = gamesWithDetails.get(game.slug);
       if (details && details.year && details.year !== "N/A") {
@@ -1624,7 +1656,8 @@
 
       if (details) {
         const rating10 = normalizeRating(details.rating);
-        const cover = details.cover ? `url('${details.cover}')` : "none";
+        const coverUrl = upgradeCoverUrl(details.cover);
+        const cover = coverUrl ? `url('${coverUrl}')` : "none";
         const genre1 = details.genre && details.genre !== "N/A"
           ? details.genre.split(",")[0].trim()
           : "";
@@ -1633,8 +1666,9 @@
             <article class="game-card" onclick="openGameModal('${slug}')" data-slug="${slug}"
                      role="button" tabindex="0"
                      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameModal('${slug}')}">
-              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}">
+              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}" ${coverUrl && coverUrl !== details.cover ? `data-cover-fallback="${details.cover}"` : ''}>
                 ${!details.cover ? `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>` : ''}
+                ${coverUrl && coverUrl !== details.cover ? `<img src="${coverUrl}" style="display:none" onerror="const p=this.parentElement;if(p.dataset.coverFallback){p.style.backgroundImage='url('+p.dataset.coverFallback+')';}" alt="">` : ''}
               </div>
               <div class="game-info">
                 <h3 class="game-title">${escapeHtml(details.title || game.title)}</h3>
@@ -1754,7 +1788,14 @@
       const poster = card.querySelector(".poster");
       poster.classList.remove("skeleton", "is-loading");
       if (details.cover) {
-        poster.style.backgroundImage = `url('${details.cover}')`;
+        const upgradedCover = upgradeCoverUrl(details.cover);
+        poster.style.backgroundImage = `url('${upgradedCover}')`;
+        if (upgradedCover !== details.cover) {
+          // Fallback: se a imagem 2x falhar, restaura a original
+          const probe = new Image();
+          probe.onerror = () => { poster.style.backgroundImage = `url('${details.cover}')`; };
+          probe.src = upgradedCover;
+        }
         poster.innerHTML = "";
       } else {
         poster.classList.add("is-loading");
@@ -1970,7 +2011,14 @@
         backdrop.style.backgroundImage = "linear-gradient(135deg,#14141f,#1c1c2a)";
       }
 
-      poster.src = details.cover || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'><rect width='200' height='300' fill='%2314141f'/></svg>";
+      const upgradedModalCover = upgradeCoverUrl(details.cover);
+      poster.src = upgradedModalCover || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'><rect width='200' height='300' fill='%2314141f'/></svg>";
+      if (upgradedModalCover && upgradedModalCover !== details.cover) {
+        poster.onerror = () => {
+          poster.onerror = null;
+          poster.src = details.cover;
+        };
+      }
       poster.alt = details.title || "";
 
       const rating10 = normalizeRating(details.rating);
