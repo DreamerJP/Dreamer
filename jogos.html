@@ -612,7 +612,7 @@
     /* Rating overlay no canto inferior do poster */
     .poster-rating {
       position: absolute;
-      bottom: 8px;
+      bottom: 4px !important;
       left: 8px;
       right: 8px;
       display: flex;
@@ -622,7 +622,7 @@
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 2;
+      z-index: 10;
     }
 
     .game-card:hover .poster-rating {
@@ -969,8 +969,9 @@
       font-size: clamp(28px, 4vw, 44px);
       font-weight: 600;
       letter-spacing: -0.02em;
-      line-height: 1.05;
-      margin-bottom: 4px;
+      line-height: 0.9;
+      margin-top: 0px !important;
+      margin-bottom: 0px !important;
       color: var(--text-1);
     }
 
@@ -978,6 +979,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top: 4px !important;
       margin-bottom: 24px;
       line-height: 1;
     }
