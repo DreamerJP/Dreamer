@@ -1590,6 +1590,27 @@
       }
     }
 
+    // ============================================================
+    // IGDB BACKGROUND — resolução original para monitores wide
+    //
+    // O JSON armazena backgrounds em t_1080p (1920x1080px).
+    // Em monitores ultrawide ou com DPI alto, essa resolução
+    // pode ficar aquém. Trocamos por t_original, que entrega
+    // a imagem na resolução nativa sem nenhum resize pelo IGDB.
+    // O CSS background-size:cover se encarrega de escalar
+    // corretamente para qualquer tamanho de tela, para cima
+    // ou para baixo.
+    //
+    // Para reverter, setar IGDB_BG_UPGRADE = false abaixo.
+    // ============================================================
+    const IGDB_BG_UPGRADE = true; // ← altere para false para desativar
+
+    function upgradeBackgroundUrl(url) {
+      if (!IGDB_BG_UPGRADE) return url;
+      if (!url || !url.includes("t_1080p/")) return url;
+      return url.replace("t_1080p/", "t_original/");
+    }
+
     function getGameYear(game) {
       const details = gamesWithDetails.get(game.slug);
       if (details && details.year && details.year !== "N/A") {
@@ -2004,9 +2025,9 @@
 
       // Backdrop full-bleed
       if (details.background && details.background !== "N/A") {
-        backdrop.style.backgroundImage = `url('${details.background}')`;
+        backdrop.style.backgroundImage = `url('${upgradeBackgroundUrl(details.background)}')`;
       } else if (details.cover) {
-        backdrop.style.backgroundImage = `url('${details.cover}')`;
+        backdrop.style.backgroundImage = `url('${upgradeCoverUrl(details.cover)}')`;
       } else {
         backdrop.style.backgroundImage = "linear-gradient(135deg,#14141f,#1c1c2a)";
       }
