@@ -237,7 +237,7 @@
       inset: 0;
       z-index: -2;
       background: linear-gradient(180deg,
-          rgba(7, 7, 13, 0.55) 0%, rgba(7, 7, 13, 0.75) 60%, rgba(7, 7, 13, 0.95) 100%);
+          rgba(7, 7, 13, 0.75) 0%, rgba(7, 7, 13, 0.85) 60%, rgba(7, 7, 13, 0.98) 100%);
     }
 
     .hero::before {
@@ -613,8 +613,8 @@
     .anime-meta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      justify-content: flex-start;
+      gap: 12px;
     }
 
     .anime-cat {
@@ -715,7 +715,12 @@
       width: 100%;
     }
 
-    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:hover {
+      background: #ffffff;
+      border-color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+    }
 
     /* ============================================================
        LOADING / EMPTY
