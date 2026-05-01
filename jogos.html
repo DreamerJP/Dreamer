@@ -581,6 +581,7 @@
       background-position: center;
       margin-bottom: 12px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      isolation: isolate;
     }
 
     .game-card:hover .poster {
@@ -596,6 +597,12 @@
       color: var(--text-3);
     }
 
+    .poster.is-loading>.icon:not(.poster-rating *) {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+
     .poster::after {
       content: "";
       position: absolute;
@@ -609,20 +616,26 @@
       opacity: 1;
     }
 
-    /* Rating overlay no canto inferior do poster */
     .poster-rating {
-      position: absolute;
+      position: absolute !important;
       bottom: 8px;
       left: 8px;
       right: 8px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 6px;
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 2;
+      flex: none;
+      width: auto;
+      align-self: auto;
+    }
+
+    .poster-rating .rating-num {
+      margin-left: auto;
     }
 
     .game-card:hover .poster-rating {
@@ -695,7 +708,6 @@
       white-space: nowrap;
     }
 
-    /* Skeleton shimmer enquanto detalhes não chegaram */
     .skeleton {
       position: relative;
       overflow: hidden;
@@ -980,10 +992,16 @@
       gap: 10px;
       margin-bottom: 24px;
       line-height: 1;
+      flex-shrink: 0;
+      width: 100%;
     }
 
     .modal-rating-row .stars-mini {
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
     }
 
     .modal-rating-row .stars-mini .icon {
