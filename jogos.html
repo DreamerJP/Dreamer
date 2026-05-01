@@ -581,7 +581,6 @@
       background-position: center;
       margin-bottom: 12px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      isolation: isolate;
     }
 
     .game-card:hover .poster {
@@ -597,11 +596,6 @@
       color: var(--text-3);
     }
 
-    .poster.is-loading>.icon:not(.poster-rating *) {
-      position: relative;
-      z-index: 1;
-      pointer-events: none;
-    }
 
     .poster::after {
       content: "";
@@ -616,62 +610,7 @@
       opacity: 1;
     }
 
-    .poster-rating {
-      position: absolute !important;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 6px;
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 2;
-      flex: none;
-      width: auto;
-      align-self: auto;
-    }
 
-    .poster-rating .rating-num {
-      margin-left: auto;
-    }
-
-    .game-card:hover .poster-rating {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .stars-mini {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      color: #ffd968;
-      font-size: 12px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-    }
-
-    .stars-mini .icon {
-      width: 14px;
-      height: 14px;
-    }
-
-    .stars-mini .empty {
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    .rating-num {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-1);
-      font-variant-numeric: tabular-nums;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      padding: 3px 7px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
 
     .game-info {
       padding: 0 2px;
@@ -708,6 +647,7 @@
       white-space: nowrap;
     }
 
+    /* Skeleton shimmer enquanto detalhes não chegaram */
     .skeleton {
       position: relative;
       overflow: hidden;
@@ -986,42 +926,7 @@
       color: var(--text-1);
     }
 
-    .modal-rating-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      line-height: 1;
-      flex-shrink: 0;
-      width: 100%;
-    }
 
-    .modal-rating-row .stars-mini {
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      flex-shrink: 0;
-    }
-
-    .modal-rating-row .stars-mini .icon {
-      width: 16px;
-      height: 16px;
-    }
-
-    .modal-rating-num {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-1);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .modal-rating-num span {
-      color: var(--text-3);
-      font-weight: 500;
-      font-size: 13px;
-    }
 
     .modal-section {
       margin-bottom: 28px;
@@ -1642,20 +1547,6 @@
       return Math.round((n / 10) * 10) / 10;
     }
 
-    function generateStars(rating10) {
-      // rating10 está em 0-10; estrelas em 0-5
-      const r = rating10 / 2;
-      const full = Math.floor(r);
-      const half = r - full >= 0.5;
-      const empty = 5 - full - (half ? 1 : 0);
-
-      let html = '';
-      for (let i = 0; i < full; i++) html += '<svg class="icon"><use href="#i-star"/></svg>';
-      if (half) html += '<svg class="icon"><use href="#i-star"/></svg>';
-      for (let i = 0; i < empty; i++) html += '<svg class="icon icon-stroke empty"><use href="#i-star-empty"/></svg>';
-      return html;
-    }
-
     function getGameYear(game) {
       const details = gamesWithDetails.get(game.slug);
       if (details && details.year && details.year !== "N/A") {
@@ -1722,7 +1613,6 @@
 
       if (details) {
         const rating10 = normalizeRating(details.rating);
-        const stars = generateStars(rating10);
         const cover = details.cover ? `url('${details.cover}')` : "none";
         const genre1 = details.genre && details.genre !== "N/A"
           ? details.genre.split(",")[0].trim()
@@ -1734,17 +1624,13 @@
                      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameModal('${slug}')}">
               <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}">
                 ${!details.cover ? `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>` : ''}
-                ${rating10 > 0 ? `
-                  <div class="poster-rating">
-                    <div class="stars-mini">${stars}</div>
-                    <div class="rating-num">${rating10.toFixed(1)}</div>
-                  </div>` : ''}
               </div>
               <div class="game-info">
                 <h3 class="game-title">${escapeHtml(details.title || game.title)}</h3>
                 <div class="game-meta">
                   ${details.year && details.year !== "N/A" ? `<span><svg class="icon icon-stroke"><use href="#i-calendar"/></svg>${escapeHtml(details.year)}</span>` : ''}
                   ${genre1 ? `<span>${escapeHtml(genre1)}</span>` : ''}
+                  ${rating10 > 0 ? `<span><svg class="icon" style="color:#ffd968;fill:#ffd968"><use href="#i-star"/></svg>${rating10.toFixed(1)}</span>` : ''}
                 </div>
               </div>
             </article>`;
@@ -1850,7 +1736,6 @@
       if (!card) return;
 
       const rating10 = normalizeRating(details.rating);
-      const stars = generateStars(rating10);
       const genre1 = details.genre && details.genre !== "N/A"
         ? details.genre.split(",")[0].trim()
         : "";
@@ -1865,21 +1750,13 @@
         poster.innerHTML = `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>`;
       }
 
-      if (rating10 > 0) {
-        const ratingNode = document.createElement("div");
-        ratingNode.className = "poster-rating";
-        ratingNode.innerHTML = `
-            <div class="stars-mini">${stars}</div>
-            <div class="rating-num">${rating10.toFixed(1)}</div>`;
-        poster.appendChild(ratingNode);
-      }
-
       const info = card.querySelector(".game-info");
       info.innerHTML = `
           <h3 class="game-title">${escapeHtml(details.title || "")}</h3>
           <div class="game-meta">
             ${details.year && details.year !== "N/A" ? `<span><svg class="icon icon-stroke"><use href="#i-calendar"/></svg>${escapeHtml(details.year)}</span>` : ''}
             ${genre1 ? `<span>${escapeHtml(genre1)}</span>` : ''}
+            ${rating10 > 0 ? `<span><svg class="icon" style="color:#ffd968;fill:#ffd968"><use href="#i-star"/></svg>${rating10.toFixed(1)}</span>` : ''}
           </div>`;
     }
 
@@ -2086,16 +1963,8 @@
       poster.alt = details.title || "";
 
       const rating10 = normalizeRating(details.rating);
-      const stars = generateStars(rating10);
-
       detailsBox.innerHTML = `
           <h2 class="modal-title">${escapeHtml(details.title || "")}</h2>
-
-          ${rating10 > 0 ? `
-            <div class="modal-rating-row">
-              <div class="stars-mini">${stars}</div>
-              <div class="modal-rating-num">${rating10.toFixed(1)} <span>/ 10</span></div>
-            </div>` : ''}
 
           ${details.summary && details.summary !== "Sinopse não disponível." ? `
             <div class="modal-section">
@@ -2115,6 +1984,11 @@
           </div>
 
           <div class="info-grid">
+            ${rating10 > 0 ? `
+              <div class="info-item">
+                <div class="info-label"><svg class="icon" style="color:#ffd968;fill:#ffd968"><use href="#i-star"/></svg> Nota</div>
+                <div class="info-value">${rating10.toFixed(1)} / 10</div>
+              </div>` : ''}
             ${details.year && details.year !== "N/A" ? `
               <div class="info-item">
                 <div class="info-label"><svg class="icon icon-stroke"><use href="#i-calendar"/></svg> Ano</div>
