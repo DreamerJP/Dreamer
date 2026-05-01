@@ -1800,7 +1800,6 @@
       const card = document.querySelector(`.game-card[data-slug="${CSS.escape(slug)}"]`);
       if (!card) return;
 
-      const rating10 = normalizeRating(details.rating);
       const genre1 = details.genre && details.genre !== "N/A"
         ? details.genre.split(",")[0].trim()
         : "";
@@ -1828,7 +1827,6 @@
           <div class="game-meta">
             ${details.year && details.year !== "N/A" ? `<span><svg class="icon icon-stroke"><use href="#i-calendar"/></svg>${escapeHtml(details.year)}</span>` : ''}
             ${genre1 ? `<span>${escapeHtml(genre1)}</span>` : ''}
-            ${rating10 > 0 ? `<span><svg class="icon" style="color:#ffd968;fill:#ffd968"><use href="#i-star"/></svg>${rating10.toFixed(1)}</span>` : ''}
           </div>`;
     }
 
