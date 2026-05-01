@@ -1687,8 +1687,9 @@
             <article class="game-card" onclick="openGameModal('${slug}')" data-slug="${slug}"
                      role="button" tabindex="0"
                      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameModal('${slug}')}">
-              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}">
+              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}" ${coverUrl && coverUrl !== details.cover ? `data-cover-fallback="${details.cover}"` : ''}>
                 ${!details.cover ? `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>` : ''}
+                ${coverUrl && coverUrl !== details.cover ? `<img src="${coverUrl}" style="display:none" onerror="const p=this.parentElement;if(p.dataset.coverFallback){p.style.backgroundImage='url('+p.dataset.coverFallback+')';}" alt="">` : ''}
               </div>
               <div class="game-info">
                 <h3 class="game-title">${escapeHtml(details.title || game.title)}</h3>
@@ -1808,7 +1809,14 @@
       const poster = card.querySelector(".poster");
       poster.classList.remove("skeleton", "is-loading");
       if (details.cover) {
-        poster.style.backgroundImage = `url('${upgradeCoverUrl(details.cover)}')`;
+        const upgradedCover = upgradeCoverUrl(details.cover);
+        poster.style.backgroundImage = `url('${upgradedCover}')`;
+        if (upgradedCover !== details.cover) {
+          // Fallback: se a imagem 2x falhar, restaura a original
+          const probe = new Image();
+          probe.onerror = () => { poster.style.backgroundImage = `url('${details.cover}')`; };
+          probe.src = upgradedCover;
+        }
         poster.innerHTML = "";
       } else {
         poster.classList.add("is-loading");
@@ -2024,7 +2032,14 @@
         backdrop.style.backgroundImage = "linear-gradient(135deg,#14141f,#1c1c2a)";
       }
 
-      poster.src = upgradeCoverUrl(details.cover) || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'><rect width='200' height='300' fill='%2314141f'/></svg>";
+      const upgradedModalCover = upgradeCoverUrl(details.cover);
+      poster.src = upgradedModalCover || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'><rect width='200' height='300' fill='%2314141f'/></svg>";
+      if (upgradedModalCover && upgradedModalCover !== details.cover) {
+        poster.onerror = () => {
+          poster.onerror = null;
+          poster.src = details.cover;
+        };
+      }
       poster.alt = details.title || "";
 
       const rating10 = normalizeRating(details.rating);
