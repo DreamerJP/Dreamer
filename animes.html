@@ -1,1121 +1,70 @@
 <!doctype html>
-<html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animes</title>
-    <style>
-      :root {
-        --primary-gradient: linear-gradient(
-          135deg,
-          #1a1a2e 0%,
-          #16213e 50%,
-          #0f3460 100%
-        );
-        --primary-color: #bb86fc;
-        --secondary-color: #03dac6;
-        --accent-color: #cf6679;
-        --text-primary: #e1e1e1;
-        --text-secondary: #b3b3b3;
-        --bg-main: rgba(18, 18, 35, 0.98);
-        --bg-nav: rgba(18, 18, 35, 0.98);
-        --shadow-color: rgba(0, 0, 0, 0.4);
-        --shadow-color-strong: rgba(0, 0, 0, 0.6);
-        --transition-speed: 0.8s;
-      }
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animes — Dreamer Collection</title>
+  <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg-0: #07070d;
+      --bg-1: #0c0c14;
+      --bg-2: #14141f;
+      --bg-3: #1c1c2a;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-default: rgba(255, 255, 255, 0.10);
+      --border-strong: rgba(255, 255, 255, 0.16);
+
+      --text-1: #f4f4f7;
+      --text-2: #b9b9c6;
+      --text-3: #6f6f80;
+
+      --accent: #b69cff;
+      --accent-soft: rgba(182, 156, 255, 0.14);
+
+      --gold: #ffd968;
+
+      --holo: conic-gradient(from 180deg at 50% 50%,
+          #ff6db5 0deg, #b69cff 90deg, #6dd4ff 180deg, #84ffd1 270deg, #ff6db5 360deg);
+
+      --font-display: "Space Grotesk", system-ui, sans-serif;
+      --font-ui: "Inter", system-ui, sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+
+      --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-3: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-ui);
+      font-feature-settings: "ss01", "cv11";
+      background: var(--bg-0);
+      color: var(--text-1);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: radial-gradient(
-          ellipse at center,
-          #0a0a0a 0%,
-          #000000 100%
-        );
-        min-height: 100vh;
-        color: var(--text-primary);
-        overflow-x: hidden;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        padding: 20px;
-      }
-
-      /* Campo de Estrelas */
-      .starfield {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: -1;
-        opacity: 1;
-        overflow: hidden;
-      }
-
-      .star {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        opacity: 0;
-        animation: star-travel linear infinite;
-      }
-
-      .star.distant {
-        width: 1px;
-        height: 1px;
-        animation-duration: 25s;
-        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
-      }
-
-      .star.medium {
-        width: 1.5px;
-        height: 1.5px;
-        animation-duration: 15s;
-        box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-      }
-
-      .star.close {
-        width: 2px;
-        height: 2px;
-        animation-duration: 8s;
-        box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-      }
-
-      .star.blue {
-        background: #e6f3ff;
-        box-shadow: 0 0 6px rgba(173, 216, 255, 0.6);
-      }
-
-      .star.yellow {
-        background: #fff8e1;
-        box-shadow: 0 0 4px rgba(255, 248, 225, 0.5);
-      }
-
-      @keyframes star-travel {
-        0% {
-          opacity: 0;
-          transform: translate(0, 0) scale(0.5);
-        }
-
-        10% {
-          opacity: 0.3;
-        }
-
-        50% {
-          opacity: 1;
-          transform: translate(var(--dx), var(--dy)) scale(1);
-        }
-
-        90% {
-          opacity: 0.8;
-        }
-
-        100% {
-          opacity: 0;
-          transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2))
-            scale(1.5);
-        }
-      }
-
-      @keyframes twinkle {
-        0% {
-          opacity: 0.3;
-        }
-
-        100% {
-          opacity: 0.8;
-        }
-      }
-
-      /* Navegação */
-      .navigation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: var(--bg-nav);
-        backdrop-filter: blur(10px);
-        border-bottom: 2px solid var(--primary-color);
-        z-index: 1000;
-        padding: 15px 0;
-        box-shadow: 0 2px 20px var(--shadow-color-strong);
-      }
-
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-      }
-
-      .nav-home {
-        font-size: 1.5em;
-        font-weight: bold;
-        color: var(--text-primary);
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .nav-home:hover {
-        color: var(--primary-color);
-        transform: scale(1.05);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 25px;
-        list-style: none;
-      }
-
-      .nav-links a {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-weight: 500;
-        padding: 8px 16px;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .nav-links a:hover,
-      .nav-links a.active {
-        color: white;
-        background: linear-gradient(
-          45deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px var(--shadow-color);
-      }
-
-      .menu-toggle {
-        display: none;
-        background: none;
-        border: none;
-        font-size: 1.5em;
-        cursor: pointer;
-        color: var(--text-primary);
-      }
-
-      @media (max-width: 768px) {
-        .menu-toggle {
-          display: block;
-        }
-
-        .nav-links {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: var(--bg-nav);
-          flex-direction: column;
-          padding: 20px;
-          transform: translateY(-100%);
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s ease;
-          box-shadow: 0 5px 20px var(--shadow-color-strong);
-          border-radius: 0 0 15px 15px;
-        }
-
-        .nav-links.active {
-          transform: translateY(0);
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .container {
-          margin-top: 80px;
-          padding: 0 10px;
-        }
-
-        .unified-header {
-          min-height: auto !important;
-          padding: 30px 15px 15px 15px !important;
-          margin-bottom: 20px;
-        }
-
-        .unified-header h1 {
-          font-size: 1.8em !important;
-          min-height: auto;
-          margin-bottom: 5px;
-        }
-
-        .unified-header p {
-          font-size: 0.9em !important;
-          margin-bottom: 15px;
-        }
-
-        .filters-stats-flex {
-          flex-direction: column;
-          gap: 15px;
-          align-items: stretch;
-        }
-
-        .filters {
-          min-height: auto !important;
-          padding: 12px !important;
-        }
-
-        .stats-compact {
-          min-height: auto !important;
-          padding: 10px !important;
-        }
-
-        .stats-compact h3 {
-          font-size: 0.9em !important;
-          margin-bottom: 8px !important;
-        }
-
-        .animes-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .nav-container {
-          padding: 0 15px;
-        }
-      }
-
-      /* Container Principal */
-      .container {
-        max-width: 1400px;
-        margin: 100px auto 0 auto;
-        padding: 0 20px;
-        position: relative;
-      }
-
-      /* Elementos Flutuantes */
-      .floating-elements {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .floating-element {
-        position: absolute;
-        font-size: 2em;
-        opacity: 0.3;
-        animation: float 6s ease-in-out infinite;
-        text-shadow: 0 0 10px var(--secondary-color);
-      }
-
-      .floating-element:nth-child(1) {
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-      }
-
-      .floating-element:nth-child(2) {
-        top: 20%;
-        right: 10%;
-        animation-delay: 2s;
-      }
-
-      .floating-element:nth-child(3) {
-        bottom: 20%;
-        left: 15%;
-        animation-delay: 4s;
-      }
-
-      .floating-element:nth-child(4) {
-        bottom: 30%;
-        right: 20%;
-        animation-delay: 1s;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-
-        33% {
-          transform: translateY(-20px) rotate(5deg);
-        }
-
-        66% {
-          transform: translateY(-10px) rotate(-3deg);
-        }
-      }
-
-      .header {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-
-      .header h1 {
-        color: var(--text-primary);
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        text-shadow:
-          0 0 20px var(--primary-color),
-          2px 2px 4px var(--shadow-color);
-      }
-
-      .header p {
-        color: var(--text-secondary);
-        font-size: 1.1em;
-        line-height: 1.6;
-      }
-
-      /* Unificar header, filtros e estatísticas */
-      .unified-header {
-        background:
-          linear-gradient(
-            135deg,
-            rgba(26, 26, 46, 0.4) 0%,
-            rgba(22, 33, 62, 0.4) 50%,
-            rgba(15, 52, 96, 0.4) 100%
-          ),
-          url("./Assets/Animes/anime_background.jpg") center center/cover
-            no-repeat;
-        position: relative;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        padding: 60px 60px 24px 60px;
-        margin-bottom: 40px;
-        min-height: 520px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        overflow: hidden;
-      }
-
-      .unified-header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(
-          90deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        z-index: 3;
-        border-radius: inherit;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      .unified-header > * {
-        position: relative;
-        z-index: 2;
-      }
-
-      .header-overlay-fix {
-        position: absolute;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.75);
-        border-radius: 20px;
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      .unified-header h1 {
-        color: #111 !important;
-        font-size: 3em;
-        margin-bottom: 15px;
-        text-shadow:
-          0 0 20px var(--primary-color),
-          2px 2px 4px var(--shadow-color);
-      }
-
-      .unified-header p {
-        color: #111 !important;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-        text-shadow:
-          0 0 10px var(--primary-color),
-          1px 1px 2px var(--shadow-color);
-      }
-
-      .filters-stats-flex {
-        display: flex;
-        gap: 40px;
-        align-items: flex-end;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-top: auto;
-        margin-bottom: 0;
-      }
-
-      .filters {
-        flex: 2;
-        min-width: 320px;
-        border-radius: 18px !important;
-        padding: 10px 10px 10px 10px !important;
-        box-shadow: 0 2px 6px var(--shadow-color-strong);
-        margin-bottom: 0;
-        background: rgba(18, 18, 35, 0.6);
-        backdrop-filter: blur(10px);
-      }
-
-      .filter-row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-        align-items: flex-end;
-      }
-
-      .filter-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        min-width: 120px;
-      }
-
-      .filter-group label {
-        font-weight: 600;
-        color: var(--text-primary);
-        font-size: 0.9em;
-        text-align: left;
-      }
-
-      .filter-group select,
-      .filter-group input {
-        padding: 10px;
-        border: 2px solid rgba(187, 134, 252, 0.3);
-        border-radius: 8px;
-        font-size: 14px;
-        transition: all 0.3s ease;
-        background: rgba(18, 18, 35, 0.8);
-        color: var(--text-primary);
-      }
-
-      .filter-group select:focus,
-      .filter-group input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.1);
-      }
-
-      .filter-tags {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .filter-tag {
-        background: linear-gradient(
-          45deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.9em;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .filter-tag:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px var(--shadow-color);
-      }
-
-      .filter-tag.active {
-        background: linear-gradient(
-          45deg,
-          var(--accent-color),
-          var(--primary-color)
-        );
-        box-shadow: 0 5px 15px rgba(207, 102, 121, 0.4);
-      }
-
-      .stats-compact {
-        flex: 1;
-        min-width: 220px;
-        background: rgba(18, 18, 35, 0.6);
-        border-radius: 18px !important;
-        padding: 8px 8px 4px 8px !important;
-        box-shadow: 0 2px 6px var(--shadow-color-strong);
-        margin-bottom: 0;
-        backdrop-filter: blur(10px);
-      }
-
-      .stats-compact .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .stat-card {
-        background: rgba(187, 134, 252, 0.1);
-        border-radius: 10px;
-        box-shadow: 0 2px 8px var(--shadow-color);
-        padding: 10px 0 6px 0;
-        text-align: center;
-      }
-
-      .stat-value {
-        font-size: 1.3em;
-        font-weight: bold;
-        color: var(--text-primary);
-      }
-
-      .stat-label {
-        font-size: 0.9em;
-        color: var(--text-secondary);
-      }
-
-      @media (max-width: 900px) {
-        .filters-stats-flex {
-          flex-direction: column;
-          gap: 20px;
-          align-items: stretch;
-        }
-
-        .filters,
-        .stats-compact {
-          width: 100%;
-          min-width: unset;
-          margin-bottom: 0;
-          margin-top: 0;
-        }
-      }
-
-      @media (max-width: 600px) {
-        .header-overlay-fix {
-          border-radius: 0 !important;
-        }
-
-        .unified-header {
-          border-radius: 0 !important;
-        }
-
-        .filters,
-        .stats-compact {
-          padding: 6px 4px 4px 4px !important;
-          border-radius: 12px !important;
-        }
-
-        .filter-tag,
-        .stat-value,
-        .stat-label {
-          font-size: 0.95em;
-        }
-
-        .filters .filter-group label {
-          font-size: 0.85em;
-        }
-      }
-
-      .filter-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 25px;
-        background: linear-gradient(
-          45deg,
-          var(--accent-color),
-          var(--primary-color)
-        );
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
-      }
-
-      .filter-btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: left 0.5s;
-      }
-
-      .filter-btn:hover::before {
-        left: 100%;
-      }
-
-      .filter-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
-      }
-
-      .filter-btn.active {
-        background: linear-gradient(
-          45deg,
-          var(--secondary-color),
-          var(--primary-color)
-        );
-      }
-
-      .filter-btn .count {
-        background: rgba(255, 255, 255, 0.3);
-        padding: 2px 8px;
-        border-radius: 10px;
-        font-size: 0.8em;
-        margin-left: 8px;
-      }
-
-      /* Campo de busca específico */
-      #searchInput {
-        min-width: 250px;
-        width: 100%;
-        max-width: 350px;
-      }
-
-      /* Responsividade para o campo de busca */
-      @media (max-width: 768px) {
-        #searchInput {
-          min-width: 200px;
-          max-width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        #searchInput {
-          min-width: 180px;
-          max-width: 100%;
-        }
-      }
-
-      .animes-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-        gap: 30px;
-        margin-top: 0;
-      }
-
-      .anime-card {
-        background: var(--bg-main);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 10px 30px var(--shadow-color);
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        position: relative;
-        overflow: hidden;
-        /* Alinhamento para o botão na base */
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-
-      .anime-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px var(--shadow-color-strong);
-        border-color: var(--primary-color);
-      }
-
-      .anime-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(
-          90deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-      }
-
-      .anime-images {
-        width: 100%;
-        height: 220px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(
-          45deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .anime-images.has-images {
-        background: none;
-      }
-
-      .image-slider {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
-
-      .slide.active {
-        opacity: 1;
-      }
-
-      .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 8px;
-      }
-
-      .slide-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 60px;
-        color: white;
-        text-shadow: 2px 2px 4px var(--shadow-color-strong);
-      }
-
-      .slide-controls {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        opacity: 0;
-        z-index: 10;
-      }
-
-      .anime-images:hover .slide-controls {
-        opacity: 1;
-      }
-
-      .slide-controls:hover {
-        background: rgba(0, 0, 0, 0.8);
-        transform: translateY(-50%) scale(1.1);
-      }
-
-      .slide-controls.prev {
-        left: 10px;
-      }
-
-      .slide-controls.next {
-        right: 10px;
-      }
-
-      .slide-indicators {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-      }
-
-      .indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-
-      .indicator.active {
-        background: white;
-      }
-
-      .anime-title {
-        font-size: 1.4em;
-        font-weight: bold;
-        color: var(--text-primary);
-        margin-bottom: 12px;
-        line-height: 1.3;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-height: calc(1.3em * 2);
-      }
-
-      .anime-category {
-        display: inline-block;
-        background: var(--accent-color);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 15px;
-        font-size: 0.8em;
-        margin-bottom: 12px;
-        text-transform: capitalize;
-        align-self: flex-start;
-      }
-
-      .anime-rating {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin-bottom: 15px;
-      }
-
-      .stars {
-        color: #f39c12;
-        font-size: 1.2em;
-      }
-
-      .anime-synopsis {
-        color: var(--text-secondary);
-        font-size: 0.9em;
-        line-height: 1.5;
-        margin-bottom: 15px;
-      }
-
-      .anime-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        font-size: 0.85em;
-        color: var(--text-secondary);
-      }
-
-      .anime-episodes {
-        background: var(--primary-color);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 10px;
-        font-size: 0.8em;
-      }
-
-      .anime-status {
-        padding: 4px 8px;
-        border-radius: 10px;
-        font-size: 0.8em;
-        font-weight: 500;
-      }
-
-      .anime-status.ongoing {
-        background: #27ae60;
-        color: white;
-      }
-
-      .anime-status.completed {
-        background: #3498db;
-        color: white;
-      }
-
-      .anime-status.hiatus {
-        background: #f39c12;
-        color: white;
-      }
-
-      .anime-genres {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 15px;
-      }
-
-      .genre-tag {
-        background: var(--secondary-color);
-        color: white;
-        padding: 3px 8px;
-        border-radius: 10px;
-        font-size: 0.75em;
-        text-transform: capitalize;
-      }
-
-      .anime-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: auto;
-      }
-
-      .action-btn {
-        flex: 1;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 0.85em;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        text-align: center;
-        display: inline-block;
-      }
-
-      .action-btn.watch {
-        background: linear-gradient(
-          45deg,
-          var(--accent-color),
-          var(--primary-color)
-        );
-        color: white;
-        border: none;
-        border-radius: 25px;
-        box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        font-weight: 500;
-      }
-
-      .action-btn.watch::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: left 0.5s;
-      }
-
-      .action-btn.watch:hover::before {
-        left: 100%;
-      }
-
-      .action-btn.watch:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(187, 134, 252, 0.4);
-      }
-
-      .action-btn.info {
-        background: var(--secondary-color);
-        color: white;
-      }
-
-      .action-btn.info:hover {
-        background: #02c4b3;
-        transform: translateY(-2px);
-      }
-
-      .no-results {
-        text-align: center;
-        padding: 50px 20px;
-        color: var(--text-secondary);
-        font-size: 1.2em;
-      }
-
-      .no-results .icon {
-        font-size: 4em;
-        margin-bottom: 20px;
-        opacity: 0.5;
-      }
-
-      /* Responsividade */
-      @media (max-width: 768px) {
-        .container {
-          margin-top: 80px;
-          padding: 0 10px;
-        }
-
-        .unified-header {
-          min-height: auto !important;
-          padding: 30px 15px 15px 15px !important;
-          margin-bottom: 20px;
-        }
-
-        .unified-header h1 {
-          font-size: 1.8em !important;
-          min-height: auto;
-          margin-bottom: 5px;
-        }
-
-        .unified-header p {
-          font-size: 0.9em !important;
-          margin-bottom: 15px;
-        }
-
-        .floating-element {
-          font-size: 1.5em;
-        }
-
-        .animes-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .unified-header h1 {
-          font-size: 1.6em !important;
-        }
-
-        .unified-header p {
-          font-size: 0.85em !important;
-        }
-
-        .filter-btn {
-          padding: 8px 16px;
-          font-size: 0.9em;
-        }
-      }
-
-      .star-special {
-        color: #ffd700;
-        text-shadow:
-          0 0 8px #fff700,
-          0 0 16px #ffec80;
-        animation: star-glow 1.2s infinite alternate;
-      }
-
-      @keyframes star-glow {
-        0% {
-          filter: brightness(1.2) drop-shadow(0 0 2px #fff700);
-        }
-
-        100% {
-          filter: brightness(2) drop-shadow(0 0 8px #fff700);
-        }
-      }
-
-    /* SVG Icon System */
     .icon {
       display: inline-block;
       width: 1em;
@@ -1125,869 +74,1408 @@
       stroke: currentColor;
       flex-shrink: 0;
     }
-    .icon-stroke {
-      fill: none;
+
+    .icon-stroke { fill: none; }
+
+    /* ============================================================
+       STARFIELD
+       ============================================================ */
+    .starfield {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.6;
     }
-    </style>
-  </head>
 
-  <body>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-  <!-- Navigation -->
-  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-  </symbol>
-  <symbol id="i-anime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z"/>
-    <circle cx="12" cy="12" r="2.5"/>
-  </symbol>
-  <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20.2 6L3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/><path d="M6.2 5.3l3.1 3.9"/><path d="M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-  </symbol>
-  <symbol id="i-gamepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="2"/>
-  </symbol>
-  <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-  </symbol>
-  <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-  </symbol>
-  <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
-  </symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-  </symbol>
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: drift linear infinite;
+    }
 
-  <!-- UI General -->
-  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </symbol>
-  <symbol id="i-bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>
-  </symbol>
-  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </symbol>
-  <symbol id="i-star-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </symbol>
-  <symbol id="i-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-  </symbol>
-  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-  </symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-  </symbol>
-  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-  </symbol>
-  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-  </symbol>
-  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-  </symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-  </symbol>
-  <symbol id="i-masks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 4a2 2 0 0 1 2-2h5.5a2 2 0 0 1 1.6.8L12 4"/><path d="M2 4v9a7 7 0 0 0 7 7 6.97 6.97 0 0 0 4-1.26"/><circle cx="6" cy="9" r="1"/><path d="M22 8a2 2 0 0 0-2-2h-5.5a2 2 0 0 0-1.6.8L12 8"/><path d="M22 8v5a7 7 0 0 1-14 0"/><circle cx="18" cy="11" r="1"/>
-  </symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-  </symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-  </symbol>
-  <symbol id="i-speech" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-  </symbol>
-  <symbol id="i-vote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 3a2 2 0 0 0-2 2v2"/><path d="M19 3a2 2 0 0 1 2 2v2"/><path d="M21 17a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 21h6"/>
-  </symbol>
-  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-  </symbol>
-  <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><line x1="7" y1="6" x2="7.01" y2="6"/><line x1="9" y1="10" x2="9.01" y2="10"/>
-  </symbol>
-  <symbol id="i-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>
-  </symbol>
-  <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/>
-  </symbol>
-  <symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
-  </symbol>
+    .star.s1 { width: 1px; height: 1px; animation-duration: 30s; }
+    .star.s2 { width: 1.5px; height: 1.5px; animation-duration: 22s; box-shadow: 0 0 3px rgba(255, 255, 255, .4); }
+    .star.s3 { width: 2px; height: 2px; animation-duration: 14s; box-shadow: 0 0 4px rgba(255, 255, 255, .6); }
 
-  <!-- Music Player -->
-  <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>
-  </symbol>
-  <symbol id="i-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-  </symbol>
-  <symbol id="i-volume-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-  </symbol>
-  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor">
-    <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
-  </symbol>
-  <symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
-  </symbol>
-  <symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-  </symbol>
-  <symbol id="i-repeat-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="12" y="14" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">1</text>
-  </symbol>
-  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-  </symbol>
-  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-  </symbol>
-  <symbol id="i-folder-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 14l1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v2"/>
-  </symbol>
-  <symbol id="i-maximize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
-  </symbol>
-  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-  </symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-  </symbol>
-  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
-  </symbol>
-  <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275z"/>
-  </symbol>
-  <symbol id="i-glow-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0.5">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-    <line x1="12" y1="0" x2="12" y2="2" stroke="currentColor" stroke-width="1"/><line x1="24" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1"/><line x1="12" y1="24" x2="12" y2="22" stroke="currentColor" stroke-width="1"/><line x1="0" y1="12" x2="2" y2="12" stroke="currentColor" stroke-width="1"/>
-  </symbol>
-  <symbol id="i-bird" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/>
-  </symbol>
-  <symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
-  </symbol>
-  <symbol id="i-narutomaki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"/><path d="M12 8a4 4 0 0 1 2.83 6.83"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
-  </symbol>
-  <symbol id="i-home-alt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-  </symbol>
-  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
-    <polygon points="5 3 19 12 5 21 5 3"/>
-  </symbol>
-</svg>
+    @keyframes drift {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
+    }
 
+    /* ============================================================
+       NAVEGAÇÃO
+       ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(7, 7, 13, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
 
-    <!-- Campo de Estrelas -->
-    <div class="starfield" id="starfield"></div>
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-    <!-- Navegação -->
-    <nav class="navigation">
-      <div class="nav-container">
-        <a href="index.html" class="nav-home"><svg class="icon icon-stroke"><use href="#i-home"/></svg> Home</a>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="animes.html" class="active"><svg class="icon icon-stroke"><use href="#i-anime"/></svg> Animes</a></li>
-          <li><a href="filmes.html"><svg class="icon icon-stroke"><use href="#i-clapperboard"/></svg> Filmes</a></li>
-          <li><a href="jogos.html"><svg class="icon icon-stroke"><use href="#i-gamepad"/></svg> Jogos</a></li>
-          <li><a href="musicas.html"><svg class="icon icon-stroke"><use href="#i-music"/></svg> Músicas</a></li>
-          <li><a href="imagens.html"><svg class="icon icon-stroke"><use href="#i-image"/></svg> Imagens</a></li>
-          <li><a href="videos.html"><svg class="icon icon-stroke"><use href="#i-video"/></svg> Vídeos</a></li>
-        </ul>
-        <button class="menu-toggle" onclick="toggleMenu()"><svg class="icon icon-stroke"><use href="#i-menu"/></svg></button>
-      </div>
-    </nav>
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-1);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    <!-- Container Principal -->
-    <div class="container">
-      <!-- Header Unificado com Filtros e Estatísticas -->
-      <div class="header unified-header">
-        <div class="header-overlay-fix"></div>
-        <h1>Animes</h1>
-        <p>ANIMES ASSISTIDOS E RECOMENDADOS</p>
-        <div class="filters-stats-flex">
-          <div class="filters">
-            <div class="filter-row">
-              <div class="filter-group">
-                <label>Categoria:</label>
-                <div class="filter-tags" id="filters">
-                  <!-- Botões serão inseridos aqui pelo JavaScript -->
-                </div>
-              </div>
-            </div>
-            <div class="filter-row">
-              <div class="filter-group">
-                <label><svg class="icon icon-stroke"><use href="#i-search"/></svg> Buscar:</label>
-                <input
-                  type="text"
-                  id="searchInput"
-                  placeholder="Digite o Título ou Sinopse"
-                  oninput="searchAnimes()"
-                />
-              </div>
-            </div>
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--holo);
+      filter: saturate(1.2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .nav-links a:hover { color: var(--text-1); background: var(--bg-2); }
+    .nav-links a.active { color: var(--text-1); background: var(--bg-3); }
+
+    .nav-links a.active::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--holo);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-default);
+      color: var(--text-1);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ============================================================
+       CONTAINER + HERO
+       ============================================================ */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 88px 28px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-top: 24px;
+      margin-bottom: 48px;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px;
+      isolation: isolate;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("./Assets/Animes/anime_background.jpg");
+      background-size: cover;
+      background-position: center;
+      z-index: -3;
+      transform: scale(1.05);
+      filter: saturate(0.9);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(180deg,
+          rgba(7, 7, 13, 0.55) 0%, rgba(7, 7, 13, 0.75) 60%, rgba(7, 7, 13, 0.95) 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--holo);
+      z-index: 1;
+      filter: saturate(1.4);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: var(--holo);
+      filter: blur(120px) saturate(1.2);
+      opacity: 0.25;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text-1);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 .holo-text {
+      background: var(--holo);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: holo-shift 8s ease-in-out infinite;
+      filter: saturate(1.3);
+    }
+
+    @keyframes holo-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--text-2);
+      max-width: 560px;
+      margin-bottom: 36px;
+    }
+
+    /* ============================================================
+       CONTROLES
+       ============================================================ */
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .filters {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-default);
+      color: var(--text-2);
+      border-radius: 999px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: capitalize;
+    }
+
+    .chip:hover { color: var(--text-1); border-color: var(--border-strong); }
+
+    .chip.active {
+      background: var(--text-1);
+      color: var(--bg-0);
+      border-color: var(--text-1);
+    }
+
+    .chip .count {
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.7;
+    }
+
+    .chip.active .count { opacity: 0.6; }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    .field:has(input) { flex: 2 1 240px; }
+
+    .field input,
+    .field select {
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-default);
+      border-radius: 10px;
+      color: var(--text-1);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      height: 40px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .field input::placeholder { color: var(--text-3); }
+
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%236f6f80' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 30px;
+    }
+
+    .field select option {
+      background: var(--bg-1);
+      color: var(--text-1);
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      gap: 32px;
+      padding: 18px 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 2px; }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       SECTION HEAD + GRID
+       ============================================================ */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .section-meta {
+      font-size: 13px;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    /* ============================================================
+       ANIME CARD
+       ============================================================ */
+    .anime-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .anime-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-default);
+      box-shadow: var(--shadow-2);
+    }
+
+    /* Cover (carousel) — 16:9 */
+    .anime-cover {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-2);
+      overflow: hidden;
+    }
+
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide.active { opacity: 1; }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: var(--text-3);
+      background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+    }
+
+    .slide-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 7, 13, 0.6);
+      backdrop-filter: blur(10px);
+      color: var(--text-1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease, background 0.15s ease, transform 0.15s ease;
+      z-index: 3;
+    }
+
+    .anime-cover:hover .slide-nav,
+    .anime-cover:focus-within .slide-nav { opacity: 1; }
+
+    .slide-nav:hover {
+      background: rgba(7, 7, 13, 0.85);
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .slide-nav.prev { left: 8px; }
+    .slide-nav.next { right: 8px; }
+
+    .slide-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(7, 7, 13, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+      border: none;
+      padding: 0;
+    }
+
+    .dot:hover { background: rgba(255, 255, 255, 0.6); }
+
+    .dot.active {
+      background: var(--text-1);
+      transform: scale(1.2);
+    }
+
+    .anime-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(7, 7, 13, 0.5) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Body */
+    .anime-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 18px 18px;
+      flex: 1;
+    }
+
+    .anime-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .anime-cat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: var(--bg-3);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-2);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: capitalize;
+      letter-spacing: 0.02em;
+    }
+
+    .anime-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      color: var(--gold);
+    }
+
+    .anime-rating .icon { width: 13px; height: 13px; fill: var(--gold); }
+    .anime-rating .icon.empty { fill: rgba(255, 217, 104, 0.18); stroke: rgba(255, 217, 104, 0.18); }
+
+    /* 5★ — tratamento holográfico */
+    .anime-rating.is-perfect .icon { fill: url(#holo-grad); }
+    .anime-rating.is-perfect .icon.empty { display: none; }
+
+    .anime-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-1);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: calc(1.25em * 2);
+    }
+
+    .anime-synopsis {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .anime-episodes {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 0.02em;
+    }
+
+    .anime-action {
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-default);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-1);
+      transition: all 0.15s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--text-1);
+      color: var(--bg-0);
+      border-color: var(--text-1);
+      width: 100%;
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+
+    /* ============================================================
+       LOADING / EMPTY
+       ============================================================ */
+    .loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-3);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--border-default);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-3);
+    }
+
+    .empty-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+
+    /* ============================================================
+       RESPONSIVO
+       ============================================================ */
+    @media (max-width: 768px) {
+      .container { padding: 80px 16px 64px; }
+      .hero { padding: 32px 24px; min-height: 380px; }
+
+      .controls {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .stats {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        overflow-x: auto;
+      }
+
+      .stat-value { font-size: 22px; }
+
+      .nav-links { display: none; }
+
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(7, 7, 13, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 16px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .menu-toggle { display: inline-flex; }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .slide-nav { opacity: 1; } /* sempre visível em touch */
+    }
+
+    /* Acessibilidade */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .slide { transition: none; }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       SVG DEFS — icons + holo gradient para 5★
+       ============================================================ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <linearGradient id="holo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff6db5" />
+        <stop offset="33%" stop-color="#b69cff" />
+        <stop offset="66%" stop-color="#6dd4ff" />
+        <stop offset="100%" stop-color="#84ffd1" />
+      </linearGradient>
+    </defs>
+    <symbol id="i-anime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z" /><circle cx="12" cy="12" r="2.5" />
+    </symbol>
+    <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.2 6L3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z" />
+      <path d="M6.2 5.3l3.1 3.9" /><path d="M12.4 3.4l3.1 4" />
+      <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    </symbol>
+    <symbol id="i-gamepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="6" y1="12" x2="10" y2="12" /><line x1="8" y1="10" x2="8" y2="14" />
+      <line x1="15" y1="13" x2="15.01" y2="13" /><line x1="18" y1="11" x2="18.01" y2="11" />
+      <rect x="2" y="6" width="20" height="12" rx="2" />
+    </symbol>
+    <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
+    </symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+    </symbol>
+    <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" />
+    </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </symbol>
+    <symbol id="i-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
+    </symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="7" width="20" height="15" rx="2" /><polyline points="17 2 12 7 7 2" />
+    </symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </symbol>
+  </svg>
+
+  <!-- Starfield -->
+  <div class="starfield" id="starfield"></div>
+
+  <!-- Navegação -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        Dreamer Collection
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="animes.html" class="active">Animes</a></li>
+        <li><a href="filmes.html">Filmes</a></li>
+        <li><a href="jogos.html">Jogos</a></li>
+        <li><a href="musicas.html">Músicas</a></li>
+        <li><a href="imagens.html">Imagens</a></li>
+        <li><a href="videos.html">Vídeos</a></li>
+      </ul>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <svg class="icon icon-stroke"><use href="#i-menu" /></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-glow"></div>
+
+      <h1>
+        Mundos em <span class="holo-text">animação</span><br />
+        que valeram cada episódio.
+      </h1>
+      <p>Animes que vi, gostei e recomendo, separados por categoria, com sinopse e link direto pra assistir.</p>
+
+      <div class="controls">
+        <div class="filters">
+          <div class="chips" id="categoryChips">
+            <!-- gerados dinamicamente -->
           </div>
-          <div class="stats stats-compact">
-            <h3
-              style="font-size: 1.1em; margin-bottom: 10px; text-align: center"
-            >
-              <svg class="icon icon-stroke"><use href="#i-bar-chart"/></svg> Estatísticas da Coleção
-            </h3>
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-value" id="totalAnimes">0</div>
-                <div class="stat-label">Total de Animes</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-value" id="currentAnimes">0</div>
-                <div class="stat-label">Exibindo</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-value" id="genresCount">0</div>
-                <div class="stat-label">Categorias</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-value" id="avgRating">0</div>
-                <div class="stat-label">Nota Média</div>
-              </div>
+
+          <div class="input-row">
+            <div class="field">
+              <input type="text" id="searchInput" placeholder="Título ou sinopse…" oninput="onSearchInput()" aria-label="Buscar animes" />
+            </div>
+            <div class="field">
+              <select id="ratingFilter" onchange="applyFilters()" aria-label="Filtrar por nota">
+                <option value="">Nota</option>
+                <option value="5">5 estrelas</option>
+                <option value="4">4+ estrelas</option>
+                <option value="3">3+ estrelas</option>
+                <option value="2">2+ estrelas</option>
+              </select>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="animes-grid" id="animesGrid">
-        <div class="loading">Carregando animes...</div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value" id="totalCount">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="currentCount">0</div>
+            <div class="stat-label">Exibindo</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="catCount">0</div>
+            <div class="stat-label">Categorias</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="avgRating">0</div>
+            <div class="stat-label">Nota média</div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- Section heading -->
+    <div class="section-head">
+      <h2 class="section-title">Coleção</h2>
+      <span class="section-meta" id="resultMeta">—</span>
     </div>
 
-    <script>
-      // Dados dos animes (carregados via JSON)
-      let animes = [];
-      let favorites = new Set();
+    <!-- Grid -->
+    <div class="grid" id="animesGrid">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando animes…</p>
+      </div>
+    </div>
+  </main>
 
-      async function fetchAnimes() {
-        try {
-          const response = await fetch("./Assets/Animes/animes.json");
-          if (!response.ok) throw new Error("Network response was not ok");
-          animes = await response.json();
+  <script>
+    /* ============================================================
+       ESTADO GLOBAL
+       ============================================================ */
+    let allAnimes = [];
+    let displayedAnimes = [];
+    let currentCategory = "todos";
+    let currentRating = "";
+    let searchQuery = "";
 
-          // Inicialização dependente dos dados
-          updateFilterCounts();
-          renderAnimes();
-        } catch (error) {
-          console.error("Falha ao carregar animes:", error);
-          const grid = document.getElementById("animesGrid");
-          if (grid) {
-            grid.innerHTML = `
-                        <div class="empty-state">
-                            <h3><svg class="icon icon-stroke"><use href="#i-alert"/></svg> Erro ao carregar dados</h3>
-                            <p>Não foi possível carregar a lista de animes. Verifique o arquivo animes.json.</p>
-                        </div>
-                    `;
-          }
-          updateStats();
-        }
-      }
+    // Estado dos carrosseis: { [animeId]: { index, intervalId, lazyLoaded } }
+    const carouselState = new Map();
+    const SLIDE_INTERVAL = 4000;
 
-      let currentSlides = {};
-      let sliderIntervals = {};
-      let currentFilter = "todos";
-      let searchQuery = "";
+    let searchDebounceTimer;
+    let visibilityObserver = null; // pausa carrossel off-screen
 
-      // Variável para animes filtrados/exibidos
-      let filteredAnimes = [];
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
 
-      // Atualizar estatísticas
-      function updateStats() {
-        const totalAnimes = animes.length;
-        const currentAnimes = filteredAnimes.length || animes.length;
+    function escapeAttr(s) {
+      return escapeHtml(s).replace(/`/g, "&#96;");
+    }
 
-        // Calcular categorias únicas
-        const categories = new Set();
-        animes.forEach((anime) => {
-          if (anime.category) {
-            categories.add(anime.category);
-          }
-        });
+    /* ============================================================
+       CARREGAMENTO INICIAL
+       ============================================================ */
+    async function loadAnimes() {
+      try {
+        const res = await fetch("./Assets/Animes/animes.json");
+        if (!res.ok) throw new Error("Falha ao carregar JSON");
+        allAnimes = await res.json();
 
-        // Calcular nota média (rating de 1 a 5, converter para 0-10)
-        let totalRating = 0;
-        let ratedAnimes = 0;
-        animes.forEach((anime) => {
-          if (anime.rating && anime.rating > 0) {
-            // Converter rating de 1-5 para 0-10 (rating * 2)
-            totalRating += anime.rating * 2;
-            ratedAnimes++;
-          }
-        });
-        const avgRating =
-          ratedAnimes > 0 ? (totalRating / ratedAnimes).toFixed(1) : 0;
-
-        // Atualizar DOM
-        const totalEl = document.getElementById("totalAnimes");
-        const currentEl = document.getElementById("currentAnimes");
-        const genresEl = document.getElementById("genresCount");
-        const avgEl = document.getElementById("avgRating");
-
-        if (totalEl) totalEl.textContent = totalAnimes;
-        if (currentEl) currentEl.textContent = currentAnimes;
-        if (genresEl) genresEl.textContent = categories.size;
-        if (avgEl) avgEl.textContent = avgRating;
-      }
-
-      // Atualizar contadores dos filtros
-      function updateFilterCounts() {
-        const categories = {};
-        animes.forEach((anime) => {
-          categories[anime.category] = (categories[anime.category] || 0) + 1;
-        });
-
-        const filtersContainer = document.getElementById("filters");
-        filtersContainer.innerHTML = "";
-
-        // Adicionar botão "Todos"
-        const todosButton = document.createElement("button");
-        todosButton.className = `filter-tag ${currentFilter === "todos" ? "active" : ""}`;
-        todosButton.dataset.category = "todos";
-        todosButton.innerHTML = `Todos`;
-        todosButton.onclick = function () {
-          document
-            .querySelectorAll(".filter-tag")
-            .forEach((b) => b.classList.remove("active"));
-          this.classList.add("active");
-          currentFilter = "todos";
-          if (window._cancelPreloadTabs) window._cancelPreloadTabs();
-          renderAnimes();
-        };
-        filtersContainer.appendChild(todosButton);
-
-        Object.keys(categories)
-          .sort()
-          .forEach((category) => {
-            const button = document.createElement("button");
-            button.className = `filter-tag ${currentFilter === category ? "active" : ""}`;
-            button.dataset.category = category;
-            button.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
-            button.onclick = function () {
-              document
-                .querySelectorAll(".filter-tag")
-                .forEach((b) => b.classList.remove("active"));
-              this.classList.add("active");
-              currentFilter = this.dataset.category;
-              if (window._cancelPreloadTabs) window._cancelPreloadTabs();
-              renderAnimes();
-            };
-            filtersContainer.appendChild(button);
-          });
-
-        // Atualizar estatísticas após atualizar filtros
+        renderCategoryChips();
+        applyFilters();
         updateStats();
+      } catch (err) {
+        console.error("Erro ao carregar animes:", err);
+        document.getElementById("animesGrid").innerHTML = `
+          <div class="empty">
+            <div class="empty-title">Não foi possível carregar a coleção</div>
+            <div>Verifique se <code>./Assets/Animes/animes.json</code> está acessível.</div>
+          </div>`;
+      }
+    }
+
+    /* ============================================================
+       CHIPS DE CATEGORIA — gerados a partir do JSON
+       ============================================================ */
+    function renderCategoryChips() {
+      const counts = { todos: allAnimes.length };
+      allAnimes.forEach(a => {
+        const c = (a.category || "outros").toLowerCase();
+        counts[c] = (counts[c] || 0) + 1;
+      });
+
+      const container = document.getElementById("categoryChips");
+      const cats = Object.keys(counts).filter(c => c !== "todos").sort();
+      const ordered = ["todos", ...cats];
+
+      container.innerHTML = ordered.map(c => `
+        <button class="chip${c === currentCategory ? ' active' : ''}" data-cat="${escapeAttr(c)}" onclick="filterByCategory('${escapeAttr(c)}', this)">
+          ${c === 'todos' ? 'Todos' : escapeHtml(c.charAt(0).toUpperCase() + c.slice(1))}
+          <span class="count">${counts[c]}</span>
+        </button>
+      `).join("");
+    }
+
+    /* ============================================================
+       FILTROS
+       ============================================================ */
+    function filterByCategory(category, btn) {
+      currentCategory = category;
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      applyFilters();
+    }
+
+    function onSearchInput() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        searchQuery = document.getElementById("searchInput").value.trim().toLowerCase();
+        applyFilters();
+      }, 200);
+    }
+
+    function applyFilters() {
+      currentRating = document.getElementById("ratingFilter").value;
+
+      let list = allAnimes;
+
+      if (currentCategory !== "todos") {
+        list = list.filter(a => (a.category || "").toLowerCase() === currentCategory);
       }
 
-      // Toggle favorito
-      function toggleFavorite(animeId) {
-        if (favorites.has(animeId)) {
-          favorites.delete(animeId);
-        } else {
-          favorites.add(animeId);
-        }
-
-        // Atualizar o anime no array
-        const anime = animes.find((a) => a.id === animeId);
-        if (anime) {
-          anime.favorite = favorites.has(animeId);
-        }
-
-        renderAnimes(); // Re-render para atualizar o botão
+      if (currentRating) {
+        const min = parseInt(currentRating, 10);
+        list = list.filter(a => (a.rating || 0) >= min);
       }
 
-      // Inicializar slider de imagens
-      function initSlider(animeId, images) {
-        if (images.length <= 1) return;
-
-        currentSlides[animeId] = 0;
-
-        if (sliderIntervals[animeId]) {
-          clearInterval(sliderIntervals[animeId]);
-        }
-
-        sliderIntervals[animeId] = setInterval(() => {
-          const slider = document.querySelector(
-            `[data-anime-id="${animeId}"] .image-slider`,
-          );
-          if (!slider) {
-            clearInterval(sliderIntervals[animeId]);
-            return;
-          }
-
-          nextSlide(animeId);
-        }, 4000);
-      }
-
-      // Navegar para próximo slide
-      function nextSlide(animeId) {
-        const anime = animes.find((a) => a.id === animeId);
-        if (!anime || !anime.images || anime.images.length <= 1) return;
-
-        const slider = document.querySelector(
-          `[data-anime-id="${animeId}"] .image-slider`,
+      if (searchQuery) {
+        list = list.filter(a =>
+          (a.title || "").toLowerCase().includes(searchQuery) ||
+          (a.synopsis || "").toLowerCase().includes(searchQuery)
         );
-        if (!slider) return;
-
-        const slides = slider.querySelectorAll(".slide");
-        const indicators = slider.querySelectorAll(".indicator");
-        if (slides.length === 0) return;
-
-        // Calcula o próximo índice
-        let nextIndex = (currentSlides[animeId] + 1) % anime.images.length;
-        const nextImg = slides[nextIndex].querySelector("img");
-        // Se a imagem já está carregada (complete e naturalWidth > 0), troca normalmente
-        if (nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
-          slides[currentSlides[animeId]].classList.remove("active");
-          if (indicators.length > 0) {
-            indicators[currentSlides[animeId]].classList.remove("active");
-          }
-          currentSlides[animeId] = nextIndex;
-          slides[currentSlides[animeId]].classList.add("active");
-          if (indicators.length > 0) {
-            indicators[currentSlides[animeId]].classList.add("active");
-          }
-        } else if (nextImg) {
-          // Se não está carregada, aguarda o carregamento e só então troca
-          const onImgLoad = function () {
-            nextImg.removeEventListener("load", onImgLoad);
-            // Chama novamente para garantir a troca
-            nextSlide(animeId);
-          };
-          nextImg.addEventListener("load", onImgLoad);
-          // Opcional: pode mostrar um loader ou feedback visual aqui
-        }
       }
 
-      // Navegar para slide anterior
-      function prevSlide(animeId) {
-        const anime = animes.find((a) => a.id === animeId);
-        if (!anime || !anime.images || anime.images.length <= 1) return;
+      displayedAnimes = list;
+      renderGrid(list);
+      updateResultMeta(list.length);
+      updateStats();
+    }
 
-        const slider = document.querySelector(
-          `[data-anime-id="${animeId}"] .image-slider`,
-        );
-        if (!slider) return;
+    /* ============================================================
+       RENDER — cards
+       ============================================================ */
+    function cardHTML(anime) {
+      const id = String(anime.id);
+      const images = Array.isArray(anime.images) ? anime.images : [];
+      const hasImages = images.length > 0;
+      const rating = Number(anime.rating) || 0;
+      const isPerfect = rating === 5;
 
-        const slides = slider.querySelectorAll(".slide");
-        const indicators = slider.querySelectorAll(".indicator");
+      // Estrelas: 5 totais (preenchidas até rating, vazias o resto)
+      // No modo "perfect" (5★) escondemos as vazias via CSS
+      const starsHtml = Array.from({ length: 5 }).map((_, i) =>
+        i < rating
+          ? `<svg class="icon"><use href="#i-star"/></svg>`
+          : `<svg class="icon empty"><use href="#i-star"/></svg>`
+      ).join("");
 
-        if (slides.length === 0) return;
+      // Apenas a primeira imagem renderiza inicialmente (lazy do resto via setupCarousel)
+      const coverHtml = hasImages
+        ? `<div class="slides">
+             <div class="slide active">
+               <img src="${escapeAttr(images[0])}" alt="${escapeAttr(anime.title || "")}"
+                    loading="lazy" decoding="async"
+                    onerror="this.style.display='none'" />
+             </div>
+           </div>
+           ${images.length > 1 ? `
+             <button class="slide-nav prev" type="button" aria-label="Imagem anterior" onclick="prevSlide('${escapeAttr(id)}', event)">
+               <svg class="icon icon-stroke"><use href="#i-chevron-left"/></svg>
+             </button>
+             <button class="slide-nav next" type="button" aria-label="Próxima imagem" onclick="nextSlide('${escapeAttr(id)}', event)">
+               <svg class="icon icon-stroke"><use href="#i-chevron-right"/></svg>
+             </button>
+             <div class="slide-dots" role="tablist"></div>
+           ` : ''}`
+        : `<div class="slide-placeholder"><svg class="icon icon-stroke"><use href="#i-anime"/></svg></div>`;
 
-        slides[currentSlides[animeId]].classList.remove("active");
-        if (indicators.length > 0) {
-          indicators[currentSlides[animeId]].classList.remove("active");
-        }
+      return `
+        <article class="anime-card" data-id="${escapeAttr(id)}" data-images="${images.length}">
+          <div class="anime-cover" role="region" aria-roledescription="carousel" aria-label="Imagens de ${escapeAttr(anime.title || '')}">
+            ${coverHtml}
+          </div>
+          <div class="anime-body">
+            <div class="anime-meta">
+              <span class="anime-cat">${escapeHtml(anime.category || "")}</span>
+              <span class="anime-rating${isPerfect ? ' is-perfect' : ''}" aria-label="Nota: ${rating} de 5">${starsHtml}</span>
+            </div>
+            <h3 class="anime-title">${escapeHtml(anime.title || "")}</h3>
+            <p class="anime-synopsis">${escapeHtml(anime.synopsis || "")}</p>
+            ${anime.episodes ? `<div class="anime-episodes"><svg class="icon icon-stroke"><use href="#i-tv"/></svg> ${escapeHtml(anime.episodes)}</div>` : ''}
+            <div class="anime-action">
+              <a class="btn btn-primary" href="${escapeAttr(anime.watchUrl || '#')}" target="_blank" rel="noopener">
+                <svg class="icon"><use href="#i-play"/></svg> Assistir
+              </a>
+            </div>
+          </div>
+        </article>`;
+    }
 
-        currentSlides[animeId] =
-          currentSlides[animeId] === 0
-            ? anime.images.length - 1
-            : currentSlides[animeId] - 1;
+    function renderGrid(list) {
+      const grid = document.getElementById("animesGrid");
 
-        slides[currentSlides[animeId]].classList.add("active");
-        if (indicators.length > 0) {
-          indicators[currentSlides[animeId]].classList.add("active");
-        }
+      // Limpa carrosseis ativos antes de re-renderizar
+      teardownAllCarousels();
+
+      if (!list.length) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div class="empty-title">Nada por aqui</div>
+            <div>Tente outra categoria ou termo de busca.</div>
+          </div>`;
+        return;
       }
 
-      // Renderizar animes
-      function renderAnimes() {
-        const grid = document.getElementById("animesGrid");
-        Object.values(sliderIntervals).forEach((interval) =>
-          clearInterval(interval),
-        );
-        sliderIntervals = {};
+      grid.innerHTML = list.map(cardHTML).join("");
 
-        filteredAnimes = animes;
-        if (searchQuery) {
-          filteredAnimes = filteredAnimes.filter(
-            (anime) =>
-              anime.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              anime.synopsis.toLowerCase().includes(searchQuery.toLowerCase()),
-          );
-        } else if (currentFilter !== "todos") {
-          filteredAnimes = filteredAnimes.filter(
-            (anime) =>
-              anime.category.toLowerCase() === currentFilter.toLowerCase(),
-          );
-        }
+      // Setup dos carrosseis (lazy load + auto-slide controlado por viewport)
+      setupAllCarousels(list);
+    }
 
-        // Atualizar estatísticas após filtrar
-        updateStats();
-
-        if (filteredAnimes.length === 0) {
-          grid.innerHTML = `
-                    <div class="empty-state">
-                        <h3><svg class="icon icon-stroke"><use href="#i-narutomaki"/></svg> Nenhum anime encontrado</h3>
-                        <p>${searchQuery ? "Tente uma pesquisa diferente." : "Tente outro filtro."}</p>
-                    </div>
-                `;
-          updateStats(); // Atualizar estatísticas mesmo quando não há resultados
-          return;
-        }
-
-        // Renderiza apenas a primeira imagem de cada anime
-        grid.innerHTML = filteredAnimes
-          .map((anime) => {
-            const images = anime.images || [];
-            const hasImages = images.length > 0;
-            let imageContent = "";
-            if (hasImages) {
-              // Apenas a primeira imagem é renderizada inicialmente
-              imageContent = `
-                        <div class="image-slider">
-                            <div class="slide active">
-                                <img src="${images[0]}" alt="${anime.title}" data-anime-id="${anime.id}" data-slide-index="0" style="opacity: 0; transition: opacity 0.3s ease;" onload="this.style.opacity='1';window.lazyLoadAnimeSlides && window.lazyLoadAnimeSlides('${anime.id}')" onerror="this.style.display='none';">
-                            </div>
-                        </div>
-                    `;
-            } else {
-              imageContent = '<div class="slide-placeholder"><svg class="icon icon-stroke"><use href="#i-anime"/></svg></div>';
-            }
-            return `
-                    <div class="anime-card" data-anime-id="${anime.id}">
-                        <div class="anime-images ${hasImages ? "has-images" : ""}">
-                            ${imageContent}
-                        </div>
-                        <div class="anime-title">${anime.title}</div>
-                        <!--<div class="anime-category">${anime.category}</div>-->
-                        <div class="anime-rating">
-                            <span class="stars">
-                                ${[1, 2, 3, 4, 5]
-                                  .map((i) => {
-                                    if (i <= anime.rating) {
-                                      if (anime.rating === 5 && i === 5) {
-                                        return '<span class="star-special"><svg class="icon"><use href="#i-star"/></svg></span>';
-                                      } else {
-                                        return '<svg class="icon"><use href="#i-star"/></svg>';
-                                      }
-                                    } else {
-                                      return "";
-                                    }
-                                  })
-                                  .join("")}
-                            </span>
-                            <span>(${anime.rating}/5)</span>
-                        </div>
-                        <div class="anime-synopsis">${anime.synopsis}</div>
-                        ${anime.episodes ? `<div class="anime-info">${anime.episodes}</div>` : ""}
-                        <div class="anime-actions">
-                            <a href="${anime.watchUrl}" target="_blank" class="action-btn watch"><svg class="icon icon-stroke"><use href="#i-clapperboard"/></svg> Assistir</a>
-                        </div>
-                    </div>
-                `;
-          })
-          .join("");
-
-        // Lazy load dos slides restantes após a primeira imagem carregar
-        window.lazyLoadAnimeSlides = function (animeId) {
-          const anime = animes.find((a) => a.id === animeId);
-          if (!anime || !anime.images || anime.images.length <= 1) return;
-          const card = document.querySelector(
-            `[data-anime-id="${animeId}"] .image-slider`,
-          );
-          if (!card) return;
-          // Evita duplicar slides
-          if (card.querySelectorAll(".slide").length > 1) return;
-          // Adiciona os slides restantes
-          for (let i = 1; i < anime.images.length; i++) {
-            const slide = document.createElement("div");
-            slide.className = "slide";
-            slide.innerHTML = `<img src="${anime.images[i]}" alt="${anime.title}" style="opacity: 0; transition: opacity 0.3s ease;" onload=\"this.style.opacity='1';\" onerror=\"this.style.display='none';\">`;
-            card.appendChild(slide);
-          }
-          // Adiciona controles e indicadores se necessário
-          if (
-            anime.images.length > 1 &&
-            !card.querySelector(".slide-controls")
-          ) {
-            const prevBtn = document.createElement("button");
-            prevBtn.className = "slide-controls prev";
-            prevBtn.innerHTML = "‹";
-            prevBtn.onclick = function () {
-              prevSlide(animeId);
-            };
-            card.appendChild(prevBtn);
-            const nextBtn = document.createElement("button");
-            nextBtn.className = "slide-controls next";
-            nextBtn.innerHTML = "›";
-            nextBtn.onclick = function () {
-              nextSlide(animeId);
-            };
-            card.appendChild(nextBtn);
-            // Indicadores
-            const indicators = document.createElement("div");
-            indicators.className = "slide-indicators";
-            for (let i = 0; i < anime.images.length; i++) {
-              const indicator = document.createElement("div");
-              indicator.className = "indicator" + (i === 0 ? " active" : "");
-              indicator.onclick = function () {
-                changeSlide(animeId, i);
-              };
-              indicators.appendChild(indicator);
-            }
-            card.appendChild(indicators);
-          }
-          // Inicializa o slider automático
-          setTimeout(() => {
-            initSlider(animeId, anime.images);
-          }, 100);
-          // Após carregar todos os slides da aba, dispara o pré-carregamento das outras abas
-          lazyLoadOtherTabs();
-        };
-      }
-
-      // Pré-carregar imagens das outras abas
-      function lazyLoadOtherTabs() {
-        // Só executa se não estiver carregando outra aba
-        if (window._preloadingTabs) return;
-        window._preloadingTabs = true;
-        let cancelled = false;
-        window._cancelPreloadTabs = function () {
-          cancelled = true;
-          window._preloadingTabs = false;
-        };
-        const categories = [...new Set(animes.map((a) => a.category))];
-        const current = currentFilter;
-        let idx = 0;
-        function preloadNextCategory() {
-          if (cancelled) {
-            window._preloadingTabs = false;
-            return;
-          }
-          if (idx >= categories.length) {
-            window._preloadingTabs = false;
-            return;
-          }
-          const cat = categories[idx++];
-          if (cat === current || cat === "todos") {
-            preloadNextCategory();
-            return;
-          }
-          const animesCat = animes.filter((a) => a.category === cat);
-          let loaded = 0;
-          if (animesCat.length === 0) {
-            preloadNextCategory();
-            return;
-          }
-          animesCat.forEach((anime) => {
-            if (cancelled) return;
-            const img = new window.Image();
-            img.src = anime.images[0];
-            img.onload = img.onerror = function () {
-              if (cancelled) return;
-              loaded++;
-              if (loaded === animesCat.length) {
-                let loadedSlides = 0;
-                if (!anime.images || anime.images.length <= 1) {
-                  loadedSlides++;
-                }
-                for (let i = 1; i < anime.images.length; i++) {
-                  if (cancelled) return;
-                  const slideImg = new window.Image();
-                  slideImg.src = anime.images[i];
-                  slideImg.onload = slideImg.onerror = function () {
-                    if (cancelled) return;
-                    loadedSlides++;
-                    if (loadedSlides === anime.images.length - 1) {
-                      preloadNextCategory();
-                    }
-                  };
-                }
-                if (anime.images.length <= 1) preloadNextCategory();
-              }
-            };
-          });
-        }
-        preloadNextCategory();
-      }
-
-      // Mudar slide manualmente
-      function changeSlide(animeId, slideIndex) {
-        const slider = document.querySelector(
-          `[data-anime-id="${animeId}"] .image-slider`,
-        );
-        if (!slider) return;
-
-        const slides = slider.querySelectorAll(".slide");
-        const indicators = slider.querySelectorAll(".indicator");
-
-        slides.forEach((slide) => slide.classList.remove("active"));
-        indicators.forEach((indicator) => indicator.classList.remove("active"));
-
-        if (slides[slideIndex]) {
-          slides[slideIndex].classList.add("active");
-        }
-        if (indicators[slideIndex]) {
-          indicators[slideIndex].classList.add("active");
-        }
-
-        currentSlides[animeId] = slideIndex;
-
-        // Reiniciar o timer do slider automático
-        if (sliderIntervals[animeId]) {
-          clearInterval(sliderIntervals[animeId]);
-          const images =
-            animes.find((anime) => anime.id === animeId)?.images || [];
-          if (images.length > 1) {
-            initSlider(animeId, images);
-          }
-        }
-      }
-
-      // Função de busca
-      function searchAnimes() {
-        const searchInput = document.getElementById("searchInput");
-        searchQuery = searchInput.value.trim();
-        renderAnimes();
-      }
-
-      // Configurar pesquisa
-      function setupSearch() {
-        const searchInput = document.getElementById("searchInput");
-        let searchTimeout;
-
-        searchInput.addEventListener("input", function () {
-          clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => {
-            searchAnimes();
-          }, 300);
-        });
-      }
-
-      // Inicializar aplicação
-      function init() {
-        setupSearch();
-        fetchAnimes();
-      }
-
-      // Inicializar quando a página carregar
-      init();
-
-      // Função para criar campo de estrelas
-      function createStarfield() {
-        const starfield = document.getElementById("starfield");
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-
-        starfield.innerHTML = "";
-
-        // Estrelas em movimento
-        for (let i = 0; i < 200; i++) {
-          const star = document.createElement("div");
-          star.className = "star";
-
-          const angle = Math.random() * 2 * Math.PI;
-          const initialRadius = Math.random() * 50 + 10;
-          const startX = centerX + Math.cos(angle) * initialRadius;
-          const startY = centerY + Math.sin(angle) * initialRadius;
-
-          const directionX = Math.cos(angle);
-          const directionY = Math.sin(angle);
-
-          const maxDistance = Math.sqrt(
-            Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2),
-          );
-          const travelDistance = maxDistance * (0.8 + Math.random() * 0.4);
-
-          const starType = Math.random();
-          if (starType < 0.6) {
-            star.classList.add("distant");
-          } else if (starType < 0.85) {
-            star.classList.add("medium");
+    /* ============================================================
+       CARROSSEL — lazy load + auto-slide via IntersectionObserver
+       ============================================================ */
+    function setupAllCarousels(list) {
+      // Reset visibility observer
+      if (visibilityObserver) visibilityObserver.disconnect();
+      visibilityObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.dataset.id;
+          if (!id) return;
+          if (entry.isIntersecting) {
+            ensureLazyLoaded(id);
+            startAutoSlide(id);
           } else {
-            star.classList.add("close");
+            stopAutoSlide(id);
           }
-
-          const colorType = Math.random();
-          if (colorType < 0.1) {
-            star.classList.add("blue");
-          } else if (colorType < 0.2) {
-            star.classList.add("yellow");
-          }
-
-          star.style.left = startX + "px";
-          star.style.top = startY + "px";
-          star.style.setProperty("--dx", directionX * travelDistance + "px");
-          star.style.setProperty("--dy", directionY * travelDistance + "px");
-          star.style.animationDelay = Math.random() * 20 + "s";
-
-          starfield.appendChild(star);
-        }
-
-        // Estrelas estacionárias
-        for (let i = 0; i < 50; i++) {
-          const staticStar = document.createElement("div");
-          staticStar.className = "star distant";
-          staticStar.style.position = "absolute";
-          staticStar.style.left = Math.random() * window.innerWidth + "px";
-          staticStar.style.top = Math.random() * window.innerHeight + "px";
-          staticStar.style.opacity = Math.random() * 0.3 + 0.1;
-          staticStar.style.animation = `twinkle ${2 + Math.random() * 3}s ease-in-out infinite alternate`;
-
-          starfield.appendChild(staticStar);
-        }
-      }
-
-      // Menu mobile
-      function toggleMenu() {
-        const navLinks = document.getElementById("navLinks");
-        navLinks.classList.toggle("active");
-      }
-
-      // Fechar menu ao clicar fora
-      document.addEventListener("click", function (e) {
-        const nav = document.querySelector(".navigation");
-        const navLinks = document.getElementById("navLinks");
-        if (!nav.contains(e.target)) {
-          navLinks.classList.remove("active");
-        }
-      });
-
-      // Efeito paralaxe nos elementos flutuantes
-      document.addEventListener("mousemove", function (e) {
-        const floatingElements = document.querySelectorAll(".floating-element");
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-
-        floatingElements.forEach((element, index) => {
-          const speed = (index + 1) * 0.5;
-          const xPos = (x - 0.5) * speed * 20;
-          const yPos = (y - 0.5) * speed * 20;
-
-          element.style.transform = `translate(${xPos}px, ${yPos}px)`;
         });
+      }, { rootMargin: "200px", threshold: 0.1 });
+
+      list.forEach(anime => {
+        const id = String(anime.id);
+        const card = document.querySelector(`.anime-card[data-id="${CSS.escape(id)}"]`);
+        if (!card) return;
+
+        // Estado inicial
+        carouselState.set(id, {
+          index: 0,
+          intervalId: null,
+          lazyLoaded: (anime.images?.length || 0) <= 1,
+          anime
+        });
+
+        // Render dots iniciais (mesmo antes do lazy load — quantidade já é conhecida)
+        renderDots(id);
+
+        // Touch swipe
+        attachSwipe(card, id);
+
+        // Pausa em hover
+        card.addEventListener("mouseenter", () => stopAutoSlide(id));
+        card.addEventListener("mouseleave", () => startAutoSlide(id));
+
+        // Observar visibilidade
+        visibilityObserver.observe(card);
       });
+    }
 
-      // Inicialização quando o DOM estiver carregado
-      document.addEventListener("DOMContentLoaded", function () {
-        createStarfield();
+    function teardownAllCarousels() {
+      carouselState.forEach((_, id) => stopAutoSlide(id));
+      carouselState.clear();
+      if (visibilityObserver) {
+        visibilityObserver.disconnect();
+        visibilityObserver = null;
+      }
+    }
 
-        // Recriar estrelas no resize
-        window.addEventListener("resize", createStarfield);
+    function ensureLazyLoaded(id) {
+      const state = carouselState.get(id);
+      if (!state || state.lazyLoaded) return;
 
-        // Inicializar a aplicação
-        init();
+      const anime = state.anime;
+      const slides = document.querySelector(`.anime-card[data-id="${CSS.escape(id)}"] .slides`);
+      if (!slides) return;
+
+      const images = anime.images || [];
+      for (let i = 1; i < images.length; i++) {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        const img = document.createElement("img");
+        img.src = images[i];
+        img.alt = anime.title || "";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.onerror = () => { img.style.display = "none"; };
+        slide.appendChild(img);
+        slides.appendChild(slide);
+      }
+      state.lazyLoaded = true;
+    }
+
+    function renderDots(id) {
+      const state = carouselState.get(id);
+      if (!state) return;
+      const total = state.anime.images?.length || 0;
+      if (total <= 1) return;
+
+      const dotsContainer = document.querySelector(`.anime-card[data-id="${CSS.escape(id)}"] .slide-dots`);
+      if (!dotsContainer) return;
+
+      dotsContainer.innerHTML = Array.from({ length: total }).map((_, i) => `
+        <button class="dot${i === 0 ? ' active' : ''}" type="button" aria-label="Ir para imagem ${i + 1}" onclick="goToSlide('${escapeAttr(id)}', ${i}, event)"></button>
+      `).join("");
+    }
+
+    function startAutoSlide(id) {
+      const state = carouselState.get(id);
+      if (!state) return;
+      const total = state.anime.images?.length || 0;
+      if (total <= 1) return;
+      if (state.intervalId) return; // já rodando
+
+      state.intervalId = setInterval(() => {
+        ensureLazyLoaded(id);
+        goToSlide(id, (state.index + 1) % total);
+      }, SLIDE_INTERVAL);
+    }
+
+    function stopAutoSlide(id) {
+      const state = carouselState.get(id);
+      if (!state) return;
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+        state.intervalId = null;
+      }
+    }
+
+    function goToSlide(id, idx, ev) {
+      if (ev) ev.stopPropagation();
+      const state = carouselState.get(id);
+      if (!state) return;
+      ensureLazyLoaded(id);
+
+      const card = document.querySelector(`.anime-card[data-id="${CSS.escape(id)}"]`);
+      if (!card) return;
+      const slides = card.querySelectorAll(".slide");
+      const dots = card.querySelectorAll(".dot");
+      if (!slides.length) return;
+
+      const total = state.anime.images?.length || slides.length;
+      const next = ((idx % total) + total) % total;
+
+      slides.forEach((s, i) => s.classList.toggle("active", i === next));
+      dots.forEach((d, i) => d.classList.toggle("active", i === next));
+      state.index = next;
+    }
+
+    function nextSlide(id, ev) {
+      const state = carouselState.get(id);
+      if (!state) return;
+      const total = state.anime.images?.length || 0;
+      goToSlide(id, (state.index + 1) % total, ev);
+    }
+
+    function prevSlide(id, ev) {
+      const state = carouselState.get(id);
+      if (!state) return;
+      const total = state.anime.images?.length || 0;
+      goToSlide(id, (state.index - 1 + total) % total, ev);
+    }
+
+    /* ============================================================
+       TOUCH SWIPE — mobile
+       ============================================================ */
+    function attachSwipe(card, id) {
+      const cover = card.querySelector(".anime-cover");
+      if (!cover) return;
+
+      let startX = 0, startY = 0, dx = 0, dy = 0, active = false;
+
+      cover.addEventListener("touchstart", e => {
+        const t = e.touches[0];
+        startX = t.clientX; startY = t.clientY; dx = 0; dy = 0; active = true;
+      }, { passive: true });
+
+      cover.addEventListener("touchmove", e => {
+        if (!active) return;
+        const t = e.touches[0];
+        dx = t.clientX - startX;
+        dy = t.clientY - startY;
+      }, { passive: true });
+
+      cover.addEventListener("touchend", () => {
+        if (!active) return;
+        active = false;
+        // só horizontal e suficientemente longo
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          if (dx < 0) nextSlide(id);
+          else prevSlide(id);
+        }
       });
-    </script>
-  </body>
+    }
+
+    /* ============================================================
+       STATS
+       ============================================================ */
+    function updateStats() {
+      const total = allAnimes.length;
+      const current = displayedAnimes.length;
+
+      const cats = new Set();
+      let sum = 0, n = 0;
+      allAnimes.forEach(a => {
+        if (a.category) cats.add(a.category.toLowerCase());
+        if (a.rating > 0) { sum += a.rating; n++; }
+      });
+      const avg = n > 0 ? (sum / n).toFixed(1) : "0";
+
+      document.getElementById("totalCount").textContent = total;
+      document.getElementById("currentCount").textContent = current;
+      document.getElementById("catCount").textContent = cats.size;
+      document.getElementById("avgRating").textContent = avg;
+    }
+
+    function updateResultMeta(count) {
+      const total = allAnimes.length;
+      const meta = document.getElementById("resultMeta");
+      meta.textContent = (count === total) ? `${total} animes` : `${count} de ${total}`;
+      document.getElementById("currentCount").textContent = count;
+    }
+
+    /* ============================================================
+       MENU MOBILE
+       ============================================================ */
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("open");
+    }
+
+    document.addEventListener("click", e => {
+      const nav = document.querySelector(".nav");
+      const navLinks = document.getElementById("navLinks");
+      if (nav && !nav.contains(e.target)) navLinks.classList.remove("open");
+    });
+
+    /* ============================================================
+       ATALHOS — "/" foca busca
+       ============================================================ */
+    document.addEventListener("keydown", e => {
+      if (e.key === "/" && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        const tag = (e.target.tagName || "").toLowerCase();
+        if (tag !== "input" && tag !== "textarea" && tag !== "select") {
+          e.preventDefault();
+          document.getElementById("searchInput").focus();
+        }
+      }
+    });
+
+    /* ============================================================
+       STARFIELD
+       ============================================================ */
+    function createStarfield() {
+      const sf = document.getElementById("starfield");
+      const w = window.innerWidth, h = window.innerHeight;
+      const cx = w / 2, cy = h / 2;
+      const count = w > 768 ? 60 : 30;
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement("div");
+        s.className = "star";
+        const tier = Math.random();
+        if (tier < 0.7) s.classList.add("s1");
+        else if (tier < 0.95) s.classList.add("s2");
+        else s.classList.add("s3");
+
+        const angle = Math.random() * 2 * Math.PI;
+        const r0 = Math.random() * 60 + 20;
+        const x0 = cx + Math.cos(angle) * r0;
+        const y0 = cy + Math.sin(angle) * r0;
+        const dist = Math.sqrt(w * w + h * h) * (0.7 + Math.random() * 0.5);
+
+        s.style.left = x0 + "px";
+        s.style.top = y0 + "px";
+        s.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+        s.style.setProperty("--dy", Math.sin(angle) * dist + "px");
+        s.style.animationDelay = -Math.random() * 30 + "s";
+        frag.appendChild(s);
+      }
+      sf.innerHTML = "";
+      sf.appendChild(frag);
+    }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    window.addEventListener("DOMContentLoaded", () => {
+      createStarfield();
+      loadAnimes();
+    });
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(createStarfield, 200);
+    });
+
+    // Pausa todos os carrosseis quando aba fica em background
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        carouselState.forEach((_, id) => stopAutoSlide(id));
+      } else {
+        // Retoma só os que estão na viewport (o IntersectionObserver cuida)
+        carouselState.forEach((state, id) => {
+          const card = document.querySelector(`.anime-card[data-id="${CSS.escape(id)}"]`);
+          if (card) {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) startAutoSlide(id);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+
 </html>
