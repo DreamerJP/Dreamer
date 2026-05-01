@@ -446,7 +446,7 @@
 
     .field input,
     .field select {
-      padding: 10px 14px 10px 36px;
+      padding: 10px 14px;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-default);
@@ -487,7 +487,6 @@
       background-repeat: no-repeat;
       background-position: right 12px center;
       padding-right: 30px;
-      padding-left: 14px;
     }
 
     .field select option {
@@ -1423,9 +1422,6 @@
 
           <div class="input-row">
             <div class="field">
-              <svg class="icon icon-stroke">
-                <use href="#i-search" />
-              </svg>
               <input type="text" id="searchInput" placeholder="Título, desenvolvedora, gênero…" oninput="searchGames()"
                 aria-label="Buscar jogos" />
             </div>
@@ -1949,7 +1945,7 @@
 
       const genreSel = document.getElementById("genreFilter");
       const curGenre = genreSel.value;
-      genreSel.innerHTML = '<option value="">Gêneros</option>';
+      genreSel.innerHTML = '<option value="">Gênero</option>';
       [...genres].sort().forEach((g) => {
         const o = document.createElement("option");
         o.value = g; o.textContent = g;
@@ -1959,7 +1955,7 @@
 
       const yearSel = document.getElementById("yearFilter");
       const curYear = yearSel.value;
-      yearSel.innerHTML = '<option value="">Anos</option>';
+      yearSel.innerHTML = '<option value="">Ano</option>';
       [...years].sort((a, b) => b - a).forEach((y) => {
         const o = document.createElement("option");
         o.value = y; o.textContent = y;
