@@ -581,6 +581,9 @@
       background-position: center;
       margin-bottom: 12px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
 
     .game-card:hover .poster {
@@ -603,6 +606,8 @@
       background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, .7) 100%);
       opacity: 0;
       transition: opacity 0.2s ease;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .game-card:hover .poster::after {
@@ -611,10 +616,8 @@
 
     /* Rating overlay no canto inferior do poster */
     .poster-rating {
-      position: absolute;
-      bottom: 4px !important;
-      left: 8px;
-      right: 8px;
+      position: relative;
+      margin: 0 8px 8px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -979,7 +982,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 4px !important;
+      margin-top: 0px !important;
       margin-bottom: 24px;
       line-height: 1;
     }
@@ -2073,13 +2076,14 @@
       const stars = generateStars(rating10);
 
       detailsBox.innerHTML = `
-          <h2 class="modal-title">${escapeHtml(details.title || "")}</h2>
-
-          ${rating10 > 0 ? `
-            <div class="modal-rating-row">
-              <div class="stars-mini">${stars}</div>
-              <div class="modal-rating-num">${rating10.toFixed(1)} <span>/ 10</span></div>
-            </div>` : ''}
+          <div style="display:flex; flex-direction:column; gap:2px;">
+            <h2 class="modal-title" style="margin:0 !important;">${escapeHtml(details.title || "")}</h2>
+            ${rating10 > 0 ? `
+              <div class="modal-rating-row" style="margin-bottom:16px !important;">
+                <div class="stars-mini">${stars}</div>
+                <div class="modal-rating-num">${rating10.toFixed(1)} <span>/ 10</span></div>
+              </div>` : ''}
+          </div>
 
           ${details.summary && details.summary !== "Sinopse não disponível." ? `
             <div class="modal-section">
