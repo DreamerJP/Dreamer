@@ -283,26 +283,6 @@
       pointer-events: none;
     }
 
-    .hero-eyebrow {
-      font-family: var(--font-ui);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hero-eyebrow::before {
-      content: "";
-      width: 24px;
-      height: 1px;
-      background: var(--text-3);
-    }
-
     .hero h1 {
       font-family: var(--font-display);
       font-size: clamp(48px, 7vw, 96px);
@@ -1301,12 +1281,11 @@
       <div class="hero-overlay"></div>
       <div class="hero-glow"></div>
 
-      <div class="hero-eyebrow">Dreamer Collection · Filmes</div>
       <h1>
         Filmes para um <span class="holo-text">cinema</span><br />
         absoluto.
       </h1>
-      <p>Catálogo pessoal — clássicos, indies e tudo o que valeu cada minuto na frente da tela.</p>
+      <p>Minha coleção pessoal de filmes assistidos.</p>
 
       <div class="controls">
         <div class="filters">
@@ -1732,7 +1711,6 @@
                    onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openMovieModal('${slug}')}">
             <div class="poster${d.poster ? '' : ' is-loading'}" style="background-image: ${poster}">
               ${!d.poster ? `<svg class="icon icon-stroke"><use href="#i-clapperboard"/></svg>` : ''}
-              ${showRating ? `<span class="rating-badge"><svg class="icon"><use href="#i-star"/></svg>${rating.toFixed(1)}</span>` : ''}
             </div>
             <div class="movie-info">
               <h3 class="movie-title">${escapeHtml(d.title || movie.title)}</h3>
@@ -1910,17 +1888,6 @@
       } else {
         poster.classList.add("is-loading");
         poster.innerHTML = `<svg class="icon icon-stroke"><use href="#i-clapperboard"/></svg>`;
-      }
-
-      const rating = parseFloat(d.imdbRating);
-      if (!isNaN(rating) && rating > 0) {
-        let badge = poster.querySelector(".rating-badge");
-        if (!badge) {
-          badge = document.createElement("span");
-          badge.className = "rating-badge";
-          poster.appendChild(badge);
-        }
-        badge.innerHTML = `<svg class="icon"><use href="#i-star"/></svg>${rating.toFixed(1)}`;
       }
 
       const info = card.querySelector(".movie-info");
@@ -2146,13 +2113,6 @@
 
       details.innerHTML = `
         <h2 class="modal-title">${escapeHtml(d.title || "")}</h2>
-        ${showRating ? `
-          <div class="modal-tagline">
-            <span class="stars-row">${starsHtml(rating)}</span>
-            <span class="rating-text">${rating.toFixed(1)} / 10</span>
-            ${d.year && d.year !== "N/A" ? `<span>· ${escapeHtml(d.year)}</span>` : ''}
-            ${d.runtime && d.runtime !== "N/A" ? `<span>· ${escapeHtml(d.runtime)}</span>` : ''}
-          </div>` : ''}
 
         ${d.plot && d.plot !== "Informações não disponíveis." && d.plot !== "Sinopse não disponível." ? `
           <div class="modal-section">
