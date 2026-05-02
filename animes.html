@@ -674,7 +674,6 @@
       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      transition: all 0.3s ease;
     }
 
     .anime-synopsis.expanded {
@@ -1062,7 +1061,6 @@
 
         renderCategoryChips();
         applyFilters();
-        updateStats();
       } catch (err) {
         console.error("Erro ao carregar animes:", err);
         document.getElementById("animesGrid").innerHTML = `
@@ -1191,9 +1189,8 @@
             </div>
             <h3 class="anime-title">${escapeHtml(anime.title || "")}</h3>
             <p class="anime-synopsis">${escapeHtml(anime.synopsis || "")}</p>
-            ${(anime.synopsis && anime.synopsis.length > 160) ? `<button class="read-more-btn" type="button" onclick="toggleSynopsis(this)">Ler mais</button>` : ''}
             <div class="anime-action">
-              <a class="btn btn-primary" href="${escapeAttr(anime.watchUrl || '#')}" target="_blank" rel="noopener">
+              <a class="btn btn-primary" href="${escapeAttr(anime.watchUrl || '#')}" target="_blank" rel="noopener noreferrer">
                 <svg class="icon"><use href="#i-play"/></svg> Assistir
               </a>
             </div>
@@ -1217,6 +1214,17 @@
       }
 
       grid.innerHTML = list.map(cardHTML).join("");
+
+      grid.querySelectorAll('.anime-synopsis').forEach(p => {
+        if (p.scrollHeight > p.clientHeight) {
+          const btn = document.createElement('button');
+          btn.className = 'read-more-btn';
+          btn.type = 'button';
+          btn.textContent = 'Ler mais';
+          btn.addEventListener('click', () => toggleSynopsis(btn));
+          p.after(btn);
+        }
+      });
 
       // Setup dos carrosseis (lazy load + auto-slide controlado por viewport)
       setupAllCarousels(list);
@@ -1409,7 +1417,6 @@
        ============================================================ */
     function updateStats() {
       const total = allAnimes.length;
-      const current = displayedAnimes.length;
 
       const cats = new Set();
       let sum = 0, n = 0;
@@ -1420,7 +1427,6 @@
       const avg = n > 0 ? (sum / n).toFixed(1) : "0";
 
       document.getElementById("totalCount").textContent = total;
-      document.getElementById("currentCount").textContent = current;
       document.getElementById("catCount").textContent = cats.size;
       document.getElementById("avgRating").textContent = avg;
     }
