@@ -82,6 +82,10 @@
 
     body.player-hidden { padding-bottom: 0; }
 
+    /* Mini cover só aparece quando tem src real (evita "imagem quebrada" antes da 1ª faixa) */
+    .np-mini-cover:not([src]),
+    .np-mini-cover[src=""] { display: none; }
+
     .icon {
       display: inline-block;
       width: 1em;
@@ -966,14 +970,15 @@
 
     /* Left: Now Playing info */
     .np-mini {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 12px;
       min-width: 0;
-      padding: 6px 10px;
+      padding: 6px 36px 6px 10px;
       border-radius: var(--radius-md);
       cursor: pointer;
-      transition: background .15s;
+      transition: background .15s, box-shadow .25s;
       border: none;
       background: transparent;
       color: inherit;
@@ -983,6 +988,74 @@
 
     .np-mini:hover { background: rgba(255,255,255,0.05); }
     .player.np-open .np-mini { background: rgba(255,255,255,0.06); cursor: default; }
+
+    /* Indicador "Abrir tela cheia" — chevron à direita */
+    .np-mini-expand {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      opacity: 0;
+      transition: opacity .2s, color .15s, transform .2s var(--ease-out);
+      pointer-events: none;
+    }
+
+    .np-mini-expand .icon { width: 16px; height: 16px; }
+
+    .np-mini:hover .np-mini-expand,
+    .np-mini.is-cued .np-mini-expand {
+      opacity: 1;
+      color: var(--text-1);
+      transform: translateY(-50%) translateX(-2px);
+    }
+
+    .player.np-open .np-mini-expand { opacity: 0 !important; }
+
+    /* Pulse de descoberta — toca uma vez quando carrega nova faixa */
+    .np-mini.is-cued {
+      box-shadow: 0 0 0 1px var(--accent-soft), 0 0 24px var(--accent-glow);
+      animation: cue-pulse 1.6s var(--ease-out) 2;
+    }
+
+    @keyframes cue-pulse {
+      0%, 100% { box-shadow: 0 0 0 1px var(--accent-soft), 0 0 0 var(--accent-glow); }
+      50%      { box-shadow: 0 0 0 1px var(--accent), 0 0 28px var(--accent-glow); }
+    }
+
+    /* Tooltip "Abrir" no hover */
+    .np-mini::after {
+      content: "Abrir tela cheia";
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      padding: 4px 10px;
+      background: var(--bg-3);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-1);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s var(--ease-out);
+      z-index: 5;
+    }
+
+    .np-mini:hover::after,
+    .np-mini.is-cued::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .player.np-open .np-mini::after { display: none; }
 
     .np-mini-cover {
       width: 52px;
@@ -1082,7 +1155,11 @@
       border-radius: 50%;
     }
 
-    .ctrl-play:hover { background: #ffffff; transform: scale(1.06); }
+    .ctrl-play:hover {
+      background: #ffffff;
+      color: var(--bg-0);
+      transform: scale(1.06);
+    }
     .ctrl-play .icon { width: 18px; height: 18px; }
     .ctrl-play.is-loading .icon { animation: spin 1s linear infinite; }
 
@@ -1663,7 +1740,7 @@
   </style>
 </head>
 
-<body>
+<body class="player-hidden">
   <!-- ============================================================
        SVG DEFS
        ============================================================ -->
@@ -1865,7 +1942,7 @@
        ============================================================ -->
   <div class="player hidden" id="player" role="region" aria-label="Player de música">
     <button class="np-mini" id="npMini" aria-label="Abrir tela cheia">
-      <img class="np-mini-cover" id="miniCover" src="" alt="" />
+      <img class="np-mini-cover" id="miniCover" alt="" />
       <div class="np-mini-info">
         <div class="np-mini-title" id="miniTitle">Selecione uma música</div>
         <div class="np-mini-artist">
@@ -1873,6 +1950,9 @@
           <span class="np-mini-counter" id="miniCounter"></span>
         </div>
       </div>
+      <span class="np-mini-expand" aria-hidden="true">
+        <svg class="icon icon-stroke"><use href="#i-chevron-up" /></svg>
+      </span>
     </button>
 
     <div class="player-center">
@@ -2505,6 +2585,7 @@
       $('miniCounter').textContent = ` · ${index + 1}/${Player.queue.length}`;
       const cover = track.artwork || './Assets/Home/favicon.ico';
       $('miniCover').src = cover;
+      cueMiniPlayer();
 
       // Atualiza Now Playing
       $('npTitle').textContent  = track.title;
@@ -3188,6 +3269,21 @@
       el.classList.add('is-visible');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => el.classList.remove('is-visible'), 1800);
+    }
+
+    /* ============================================================
+       DISCOVERY CUE — pulse no mini player ao iniciar nova faixa
+       ============================================================ */
+    let cueTimer;
+    function cueMiniPlayer() {
+      if ($('npOverlay').classList.contains('is-open')) return;
+      const el = $('npMini');
+      el.classList.remove('is-cued');
+      // force reflow para reiniciar a animação
+      void el.offsetWidth;
+      el.classList.add('is-cued');
+      clearTimeout(cueTimer);
+      cueTimer = setTimeout(() => el.classList.remove('is-cued'), 3400);
     }
 
     /* ============================================================
