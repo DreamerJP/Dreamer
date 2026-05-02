@@ -1019,13 +1019,13 @@
 
     /* Pulse de descoberta — toca uma vez quando carrega nova faixa */
     .np-mini.is-cued {
-      box-shadow: 0 0 0 1px var(--accent-soft), 0 0 24px var(--accent-glow);
-      animation: cue-pulse 1.6s var(--ease-out) 1;
+      box-shadow: 0 0 32px var(--accent-glow);
+      animation: cue-pulse 1.4s var(--ease-out) 1;
     }
 
     @keyframes cue-pulse {
-      0%, 100% { box-shadow: 0 0 0 1px var(--accent-soft), 0 0 0 var(--accent-glow); }
-      50%      { box-shadow: 0 0 0 1px var(--accent), 0 0 28px var(--accent-glow); }
+      0%, 100% { box-shadow: 0 0 0 var(--accent-glow); }
+      50%      { box-shadow: 0 0 40px var(--accent-glow); }
     }
 
     /* Tooltip "Abrir" no hover */
@@ -1049,8 +1049,7 @@
       z-index: 5;
     }
 
-    .np-mini:hover::after,
-    .np-mini.is-cued::after {
+    .np-mini:hover::after {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
