@@ -1138,39 +1138,6 @@
       <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
       <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
     </symbol>
-    <!-- Ícones especiais de pasta (fallback quando capa falha) -->
-    <symbol id="i-masks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M2 4a2 2 0 0 1 2-2h5.5a2 2 0 0 1 1.6.8L12 4" />
-      <path d="M2 4v9a7 7 0 0 0 7 7 6.97 6.97 0 0 0 4-1.26" />
-      <circle cx="6" cy="9" r="1" />
-      <path d="M22 8a2 2 0 0 0-2-2h-5.5a2 2 0 0 0-1.6.8L12 8" />
-      <path d="M22 8v5a7 7 0 0 1-14 0" />
-      <circle cx="18" cy="11" r="1" />
-    </symbol>
-    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275z" />
-    </symbol>
-    <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-      <line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" />
-    </symbol>
-    <symbol id="i-glow-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0.5">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </symbol>
-    <symbol id="i-bird" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 7h.01" />
-      <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20" />
-      <path d="m20 7 2 .5-2 .5" />
-      <path d="M10 18v3" /><path d="M14 17.75V21" />
-      <path d="M7 18a6 6 0 0 0 3.84-10.61" />
-    </symbol>
-    <symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 8V4H8" />
-      <rect width="16" height="12" x="4" y="8" rx="2" />
-      <path d="M2 14h2" /><path d="M20 14h2" />
-      <path d="M15 13v2" /><path d="M9 13v2" />
-    </symbol>
   </svg>
 
   <!-- Starfield -->
@@ -1384,22 +1351,6 @@
       return seg.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
     }
 
-    // Ícone fallback específico por nome de pasta (usado se a capa falhar ao carregar)
-    const FOLDER_ICON_MAP = {
-      "Alessa": "i-masks",
-      "Alessa Gillespie": "i-masks",
-      "Aurora": "i-sparkles",
-      "Avril Lavigne": "i-mic",
-      "Emily Browning": "i-glow-star",
-      "Luna Lovegood": "i-bird",
-      "Nier Automata": "i-bot",
-      "Stellar Blade": "i-bot",
-      "t.A.T.u": "i-music",
-    };
-
-    function getFolderIconId(name) {
-      return FOLDER_ICON_MAP[name] || "i-folder";
-    }
 
     /* ============================================================
        GOOGLE DRIVE LINKS
@@ -1688,8 +1639,7 @@
     }
 
     function folderCardHTML(folder) {
-      const iconId = getFolderIconId(folder.name);
-      const fallback = `<div class="folder-cover-fallback"${folder.cover ? ' style="display:none"' : ''}><svg class="icon icon-stroke"><use href="#${iconId}"/></svg></div>`;
+      const fallback = `<div class="folder-cover-fallback"${folder.cover ? ' style="display:none"' : ''}><svg class="icon icon-stroke"><use href="#i-folder"/></svg></div>`;
       const cover = folder.cover
         ? `<img src="${escapeAttr(folder.cover)}" alt="${escapeAttr(folder.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.classList.add('loaded')" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />${fallback}`
         : fallback;
