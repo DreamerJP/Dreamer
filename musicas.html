@@ -745,7 +745,7 @@
        ============================================================ */
     .track-list-head {
       display: grid;
-      grid-template-columns: 32px 1fr 80px 60px;
+      grid-template-columns: 32px 1fr 140px 60px 32px;
       gap: 16px;
       padding: 0 16px 12px;
       border-bottom: 1px solid var(--border-subtle);
@@ -768,7 +768,7 @@
 
     .track-item {
       display: grid;
-      grid-template-columns: 32px 1fr 80px 60px;
+      grid-template-columns: 32px 1fr 140px 60px 32px;
       gap: 16px;
       align-items: center;
       padding: 10px 16px;
@@ -777,6 +777,28 @@
       transition: background .15s, color .15s;
       position: relative;
     }
+
+    .track-menu-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: none;
+      color: var(--text-3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .15s, color .15s, background .15s;
+    }
+
+    .track-item:hover .track-menu-btn,
+    .track-item.is-current .track-menu-btn,
+    .track-menu-btn.is-open { opacity: 1; }
+
+    .track-menu-btn:hover { color: var(--text-1); background: rgba(255,255,255,0.08); }
+    .track-menu-btn .icon { width: 16px; height: 16px; }
 
     .track-item:hover { background: rgba(255,255,255,0.05); }
 
@@ -891,6 +913,147 @@
     }
 
     .track-format.flac { color: var(--mint); background: rgba(132, 255, 209, 0.1); }
+
+    /* ============================================================
+       CONTEXT MENU (Tocar agora / Em seguida / Adicionar à fila)
+       ============================================================ */
+    .context-menu {
+      position: fixed;
+      min-width: 220px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-3);
+      padding: 6px;
+      z-index: 250;
+      opacity: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+      transition: opacity .15s, transform .15s var(--ease-out);
+      backdrop-filter: blur(20px);
+    }
+
+    .context-menu.is-open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .ctx-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      background: none;
+      border: none;
+      color: var(--text-1);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background .12s, color .12s;
+      text-align: left;
+      font-family: var(--font-ui);
+    }
+
+    .ctx-item:hover { background: rgba(255,255,255,0.06); }
+    .ctx-item:disabled { opacity: 0.4; cursor: default; }
+    .ctx-item:disabled:hover { background: none; }
+
+    .ctx-item .icon { width: 16px; height: 16px; color: var(--text-2); flex-shrink: 0; }
+    .ctx-item:hover .icon { color: var(--text-1); }
+
+    .ctx-item.is-danger { color: var(--pink); }
+    .ctx-item.is-danger .icon { color: var(--pink); }
+
+    .ctx-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 6px 4px;
+    }
+
+    .ctx-label {
+      padding: 6px 12px 4px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       QUEUE — sections (Tocando agora / Próximas / Histórico)
+       ============================================================ */
+    .np-queue-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 4px 6px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-weight: 600;
+    }
+
+    .np-queue-section:first-child { padding-top: 0; }
+
+    .np-queue-section-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .np-queue-section-title .icon { width: 12px; height: 12px; }
+
+    .np-queue-clear {
+      background: none;
+      border: none;
+      color: var(--text-3);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color .15s, background .15s;
+    }
+
+    .np-queue-clear:hover { color: var(--pink); background: rgba(255,109,181,0.08); }
+
+    .np-queue-empty {
+      padding: 16px 4px;
+      font-size: 12px;
+      color: var(--text-3);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .np-q-menu-btn {
+      opacity: 0;
+      transition: opacity .15s, color .15s, background .15s;
+    }
+
+    .np-queue-item:hover .np-q-menu-btn,
+    .np-q-menu-btn.is-open { opacity: 1; }
+
+    /* Botão "Adicionar à fila" no header do artista */
+    .btn .btn-icon-only { display: none; }
+
+    /* Adapta tabela quando coluna do menu é adicionada */
+    @media (max-width: 768px) {
+      .track-list-head,
+      .track-item {
+        grid-template-columns: 28px 1fr auto 28px;
+      }
+      .track-list-head .col-album,
+      .track-album { display: none; }
+      .track-menu-btn { opacity: 1; }  /* sempre visível em touch */
+    }
 
     /* ============================================================
        LOADING / EMPTY / ERROR
@@ -1698,15 +1861,6 @@
 
       .artist-header-cover { width: 160px; height: 160px; }
 
-      .track-list-head,
-      .track-item {
-        grid-template-columns: 28px 1fr auto;
-        gap: 12px;
-      }
-
-      .track-list-head .col-album,
-      .track-album { display: none; }
-
       .track-list-head { padding: 0 12px 10px; }
       .track-item { padding: 10px 12px; }
 
@@ -1844,6 +1998,31 @@
     <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
       <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </symbol>
+    <symbol id="i-more" viewBox="0 0 24 24" fill="currentColor">
+      <circle cx="5" cy="12" r="1.7" /><circle cx="12" cy="12" r="1.7" /><circle cx="19" cy="12" r="1.7" />
+    </symbol>
+    <symbol id="i-corner-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 14 20 9 15 4" /><path d="M4 20v-7a4 4 0 0 1 4-4h12" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+      <path d="M10 11v6" /><path d="M14 11v6" />
+      <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+    </symbol>
+    <symbol id="i-list-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="14" y2="6" /><line x1="3" y1="12" x2="14" y2="12" /><line x1="3" y1="18" x2="10" y2="18" />
+      <line x1="18" y1="9" x2="18" y2="21" /><line x1="12" y1="15" x2="24" y2="15" />
+    </symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+    </symbol>
+    <symbol id="i-disc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" />
     </symbol>
   </svg>
 
@@ -2043,6 +2222,9 @@
 
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Context menu (reaproveitado por track items, queue items, mini player) -->
+  <div class="context-menu" id="contextMenu" role="menu" aria-hidden="true"></div>
 
   <!-- Audio elements -->
   <audio id="audio" preload="none" crossorigin="anonymous"></audio>
@@ -2393,6 +2575,9 @@
               <button class="btn" id="shuffleArtistBtn" type="button">
                 <svg class="icon icon-stroke"><use href="#i-shuffle"/></svg> Aleatório
               </button>
+              <button class="btn" id="queueArtistBtn" type="button" title="Adicionar tudo à fila">
+                <svg class="icon icon-stroke"><use href="#i-list-plus"/></svg> À fila
+              </button>
             </div>
           </div>
         </header>
@@ -2402,6 +2587,7 @@
           <div class="col-title">Título</div>
           <div class="col-album">Álbum</div>
           <div class="col-meta">Tipo</div>
+          <div></div>
         </div>
 
         <div class="track-list" id="trackList">
@@ -2412,12 +2598,8 @@
       $('backBtn').addEventListener('click', goHome);
       $('playArtistBtn').addEventListener('click', () => playArtist(key, false));
       $('shuffleArtistBtn').addEventListener('click', () => playArtist(key, true));
-      $('trackList').addEventListener('click', (e) => {
-        const item = e.target.closest('.track-item');
-        if (!item) return;
-        const idx = Number(item.dataset.index);
-        playArtistAt(key, idx, false);
-      });
+      $('queueArtistBtn').addEventListener('click', () => addToQueue(tracks));
+      $('trackList').addEventListener('click', (e) => onTrackListClick(e, tracks));
 
       syncTrackUI();
     }
@@ -2437,6 +2619,9 @@
           </div>
           <div class="track-album">${escapeHtml(t.album || '—')}</div>
           <div class="track-meta">${formatBadge}</div>
+          <button class="track-menu-btn" data-action="menu" aria-label="Mais ações" title="Mais ações">
+            <svg class="icon"><use href="#i-more"/></svg>
+          </button>
         </div>`;
     }
 
@@ -2470,7 +2655,8 @@
       $('sectionTitle').textContent = 'Resultados';
       $('sectionMeta').textContent  = `${all.length} ${all.length === 1 ? 'faixa' : 'faixas'} para "${State.searchQuery}"`;
       $('sectionActions').innerHTML = all.length
-        ? `<button class="btn btn-ghost" id="playSearchBtn" type="button"><svg class="icon"><use href="#i-play"/></svg> Tocar resultados</button>`
+        ? `<button class="btn btn-ghost" id="playSearchBtn" type="button"><svg class="icon"><use href="#i-play"/></svg> Tocar resultados</button>
+           <button class="btn btn-ghost" id="queueSearchBtn" type="button" title="Adicionar todos à fila"><svg class="icon icon-stroke"><use href="#i-list-plus"/></svg> À fila</button>`
         : '';
 
       const container = $('content');
@@ -2486,6 +2672,7 @@
           <div class="col-title">Título</div>
           <div class="col-album">Artista</div>
           <div class="col-meta">Tipo</div>
+          <div></div>
         </div>
         <div class="track-list" id="searchList">
           ${all.map((t, i) => `
@@ -2499,16 +2686,16 @@
               </div>
               <div class="track-album">${escapeHtml(t.artist)}</div>
               <div class="track-meta">${t.format ? `<span class="track-format ${t.format}">${t.format}</span>` : ''}</div>
+              <button class="track-menu-btn" data-action="menu" aria-label="Mais ações" title="Mais ações">
+                <svg class="icon"><use href="#i-more"/></svg>
+              </button>
             </div>
           `).join('')}
         </div>`;
 
       $('playSearchBtn')?.addEventListener('click', () => loadQueue(all, 0, false));
-      $('searchList').addEventListener('click', (e) => {
-        const item = e.target.closest('.track-item');
-        if (!item) return;
-        loadQueue(all, Number(item.dataset.index), false);
-      });
+      $('queueSearchBtn')?.addEventListener('click', () => addToQueue(all));
+      $('searchList').addEventListener('click', (e) => onTrackListClick(e, all));
 
       syncTrackUI();
     }
@@ -2575,6 +2762,65 @@
       $('player').classList.remove('hidden');
       document.body.classList.remove('player-hidden');
       loadTrack(Player.index);
+    }
+
+    /** Insere itens logo após a faixa atual (vão tocar em seguida). */
+    function playNext(items) {
+      const arr = Array.isArray(items) ? items : [items];
+      if (!arr.length) return;
+      if (Player.index < 0) return loadQueue(arr, 0, false);
+
+      Player.queue.splice(Player.index + 1, 0, ...arr);
+      Player.preloadIndex = -1;
+      $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
+      if ($('npOverlay').classList.contains('is-open')) renderQueue();
+      toast(arr.length === 1 ? `"${arr[0].title}" tocará em seguida` : `${arr.length} faixas tocarão em seguida`);
+    }
+
+    /** Adiciona itens ao fim da fila. */
+    function addToQueue(items) {
+      const arr = Array.isArray(items) ? items : [items];
+      if (!arr.length) return;
+      if (Player.index < 0) return loadQueue(arr, 0, false);
+
+      Player.queue.push(...arr);
+      $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
+      if ($('npOverlay').classList.contains('is-open')) renderQueue();
+      toast(arr.length === 1 ? `"${arr[0].title}" adicionada à fila` : `${arr.length} faixas adicionadas à fila`);
+    }
+
+    /** Remove todas as próximas, mantém só a atual. */
+    function clearUpcoming() {
+      if (Player.index < 0) return;
+      const removed = Player.queue.length - (Player.index + 1);
+      if (removed <= 0) { toast('Não há próximas faixas'); return; }
+      Player.queue = Player.queue.slice(0, Player.index + 1);
+      Player.preloadIndex = -1;
+      $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
+      renderQueue();
+      toast(`${removed} próxima${removed === 1 ? '' : 's'} removida${removed === 1 ? '' : 's'}`);
+    }
+
+    /** Click handler unificado para listas de tracks (artist + search).
+        Distingue entre clique no item (toca agora, substitui fila) e clique no menu (...) */
+    function onTrackListClick(e, sourceList) {
+      const menuBtn = e.target.closest('[data-action="menu"]');
+      const item = e.target.closest('.track-item');
+      if (!item) return;
+      const idx = Number(item.dataset.index);
+      const track = sourceList[idx];
+      if (!track) return;
+
+      if (menuBtn) {
+        e.stopPropagation();
+        openContextMenu(menuBtn, [
+          { label: 'Tocar agora', icon: 'i-play', onClick: () => loadQueue(sourceList, idx, false) },
+          { label: 'Tocar em seguida', icon: 'i-corner-up-right', onClick: () => playNext(track), disabled: Player.index < 0 },
+          { label: 'Adicionar à fila', icon: 'i-list-plus', onClick: () => addToQueue(track), disabled: Player.index < 0 },
+        ]);
+      } else {
+        loadQueue(sourceList, idx, false);
+      }
     }
 
     function loadTrack(index) {
@@ -2995,29 +3241,67 @@
       }
     }
 
+    function queueItemHTML(t, i, opts = {}) {
+      const isCur = opts.current === true;
+      const isHistory = opts.history === true;
+      const thumb = t.artwork || './Assets/Home/favicon.ico';
+      const numHtml = isCur
+        ? '<div class="wave-bars" style="margin:0 auto"><span></span><span></span><span></span></div>'
+        : (isHistory ? '·' : (i + 1));
+      return `
+        <div class="np-queue-item${isCur ? ' is-current' : ''}${isHistory ? ' is-history' : ''}" data-index="${i}" ${isHistory ? '' : 'draggable="true"'}>
+          <span class="np-q-num">${numHtml}</span>
+          <img class="np-q-thumb" src="${escapeAttr(thumb)}" alt="" loading="lazy" draggable="false" />
+          <div class="np-q-info">
+            <div class="np-q-title">${escapeHtml(t.title)}</div>
+            <div class="np-q-artist">${escapeHtml(t.artist)}</div>
+          </div>
+          <div class="np-q-actions">
+            ${isCur || isHistory ? '' : '<button class="np-q-btn np-q-handle" aria-label="Arrastar" title="Arrastar"><svg class="icon"><use href="#i-grip"/></svg></button>'}
+            <button class="np-q-btn np-q-menu-btn" data-action="menu" aria-label="Mais ações" title="Mais ações"><svg class="icon"><use href="#i-more"/></svg></button>
+          </div>
+        </div>`;
+    }
+
     function renderQueue() {
-      const list = $('npQueueList');
+      const list  = $('npQueueList');
       const count = $('npQueueCount');
       count.textContent = `${Player.queue.length} ${Player.queue.length === 1 ? 'faixa' : 'faixas'}`;
 
-      list.innerHTML = Player.queue.map((t, i) => {
-        const isCur = i === Player.index;
-        const thumb = t.artwork || './Assets/Home/favicon.ico';
-        return `
-          <div class="np-queue-item${isCur ? ' is-current' : ''}" data-index="${i}" draggable="true">
-            <span class="np-q-num">${isCur ? '<div class="wave-bars" style="margin:0 auto"><span></span><span></span><span></span></div>' : (i + 1)}</span>
-            <img class="np-q-thumb" src="${escapeAttr(thumb)}" alt="" loading="lazy" draggable="false" />
-            <div class="np-q-info">
-              <div class="np-q-title">${escapeHtml(t.title)}</div>
-              <div class="np-q-artist">${escapeHtml(t.artist)}</div>
-            </div>
-            <div class="np-q-actions">
-              <button class="np-q-btn np-q-handle" aria-label="Arrastar" title="Arrastar"><svg class="icon"><use href="#i-grip"/></svg></button>
-              <button class="np-q-btn np-q-remove" aria-label="Remover" title="Remover"><svg class="icon icon-stroke"><use href="#i-x"/></svg></button>
-            </div>
-          </div>`;
-      }).join('');
+      const cur = Player.queue[Player.index];
+      const upcoming = Player.queue.slice(Player.index + 1);
+      const upcomingCount = upcoming.length;
 
+      const sections = [];
+
+      if (cur) {
+        sections.push(`
+          <div class="np-queue-section">
+            <span class="np-queue-section-title">
+              <svg class="icon icon-stroke"><use href="#i-disc"/></svg> Tocando agora
+            </span>
+          </div>
+          ${queueItemHTML(cur, Player.index, { current: true })}
+        `);
+      }
+
+      sections.push(`
+        <div class="np-queue-section">
+          <span class="np-queue-section-title">
+            <svg class="icon icon-stroke"><use href="#i-list"/></svg> Próximas <span style="color:var(--text-3); font-weight:500; margin-left:4px;">(${upcomingCount})</span>
+          </span>
+          ${upcomingCount ? '<button class="np-queue-clear" id="queueClearBtn" type="button">Limpar</button>' : ''}
+        </div>
+      `);
+      if (upcomingCount) {
+        sections.push(upcoming.map((t, i) => queueItemHTML(t, Player.index + 1 + i)).join(''));
+      } else {
+        sections.push(`<div class="np-queue-empty">Nada na fila depois desta. Use o menu (•••) de uma faixa para adicionar.</div>`);
+      }
+
+      list.innerHTML = sections.join('');
+
+      $('queueClearBtn')?.addEventListener('click', clearUpcoming);
       attachQueueHandlers();
     }
 
@@ -3026,15 +3310,38 @@
       let dragFromIndex = -1;
 
       list.querySelectorAll('.np-queue-item').forEach(item => {
+        const itemIdx = Number(item.dataset.index);
+
         item.addEventListener('click', (e) => {
           if (e.target.closest('.np-q-actions')) return;
-          const idx = Number(item.dataset.index);
-          if (idx === Player.index) togglePlay();
-          else { Player.index = idx; Player.preloadIndex = -1; loadTrack(idx); }
+          if (itemIdx === Player.index) togglePlay();
+          else { Player.index = itemIdx; Player.preloadIndex = -1; loadTrack(itemIdx); }
         });
 
+        // Menu contextual
+        const menuBtn = item.querySelector('[data-action="menu"]');
+        menuBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isCur = item.classList.contains('is-current');
+          const isHistory = item.classList.contains('is-history');
+          const track = Player.queue[itemIdx];
+          if (!track) return;
+
+          const items = [];
+          if (!isCur) items.push({ label: 'Tocar agora', icon: 'i-play', onClick: () => { Player.index = itemIdx; Player.preloadIndex = -1; loadTrack(itemIdx); } });
+          if (!isCur && !isHistory) items.push({ label: 'Tocar em seguida', icon: 'i-corner-up-right', onClick: () => moveToNext(itemIdx) });
+          if (!isCur) items.push({ label: 'Adicionar ao fim da fila', icon: 'i-list-plus', onClick: () => moveToEnd(itemIdx) });
+          if (items.length) items.push({ divider: true });
+          items.push({ label: 'Remover da fila', icon: 'i-trash', onClick: () => removeFromQueue(itemIdx), danger: true });
+
+          openContextMenu(menuBtn, items);
+        });
+
+        // Drag-and-drop só para itens em "Próximas"
+        if (item.classList.contains('is-history') || item.classList.contains('is-current')) return;
+
         item.addEventListener('dragstart', (e) => {
-          dragFromIndex = Number(item.dataset.index);
+          dragFromIndex = itemIdx;
           item.classList.add('is-dragging');
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', String(dragFromIndex));
@@ -3052,9 +3359,8 @@
           e.preventDefault();
           item.classList.remove('is-drop-target');
           const from = dragFromIndex;
-          const to = Number(item.dataset.index);
-          if (from === -1 || from === to) return;
-          reorderQueue(from, to);
+          if (from === -1 || from === itemIdx) return;
+          reorderQueue(from, itemIdx);
         });
 
         item.addEventListener('dragend', () => {
@@ -3062,12 +3368,33 @@
           list.querySelectorAll('.is-drop-target').forEach(el => el.classList.remove('is-drop-target'));
           dragFromIndex = -1;
         });
-
-        item.querySelector('.np-q-remove')?.addEventListener('click', (e) => {
-          e.stopPropagation();
-          removeFromQueue(Number(item.dataset.index));
-        });
       });
+    }
+
+    /** Move item da fila pra logo após a faixa atual. */
+    function moveToNext(idx) {
+      if (idx === Player.index) return;
+      const [moved] = Player.queue.splice(idx, 1);
+      const insertAt = idx < Player.index ? Player.index : Player.index + 1;
+      Player.queue.splice(insertAt, 0, moved);
+      if (idx < Player.index) Player.index--;
+      Player.preloadIndex = -1;
+      renderQueue();
+      syncTrackUI();
+      toast(`"${moved.title}" tocará em seguida`);
+    }
+
+    /** Move item da fila pro final. */
+    function moveToEnd(idx) {
+      if (idx === Player.queue.length - 1) return;
+      const [moved] = Player.queue.splice(idx, 1);
+      Player.queue.push(moved);
+      if (idx < Player.index) Player.index--;
+      else if (idx === Player.index) Player.index = Player.queue.length - 1;
+      Player.preloadIndex = -1;
+      renderQueue();
+      syncTrackUI();
+      toast(`"${moved.title}" movida para o fim`);
     }
 
     function reorderQueue(from, to) {
@@ -3272,6 +3599,87 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => el.classList.remove('is-visible'), 1800);
     }
+
+    /* ============================================================
+       CONTEXT MENU — reusable
+       ============================================================ */
+    let activeMenuAnchor = null;
+
+    function closeContextMenu() {
+      const menu = $('contextMenu');
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      if (activeMenuAnchor) activeMenuAnchor.classList.remove('is-open');
+      activeMenuAnchor = null;
+    }
+
+    /** Abre o menu posicionado relativo ao botão âncora. items: [{label, icon, onClick, disabled, danger}, ...] */
+    function openContextMenu(anchor, items) {
+      const menu = $('contextMenu');
+
+      // Toggle se mesmo âncora
+      if (activeMenuAnchor === anchor && menu.classList.contains('is-open')) {
+        closeContextMenu();
+        return;
+      }
+
+      menu.innerHTML = items.map((it, i) => {
+        if (it.divider) return `<div class="ctx-divider"></div>`;
+        if (it.label && it.heading) return `<div class="ctx-label">${escapeHtml(it.label)}</div>`;
+        return `
+          <button class="ctx-item${it.danger ? ' is-danger' : ''}" data-i="${i}"${it.disabled ? ' disabled' : ''} type="button" role="menuitem">
+            ${it.icon ? `<svg class="icon ${it.icon === 'i-trash' || it.icon === 'i-corner-up-right' || it.icon === 'i-list-plus' || it.icon === 'i-arrow-up' || it.icon === 'i-disc' ? 'icon-stroke' : ''}"><use href="#${it.icon}"/></svg>` : ''}
+            <span>${escapeHtml(it.label)}</span>
+          </button>`;
+      }).join('');
+
+      // Posiciona após renderização
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden', 'false');
+      anchor.classList.add('is-open');
+      activeMenuAnchor = anchor;
+
+      // Posicionamento inteligente: prefere abaixo, fallback acima
+      const a = anchor.getBoundingClientRect();
+      const m = menu.getBoundingClientRect();
+      const margin = 6;
+      let top = a.bottom + margin;
+      let left = a.right - m.width;
+
+      if (top + m.height > window.innerHeight - 8) top = a.top - m.height - margin;
+      if (top < 8) top = 8;
+      if (left < 8) left = 8;
+      if (left + m.width > window.innerWidth - 8) left = window.innerWidth - m.width - 8;
+
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+
+      // Bind item clicks
+      menu.querySelectorAll('.ctx-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const it = items[Number(btn.dataset.i)];
+          closeContextMenu();
+          it?.onClick?.();
+        }, { once: true });
+      });
+    }
+
+    // Fecha ao clicar fora ou pressionar Esc / scroll / resize
+    document.addEventListener('mousedown', (e) => {
+      const menu = $('contextMenu');
+      if (!menu.classList.contains('is-open')) return;
+      if (menu.contains(e.target) || activeMenuAnchor?.contains(e.target)) return;
+      closeContextMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && $('contextMenu').classList.contains('is-open')) closeContextMenu();
+    });
+    window.addEventListener('scroll', () => {
+      if ($('contextMenu').classList.contains('is-open')) closeContextMenu();
+    }, true);
+    window.addEventListener('resize', () => {
+      if ($('contextMenu').classList.contains('is-open')) closeContextMenu();
+    });
 
     /* ============================================================
        DISCOVERY CUE — pulse no mini player ao iniciar nova faixa
