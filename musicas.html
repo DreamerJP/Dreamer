@@ -2393,6 +2393,15 @@
           loadContent("/", false);
         } catch (e) {
           console.error(e);
+          document.getElementById("galleryContent").innerHTML = `
+            <div class="empty" style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; color: var(--text-secondary, #b3b3b3)">
+              <svg class="icon icon-stroke" style="width:36px;height:36px;color: #ff6db5;margin-bottom:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <div style="font-family: inherit; font-size: 20px; color: var(--text-primary, #e1e1e1); margin-bottom: 8px; font-weight: 500;">Não foi possível carregar a coleção</div>
+              <div style="font-size: 14px; color: var(--text-secondary, #b3b3b3);">Verifique a conexão e tente novamente.</div>
+              <button type="button" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--text-primary, #e1e1e1); color: #000; border: none; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" onclick="loadLibrary()">
+                <svg class="icon icon-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Tentar novamente
+              </button>
+            </div>`;
         }
       }
 
