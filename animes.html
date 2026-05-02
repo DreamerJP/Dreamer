@@ -1052,6 +1052,7 @@
 
     let searchDebounceTimer;
     let visibilityObserver = null; // pausa carrossel off-screen
+    let synopsisObserver = null;   // detecta overflow das sinopses
 
     /* ============================================================
        HELPERS
@@ -1232,8 +1233,9 @@
     function renderGrid(list) {
       const grid = document.getElementById("animesGrid");
 
-      // Limpa carrosseis ativos antes de re-renderizar
+      // Limpa carrosseis e observadores ativos antes de re-renderizar
       teardownAllCarousels();
+      if (synopsisObserver) synopsisObserver.disconnect();
 
       if (!list.length) {
         grid.innerHTML = `
@@ -1246,19 +1248,36 @@
 
       grid.innerHTML = list.map(cardHTML).join("");
 
-      grid.querySelectorAll('.anime-synopsis').forEach(p => {
-        if (p.scrollHeight > p.clientHeight) {
-          const btn = document.createElement('button');
-          btn.className = 'read-more-btn';
-          btn.type = 'button';
-          btn.textContent = 'Ler mais';
-          btn.addEventListener('click', () => toggleSynopsis(btn));
-          p.after(btn);
-        }
-      });
+      // Inicializa o observador de sinopses (ResizeObserver é mais robusto para detectar overflow após render)
+      setupSynopsisObserver();
+      grid.querySelectorAll('.anime-synopsis').forEach(p => synopsisObserver.observe(p));
 
       // Setup dos carrosseis (lazy load + auto-slide controlado por viewport)
       setupAllCarousels(list);
+    }
+
+    function setupSynopsisObserver() {
+      synopsisObserver = new ResizeObserver(entries => {
+        for (const entry of entries) {
+          const p = entry.target;
+          // Se já estiver expandido, não removemos o botão
+          if (p.classList.contains('expanded')) continue;
+
+          const hasBtn = p.nextElementSibling && p.nextElementSibling.classList.contains('read-more-btn');
+          const isOverflowing = p.scrollHeight > p.clientHeight;
+
+          if (isOverflowing && !hasBtn) {
+            const btn = document.createElement('button');
+            btn.className = 'read-more-btn';
+            btn.type = 'button';
+            btn.textContent = 'Ler mais';
+            btn.addEventListener('click', () => toggleSynopsis(btn));
+            p.after(btn);
+          } else if (!isOverflowing && hasBtn) {
+            p.nextElementSibling.remove();
+          }
+        }
+      });
     }
 
     /* ============================================================
