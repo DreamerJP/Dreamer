@@ -1041,9 +1041,6 @@
     .np-queue-item:hover .np-q-menu-btn,
     .np-q-menu-btn.is-open { opacity: 1; }
 
-    /* Botão "Adicionar à fila" no header do artista */
-    .btn .btn-icon-only { display: none; }
-
     /* Adapta tabela quando coluna do menu é adicionada */
     @media (max-width: 768px) {
       .track-list-head,
@@ -1150,7 +1147,7 @@
     }
 
     .np-mini:hover { background: rgba(255,255,255,0.05); }
-    .player.np-open .np-mini { background: rgba(255,255,255,0.06); cursor: default; }
+    .player.np-open .np-mini { background: rgba(255,255,255,0.06); }
 
     /* Indicador "Fila de reprodução" — chevron à direita */
     .np-mini-expand {
@@ -1178,7 +1175,7 @@
       transform: translateY(-50%) translateX(-2px);
     }
 
-    .player.np-open .np-mini-expand { opacity: 0 !important; }
+    .player.np-open .np-mini-expand { opacity: 1; color: var(--text-1); }
 
     /* Pulse de descoberta — toca uma vez quando carrega nova faixa */
     .np-mini.is-cued {
@@ -1212,12 +1209,16 @@
       z-index: 5;
     }
 
-    .np-mini:hover::after {
+    .np-mini:hover::after,
+    .np-mini.is-cued::after {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
-    .player.np-open .np-mini::after { display: none; }
+    .player.np-open .np-mini::after { content: "Fechar fila"; }
+
+    /* Chevron gira pra baixo quando NP está aberto */
+    .player.np-open .np-mini-expand { transform: translateY(-50%) rotate(180deg); }
 
     .np-mini-cover {
       width: 52px;
@@ -1564,7 +1565,6 @@
       transition: opacity .4s;
     }
 
-    .player.is-paused-state .np-art-glow,
     .np-overlay.is-paused .np-art-glow { opacity: 0.15; }
 
     .np-info {
@@ -2250,9 +2250,6 @@
       return `${m}:${s.toString().padStart(2, '0')}`;
     };
 
-    const slug = (s) => String(s).toLowerCase()
-      .normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
     /** Decodifica e limpa o nome do arquivo de música. Retorna { name, format, album }. */
     const parseTrackUrl = (url) => {
@@ -2339,24 +2336,30 @@
       searchQuery: '',
     };
 
+    /* Dois <audio> reais que se alternam entre "ativo" (Player.audio)
+       e "preload" (Player.preloadEl). Ao trocar de faixa, se a próxima
+       já está pré-carregada no inativo, basta SWAP de referências —
+       sem nenhum download/decode novo, ainda que momentâneo, no ativo. */
     const Player = {
-      audio: $('audio'),
-      preload: $('preload'),
-      queue: [],                // [{ url, title, artist, artwork, album, format }]
+      audio: $('audio'),         // ref ao elemento atualmente em uso
+      preloadEl: $('preload'),   // ref ao elemento que está pré-carregando
+      queue: [],                 // [{ url, title, artist, artwork, album, format }]
       index: -1,
       isPlaying: false,
       isLoading: false,
       volume: 1,
       muted: false,
       shuffle: false,
-      repeat: 0,                // 0 off, 1 all, 2 one
+      repeat: 0,                 // 0 off, 1 all, 2 one
       preloadIndex: -1,
       history: [],
       audioCtx: null,
       analyser: null,
       dataArray: null,
-      sourceNode: null,
+      sourceA: null,             // MediaElementSource do <audio>
+      sourceB: null,             // MediaElementSource do <preload>
       visRunning: false,
+      visTickActive: false,
     };
 
     /* ============================================================
@@ -2401,7 +2404,6 @@
         return {
           key,
           name: key,
-          slug: slug(key),
           cover: data._cover || '',
           files,
           count: files.length,
@@ -2719,12 +2721,6 @@
       loadQueue(queue, 0, false);
     }
 
-    function playArtistAt(key, index) {
-      const queue = buildQueueFromArtist(key);
-      if (!queue.length) return;
-      loadQueue(queue, index, false);
-    }
-
     function shuffleAll() {
       const all = [];
       for (const a of State.artists) {
@@ -2764,17 +2760,34 @@
       loadTrack(Player.index);
     }
 
+    /** Filtra itens já presentes na fila (compara por URL). */
+    function dedupeAgainstQueue(items) {
+      const known = new Set(Player.queue.map(t => t.url));
+      const fresh = items.filter(t => !known.has(t.url));
+      return { fresh, skipped: items.length - fresh.length };
+    }
+
     /** Insere itens logo após a faixa atual (vão tocar em seguida). */
     function playNext(items) {
       const arr = Array.isArray(items) ? items : [items];
       if (!arr.length) return;
       if (Player.index < 0) return loadQueue(arr, 0, false);
 
-      Player.queue.splice(Player.index + 1, 0, ...arr);
+      const { fresh, skipped } = dedupeAgainstQueue(arr);
+      if (!fresh.length) {
+        toast(arr.length === 1 ? 'Esta faixa já está na fila' : 'Todas já estão na fila');
+        return;
+      }
+
+      Player.queue.splice(Player.index + 1, 0, ...fresh);
       Player.preloadIndex = -1;
       $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
       if ($('npOverlay').classList.contains('is-open')) renderQueue();
-      toast(arr.length === 1 ? `"${arr[0].title}" tocará em seguida` : `${arr.length} faixas tocarão em seguida`);
+
+      const msg = fresh.length === 1
+        ? `"${fresh[0].title}" tocará em seguida`
+        : `${fresh.length} faixas tocarão em seguida${skipped ? ` (${skipped} já na fila)` : ''}`;
+      toast(msg);
     }
 
     /** Adiciona itens ao fim da fila. */
@@ -2783,10 +2796,20 @@
       if (!arr.length) return;
       if (Player.index < 0) return loadQueue(arr, 0, false);
 
-      Player.queue.push(...arr);
+      const { fresh, skipped } = dedupeAgainstQueue(arr);
+      if (!fresh.length) {
+        toast(arr.length === 1 ? 'Esta faixa já está na fila' : 'Todas já estão na fila');
+        return;
+      }
+
+      Player.queue.push(...fresh);
       $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
       if ($('npOverlay').classList.contains('is-open')) renderQueue();
-      toast(arr.length === 1 ? `"${arr[0].title}" adicionada à fila` : `${arr.length} faixas adicionadas à fila`);
+
+      const msg = fresh.length === 1
+        ? `"${fresh[0].title}" adicionada à fila`
+        : `${fresh.length} faixas adicionadas${skipped ? ` (${skipped} já na fila)` : ''}`;
+      toast(msg);
     }
 
     /** Remove todas as próximas, mantém só a atual. */
@@ -2813,10 +2836,12 @@
 
       if (menuBtn) {
         e.stopPropagation();
+        // playNext/addToQueue caem pra loadQueue quando ainda não há fila —
+        // por isso nenhuma opção é disabled.
         openContextMenu(menuBtn, [
           { label: 'Tocar agora', icon: 'i-play', onClick: () => loadQueue(sourceList, idx, false) },
-          { label: 'Tocar em seguida', icon: 'i-corner-up-right', onClick: () => playNext(track), disabled: Player.index < 0 },
-          { label: 'Adicionar à fila', icon: 'i-list-plus', onClick: () => addToQueue(track), disabled: Player.index < 0 },
+          { label: 'Tocar em seguida', icon: 'i-corner-up-right', onClick: () => playNext(track) },
+          { label: 'Adicionar à fila', icon: 'i-list-plus', onClick: () => addToQueue(track) },
         ]);
       } else {
         loadQueue(sourceList, idx, false);
@@ -2857,18 +2882,28 @@
       syncTrackUI();
       updateArtistCardCurrent();
 
-      // Lazy: usa preloaded se aplicável
-      if (index === Player.preloadIndex && Player.preload.readyState >= 3) {
-        Player.audio.src = Player.preload.src;
-        Player.preload.removeAttribute('src');
-        Player.preload.load();
+      // Hot path: faixa já está pré-carregada no elemento "preloadEl".
+      // SWAP real — pausa o atual e troca as referências. O elemento que
+      // já tem o áudio em buffer vira o ativo, sem nenhum download novo.
+      if (index === Player.preloadIndex && Player.preloadEl.readyState >= 3) {
+        const oldActive = Player.audio;
+        oldActive.pause();
+        oldActive.removeAttribute('src');
+        oldActive.load();
+
+        // O preloadEl já tem o áudio carregado, vira o ativo
+        Player.audio = Player.preloadEl;
+        Player.preloadEl = oldActive;
         Player.preloadIndex = -1;
       } else {
         Player.audio.src = resolveStreamUrl(track.url);
+        Player.audio.preload = 'auto';
+        Player.audio.load();
       }
 
-      Player.audio.preload = 'auto';
-      Player.audio.load();
+      // Aplica volume/mute (podem ter mudado enquanto outro elemento estava ativo)
+      Player.audio.volume = Player.volume;
+      Player.audio.muted  = Player.muted;
 
       ensureAudioContext();
       Player.audio.play().catch(err => {
@@ -2923,63 +2958,76 @@
       if (next === -1 || next === Player.index) return;
       const track = Player.queue[next];
       if (!track) return;
-      Player.preload.src = resolveStreamUrl(track.url);
-      Player.preload.preload = 'auto';
-      Player.preload.load();
+      Player.preloadEl.src = resolveStreamUrl(track.url);
+      Player.preloadEl.preload = 'auto';
+      Player.preloadEl.load();
       Player.preloadIndex = next;
     }
 
     /* ============================================================
-       AUDIO EVENTS
+       AUDIO EVENTS — listeners ligados a AMBOS os elementos.
+       Cada handler ignora eventos do elemento inativo (preloadEl).
        ============================================================ */
-    Player.audio.addEventListener('loadstart', () => { Player.isLoading = true; updatePlayUI(); });
-    Player.audio.addEventListener('waiting',   () => { Player.isLoading = true; updatePlayUI(); });
-    Player.audio.addEventListener('canplay',   () => { Player.isLoading = false; updatePlayUI(); });
-    Player.audio.addEventListener('playing',   () => {
-      Player.isLoading = false;
-      Player.isPlaying = true;
-      updatePlayUI();
-      syncTrackUI();
-    });
-    Player.audio.addEventListener('pause', () => {
-      Player.isPlaying = false;
-      updatePlayUI();
-      syncTrackUI();
-    });
-    Player.audio.addEventListener('ended', () => {
-      if (Player.repeat === 2) {
-        Player.audio.currentTime = 0;
-        Player.audio.play().catch(() => {});
-      } else {
-        nextTrack();
-      }
-    });
-    Player.audio.addEventListener('timeupdate', () => {
-      const dur = Player.audio.duration;
-      const cur = Player.audio.currentTime;
-      if (isFinite(dur) && dur > 0) {
-        const pct = (cur / dur) * 100;
-        $('progressFill').style.width = pct + '%';
-        $('progressThumb').style.left = pct + '%';
-        $('timeCurrent').textContent = formatTime(cur);
-        $('timeTotal').textContent   = formatTime(dur);
+    function bindAudioEvents(el) {
+      const ifActive = (fn) => (e) => { if (e.target === Player.audio) fn(e); };
 
-        const remaining = dur - cur;
-        const threshold = Math.min(15, dur * 0.2);
-        if (remaining > 0 && remaining <= threshold) preloadNext();
-      }
-    });
-    Player.audio.addEventListener('error', () => {
-      // Fallback: jsdelivr → raw github
-      const cur = Player.audio.src;
-      if (cur && cur.includes('cdn.jsdelivr.net')) {
-        const fallback = cur.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com').replace('@', '/');
-        console.warn('Falha ao carregar — tentando raw GitHub');
-        Player.audio.src = fallback;
-        Player.audio.load();
-        Player.audio.play().catch(() => {});
-      }
-    });
+      el.addEventListener('loadstart', ifActive(() => { Player.isLoading = true;  updatePlayUI(); }));
+      el.addEventListener('waiting',   ifActive(() => { Player.isLoading = true;  updatePlayUI(); }));
+      el.addEventListener('canplay',   ifActive(() => { Player.isLoading = false; updatePlayUI(); }));
+      el.addEventListener('playing',   ifActive(() => {
+        Player.isLoading = false;
+        Player.isPlaying = true;
+        updatePlayUI();
+        syncTrackUI();
+      }));
+      el.addEventListener('pause', ifActive(() => {
+        Player.isPlaying = false;
+        updatePlayUI();
+        syncTrackUI();
+      }));
+      el.addEventListener('ended', ifActive(() => {
+        if (Player.repeat === 2) {
+          Player.audio.currentTime = 0;
+          Player.audio.play().catch(() => {});
+        } else {
+          nextTrack();
+        }
+      }));
+      el.addEventListener('timeupdate', ifActive(() => {
+        const dur = Player.audio.duration;
+        const cur = Player.audio.currentTime;
+        if (isFinite(dur) && dur > 0) {
+          const pct = (cur / dur) * 100;
+          $('progressFill').style.width = pct + '%';
+          $('progressThumb').style.left = pct + '%';
+          $('timeCurrent').textContent = formatTime(cur);
+          $('timeTotal').textContent   = formatTime(dur);
+
+          const remaining = dur - cur;
+          const threshold = Math.min(15, dur * 0.2);
+          if (remaining > 0 && remaining <= threshold) preloadNext();
+        }
+      }));
+      el.addEventListener('error', ifActive(() => {
+        const cur = Player.audio.src;
+        if (cur && cur.includes('cdn.jsdelivr.net')) {
+          const fallback = cur.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com').replace('@', '/');
+          console.warn('Falha ao carregar — tentando raw GitHub');
+          Player.audio.src = fallback;
+          Player.audio.load();
+          Player.audio.play().catch(() => {});
+        } else if (cur) {
+          // Fallback também falhou — avisa o usuário e pula
+          toast('Falha ao reproduzir esta faixa');
+          Player.isLoading = false;
+          updatePlayUI();
+          if (Player.queue.length > 1) setTimeout(nextTrack, 600);
+        }
+      }));
+    }
+
+    bindAudioEvents($('audio'));
+    bindAudioEvents($('preload'));
 
     /* ============================================================
        UI SYNC
@@ -2998,7 +3046,6 @@
         icon.firstElementChild.setAttribute('href', '#i-play');
       }
 
-      $('player').classList.toggle('is-paused-state', !Player.isPlaying);
       $('npOverlay').classList.toggle('is-paused', !Player.isPlaying);
     }
 
@@ -3032,16 +3079,22 @@
         if (!Player.audioCtx) {
           const Ctx = window.AudioContext || window.webkitAudioContext;
           if (!Ctx) return;
-          Player.audioCtx  = new Ctx();
-          Player.analyser  = Player.audioCtx.createAnalyser();
-          Player.sourceNode = Player.audioCtx.createMediaElementSource(Player.audio);
-          Player.sourceNode.connect(Player.analyser);
-          Player.analyser.connect(Player.audioCtx.destination);
+          Player.audioCtx = new Ctx();
+          Player.analyser = Player.audioCtx.createAnalyser();
           Player.analyser.fftSize = 128;
           Player.analyser.smoothingTimeConstant = 0.75;
           Player.analyser.minDecibels = -85;
           Player.analyser.maxDecibels = -10;
           Player.dataArray = new Uint8Array(Player.analyser.frequencyBinCount);
+          // createMediaElementSource só pode ser chamado UMA vez por elemento.
+          // Conectamos ambos os elementos no mesmo analyser logo no init —
+          // o inativo fica em pause (sem áudio), então o analyser só
+          // "vê" o que toca no ativo.
+          Player.sourceA = Player.audioCtx.createMediaElementSource($('audio'));
+          Player.sourceB = Player.audioCtx.createMediaElementSource($('preload'));
+          Player.sourceA.connect(Player.analyser);
+          Player.sourceB.connect(Player.analyser);
+          Player.analyser.connect(Player.audioCtx.destination);
           startVisualizer();
         }
         if (Player.audioCtx.state === 'suspended') Player.audioCtx.resume();
@@ -3050,20 +3103,22 @@
       }
     }
 
-    function startVisualizer() {
-      if (Player.visRunning) return;
-      Player.visRunning = true;
+    // Bandas de frequência mapeadas pra cobrir grave→agudo
+    const VIS_RANGES = [
+      [1, 1, 0.85], [2, 2, 0.95], [3, 4, 1.0], [5, 7, 1.1],
+      [8, 12, 1.25], [13, 18, 1.4], [19, 25, 1.55], [26, 35, 1.75],
+      [36, 48, 2.0], [49, 63, 2.4],
+    ];
 
-      const bars = Array.from($$('.np-vis-bar'));
-      // Bandas de frequência mapeadas pra cobrir grave→agudo
-      const ranges = [
-        [1, 1, 0.85], [2, 2, 0.95], [3, 4, 1.0], [5, 7, 1.1],
-        [8, 12, 1.25], [13, 18, 1.4], [19, 25, 1.55], [26, 35, 1.75],
-        [36, 48, 2.0], [49, 63, 2.4],
-      ];
+    function startVisualizer() {
+      // Se já há um tick rodando, não inicia outro
+      if (Player.visTickActive) return;
+      Player.visRunning = true;
+      Player.visTickActive = true;
 
       const tick = () => {
-        if (!Player.visRunning) return;
+        if (!Player.visRunning) { Player.visTickActive = false; return; }
+        const bars = $$('.np-vis-bar');
         if (!Player.isPlaying) {
           for (const b of bars) b.style.height = '4px';
           requestAnimationFrame(tick);
@@ -3071,7 +3126,7 @@
         }
         Player.analyser.getByteFrequencyData(Player.dataArray);
         for (let i = 0; i < bars.length; i++) {
-          const [s, e, mult] = ranges[i] || [0, 0, 1];
+          const [s, e, mult] = VIS_RANGES[i] || [0, 0, 1];
           let sum = 0;
           for (let j = s; j <= e; j++) sum += Player.dataArray[j] || 0;
           const avg = (sum / (e - s + 1)) * mult;
@@ -3125,11 +3180,7 @@
       document.addEventListener('mouseup',  onUp);
       document.addEventListener('touchend', onUp);
 
-      // Hover preview (desktop só)
-      barEl.addEventListener('mousemove', (e) => {
-        if (dragging) return;
-        if (onPreview) onPreview(calcPct(e), e);
-      });
+      // Hover-preview reset ao sair (o preview no hover já é coberto pelo `onMove` global)
       barEl.addEventListener('mouseleave', () => {
         if (dragging) return;
         if (onPreview) onPreview(getValueFn ? getValueFn() : 0, null, true);
@@ -3207,6 +3258,11 @@
     /* ============================================================
        FILA / NOW PLAYING
        ============================================================ */
+    function toggleNowPlaying() {
+      if ($('npOverlay').classList.contains('is-open')) closeNowPlaying();
+      else openNowPlaying();
+    }
+
     function openNowPlaying() {
       if (Player.index < 0) return;
       ensureNpVisualizer();
@@ -3397,16 +3453,30 @@
       toast(`"${moved.title}" movida para o fim`);
     }
 
+    /** Remapeia um índice quando o item em `from` foi movido para `to`. */
+    function remapAfterMove(idx, from, to) {
+      if (idx === from) return to;
+      if (from < idx && to >= idx) return idx - 1;
+      if (from > idx && to <= idx) return idx + 1;
+      return idx;
+    }
+
     function reorderQueue(from, to) {
       const [moved] = Player.queue.splice(from, 1);
       Player.queue.splice(to, 0, moved);
-      if (Player.index === from) Player.index = to;
-      else if (from < Player.index && to >= Player.index) Player.index--;
-      else if (from > Player.index && to <= Player.index) Player.index++;
+      Player.index = remapAfterMove(Player.index, from, to);
+      Player.history = Player.history.map(i => remapAfterMove(i, from, to));
       Player.preloadIndex = -1;
       renderQueue();
       syncTrackUI();
       $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
+    }
+
+    /** Remapeia índice depois que o item em `removed` foi excluído. */
+    function remapAfterRemove(idx, removed) {
+      if (idx === removed) return -1;
+      if (idx > removed) return idx - 1;
+      return idx;
     }
 
     function removeFromQueue(idx) {
@@ -3415,6 +3485,7 @@
           Player.audio.pause();
           Player.queue = [];
           Player.index = -1;
+          Player.history = [];
           $('player').classList.add('hidden');
           document.body.classList.add('player-hidden');
           closeNowPlaying();
@@ -3422,11 +3493,18 @@
         }
         Player.queue.splice(idx, 1);
         if (Player.index >= Player.queue.length) Player.index = 0;
+        // history pode conter o índice removido — limpa
+        Player.history = Player.history
+          .map(i => remapAfterRemove(i, idx))
+          .filter(i => i !== -1);
         Player.preloadIndex = -1;
         loadTrack(Player.index);
       } else {
         Player.queue.splice(idx, 1);
         if (idx < Player.index) Player.index--;
+        Player.history = Player.history
+          .map(i => remapAfterRemove(i, idx))
+          .filter(i => i !== -1);
         Player.preloadIndex = -1;
         renderQueue();
         $('miniCounter').textContent = ` · ${Player.index + 1}/${Player.queue.length}`;
@@ -3467,8 +3545,8 @@
         Prefs.save({ muted: Player.muted });
       });
 
-      $('btnQueue').addEventListener('click', openNowPlaying);
-      $('npMini').addEventListener('click', openNowPlaying);
+      $('btnQueue').addEventListener('click', toggleNowPlaying);
+      $('npMini').addEventListener('click', toggleNowPlaying);
       $('npClose').addEventListener('click', closeNowPlaying);
 
       // Search
@@ -3569,10 +3647,18 @@
         navigator.mediaSession.setActionHandler('nexttrack',     nextTrack);
       }
 
-      // Pausa visualizer quando aba fica oculta (economia de bateria)
+      // Pausa visualizer quando aba fica oculta (economia de bateria).
+      // Ao voltar, força reinício limpo — o tick antigo pode estar paralisado
+      // pelo RAF do navegador enquanto a aba estava oculta.
       document.addEventListener('visibilitychange', () => {
-        if (document.hidden) Player.visRunning = false;
-        else if (Player.audioCtx) { Player.visRunning = true; startVisualizer(); }
+        if (document.hidden) {
+          Player.visRunning = false;
+        } else if (Player.audioCtx) {
+          Player.visRunning = true;
+          Player.visTickActive = false;     // força startVisualizer a iniciar um tick novo
+          startVisualizer();
+          if (Player.audioCtx.state === 'suspended') Player.audioCtx.resume();
+        }
       });
 
       // Browser back
