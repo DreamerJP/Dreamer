@@ -2953,7 +2953,11 @@
     function nextTrack() {
       if (!Player.queue.length) return;
       if (Player.index !== -1) Player.history.push(Player.index);
-      const next = getNextIndex();
+
+      // Se já temos uma próxima pré-carregada (e realçada), usamos ela.
+      // Caso contrário (ex: trocas muito rápidas), sorteamos uma nova.
+      const next = (Player.preloadIndex !== -1) ? Player.preloadIndex : getNextIndex();
+
       if (next === -1) { Player.audio.pause(); return; }
       Player.index = next;
       loadTrack(next);
@@ -3359,11 +3363,38 @@
         return;
       }
 
-      list.innerHTML = Player.queue.map((t, i) => {
+      const cur = Player.queue[Player.index];
+      const sections = [];
+
+      // TOCANDO AGORA no topo
+      if (cur) {
+        sections.push(`
+          <div class="np-queue-section">
+            <span class="np-queue-section-title">
+              <svg class="icon icon-stroke"><use href="#i-disc"/></svg> TOCANDO AGORA
+            </span>
+          </div>
+          ${queueItemHTML(cur, Player.index, { current: true })}
+        `);
+      }
+
+      // FILA COMPLETA
+      sections.push(`
+        <div class="np-queue-section">
+          <span class="np-queue-section-title">
+            <svg class="icon icon-stroke"><use href="#i-list"/></svg> FILA DE REPRODUÇÃO
+          </span>
+        </div>
+      `);
+
+      sections.push(Player.queue.map((t, i) => {
         const isCur = i === Player.index;
-        const isHistory = i < Player.index;
+        // Histórico real: músicas que estão no array Player.history
+        const isHistory = Player.history.includes(i);
         return queueItemHTML(t, i, { current: isCur, history: isHistory });
-      }).join('');
+      }).join(''));
+
+      list.innerHTML = sections.join('');
 
       attachQueueHandlers();
     }
