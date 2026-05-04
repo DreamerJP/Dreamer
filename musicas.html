@@ -3388,10 +3388,11 @@
       `);
 
       sections.push(Player.queue.map((t, i) => {
-        const isCur = i === Player.index;
+        // Pula a música que já está no destaque "TOCANDO AGORA" para não repetir
+        if (i === Player.index) return '';
         // Histórico real: músicas que estão no array Player.history
         const isHistory = Player.history.includes(i);
-        return queueItemHTML(t, i, { current: isCur, history: isHistory });
+        return queueItemHTML(t, i, { current: false, history: isHistory });
       }).join(''));
 
       list.innerHTML = sections.join('');
