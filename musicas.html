@@ -809,6 +809,11 @@
 
     .track-item.is-current .track-name { color: var(--accent); }
 
+    .track-item.is-next {
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: inset 0 0 0 1px var(--accent-soft);
+    }
+
     .track-num {
       font-size: 13px;
       color: var(--text-3);
@@ -1671,6 +1676,11 @@
     .np-queue-item:hover { background: rgba(255,255,255,0.05); }
     .np-queue-item.is-current { background: var(--accent-soft); }
     .np-queue-item.is-current .np-q-title { color: var(--accent); }
+
+    .np-queue-item.is-next {
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: inset 0 0 0 1px var(--accent-soft);
+    }
     .np-queue-item.is-dragging { opacity: 0.5; }
     .np-queue-item.is-drop-target { border-top: 2px solid var(--accent); padding-top: 6px; }
 
@@ -2911,6 +2921,8 @@
         Player.isLoading = false;
         updatePlayUI();
       });
+
+      preloadNext();
     }
 
     function togglePlay() {
@@ -2962,6 +2974,7 @@
       Player.preloadEl.preload = 'auto';
       Player.preloadEl.load();
       Player.preloadIndex = next;
+      syncTrackUI();
     }
 
     /* ============================================================
@@ -3051,16 +3064,24 @@
 
     function syncTrackUI() {
       const currentUrl = Player.queue[Player.index]?.url;
+      const nextUrl    = Player.queue[Player.preloadIndex]?.url;
+
       $$('.track-item').forEach(item => {
-        const isCur = item.dataset.url === currentUrl;
+        const url = item.dataset.url;
+        const isCur = url === currentUrl;
+        const isNext = url === nextUrl;
         item.classList.toggle('is-current', isCur);
         item.classList.toggle('is-paused', isCur && !Player.isPlaying);
+        item.classList.toggle('is-next', isNext);
       });
 
-      $$('.np-queue-item').forEach((item, i) => {
-        const isCur = i === Player.index;
+      $$('.np-queue-item').forEach((item) => {
+        const idx = Number(item.dataset.index);
+        const isCur = idx === Player.index;
+        const isNext = idx === Player.preloadIndex;
         item.classList.toggle('is-current', isCur);
         item.classList.toggle('is-paused', isCur && !Player.isPlaying);
+        item.classList.toggle('is-next', isNext);
       });
     }
 
