@@ -2889,7 +2889,6 @@
       }
 
       renderQueue();
-      syncTrackUI();
       updateArtistCardCurrent();
 
       // Hot path: faixa já está pré-carregada no elemento "preloadEl".
@@ -2906,10 +2905,21 @@
         Player.preloadEl = oldActive;
         Player.preloadIndex = -1;
       } else {
+        // Limpa preload anterior se houver (seja porque é a faixa atual que falhou no readyState
+        // ou porque pulamos para outra faixa qualquer). Isso evita realce duplo e trava no preloadNext.
+        if (Player.preloadIndex !== -1) {
+          Player.preloadEl.pause();
+          Player.preloadEl.removeAttribute('src');
+          Player.preloadEl.load();
+          Player.preloadIndex = -1;
+        }
         Player.audio.src = resolveStreamUrl(track.url);
         Player.audio.preload = 'auto';
         Player.audio.load();
       }
+
+      // Sincroniza UI após decidir qual elemento é o ativo e limpar estados de preload antigos
+      syncTrackUI();
 
       // Aplica volume/mute (podem ter mudado enquanto outro elemento estava ativo)
       Player.audio.volume = Player.volume;
