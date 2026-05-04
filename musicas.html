@@ -1683,6 +1683,8 @@
     }
     .np-queue-item.is-dragging { opacity: 0.5; }
     .np-queue-item.is-drop-target { border-top: 2px solid var(--accent); padding-top: 6px; }
+    .np-queue-item.is-history { opacity: 0.6; }
+    .np-queue-item.is-history:hover { opacity: 0.9; }
 
     .np-q-num {
       font-size: 12px;
@@ -2905,8 +2907,6 @@
         Player.preloadEl = oldActive;
         Player.preloadIndex = -1;
       } else {
-        // Limpa preload anterior se houver (seja porque é a faixa atual que falhou no readyState
-        // ou porque pulamos para outra faixa qualquer). Isso evita realce duplo e trava no preloadNext.
         if (Player.preloadIndex !== -1) {
           Player.preloadEl.pause();
           Player.preloadEl.removeAttribute('src');
@@ -2918,7 +2918,6 @@
         Player.audio.load();
       }
 
-      // Sincroniza UI após decidir qual elemento é o ativo e limpar estados de preload antigos
       syncTrackUI();
 
       // Aplica volume/mute (podem ter mudado enquanto outro elemento estava ativo)
@@ -3334,9 +3333,9 @@
       const thumb = t.artwork || './Assets/Home/favicon.ico';
       const numHtml = isCur
         ? '<div class="wave-bars" style="margin:0 auto"><span></span><span></span><span></span></div>'
-        : (isHistory ? '·' : (i + 1));
+        : (i + 1);
       return `
-        <div class="np-queue-item${isCur ? ' is-current' : ''}${isHistory ? ' is-history' : ''}" data-index="${i}" ${isHistory ? '' : 'draggable="true"'}>
+        <div class="np-queue-item${isCur ? ' is-current' : ''}${isHistory ? ' is-history' : ''}" data-index="${i}" draggable="true">
           <span class="np-q-num">${numHtml}</span>
           <img class="np-q-thumb" src="${escapeAttr(thumb)}" alt="" loading="lazy" draggable="false" />
           <div class="np-q-info">
@@ -3344,7 +3343,7 @@
             <div class="np-q-artist">${escapeHtml(t.artist)}</div>
           </div>
           <div class="np-q-actions">
-            ${isCur || isHistory ? '' : '<button class="np-q-btn np-q-handle" aria-label="Arrastar" title="Arrastar"><svg class="icon"><use href="#i-grip"/></svg></button>'}
+            ${isCur ? '' : '<button class="np-q-btn np-q-handle" aria-label="Arrastar" title="Arrastar"><svg class="icon"><use href="#i-grip"/></svg></button>'}
             <button class="np-q-btn np-q-menu-btn" data-action="menu" aria-label="Mais ações" title="Mais ações"><svg class="icon"><use href="#i-more"/></svg></button>
           </div>
         </div>`;
@@ -3355,40 +3354,17 @@
       const count = $('npQueueCount');
       count.textContent = `${Player.queue.length} ${Player.queue.length === 1 ? 'faixa' : 'faixas'}`;
 
-      const cur = Player.queue[Player.index];
-      const upcoming = Player.queue.slice(Player.index + 1);
-      const upcomingCount = upcoming.length;
-
-      const sections = [];
-
-      if (cur) {
-        sections.push(`
-          <div class="np-queue-section">
-            <span class="np-queue-section-title">
-              <svg class="icon icon-stroke"><use href="#i-disc"/></svg> Tocando agora
-            </span>
-          </div>
-          ${queueItemHTML(cur, Player.index, { current: true })}
-        `);
+      if (!Player.queue.length) {
+        list.innerHTML = `<div class="np-queue-empty">Fila vazia. Adicione músicas para começar.</div>`;
+        return;
       }
 
-      sections.push(`
-        <div class="np-queue-section">
-          <span class="np-queue-section-title">
-            <svg class="icon icon-stroke"><use href="#i-list"/></svg> Próximas <span style="color:var(--text-3); font-weight:500; margin-left:4px;">(${upcomingCount})</span>
-          </span>
-          ${upcomingCount ? '<button class="np-queue-clear" id="queueClearBtn" type="button">Limpar</button>' : ''}
-        </div>
-      `);
-      if (upcomingCount) {
-        sections.push(upcoming.map((t, i) => queueItemHTML(t, Player.index + 1 + i)).join(''));
-      } else {
-        sections.push(`<div class="np-queue-empty">Nada na fila depois desta. Use o menu (•••) de uma faixa para adicionar.</div>`);
-      }
+      list.innerHTML = Player.queue.map((t, i) => {
+        const isCur = i === Player.index;
+        const isHistory = i < Player.index;
+        return queueItemHTML(t, i, { current: isCur, history: isHistory });
+      }).join('');
 
-      list.innerHTML = sections.join('');
-
-      $('queueClearBtn')?.addEventListener('click', clearUpcoming);
       attachQueueHandlers();
     }
 
@@ -3423,9 +3399,6 @@
 
           openContextMenu(menuBtn, items);
         });
-
-        // Drag-and-drop só para itens em "Próximas"
-        if (item.classList.contains('is-history') || item.classList.contains('is-current')) return;
 
         item.addEventListener('dragstart', (e) => {
           dragFromIndex = itemIdx;
