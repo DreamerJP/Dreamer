@@ -1668,7 +1668,7 @@
         const res = await fetch("./Assets/Jogos/minha_lista_jogos.json");
         if (!res.ok) throw new Error("not ok");
         const data = await res.json();
-        allGames = data.games || [];
+        allGames = data.games || (Array.isArray(data) ? data : []);
 
         // categoria padrão = "all"
         await filterByCategory("all");

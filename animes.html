@@ -1084,7 +1084,9 @@
       try {
         const res = await fetch("./Assets/Animes/animes.json");
         if (!res.ok) throw new Error("Falha ao carregar JSON");
-        allAnimes = await res.json();
+        const data = await res.json();
+        // Compatibilidade: aceita lista direta ou objeto com chave "animes"
+        allAnimes = Array.isArray(data) ? data : (data.animes || []);
 
         renderCategoryChips();
         applyFilters();

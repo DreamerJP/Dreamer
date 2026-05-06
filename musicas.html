@@ -2383,7 +2383,8 @@
       try {
         const res = await fetch('./Assets/Musicas/music-index.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        State.raw = await res.json();
+        const data = await res.json();
+        State.raw = data.musicas || data;
         buildArtistsModel();
         renderCategoryChips();
         renderStats();

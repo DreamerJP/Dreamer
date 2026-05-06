@@ -892,7 +892,7 @@
           const res = await fetch("./Assets/Videos/minha_lista_videos.json");
           if (!res.ok) throw new Error("not ok");
           const data = await res.json();
-          videosData = data.videos || [];
+          videosData = data.videos || (Array.isArray(data) ? data : []);
           createFilters();
           render(videosData);
         } catch (err) {

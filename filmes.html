@@ -1640,7 +1640,7 @@
         const res = await fetch("./Assets/Filmes/minha_lista_filmes.json");
         if (!res.ok) throw new Error("Falha ao carregar JSON");
         const data = await res.json();
-        allMovies = data.films || [];
+        allMovies = data.films || (Array.isArray(data) ? data : []);
 
         // Limpar entradas expiradas do cache
         cachePrune();

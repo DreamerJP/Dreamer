@@ -1464,7 +1464,8 @@
       try {
         const res = await fetch("./Assets/Imagens/images-index.json");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        state.rawIndex = await res.json();
+        const data = await res.json();
+        state.rawIndex = data.imagens || data;
         state.pathMap["/"] = state.rawIndex;
 
         // Estatísticas globais
