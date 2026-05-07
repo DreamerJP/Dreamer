@@ -10923,6 +10923,27 @@
       "production": "Amazon MGM Studios, On the Roam, Dogbone Entertainment, Henness Ridge Entertainment, 6th & Idaho Motion Picture Company, Reunion Pacific Entertainment",
       "boxOffice": "$89,000,000",
       "released": "2026-01-28"
+    },
+    {
+      "title": "Mortal Kombat",
+      "slug": "mortal-kombat",
+      "year": "2021",
+      "plot": "O lutador de MMA Cole Young deve treinar para liberar seu verdadeiro poder para unir-se aos maiores campeões mundiais contra inimigos da Exoterra em uma batalha decisiva pelo universo.",
+      "director": "Simon McQuoid",
+      "actors": "Lewis Tan, Jessica McNamee, Mehcad Brooks, Josh Lawson, Ludi Lin",
+      "genre": "Ação, Fantasia, Aventura",
+      "runtime": "110 min",
+      "imdbRating": "7.0",
+      "url": "https://letterboxd.com/film/mortal-kombat-2021/",
+      "trailer": "https://www.youtube.com/watch?v=cbvbYpGkgjg",
+      "poster": "https://image.tmdb.org/t/p/w500/4nW5X9iBrMlHMDcTsEOQWXKu3TZ.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/6ELCZlTA5lGUops70hKdB83WJxH.jpg",
+      "imdbVotes": "6313",
+      "country": "United States of America",
+      "language": "日本語, English, 普通话",
+      "production": "Atomic Monster, Broken Road Productions, New Line Cinema",
+      "boxOffice": "$84,426,031",
+      "released": "2021-04-07"
     }
   ]
 }
