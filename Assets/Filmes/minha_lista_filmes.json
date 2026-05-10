@@ -10944,6 +10944,27 @@
       "production": "Atomic Monster, Broken Road Productions, New Line Cinema",
       "boxOffice": "$84,426,031",
       "released": "2021-04-07"
+    },
+    {
+      "title": "Devoradores de Estrelas",
+      "slug": "devoradores-de-estrelas",
+      "year": "2026",
+      "plot": "O professor de ciências Ryland Grace acorda em uma espaçonave anos-luz de casa sem memória de quem ele é ou como chegou lá.",
+      "director": "Phil Lord",
+      "actors": "Ryan Gosling, Sandra Hüller, James Ortiz, Lionel Boyce, Milana Vayntrub",
+      "genre": "Ficção científica, Aventura",
+      "runtime": "157 min",
+      "imdbRating": "8.2",
+      "url": "https://letterboxd.com/film/project-hail-mary/",
+      "trailer": "https://www.youtube.com/watch?v=abJG_v4v7xM",
+      "poster": "https://image.tmdb.org/t/p/w500/bOzG3SG6gBxHGGHYiq7xXeNb1bG.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/xQRNN12LePQqqIbhP6xP5X212HG.jpg",
+      "imdbVotes": "2012",
+      "country": "United States of America",
+      "language": "普通话, English, 日本語, Pусский",
+      "production": "Lord Miller, Amazon MGM Studios, Pascal Pictures, Open Invite Entertainment, Waypoint Entertainment",
+      "boxOffice": "$655,800,000",
+      "released": "2026-03-15"
     }
   ]
 }
