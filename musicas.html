@@ -99,37 +99,6 @@
     .icon-stroke { fill: none; }
 
     /* ============================================================
-       STARFIELD
-       ============================================================ */
-    .starfield {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      opacity: 0.55;
-    }
-
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0;
-      animation: drift linear infinite;
-    }
-
-    .star.s1 { width: 1px; height: 1px; animation-duration: 30s; }
-    .star.s2 { width: 1.5px; height: 1.5px; animation-duration: 22s; box-shadow: 0 0 3px rgba(255,255,255,.4); }
-    .star.s3 { width: 2px; height: 2px; animation-duration: 14s; box-shadow: 0 0 4px rgba(255,255,255,.6); }
-
-    @keyframes drift {
-      0%   { opacity: 0; transform: translate(0,0) scale(0.5); }
-      20%  { opacity: 0.6; }
-      80%  { opacity: 0.6; }
-      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
-    }
-
-    /* ============================================================
        NAVEGAÇÃO
        ============================================================ */
     .nav {
@@ -567,7 +536,7 @@
     }
 
     .artist-card:hover .artist-cover img { transform: scale(1.05); }
-    .artist-card:hover .artist-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .artist-card:hover .artist-play { opacity: 1; transform: translateY(0); }
 
     .artist-cover {
       position: relative;
@@ -598,10 +567,11 @@
 
     .artist-play {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.85);
-      width: 56px;
-      height: 56px;
+      right: 10px;
+      bottom: 10px;
+      transform: translateY(8px);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--text-1);
       color: var(--bg-0);
@@ -609,15 +579,16 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transition: opacity .2s, transform .2s var(--ease-out);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transition: opacity .2s, transform .2s var(--ease-out), background .15s;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.55);
       border: none;
       cursor: pointer;
       font: inherit;
+      z-index: 2;
     }
 
-    .artist-play:hover { background: #ffffff; }
-    .artist-play .icon { width: 22px; height: 22px; margin-left: 3px; }
+    .artist-play:hover { background: #ffffff; transform: translateY(-2px); }
+    .artist-play .icon { width: 16px; height: 16px; margin-left: 2px; }
 
     .artist-meta {
       display: flex;
@@ -916,8 +887,6 @@
       color: var(--text-2);
       font-family: var(--font-mono);
     }
-
-    .track-format.flac { color: var(--mint); background: rgba(132, 255, 209, 0.1); }
 
     /* ============================================================
        CONTEXT MENU (Tocar agora / Em seguida / Adicionar à fila)
@@ -1890,7 +1859,6 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
-      .star { display: none; }
     }
 
     :focus-visible {
@@ -2037,9 +2005,6 @@
       <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" />
     </symbol>
   </svg>
-
-  <!-- Starfield -->
-  <div class="starfield" id="starfield" aria-hidden="true"></div>
 
   <!-- Navegação -->
   <nav class="nav">
@@ -3820,41 +3785,6 @@
     }
 
     /* ============================================================
-       STARFIELD
-       ============================================================ */
-    function createStarfield() {
-      const sf = $('starfield');
-      const w = window.innerWidth, h = window.innerHeight;
-      const cx = w / 2, cy = h / 2;
-      const count = w > 768 ? 60 : 30;
-      const frag = document.createDocumentFragment();
-
-      for (let i = 0; i < count; i++) {
-        const s = document.createElement('div');
-        s.className = 'star';
-        const tier = Math.random();
-        if (tier < 0.7) s.classList.add('s1');
-        else if (tier < 0.95) s.classList.add('s2');
-        else s.classList.add('s3');
-
-        const angle = Math.random() * 2 * Math.PI;
-        const r0 = Math.random() * 60 + 20;
-        const x0 = cx + Math.cos(angle) * r0;
-        const y0 = cy + Math.sin(angle) * r0;
-        const dist = Math.sqrt(w * w + h * h) * (0.7 + Math.random() * 0.5);
-
-        s.style.left = x0 + 'px';
-        s.style.top  = y0 + 'px';
-        s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-        s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
-        s.style.animationDelay = -Math.random() * 30 + 's';
-        frag.appendChild(s);
-      }
-      sf.innerHTML = '';
-      sf.appendChild(frag);
-    }
-
-    /* ============================================================
        INIT
        ============================================================ */
     function restorePrefs() {
@@ -3887,7 +3817,6 @@
 
     function init() {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      createStarfield();
       restorePrefs();
       setupControls();
       setupProgress();
@@ -3895,12 +3824,6 @@
       ensureNpVisualizer();
       loadLibrary();
 
-      // Resize → recria starfield
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(createStarfield, 200);
-      });
     }
 
     if (document.readyState === 'loading') {
