@@ -256,6 +256,36 @@
       "trailer": "https://www.youtube.com/watch?v=qJWI4bkD9ZM"
     },
     {
+      "title": "Death Stranding",
+      "slug": "death-stranding",
+      "year": "2019",
+      "summary": "Death Stranding é um jogo de ação ambientado em um Estados Unidos pós-apocalíptico.\n\nOs jogadores controlam Sam Porter Bridges, um entregador encarregado de reconectar cidades isoladas por meio de uma rede de comunicação enquanto transporta cargas essenciais. A jogabilidade combina exploração, gerenciamento de recursos e elementos narrativos, com foco na conectividade social por meio de um sistema multijogador assíncrono. O jogo é conhecido por suas mecânicas únicas, mundo atmosférico e temas filosóficos.",
+      "developer": "Guerrilla Games",
+      "publisher": "505 Games",
+      "genre": "Shooter, Role-playing (RPG), Adventure",
+      "platforms": "PlayStation 4, PC (Microsoft Windows)",
+      "rating": "86.2",
+      "url": "https://www.igdb.com/games/death-stranding",
+      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/cobksf.jpg",
+      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/fq9mae2ruszujzbybiif.jpg",
+      "trailer": "https://www.youtube.com/watch?v=wyAnYp4GbWM"
+    },
+    {
+      "title": "Death Stranding 2: On the Beach",
+      "slug": "death-stranding-2-on-the-beach",
+      "year": "2025",
+      "summary": "Embarque em uma missão inspiradora de conexão humana além da UCA. Sam, acompanhado por seus companheiros, parte em uma nova jornada para salvar a humanidade da extinção. Junte-se a eles enquanto atravessam um mundo assolado por inimigos sobrenaturais, obstáculos e uma pergunta inquietante: deveríamos ter nos conectado?",
+      "developer": "Nixxes Software",
+      "publisher": "Kojima Productions",
+      "genre": "Shooter, Adventure",
+      "platforms": "PC (Microsoft Windows), PlayStation 5",
+      "rating": "91.0",
+      "url": "https://www.igdb.com/games/death-stranding-2-on-the-beach",
+      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9ipx.jpg",
+      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3me9.jpg",
+      "trailer": "https://www.youtube.com/watch?v=WOmTBfDD6a4"
+    },
+    {
       "slug": "detroit-become-human",
       "url": "https://www.igdb.com/games/detroit-become-human",
       "title": "Detroit: Become Human",
@@ -1379,39 +1409,9 @@
       "trailer": "https://www.youtube.com/watch?v=D2NCCJHGSSY",
       "url": "https://www.igdb.com/games/lockdown-protocol--2",
       "summary": "A first-person social deduction game, combining real-time action and communication, 3 to 8 players. While most players will do their best to complete objectives and ensure victory, a small portion of dissidents will try to stop them at all costs, without getting caught."
-    },
-    {
-      "title": "Death Stranding",
-      "slug": "death-stranding",
-      "year": "2019",
-      "summary": "Death Stranding é um jogo de ação ambientado em um Estados Unidos pós-apocalíptico.\n\nOs jogadores controlam Sam Porter Bridges, um entregador encarregado de reconectar cidades isoladas por meio de uma rede de comunicação enquanto transporta cargas essenciais. A jogabilidade combina exploração, gerenciamento de recursos e elementos narrativos, com foco na conectividade social por meio de um sistema multijogador assíncrono. O jogo é conhecido por suas mecânicas únicas, mundo atmosférico e temas filosóficos.",
-      "developer": "Guerrilla Games",
-      "publisher": "505 Games",
-      "genre": "Shooter, Role-playing (RPG), Adventure",
-      "platforms": "PlayStation 4, PC (Microsoft Windows)",
-      "rating": "86.2",
-      "url": "https://www.igdb.com/games/death-stranding",
-      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/cobksf.jpg",
-      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/fq9mae2ruszujzbybiif.jpg",
-      "trailer": "https://www.youtube.com/watch?v=wyAnYp4GbWM"
-    },
-    {
-      "title": "Death Stranding 2: On the Beach",
-      "slug": "death-stranding-2-on-the-beach",
-      "year": "2025",
-      "summary": "Embarque em uma missão inspiradora de conexão humana além da UCA. Sam, acompanhado por seus companheiros, parte em uma nova jornada para salvar a humanidade da extinção. Junte-se a eles enquanto atravessam um mundo assolado por inimigos sobrenaturais, obstáculos e uma pergunta inquietante: deveríamos ter nos conectado?",
-      "developer": "Nixxes Software",
-      "publisher": "Kojima Productions",
-      "genre": "Shooter, Adventure",
-      "platforms": "PC (Microsoft Windows), PlayStation 5",
-      "rating": "91.0",
-      "url": "https://www.igdb.com/games/death-stranding-2-on-the-beach",
-      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9ipx.jpg",
-      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3me9.jpg",
-      "trailer": "https://www.youtube.com/watch?v=WOmTBfDD6a4"
     }
   ],
   "total_games": 94,
-  "managed_at": "2026-06-06 00:08:27",
+  "managed_at": "2026-06-06 00:18:05",
   "url": "MANAGED_BY_WEB_EDITOR"
 }
