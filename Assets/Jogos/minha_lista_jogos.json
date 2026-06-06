@@ -1381,21 +1381,6 @@
       "summary": "A first-person social deduction game, combining real-time action and communication, 3 to 8 players. While most players will do their best to complete objectives and ensure victory, a small portion of dissidents will try to stop them at all costs, without getting caught."
     },
     {
-      "title": "Death Stranding 2: On the Beach",
-      "slug": "death-stranding-2-on-the-beach",
-      "year": "2025",
-      "summary": "Embarque em uma missão inspiradora de conexão humana além da UCA. Sam, acompanhado por seus companheiros, parte em uma nova jornada para salvar a humanidade da extinção. Junte-se a eles enquanto atravessam um mundo assolado por inimigos sobrenaturais, obstáculos e uma pergunta inquietante: deveríamos ter nos conectado?",
-      "developer": "Nixxes Software",
-      "publisher": "Kojima Productions",
-      "genre": "Shooter, Adventure",
-      "platforms": "PC (Microsoft Windows), PlayStation 5",
-      "rating": "91.0",
-      "url": "https://www.igdb.com/games/death-stranding-2-on-the-beach",
-      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9ipx.jpg",
-      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3me9.jpg",
-      "trailer": "https://www.youtube.com/watch?v=WOmTBfDD6a4"
-    },
-    {
       "title": "Death Stranding",
       "slug": "death-stranding",
       "year": "2019",
@@ -1409,6 +1394,21 @@
       "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/cobksf.jpg",
       "background": "https://images.igdb.com/igdb/image/upload/t_1080p/fq9mae2ruszujzbybiif.jpg",
       "trailer": "https://www.youtube.com/watch?v=wyAnYp4GbWM"
+    },
+    {
+      "title": "Death Stranding 2: On the Beach",
+      "slug": "death-stranding-2-on-the-beach",
+      "year": "2025",
+      "summary": "Embarque em uma missão inspiradora de conexão humana além da UCA. Sam, acompanhado por seus companheiros, parte em uma nova jornada para salvar a humanidade da extinção. Junte-se a eles enquanto atravessam um mundo assolado por inimigos sobrenaturais, obstáculos e uma pergunta inquietante: deveríamos ter nos conectado?",
+      "developer": "Nixxes Software",
+      "publisher": "Kojima Productions",
+      "genre": "Shooter, Adventure",
+      "platforms": "PC (Microsoft Windows), PlayStation 5",
+      "rating": "91.0",
+      "url": "https://www.igdb.com/games/death-stranding-2-on-the-beach",
+      "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9ipx.jpg",
+      "background": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3me9.jpg",
+      "trailer": "https://www.youtube.com/watch?v=WOmTBfDD6a4"
     }
   ],
   "total_games": 94,
