@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dreamer — Portfolio Digital</title>
+  <title>Dreamer · Portfolio Digital</title>
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -282,7 +282,7 @@
       color: var(--accent);
     }
 
-    /* glitch — only on hover */
+    /* glitch: only on hover */
     .glitch {
       position: relative;
       display: inline-block;
@@ -1117,8 +1117,7 @@
           <span class="glitch" data-text="DREAMER">DREAM<em>er</em></span>
         </h1>
         <p class="hero-subtitle">
-          Um arquivo pessoal de obsessões — animes, filmes, jogos, músicas, imagens e vídeos que constroem o universo de
-          quem sonha em silêncio.
+          Um arquivo pessoal de obsessões: animes, filmes, jogos, músicas, imagens e vídeos reunidos num lugar só.
         </p>
       </div>
 
@@ -1150,7 +1149,7 @@
         </svg>
       </button>
       <div class="quote-container">
-        <div class="quote-attr">— Manifesto —</div>
+        <div class="quote-attr">Manifesto</div>
         <blockquote class="quote-text">
           <span class="line">I am the son and the heir</span>
           <span class="line">of a shyness that is criminally vulgar.</span>
@@ -1171,7 +1170,7 @@
         <header class="section-head">
           <div>
             <h2 class="section-title">Universo <em>criativo</em></h2>
-            <p class="section-lede">Seis caminhos para entrar. Escolha onde a curiosidade puxa primeiro.</p>
+            <p class="section-lede">Seis seções para explorar, cada uma com um pedaço do que eu curto.</p>
           </div>
         </header>
 
@@ -1183,7 +1182,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-anime" />
                 </svg></span>
-              <span class="row-desc">Narrativas que dobram o tempo e desenham o silêncio entre personagens.</span>
+              <span class="row-desc">Séries e filmes de animação que vi e recomendo.</span>
               <span class="row-meta">Curadoria pessoal</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1195,7 +1194,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-clapper" />
                 </svg></span>
-              <span class="row-desc">Clássicos e descobertas modernas — uma sala de cinema que nunca fecha.</span>
+              <span class="row-desc">Clássicos e lançamentos que marcaram, reunidos num só lugar.</span>
               <span class="row-meta">Cinemateca</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1207,7 +1206,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-pad" />
                 </svg></span>
-              <span class="row-desc">Mundos virtuais que expandem os limites da imaginação e do tempo livre.</span>
+              <span class="row-desc">Os jogos que zerei e ainda guardo na memória.</span>
               <span class="row-meta">Memória interativa</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1219,7 +1218,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-music" />
                 </svg></span>
-              <span class="row-desc">Playlists que marcaram momentos, faixas que se tornaram lugares.</span>
+              <span class="row-desc">As faixas e playlists que marcaram época pra mim.</span>
               <span class="row-meta">Trilha sonora</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1231,7 +1230,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-image" />
                 </svg></span>
-              <span class="row-desc">Uma coleção de fotos, capturas e fragmentos visuais que ficaram.</span>
+              <span class="row-desc">Capturas, wallpapers e referências que fui juntando.</span>
               <span class="row-meta">Galeria</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1243,7 +1242,7 @@
               <span class="row-icon"><svg>
                   <use href="#i-video" />
                 </svg></span>
-              <span class="row-desc">Conteúdo audiovisual — música, animações e momentos audiovisuais.</span>
+              <span class="row-desc">Videoclipes, animações e outros vídeos favoritos.</span>
               <span class="row-meta">Reel pessoal</span>
               <span class="row-arrow">→</span>
             </a>
@@ -1315,7 +1314,7 @@
         stars = [];
         const cx = W / 2, cy = H / 2;
         for (let i = 0; i < count; i++) {
-          // depth: 0 (far) → 1 (near) — controls speed of hyperspace travel
+          // depth: 0 (far) → 1 (near), controls speed of hyperspace travel
           const depth = Math.pow(Math.random(), 1.4);
           const tint = Math.random();
           let color = 'rgba(255,255,255,';
@@ -1340,7 +1339,7 @@
             baseAlpha: 0.15 + depth * 0.7,
             twinkleSpeed: 0.0006 + Math.random() * 0.0018,
             twinklePhase: Math.random() * Math.PI * 2,
-            // outward speed — far stars almost still, near stars zoom past
+            // outward speed: far stars almost still, near stars zoom past
             speed: 0.015 + Math.pow(depth, 2.2) * TRAVEL_BASE_SPEED
           });
         }
@@ -1370,18 +1369,18 @@
       function frame(t) {
         ctx.clearRect(0, 0, W, H);
 
-        // stars — hyperspace travel: each one moves outward from center, faster the closer it is
+        // stars, hyperspace travel: each one moves outward from center, faster the closer it is
         const cx = W / 2, cy = H / 2;
         for (let i = 0; i < stars.length; i++) {
           const s = stars[i];
           // advance radially outward; speed scales with current radius (perspective acceleration)
-          // — a star far from center moves much faster across screen than one near center
+          // a star far from center moves much faster across screen than one near center
           const radialBoost = 1 + s.radius * 0.006;
           s.radius += s.speed * radialBoost;
           s.x = cx + Math.cos(s.angle) * s.radius;
           s.y = cy + Math.sin(s.angle) * s.radius;
 
-          // recycle when off-screen — respawn at minimum radius (just past center exclusion zone)
+          // recycle when off-screen: respawn at minimum radius (just past center exclusion zone)
           const offscreen =
             s.x < -10 || s.x > W + 10 || s.y < -10 || s.y > H + 10;
           if (offscreen) {
@@ -1409,8 +1408,6 @@
           ctx.fill();
         }
 
-        // shooting stars removed
-
         if (!prefersReduced) requestAnimationFrame(frame);
       }
 
@@ -1435,7 +1432,7 @@
       let timer;
       function pulse() {
         if (title.matches(':hover')) {
-          // skip if user is already hovering — let their interaction take over
+          // skip if user is already hovering, let their interaction take over
           schedule();
           return;
         }

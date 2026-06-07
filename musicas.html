@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#07070d" />
-  <meta name="description" content="Coleção pessoal de músicas — Dreamer Collection" />
-  <title>Músicas — Dreamer Collection</title>
+  <meta name="description" content="Coleção pessoal de músicas · Dreamer Collection" />
+  <title>Músicas · Dreamer Collection</title>
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -957,7 +957,7 @@
     }
 
     /* ============================================================
-       QUEUE — sections (Tocando agora / Próximas / Histórico)
+       QUEUE: sections (Tocando agora / Próximas / Histórico)
        ============================================================ */
     .np-queue-section {
       display: flex;
@@ -1123,7 +1123,7 @@
     .np-mini:hover { background: rgba(255,255,255,0.05); }
     .player.np-open .np-mini { background: rgba(255,255,255,0.06); }
 
-    /* Indicador "Fila de reprodução" — chevron à direita */
+    /* Indicador "Fila de reprodução": chevron à direita */
     .np-mini-expand {
       position: absolute;
       right: 10px;
@@ -1151,7 +1151,7 @@
 
     .player.np-open .np-mini-expand { opacity: 1; color: var(--text-1); }
 
-    /* Pulse de descoberta — toca uma vez quando carrega nova faixa */
+    /* Pulse de descoberta: toca uma vez quando carrega nova faixa */
     .np-mini.is-cued {
       box-shadow: 0 0 32px var(--accent-glow);
       animation: cue-pulse 1.4s var(--ease-out) 1;
@@ -2035,8 +2035,8 @@
       <div class="hero-glow"></div>
 
       <h1>
-        Trilha sonora <span class="holo-text">pessoal</span><br />
-        que define cada momento.
+        Minha trilha sonora<br />
+        <span class="holo-text">pessoal</span>.
       </h1>
       <p>Coleção de músicas que ouvi, gostei e mantenho perto. Navegue por artista ou busque qualquer faixa.</p>
 
@@ -2296,7 +2296,7 @@
       save(patch) {
         const cur = Prefs.load();
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...cur, ...patch })); }
-        catch { /* storage unavailable — silently ignore */ }
+        catch { /* storage unavailable, silently ignore */ }
       }
     };
 
@@ -2315,7 +2315,7 @@
 
     /* Dois <audio> reais que se alternam entre "ativo" (Player.audio)
        e "preload" (Player.preloadEl). Ao trocar de faixa, se a próxima
-       já está pré-carregada no inativo, basta SWAP de referências —
+       já está pré-carregada no inativo, basta SWAP de referências,
        sem nenhum download/decode novo, ainda que momentâneo, no ativo. */
     const Player = {
       audio: $('audio'),         // ref ao elemento atualmente em uso
@@ -2814,7 +2814,7 @@
 
       if (menuBtn) {
         e.stopPropagation();
-        // playNext/addToQueue caem pra loadQueue quando ainda não há fila —
+        // playNext/addToQueue caem pra loadQueue quando ainda não há fila,
         // por isso nenhuma opção é disabled.
         openContextMenu(menuBtn, [
           { label: 'Tocar agora', icon: 'i-play', onClick: () => loadQueue(sourceList, idx, false) },
@@ -2860,7 +2860,7 @@
       updateArtistCardCurrent();
 
       // Hot path: faixa já está pré-carregada no elemento "preloadEl".
-      // SWAP real — pausa o atual e troca as referências. O elemento que
+      // SWAP real: pausa o atual e troca as referências. O elemento que
       // já tem o áudio em buffer vira o ativo, sem nenhum download novo.
       if (index === Player.preloadIndex && Player.preloadEl.readyState >= 3) {
         const oldActive = Player.audio;
@@ -2957,7 +2957,7 @@
     }
 
     /* ============================================================
-       AUDIO EVENTS — listeners ligados a AMBOS os elementos.
+       AUDIO EVENTS: listeners ligados a AMBOS os elementos.
        Cada handler ignora eventos do elemento inativo (preloadEl).
        ============================================================ */
     function bindAudioEvents(el) {
@@ -3004,12 +3004,12 @@
         const cur = Player.audio.src;
         if (cur && cur.includes('cdn.jsdelivr.net')) {
           const fallback = cur.replace('cdn.jsdelivr.net/gh', 'raw.githubusercontent.com').replace('@', '/');
-          console.warn('Falha ao carregar — tentando raw GitHub');
+          console.warn('Falha ao carregar, tentando raw GitHub');
           Player.audio.src = fallback;
           Player.audio.load();
           Player.audio.play().catch(() => {});
         } else if (cur) {
-          // Fallback também falhou — avisa o usuário e pula
+          // Fallback também falhou, avisa o usuário e pula
           toast('Falha ao reproduzir esta faixa');
           Player.isLoading = false;
           updatePlayUI();
@@ -3087,7 +3087,7 @@
           Player.analyser.maxDecibels = -10;
           Player.dataArray = new Uint8Array(Player.analyser.frequencyBinCount);
           // createMediaElementSource só pode ser chamado UMA vez por elemento.
-          // Conectamos ambos os elementos no mesmo analyser logo no init —
+          // Conectamos ambos os elementos no mesmo analyser logo no init,
           // o inativo fica em pause (sem áudio), então o analyser só
           // "vê" o que toca no ativo.
           Player.sourceA = Player.audioCtx.createMediaElementSource($('audio'));
@@ -3099,7 +3099,7 @@
         }
         if (Player.audioCtx.state === 'suspended') Player.audioCtx.resume();
       } catch (err) {
-        // Ignora — provavelmente CORS. O áudio continua tocando.
+        // Ignora: provavelmente CORS. O áudio continua tocando.
       }
     }
 
@@ -3495,7 +3495,7 @@
         }
         Player.queue.splice(idx, 1);
         if (Player.index >= Player.queue.length) Player.index = 0;
-        // history pode conter o índice removido — limpa
+        // history pode conter o índice removido, limpa
         Player.history = Player.history
           .map(i => remapAfterRemove(i, idx))
           .filter(i => i !== -1);
@@ -3514,7 +3514,7 @@
     }
 
     /* ============================================================
-       CONTROLES — bind
+       CONTROLES: bind
        ============================================================ */
     function setupControls() {
       $('btnPlay').addEventListener('click', togglePlay);
@@ -3650,7 +3650,7 @@
       }
 
       // Pausa visualizer quando aba fica oculta (economia de bateria).
-      // Ao voltar, força reinício limpo — o tick antigo pode estar paralisado
+      // Ao voltar, força reinício limpo: o tick antigo pode estar paralisado
       // pelo RAF do navegador enquanto a aba estava oculta.
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
@@ -3689,7 +3689,7 @@
     }
 
     /* ============================================================
-       CONTEXT MENU — reusable
+       CONTEXT MENU: reusable
        ============================================================ */
     let activeMenuAnchor = null;
 
@@ -3770,7 +3770,7 @@
     });
 
     /* ============================================================
-       DISCOVERY CUE — pulse no mini player ao iniciar nova faixa
+       DISCOVERY CUE: pulse no mini player ao iniciar nova faixa
        ============================================================ */
     let cueTimer;
     function cueMiniPlayer() {

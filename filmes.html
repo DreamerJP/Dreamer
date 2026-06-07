@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filmes — Dreamer Collection</title>
+  <title>Filmes · Dreamer Collection</title>
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -750,7 +750,7 @@
     }
 
     /* ============================================================
-       MODAL — detalhes do filme (full-bleed backdrop)
+       MODAL: detalhes do filme (full-bleed backdrop)
        ============================================================ */
     .modal {
       display: none;
@@ -1080,7 +1080,7 @@
     .modal-backdrop::after { transition: background 0.6s ease; }
 
         /* ============================================================
-       MODAL — TRAILER
+       MODAL: TRAILER
        ============================================================ */
     .trailer-modal {
       display: none;
@@ -1400,8 +1400,8 @@
       <div class="hero-glow"></div>
 
       <h1>
-        Filmes para um <span class="holo-text">cinema</span><br />
-        absoluto.
+        Filmes que valeram<br />
+        a <span class="holo-text">sessão</span>.
       </h1>
       <p>Minha coleção pessoal de filmes assistidos.</p>
 
@@ -1530,7 +1530,7 @@
     let infiniteObserver = null;
 
     /* ============================================================
-       CACHE — localStorage com TTL de 3 dias
+       CACHE: localStorage com TTL de 3 dias
        ============================================================ */
     const CACHE_PREFIX = "dreamer_movie_v2_";
     const CACHE_TTL = 3 * 24 * 60 * 60 * 1000; // 3 dias
@@ -1638,7 +1638,7 @@
     }
 
     /* ============================================================
-       TMDB — fetch com matching robusto por ano
+       TMDB: fetch com matching robusto por ano
        ============================================================ */
     const TMDB_API_KEY = "4e44d9029b1270a757cddc766a1bcb63";
     const TMDB_BASE = "https://api.themoviedb.org/3";
@@ -1824,7 +1824,7 @@
     }
 
     /* ============================================================
-       RENDER — cards
+       RENDER: cards
        ============================================================ */
     function cardHTML(movie) {
       const d = moviesWithDetails.get(movie.slug);
@@ -1953,7 +1953,7 @@
     }
 
     /* ============================================================
-       LAZY LOAD INFINITO (categoria=all) — IntersectionObserver
+       LAZY LOAD INFINITO (categoria=all): IntersectionObserver
        ============================================================ */
     function setupInfinite() {
       teardownInfinite();
@@ -2005,7 +2005,7 @@
     }
 
     /* ============================================================
-       UPDATE IN-PLACE — chega detalhes
+       UPDATE IN-PLACE: chega detalhes
        ============================================================ */
     function updateMovieCard(slug, d) {
       const card = document.querySelector(`.movie-card[data-slug="${CSS.escape(slug)}"]`);
@@ -2192,7 +2192,7 @@
     }
 
     /* ============================================================
-       MODAL — DETALHES
+       MODAL: DETALHES
        ============================================================ */
     function openMovieModal(slug) {
       const d = moviesWithDetails.get(slug) || allMovies.find(m => m.slug === slug);
@@ -2288,7 +2288,7 @@
     }
 
     /* ============================================================
-       MODAL — TRAILER
+       MODAL: TRAILER
        ============================================================ */
     function openTrailerModal(trailerUrl) {
       const modal = document.getElementById("trailerModal");

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jogos — Dreamer Collection</title>
+  <title>Jogos · Dreamer Collection</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <style>
     /* ============================================================
-         DESIGN TOKENS — Dreamer Collection
+         DESIGN TOKENS: Dreamer Collection
          ============================================================ */
     :root {
       --bg-0: #07070d;
@@ -392,7 +392,7 @@
       gap: 14px;
     }
 
-    /* Categoria — chips (Favoritos/Todos/Recentes) */
+    /* Categoria: chips (Favoritos/Todos/Recentes) */
     .chips {
       display: flex;
       gap: 8px;
@@ -494,7 +494,7 @@
       color: var(--text-1);
     }
 
-    /* Stats — linha discreta com 4 colunas */
+    /* Stats: linha discreta com 4 colunas */
     .stats {
       display: flex;
       gap: 32px;
@@ -735,7 +735,7 @@
     }
 
     /* ============================================================
-         PAGINAÇÃO — limpa, sem gradiente
+         PAGINAÇÃO: limpa, sem gradiente
          ============================================================ */
     .pagination {
       grid-column: 1 / -1;
@@ -802,7 +802,7 @@
     }
 
     /* ============================================================
-         MODAL — detalhes do jogo (full-bleed backdrop)
+         MODAL: detalhes do jogo (full-bleed backdrop)
          ============================================================ */
     .modal {
       display: none;
@@ -1602,7 +1602,7 @@
   </main>
 
   <!-- ============================================================
-         MODAL — detalhes do jogo
+         MODAL: detalhes do jogo
          ============================================================ -->
   <div class="modal" id="gameModal" onclick="modalClickOutside(event)">
     <div class="modal-content" id="modalContent">
@@ -1630,7 +1630,7 @@
   </div>
 
   <!-- ============================================================
-         MODAL — trailer (secundário)
+         MODAL: trailer (secundário)
          ============================================================ -->
   <div class="trailer-modal" id="trailerModal" onclick="trailerClickOutside(event)">
     <div class="trailer-content">
@@ -1672,7 +1672,7 @@
     }
 
     // ============================================================
-    // IGDB COVER — alta resolução com fallback automático
+    // IGDB COVER: alta resolução com fallback automático
     //
     // O IGDB fornece capas em t_cover_big (264x374px), que fica
     // abaixo do ideal em telas Retina. Aqui trocamos por
@@ -1704,7 +1704,7 @@
     }
 
     // ============================================================
-    // IGDB BACKGROUND — resolução original para monitores wide
+    // IGDB BACKGROUND: resolução original para monitores wide
     //
     // O JSON armazena backgrounds em t_1080p (1920x1080px).
     // Em monitores ultrawide ou com DPI alto, essa resolução
@@ -1785,7 +1785,7 @@
     }
 
     /* ============================================================
-       RENDER — cards individuais
+       RENDER: cards individuais
        ============================================================ */
     function cardHTML(game) {
       const details = gamesWithDetails.get(game.slug);
@@ -1910,7 +1910,7 @@
     }
 
     /* ============================================================
-       ATUALIZAÇÃO IN-PLACE — ao chegarem detalhes
+       ATUALIZAÇÃO IN-PLACE: ao chegarem detalhes
        ============================================================ */
     function updateGameCard(slug, details) {
       const card = document.querySelector(`.game-card[data-slug="${CSS.escape(slug)}"]`);
@@ -1948,7 +1948,7 @@
 
     /* ============================================================
        CARREGAMENTO PROGRESSIVO DE DETALHES
-       (preserva comportamento original — não bloqueia render inicial)
+       (não bloqueia o render inicial)
        ============================================================ */
     function loadGameDetailsBackground(games) {
       const BATCH_SIZE = 8;
@@ -1959,7 +1959,7 @@
         batch.forEach((game) => {
           if (!gamesWithDetails.has(game.slug)) {
             // No JSON original os detalhes já vêm dentro do próprio item.
-            // O Map serve como cache "pronto" — populamos com o próprio game.
+            // O Map serve como cache "pronto": populamos com o próprio game.
             gamesWithDetails.set(game.slug, game);
             updateGameCard(game.slug, game);
             debouncedResortAndRender();
@@ -2125,7 +2125,7 @@
     }
 
     /* ============================================================
-       MODAL — DETALHES
+       MODAL: DETALHES
        ============================================================ */
     function openGameModal(slug) {
       const details = gamesWithDetails.get(slug);
@@ -2234,7 +2234,7 @@
     }
 
     /* ============================================================
-       MODAL — TRAILER
+       MODAL: TRAILER
        ============================================================ */
     function openTrailerModal(trailerUrl, gameTitle) {
       const modal = document.getElementById("trailerModal");

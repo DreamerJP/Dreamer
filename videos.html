@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vídeos — Dreamer Collection</title>
+    <title>Vídeos · Dreamer Collection</title>
     <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +16,7 @@
          DESIGN TOKENS
          ============================================================ */
       :root {
-        /* Cores base — paleta dark profunda */
+        /* Cores base: paleta dark profunda */
         --bg-0: #07070d;          /* fundo absoluto */
         --bg-1: #0c0c14;          /* superfícies elevadas nv1 */
         --bg-2: #14141f;          /* superfícies elevadas nv2 */
@@ -32,7 +32,7 @@
         --text-2: #b9b9c6;        /* corpo */
         --text-3: #6f6f80;        /* meta/legenda */
 
-        /* Acento — usado com parcimônia */
+        /* Acento: usado com parcimônia */
         --accent: #b69cff;        /* roxo holográfico mais suave */
         --accent-soft: rgba(182, 156, 255, 0.14);
 
@@ -86,7 +86,7 @@
       }
 
       /* ============================================================
-         STARFIELD — discreto, só ambientação
+         STARFIELD: discreto, só ambientação
          ============================================================ */
       .starfield {
         position: fixed;
@@ -245,7 +245,7 @@
         filter: saturate(0.9);
       }
 
-      /* Overlay escuro com gradiente — substitui o overlay branco */
+      /* Overlay escuro com gradiente */
       .hero-overlay {
         position: absolute;
         inset: 0;
@@ -259,7 +259,7 @@
           );
       }
 
-      /* Anel holográfico fino no topo — único uso forte do gradiente holo */
+      /* Anel holográfico fino no topo: único uso forte do gradiente holo */
       .hero::before {
         content: "";
         position: absolute;
@@ -338,7 +338,7 @@
       }
 
       /* ============================================================
-         CONTROLES — filtros + estatísticas (linha única no hero)
+         CONTROLES: filtros + estatísticas (linha única no hero)
          ============================================================ */
       .controls {
         display: grid;
@@ -421,7 +421,7 @@
         border-color: var(--text-1);
       }
 
-      /* Stats — linha discreta, sem cards */
+      /* Stats: linha discreta, sem cards */
       .stats {
         display: flex;
         gap: 36px;
@@ -530,7 +530,7 @@
         opacity: 1;
       }
 
-      /* Play button — minimal, não gira */
+      /* Play button: minimal, não gira */
       .play {
         position: absolute;
         top: 50%;
@@ -871,7 +871,7 @@
 
     <script>
       /* ============================================================
-         DADOS — carregados de ./Assets/Videos/minha_lista_videos.json
+         DADOS: carregados de ./Assets/Videos/minha_lista_videos.json
          ============================================================ */
       let videosData = [];
       let currentFilter = "Todos";

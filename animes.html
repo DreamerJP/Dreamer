@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Animes — Dreamer Collection</title>
+  <title>Animes · Dreamer Collection</title>
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -515,7 +515,7 @@
       box-shadow: var(--shadow-2);
     }
 
-    /* Cover (carousel) — 16:9 */
+    /* Cover (carousel), 16:9 */
     .anime-cover {
       position: relative;
       aspect-ratio: 16 / 9;
@@ -669,7 +669,7 @@
     .anime-rating .icon { width: 13px; height: 13px; fill: var(--gold); }
     .anime-rating .icon.empty { display: none; }
 
-    /* 5★ — brilho especial */
+    /* 5★: brilho especial */
     .anime-rating.is-perfect {
       animation: perfect-glow 1.2s infinite alternate;
       color: var(--gold);
@@ -882,7 +882,7 @@
 
 <body>
   <!-- ============================================================
-       SVG DEFS — icons + holo gradient para 5★
+       SVG DEFS: icons + holo gradient para 5★
        ============================================================ -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <defs>
@@ -973,7 +973,7 @@
       <div class="hero-glow"></div>
 
       <h1>
-        Mundos em <span class="holo-text">animação</span><br />
+        <span class="holo-text">Animações</span><br />
         que valeram cada episódio.
       </h1>
       <p>Animes que vi, gostei e recomendo, separados por categoria, com sinopse e link direto pra assistir.</p>
@@ -1105,7 +1105,7 @@
     }
 
     /* ============================================================
-       CHIPS DE CATEGORIA — gerados a partir do JSON
+       CHIPS DE CATEGORIA: gerados a partir do JSON
        ============================================================ */
     function renderCategoryChips() {
       const counts = { todos: allAnimes.length };
@@ -1172,7 +1172,7 @@
     }
 
     /* ============================================================
-       RENDER — cards
+       RENDER: cards
        ============================================================ */
     function cardHTML(anime) {
       const id = String(anime.id);
@@ -1264,7 +1264,7 @@
     }
 
     /* ============================================================
-       CARROSSEL — lazy load + auto-slide via IntersectionObserver
+       CARROSSEL: lazy load + auto-slide via IntersectionObserver
        ============================================================ */
     function setupAllCarousels(list) {
       // Reset visibility observer
@@ -1295,7 +1295,7 @@
           anime
         });
 
-        // Render dots iniciais (mesmo antes do lazy load — quantidade já é conhecida)
+        // Render dots iniciais (mesmo antes do lazy load, quantidade já é conhecida)
         renderDots(id);
 
         // Touch swipe
@@ -1414,7 +1414,7 @@
     }
 
     /* ============================================================
-       TOUCH SWIPE — mobile
+       TOUCH SWIPE: mobile
        ============================================================ */
     function attachSwipe(card, id) {
       const cover = card.querySelector(".anime-cover");
@@ -1485,7 +1485,7 @@
     });
 
     /* ============================================================
-       ATALHOS — "/" foca busca
+       ATALHOS: "/" foca busca
        ============================================================ */
     document.addEventListener("keydown", e => {
       if (e.key === "/" && !e.ctrlKey && !e.altKey && !e.metaKey) {
