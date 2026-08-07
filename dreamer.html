@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreamer</title>
+  <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #04050a;
+      --ink: #d9d3c5;
+      --ink-dim: #8b8478;
+      --ink-faint: #4c483f;
+      --line: rgba(217, 211, 197, 0.10);
+      --line-strong: rgba(217, 211, 197, 0.22);
+
+      /* trocados pela fase ativa */
+      --accent: #c2703f;
+      --tint-a: rgba(150, 96, 52, 0.18);
+      --tint-b: rgba(64, 58, 74, 0.16);
+      --grain: 0.05;
+
+      --serif: "EB Garamond", Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    :root[data-phase="1"] {
+      --accent: #7ba07f;
+      --tint-a: rgba(58, 96, 74, 0.16);
+      --tint-b: rgba(30, 46, 52, 0.26);
+      --grain: 0.085;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    html.held {
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #06070c;
+    }
+
+    /* ============================================================
+       PALCO — camadas e projecao
+       ============================================================ */
+    /* O filtro fica aqui, e nao em .scene: filter achata o contexto 3D,
+       e a projecao C depende dele para dar profundidade aos planos. */
+    .stage {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      transition: filter 900ms var(--ease);
+      filter: sepia(0.3) saturate(0.75) contrast(1.05) brightness(0.98);
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+    }
+
+    :root[data-phase="1"] .stage {
+      filter: sepia(0.1) saturate(0.6) contrast(1.22) brightness(0.82) hue-rotate(35deg);
+    }
+
+    .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      will-change: transform, opacity;
+    }
+
+    /* A peca repetida e desenhada pelo proprio navegador, num elemento so.
+       Fatiar em filhos multiplica a area promovida a GPU e trava o quadro. */
+
+    .layer img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── neblina e vinheta ── */
+    .haze {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 22% 62%, var(--tint-a) 0%, transparent 62%),
+        radial-gradient(ellipse 60% 45% at 78% 40%, var(--tint-b) 0%, transparent 60%);
+      transition: background 900ms var(--ease);
+      animation: drift 34s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from {
+        transform: translate3d(-2%, 1%, 0) scale(1.04);
+      }
+
+      to {
+        transform: translate3d(3%, -2%, 0) scale(1.1);
+      }
+    }
+
+    .edge {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 24%, rgba(0, 0, 0, 0.55) 72%, rgba(0, 0, 0, 0.92) 100%);
+      animation: breathe 11s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        opacity: 0.86;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .edge::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: var(--grain);
+      mix-blend-mode: overlay;
+      transition: opacity 900ms var(--ease);
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3"/></filter><rect width="180" height="180" filter="url(%23n)"/></svg>');
+    }
+
+    /* ============================================================
+       OBJETOS ANCORADOS
+       ============================================================ */
+    .markers {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .marker {
+      position: absolute;
+      width: 128px;
+      height: 128px;
+      margin: -64px 0 0 -64px;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .marker.on {
+      pointer-events: auto;
+    }
+
+    /* Os valores abaixo sao escritos a cada quadro pelo laco; sem transicao,
+       para que o movimento venha da rolagem e nao de uma animacao concorrente. */
+    .marker .glyph {
+      position: relative;
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      transform: rotate(45deg) scale(calc(0.35 + var(--f, 0) * 0.9));
+      box-shadow: 0 0 calc(16px * var(--f, 0)) calc(3px * var(--f, 0)) var(--accent);
+      transition: background 900ms var(--ease);
+    }
+
+    .marker .glyph::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 96px;
+      margin: -48px 0 0 -0.5px;
+      transform: rotate(-45deg);
+      background: linear-gradient(180deg, transparent, var(--accent), transparent);
+      opacity: calc(var(--f, 0) * 0.5);
+    }
+
+    .marker .tag {
+      position: absolute;
+      top: calc(50% + 26px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--ink-dim);
+      opacity: calc(var(--f, 0) * var(--f, 0));
+      transition: color 260ms var(--ease);
+    }
+
+    .marker.seen .glyph {
+      background: var(--ink-faint);
+      box-shadow: none;
+    }
+
+    .marker.seen .tag {
+      color: var(--ink-faint);
+    }
+
+    .marker.on:hover .glyph {
+      transform: rotate(45deg) scale(calc((0.35 + var(--f, 0) * 0.9) * 1.8));
+    }
+
+    .marker.on:hover .tag {
+      color: var(--ink);
+    }
+
+    /* ============================================================
+       INTERFACE
+       ============================================================ */
+    .track {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 26px 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      pointer-events: none;
+    }
+
+    .top .title {
+      color: var(--ink-dim);
+    }
+
+    .top .right {
+      text-align: right;
+      pointer-events: auto;
+    }
+
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      transition: border-color 300ms var(--ease), color 300ms var(--ease);
+    }
+
+    .switch:hover {
+      border-color: var(--line-strong);
+      color: var(--ink);
+    }
+
+    .switch .bulb {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 9px var(--accent);
+      transition: background 900ms var(--ease), box-shadow 900ms var(--ease);
+    }
+
+    /* ── trilho de progresso ── */
+    .rail {
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      z-index: 20;
+      width: min(520px, 62vw);
+      height: 26px;
+      pointer-events: none;
+    }
+
+    .rail .bar {
+      position: absolute;
+      top: 13px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .rail .fill {
+      position: absolute;
+      top: 13px;
+      left: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent));
+      transition: background 900ms var(--ease);
+    }
+
+    .rail .pip {
+      position: absolute;
+      top: 10px;
+      width: 7px;
+      height: 7px;
+      margin-left: -3.5px;
+      border: 1px solid var(--ink-faint);
+      transform: rotate(45deg);
+      background: var(--bg);
+      transition: background 400ms var(--ease), border-color 400ms var(--ease);
+    }
+
+    .rail .pip.seen {
+      background: var(--ink-faint);
+      border-color: var(--ink-faint);
+    }
+
+    .rail .pip.near {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+
+    .rail .hint {
+      position: absolute;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      transition: opacity 700ms var(--ease);
+    }
+
+    /* ── seletor de projecao (provisorio) ── */
+    .modes {
+      position: fixed;
+      left: 34px;
+      bottom: 30px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .modes .lbl {
+      margin-right: 6px;
+      opacity: 0.7;
+    }
+
+    .modes button {
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--line);
+      color: var(--ink-faint);
+      transition: all 260ms var(--ease);
+    }
+
+    .modes button:hover {
+      border-color: var(--line-strong);
+      color: var(--ink-dim);
+    }
+
+    .modes button[aria-pressed="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       LEITOR
+       ============================================================ */
+    .reader {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: grid;
+      place-items: center;
+      padding: 7vh 24px;
+      background: rgba(4, 5, 10, 0.82);
+      backdrop-filter: blur(14px) saturate(0.7);
+      -webkit-backdrop-filter: blur(14px) saturate(0.7);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 520ms var(--ease), visibility 520ms;
+    }
+
+    .reader.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sheet {
+      position: relative;
+      width: min(640px, 100%);
+      max-height: 86vh;
+      overflow-y: auto;
+      padding: 8px 4px 40px;
+      overscroll-behavior: contain;
+      transform: translateY(18px);
+      transition: transform 620ms var(--ease);
+      scrollbar-width: thin;
+      scrollbar-color: var(--ink-faint) transparent;
+    }
+
+    .reader.open .sheet {
+      transform: none;
+    }
+
+    .sheet::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .sheet::-webkit-scrollbar-thumb {
+      background: var(--ink-faint);
+    }
+
+    .sheet .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 18px;
+    }
+
+    .sheet .meta .kind {
+      color: var(--accent);
+      transition: color 900ms var(--ease);
+    }
+
+    .sheet .meta .draft {
+      padding: 2px 7px;
+      border: 1px dashed var(--line-strong);
+      color: var(--ink-faint);
+      letter-spacing: 0.18em;
+    }
+
+    .sheet h2 {
+      font-weight: 500;
+      font-size: clamp(30px, 5.4vw, 46px);
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+      margin-bottom: 30px;
+    }
+
+    .sheet p {
+      font-size: clamp(17px, 2.1vw, 19px);
+      line-height: 1.78;
+      color: var(--ink);
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rise 900ms var(--ease) forwards;
+      animation-delay: calc(220ms + var(--i) * 340ms);
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .sheet .link {
+      position: relative;
+      color: var(--ink);
+      padding: 0 1px;
+      border-bottom: 1px solid var(--accent);
+      transition: color 260ms var(--ease), background 260ms var(--ease);
+    }
+
+    .sheet .link:hover {
+      background: var(--accent);
+      color: #06070c;
+    }
+
+    .sheet .again {
+      margin-top: 34px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .close {
+      position: fixed;
+      top: 24px;
+      right: 30px;
+      z-index: 41;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: var(--ink-faint);
+      font-size: 20px;
+      line-height: 1;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 420ms var(--ease), visibility 420ms, color 260ms var(--ease);
+    }
+
+    .reader.open~.close {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .close:hover {
+      color: var(--ink);
+    }
+
+    /* ============================================================
+       AVISOS / ABERTURA
+       ============================================================ */
+    .notice {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      text-align: center;
+      background: var(--bg);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 2;
+      letter-spacing: 0.1em;
+    }
+
+    .notice code {
+      color: var(--accent);
+    }
+
+    .veil {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      transition: opacity 1400ms var(--ease), visibility 1400ms;
+    }
+
+    .veil.gone {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .veil span {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      animation: fade 3.2s ease-in-out infinite;
+    }
+
+    @keyframes fade {
+
+      0%,
+      100% {
+        opacity: 0.25;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    /* ============================================================
+       TELAS ESTREITAS
+       ============================================================ */
+    @media (max-width: 760px) {
+      .top {
+        padding: 18px 18px;
+        font-size: 9px;
+      }
+
+      .modes {
+        left: 18px;
+        bottom: 22px;
+      }
+
+      .rail {
+        width: 46vw;
+        bottom: 22px;
+        left: auto;
+        right: 18px;
+        transform: none;
+      }
+
+      .rail .hint {
+        display: none;
+      }
+
+      .close {
+        top: 14px;
+        right: 14px;
+      }
+
+      .marker {
+        width: 96px;
+        height: 96px;
+        margin: -48px 0 0 -48px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .haze,
+      .edge,
+      .veil span {
+        animation: none;
+      }
+
+      .sheet p {
+        animation-delay: 0ms;
+        animation-duration: 1ms;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stage" aria-hidden="true">
+    <div class="scene" id="scene">
+      <div class="markers" id="markers"></div>
+    </div>
+  </div>
+
+  <div class="haze" aria-hidden="true"></div>
+  <div class="edge" aria-hidden="true"></div>
+
+  <div class="track" id="track"></div>
+
+  <header class="top">
+    <div class="title">Dreamer</div>
+    <div class="right">
+      <button class="switch" id="switch" type="button" aria-pressed="false">
+        <span class="bulb"></span><span id="switchLabel">alternar · E</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="modes" aria-label="Projecao">
+    <span class="lbl">Projecao</span>
+    <button type="button" data-mode="a" aria-pressed="true">A</button>
+    <button type="button" data-mode="b" aria-pressed="false">B</button>
+  </nav>
+
+  <div class="rail" id="rail">
+    <div class="bar"></div>
+    <div class="fill" id="fill"></div>
+    <div class="hint" id="hint">role para percorrer</div>
+  </div>
+
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <article class="sheet" id="sheet"></article>
+  </div>
+  <button class="close" id="close" type="button" aria-label="Fechar">&#215;</button>
+
+  <div class="veil" id="veil"><span>abrindo</span></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ══════════════════════════════════════════════════════════
+         CONFIGURACAO
+         ══════════════════════════════════════════════════════════ */
+      const SOURCE = "./Assets/Dreamer/fragmentos.json";
+      const ART = "./Assets/Dreamer/camadas/";
+      const STORE = "dreamer.progress";
+
+      // Cada projecao declara suas camadas e como o progresso vira transform.
+      // Trocar de projecao nao toca em mais nada da pagina.
+      const MODES = {
+        a: {
+          // Camadas repetiveis: a arte e uma peca que se repete no eixo, entao o
+          // percurso nao fica preso a largura do arquivo. Uma peca de 3:1 cobre
+          // qualquer distancia.
+          tile: "x",
+          depths: [0.25, 1],
+          files: ["a-fundo.png", "a-frente.png"],
+          reach: 5,                                    // telas de percurso
+          span: 6,                                     // alturas de tela de rolagem
+          hint: "role para percorrer"
+        },
+        b: {
+          tile: "y",
+          depths: [0.25, 0.6, 1],
+          bleeds: [1, 1.1, 1.3],                       // afasta as bordas da arte do enquadramento
+          files: ["b-fundo.png", "b-meio.png", "b-frente.png"],
+          reach: 5,
+          span: 6,
+          hint: "role para descer"
+        },
+      };
+
+      // Checagem propria, e nao 'MODES[m]': chaves herdadas de Object.prototype
+      // passariam pelo teste e derrubariam a montagem da cena.
+      const known = m => Object.prototype.hasOwnProperty.call(MODES, m);
+
+      /* ══════════════════════════════════════════════════════════
+         ESTADO
+         ══════════════════════════════════════════════════════════ */
+      const el = {
+        stage: document.querySelector(".stage"),
+        scene: document.getElementById("scene"),
+        markers: document.getElementById("markers"),
+        track: document.getElementById("track"),
+        rail: document.getElementById("rail"),
+        fill: document.getElementById("fill"),
+        hint: document.getElementById("hint"),
+        reader: document.getElementById("reader"),
+        sheet: document.getElementById("sheet"),
+        close: document.getElementById("close"),
+        veil: document.getElementById("veil"),
+        toggle: document.getElementById("switch")
+      };
+
+      const app = {
+        mode: "a",
+        phase: 0,
+        items: [],
+        byId: new Map(),
+        read: new Set(),
+        layers: [],
+        nodes: new Map(),   // id -> { marker, pip }
+        box: { w: 0, h: 0, art: 0, artH: 0, travel: 1, offX: 0, offY: 0 },
+        p: 0,
+        open: null,
+        ready: false
+      };
+
+      const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+      const smooth = t => t * t * (3 - 2 * t);
+      /* ══════════════════════════════════════════════════════════
+         PERSISTENCIA
+         ══════════════════════════════════════════════════════════ */
+      function restore() {
+        try {
+          const raw = localStorage.getItem(STORE);
+          if (raw) (JSON.parse(raw).read || []).forEach(id => app.read.add(id));
+        } catch (e) { /* armazenamento indisponivel: segue sem historico */ }
+      }
+
+      function persist() {
+        try {
+          localStorage.setItem(STORE, JSON.stringify({ read: [...app.read] }));
+        } catch (e) { /* idem */ }
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         DADOS
+         ══════════════════════════════════════════════════════════ */
+      async function load() {
+        const res = await fetch(SOURCE);
+        if (!res.ok) throw new Error(res.status + " " + res.statusText);
+        const data = await res.json();
+        app.items = (data.fragmentos || []).slice().sort((x, y) => x.at - y.at);
+        app.items.forEach(f => app.byId.set(f.id, f));
+      }
+
+      // Um fragmento existe se a fase confere e os pre-requisitos ja foram lidos.
+      function available(f) {
+        if (f.estado != null && f.estado !== app.phase) return false;
+        if (f.requer && !f.requer.every(id => app.read.has(id))) return false;
+        return true;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         MONTAGEM DA CENA
+         ══════════════════════════════════════════════════════════ */
+      function buildScene() {
+        const cfg = MODES[app.mode];
+        app.layers.forEach(l => l.node.remove());
+        app.layers = [];
+
+        cfg.files.forEach((file, i) => {
+          const l = { node: layerNode(file, cfg.tile), depth: cfg.depths[i], aspect: 0 };
+          app.layers.push(l);
+          // A peca so pode ser dimensionada depois que a proporcao real e conhecida.
+          probe(ART + file, r => { l.aspect = r; measure(); request(); });
+        });
+
+        app.layers.forEach(l => el.scene.insertBefore(l.node, el.markers));
+
+        el.track.style.height = (cfg.span * 100) + "vh";
+        el.hint.textContent = cfg.hint;
+      }
+
+      function probe(url, done) {
+        const im = new Image();
+        im.onload = () => { if (im.naturalHeight) done(im.naturalWidth / im.naturalHeight); };
+        im.src = url;
+      }
+
+      function layerNode(file, tile) {
+        const d = document.createElement("div");
+        d.className = "layer";
+        if (tile) {
+          // Uma imagem repetida pelo proprio navegador. Fatiar em elementos filhos
+          // multiplica a area promovida a GPU e derruba a taxa de quadros.
+          d.classList.add("tiled");
+          d.style.backgroundImage = "url('" + ART + file + "')";
+          d.style.backgroundRepeat = tile === "x" ? "repeat-x" : "repeat-y";
+          d.style.backgroundPosition = tile === "x" ? "0px center" : "center 0px";
+        } else {
+          const img = document.createElement("img");
+          img.src = ART + file;
+          img.alt = "";
+          img.decoding = "async";
+          d.appendChild(img);
+        }
+        return d;
+      }
+
+      function buildMarkers() {
+        el.markers.textContent = "";
+        el.rail.querySelectorAll(".pip").forEach(n => n.remove());
+        app.nodes.clear();
+
+        app.items.forEach(f => {
+          const m = document.createElement("button");
+          m.type = "button";
+          m.className = "marker";
+          m.dataset.id = f.id;
+          m.setAttribute("aria-label", f.titulo);
+          m.innerHTML = '<span class="glyph"></span><span class="tag"></span>';
+          m.querySelector(".tag").textContent = app.read.has(f.id) ? f.titulo : f.tipo;
+          m.addEventListener("click", () => show(f.id));
+          el.markers.appendChild(m);
+
+          const pip = document.createElement("i");
+          pip.className = "pip";
+          pip.style.left = (f.at * 100) + "%";
+          el.rail.appendChild(pip);
+
+          app.nodes.set(f.id, { marker: m, pip: pip });
+        });
+        refreshSeen();
+      }
+
+      function refreshSeen() {
+        app.nodes.forEach((n, id) => {
+          const f = app.byId.get(id);
+          const seen = app.read.has(id);
+          n.marker.classList.toggle("seen", seen);
+          n.pip.classList.toggle("seen", seen);
+          n.marker.querySelector(".tag").textContent = seen ? f.titulo : f.tipo;
+        });
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         MEDIDAS
+         ══════════════════════════════════════════════════════════ */
+      function measure() {
+        const w = window.innerWidth, h = window.innerHeight;
+        const cfg = MODES[app.mode];
+        const b = app.box;
+        const down = cfg.tile === "y";
+        b.w = w;
+        b.h = h;
+        // A peca se repete, entao o percurso nao depende do tamanho do arquivo.
+        b.travel = (down ? h : w) * cfg.reach;
+
+        app.layers.forEach((l, i) => {
+          // 'bleed' estica a peca para fora da tela no eixo transversal, empurrando
+          // as bordas da arte para longe do enquadramento.
+          const bleed = (cfg.bleeds && cfg.bleeds[i]) || 1;
+          const cross = (down ? w : h) * bleed;
+          l.step = l.aspect ? (down ? cross / l.aspect : cross * l.aspect) : (down ? h : w);
+
+          l.node.style.backgroundSize = down ? cross + "px auto" : "auto " + cross + "px";
+          l.node.style.width = (down ? w : w + l.step) + "px";
+          l.node.style.height = (down ? h + l.step : h) + "px";
+        });
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         PROJECAO — a unica coisa que muda entre A, B e C
+         ══════════════════════════════════════════════════════════ */
+      function project(p) {
+        const b = app.box, cfg = MODES[app.mode];
+        const down = cfg.tile === "y";
+        const shift = p * b.travel;
+        const size = down ? b.h : b.w;
+
+        app.layers.forEach(l => {
+          // Desliza no maximo uma peca e reinicia: a repeticao esconde o salto.
+          const d = l.step ? -((shift * l.depth) % l.step) : 0;
+          l.node.style.transform = down
+            ? "translate3d(0," + d + "px,0)"
+            : "translate3d(" + d + "px,0,0)";
+        });
+
+        el.markers.style.transform = down
+          ? "translate3d(0," + (-shift) + "px,0)"
+          : "translate3d(" + (-shift) + "px,0,0)";
+
+        app.items.forEach(f => {
+          // Ancorado de modo que o objeto fique centrado exatamente quando p == at.
+          const along = f.at * b.travel + size / 2;
+          const x = down ? f.alt * b.w : along;
+          const y = down ? along : f.alt * b.h;
+          place(app.nodes.get(f.id), f, x, y, focusFrom((f.at - p) * b.travel, size));
+        });
+      }
+
+      // Quanto o objeto esta perto do ponto de leitura: 0 = fora, 1 = no ponto.
+      function focusFrom(offset, size) {
+        return smooth(clamp(1 - Math.abs(offset) / (size * 0.3), 0, 1));
+      }
+
+      function place(n, f, x, y, focus, z) {
+        if (!n) return;
+        const live = available(f);
+        const on = live && focus > 0.12;
+        n.marker.style.transform = "translate3d(" + x + "px," + y + "px," + (z || 0) + "px)";
+        n.marker.style.opacity = live ? focus : 0;
+        n.marker.style.setProperty("--f", focus.toFixed(3));
+        n.marker.classList.toggle("on", on);
+        n.pip.classList.toggle("near", on);
+        n.pip.style.opacity = live ? 1 : 0.25;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         LACO
+         ══════════════════════════════════════════════════════════ */
+      let queued = false;
+      function tick() {
+        queued = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        app.p = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+        project(app.p);
+        el.fill.style.width = (app.p * 100) + "%";
+        el.hint.style.opacity = app.p > 0.02 ? 0 : 1;
+      }
+
+      function request() {
+        if (!queued && app.ready) { queued = true; requestAnimationFrame(tick); }
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         LEITOR
+         ══════════════════════════════════════════════════════════ */
+      // [[id|palavra]] vira um link para outro fragmento.
+      function withLinks(line) {
+        const out = document.createDocumentFragment();
+        const re = /\[\[([^\|\]]+)\|([^\]]+)\]\]/g;
+        let last = 0, m;
+        while ((m = re.exec(line))) {
+          if (m.index > last) out.append(line.slice(last, m.index));
+          const id = m[1], label = m[2];   // fixados por iteracao: o handler roda depois
+          const target = app.byId.get(id);
+          if (target && available(target)) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "link";
+            b.textContent = label;
+            b.addEventListener("click", () => travel(id));
+            out.append(b);
+          } else {
+            out.append(label);          // destino indisponivel: fica texto comum
+          }
+          last = re.lastIndex;
+        }
+        if (last < line.length) out.append(line.slice(last));
+        return out;
+      }
+
+      function show(id) {
+        const f = app.byId.get(id);
+        if (!f || !available(f)) return;
+
+        const again = app.read.has(id) && f.revisita && f.revisita.length;
+        const lines = again ? f.revisita : f.texto;
+
+        el.sheet.textContent = "";
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.innerHTML = '<span class="kind"></span><span class="when"></span>';
+        meta.querySelector(".kind").textContent = f.tipo || "fragmento";
+        meta.querySelector(".when").textContent = f.data || "";
+        if (f.rascunho) {
+          const d = document.createElement("span");
+          d.className = "draft";
+          d.textContent = "rascunho";
+          meta.appendChild(d);
+        }
+        el.sheet.appendChild(meta);
+
+        const h = document.createElement("h2");
+        h.id = "sheetTitle";
+        h.textContent = f.titulo;
+        el.sheet.appendChild(h);
+
+        lines.forEach((line, i) => {
+          const p = document.createElement("p");
+          p.style.setProperty("--i", i);
+          p.appendChild(withLinks(line));
+          el.sheet.appendChild(p);
+        });
+
+        if (again) {
+          const note = document.createElement("div");
+          note.className = "again";
+          note.textContent = "segunda leitura";
+          el.sheet.appendChild(note);
+        }
+
+        el.sheet.scrollTop = 0;
+        el.reader.classList.add("open");
+        app.open = id;
+        document.documentElement.classList.add("held");
+        el.close.focus();
+
+        if (!app.read.has(id)) {
+          app.read.add(id);
+          persist();
+          refreshSeen();
+        }
+      }
+
+      function hide() {
+        el.reader.classList.remove("open");
+        app.open = null;
+        document.documentElement.classList.remove("held");
+        request();
+      }
+
+      // Seguir um link move a cena ate o destino: o texto e o espaco andam juntos.
+      function travel(id) {
+        const f = app.byId.get(id);
+        if (!f) return;
+        hide();
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        // O leitor trava a rolagem, entao so pode abrir quando o percurso terminar.
+        glide(clamp(targetScroll(f) * max, 0, max), () => show(id));
+      }
+
+      // Deslocamento proprio: o fim e conhecido, sem depender de evento do navegador.
+      function glide(to, done) {
+        const from = window.scrollY;
+        const dist = to - from;
+        if (Math.abs(dist) < 4) { done(); return; }
+        const span = clamp(420 + Math.abs(dist) * 0.4, 420, 1600);
+        const t0 = performance.now();
+        (function step(now) {
+          const k = clamp((now - t0) / span, 0, 1);
+          const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          window.scrollTo(0, from + dist * e);
+          if (k < 1) requestAnimationFrame(step); else done();
+        })(t0);
+      }
+
+      // Todo objeto esta no ponto de leitura quando o progresso iguala seu 'at'.
+      function targetScroll(f) {
+        return clamp(f.at, 0, 1);
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         FASE E PROJECAO
+         ══════════════════════════════════════════════════════════ */
+      function setPhase(n) {
+        app.phase = n;
+        document.documentElement.dataset.phase = n;
+        el.toggle.setAttribute("aria-pressed", n === 1 ? "true" : "false");
+        // A cena mudou por baixo: o leitor sai de cena junto, em vez de ficar defasado.
+        if (app.open) hide();
+        request();
+      }
+
+      function setMode(m) {
+        if (!known(m) || m === app.mode) return;
+        app.mode = m;
+        document.querySelectorAll(".modes button").forEach(b => {
+          b.setAttribute("aria-pressed", b.dataset.mode === m ? "true" : "false");
+        });
+        buildScene();
+        measure();
+        window.scrollTo(0, 0);
+        request();
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         INICIO
+         ══════════════════════════════════════════════════════════ */
+      function bind() {
+        window.addEventListener("scroll", request, { passive: true });
+        window.addEventListener("resize", () => { measure(); request(); });
+
+        el.close.addEventListener("click", hide);
+        el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
+        el.toggle.addEventListener("click", () => setPhase(app.phase === 0 ? 1 : 0));
+
+        document.querySelectorAll(".modes button").forEach(b => {
+          b.addEventListener("click", () => setMode(b.dataset.mode));
+        });
+
+        document.addEventListener("keydown", e => {
+          if (e.key === "Escape" && app.open) hide();
+          if ((e.key === "e" || e.key === "E") && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            setPhase(app.phase === 0 ? 1 : 0);
+          }
+        });
+      }
+
+      function fail(err) {
+        const n = document.createElement("div");
+        n.className = "notice";
+        n.innerHTML =
+          "<div>nao foi possivel ler os fragmentos<br><br>" +
+          "abra a pagina por um servidor, nao por duplo clique<br>" +
+          "<code>npx serve .</code><br><br>" +
+          "<span style='opacity:.5'>" + String(err && err.message || err) + "</span></div>";
+        document.body.appendChild(n);
+      }
+
+      (async function start() {
+        restore();
+        const params = new URLSearchParams(location.search);
+        const m = (params.get("m") || "a").toLowerCase();
+        if (known(m)) app.mode = m;
+
+        try {
+          await load();
+        } catch (err) {
+          el.veil.classList.add("gone");
+          fail(err);
+          return;
+        }
+
+        setMode0();
+        bind();
+        app.ready = true;
+        tick();
+        requestAnimationFrame(() => el.veil.classList.add("gone"));
+      })();
+
+      // Monta a projecao inicial sem passar por setMode (que rejeita o modo atual).
+      function setMode0() {
+        document.querySelectorAll(".modes button").forEach(b => {
+          b.setAttribute("aria-pressed", b.dataset.mode === app.mode ? "true" : "false");
+        });
+        buildScene();
+        buildMarkers();
+        measure();
+      }
+    })();
+  </script>
+</body>
+
+</html>
