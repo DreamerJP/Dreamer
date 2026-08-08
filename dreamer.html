@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap"
     rel="stylesheet" />
   <style>
     /* ============================================================
@@ -31,6 +31,8 @@
 
       --serif: "EB Garamond", Georgia, serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
+      /* Face propria da legenda: precisa soar diferente do texto dos fragmentos. */
+      --canto: "Cormorant Garamond", "EB Garamond", Georgia, serif;
 
       --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
@@ -79,10 +81,9 @@
     }
 
     /* ============================================================
-       PALCO — camadas e projecao
+       PALCO — camadas
        ============================================================ */
-    /* O filtro fica aqui, e nao em .scene: filter achata o contexto 3D,
-       e a projecao C depende dele para dar profundidade aos planos. */
+    /* O filtro cobre cena e camadas de uma vez, sem repintar cada uma. */
     .stage {
       position: fixed;
       inset: 0;
@@ -291,7 +292,9 @@
     }
 
     .top .right {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       pointer-events: auto;
     }
 
@@ -313,6 +316,46 @@
     .switch:hover {
       border-color: var(--line-strong);
       color: var(--ink);
+    }
+
+    /* As barras so se mexem quando ha som saindo. */
+    .switch .wave {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 9px;
+    }
+
+    .switch .wave i {
+      width: 2px;
+      height: 3px;
+      background: var(--ink-faint);
+      transition: background 300ms var(--ease);
+    }
+
+    #sound[aria-pressed="true"] .wave i {
+      background: var(--accent);
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+
+    #sound[aria-pressed="true"] .wave i:nth-child(2) {
+      animation-delay: 0.22s;
+    }
+
+    #sound[aria-pressed="true"] .wave i:nth-child(3) {
+      animation-delay: 0.44s;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        height: 3px;
+      }
+
+      50% {
+        height: 9px;
+      }
     }
 
     .switch .bulb {
@@ -390,43 +433,94 @@
       transition: opacity 700ms var(--ease);
     }
 
-    /* ── seletor de projecao (provisorio) ── */
-    .modes {
+    /* ============================================================
+       LEGENDA
+       ============================================================ */
+    /* Anda pelos cantos e nunca ocupa o centro, que e onde os fragmentos vivem.
+       A estrofe inteira ocupa um canto; os versos acendem um a um dentro dela. */
+    .lyric {
       position: fixed;
-      left: 34px;
-      bottom: 30px;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-
-    .modes .lbl {
-      margin-right: 6px;
-      opacity: 0.7;
-    }
-
-    .modes button {
-      width: 26px;
-      height: 26px;
-      border: 1px solid var(--line);
-      color: var(--ink-faint);
-      transition: all 260ms var(--ease);
-    }
-
-    .modes button:hover {
-      border-color: var(--line-strong);
+      z-index: 10;
+      max-width: min(30ch, 42vw);
+      pointer-events: none;
+      font-family: var(--canto);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(22px, 2.6vw, 34px);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
       color: var(--ink-dim);
+      text-shadow: 0 0 30px rgba(4, 5, 10, 0.95), 0 2px 4px rgba(4, 5, 10, 0.85);
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(10px);
+      transition: opacity 800ms var(--ease), filter 800ms var(--ease), transform 800ms var(--ease);
     }
 
-    .modes button[aria-pressed="true"] {
-      border-color: var(--accent);
+    .lyric.on {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    .lyric p {
+      margin-bottom: 0.2em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 520ms var(--ease), transform 520ms var(--ease), color 520ms var(--ease);
+    }
+
+    /* O verso que soa agora tem corpo; os ja ditos ficam como eco. */
+    .lyric p.viva {
+      opacity: 0.92;
+      transform: none;
+      color: var(--ink);
+    }
+
+    .lyric p.passou {
+      opacity: 0.34;
+      transform: none;
+    }
+
+    /* Tres vozes que nunca se encontram: reta, espacada, sem calor.
+       Sem italico e com entrelinha alta, cada verso soa como declaracao isolada. */
+    .lyric[data-tema="vozes"] {
+      font-style: normal;
+      font-size: clamp(21px, 2.4vw, 31px);
+      line-height: 1.85;
+      letter-spacing: 0.09em;
+      max-width: min(26ch, 38vw);
+    }
+
+    .lyric[data-tema="vozes"] p {
+      margin-bottom: 0;
+    }
+
+    /* Uma carta: inclinada, corrida, mais proxima do rosto. */
+    .lyric[data-tema="carta"] {
+      font-size: clamp(24px, 2.9vw, 38px);
+      line-height: 1.3;
+      max-width: min(24ch, 44vw);
+    }
+
+    .lyric[data-tema="carta"] p:first-child {
       color: var(--accent);
+      transition: color 900ms var(--ease);
+    }
+
+    .lyric.oculta {
+      opacity: 0 !important;
+      filter: blur(4px) !important;
+    }
+
+    @media (max-width: 760px) {
+
+      .lyric,
+      .lyric[data-tema="vozes"],
+      .lyric[data-tema="carta"] {
+        max-width: 74vw;
+        font-size: 21px;
+      }
     }
 
     /* ============================================================
@@ -647,17 +741,9 @@
         font-size: 9px;
       }
 
-      .modes {
-        left: 18px;
-        bottom: 22px;
-      }
-
       .rail {
-        width: 46vw;
+        width: 62vw;
         bottom: 22px;
-        left: auto;
-        right: 18px;
-        transform: none;
       }
 
       .rail .hint {
@@ -708,17 +794,14 @@
   <header class="top">
     <div class="title">Dreamer</div>
     <div class="right">
+      <button class="switch" id="sound" type="button" aria-pressed="false" aria-label="Som ambiente" hidden>
+        <span class="wave"><i></i><i></i><i></i></span><span>som</span>
+      </button>
       <button class="switch" id="switch" type="button" aria-pressed="false">
         <span class="bulb"></span><span id="switchLabel">alternar · E</span>
       </button>
     </div>
   </header>
-
-  <nav class="modes" aria-label="Projecao">
-    <span class="lbl">Projecao</span>
-    <button type="button" data-mode="a" aria-pressed="true">A</button>
-    <button type="button" data-mode="b" aria-pressed="false">B</button>
-  </nav>
 
   <div class="rail" id="rail">
     <div class="bar"></div>
@@ -730,6 +813,8 @@
     <article class="sheet" id="sheet"></article>
   </div>
   <button class="close" id="close" type="button" aria-label="Fechar">&#215;</button>
+
+  <div class="lyric" id="lyric" aria-hidden="true"></div>
 
   <div class="veil" id="veil"><span>abrindo</span></div>
 
@@ -744,34 +829,44 @@
       const ART = "./Assets/Dreamer/camadas/";
       const STORE = "dreamer.progress";
 
-      // Cada projecao declara suas camadas e como o progresso vira transform.
-      // Trocar de projecao nao toca em mais nada da pagina.
-      const MODES = {
-        a: {
-          // Camadas repetiveis: a arte e uma peca que se repete no eixo, entao o
-          // percurso nao fica preso a largura do arquivo. Uma peca de 3:1 cobre
-          // qualquer distancia.
-          tile: "x",
-          depths: [0.25, 1],
-          files: ["a-fundo.png", "a-frente.png"],
-          reach: 5,                                    // telas de percurso
-          span: 6,                                     // alturas de tela de rolagem
-          hint: "role para percorrer"
-        },
-        b: {
-          tile: "y",
-          depths: [0.25, 0.6, 1],
-          bleeds: [1, 1.1, 1.3],                       // afasta as bordas da arte do enquadramento
-          files: ["b-fundo.png", "b-meio.png", "b-frente.png"],
-          reach: 5,
-          span: 6,
-          hint: "role para descer"
-        },
+      // Som ambiente. As faixas tocam em sequencia e voltam ao inicio.
+      // Para trocar o repertorio, mexa so nesta lista.
+      const AUDIO = {
+        dir: "./Assets/Dreamer/audio/",
+        volume: 0.7,                                   // teto de volume, 0 a 1
+        fade: 1600,                                    // entrada e saida do som, em ms
+        // 'letra' e opcional: sem ele a faixa toca sem legenda.
+        faixas: [
+          {
+            arquivo: "Rain of Brass Petals - Three Vocals Edit.mp3",
+            letra: "Rain of Brass Petals - Three Vocals Edit.json"
+          },
+          {
+            arquivo: "Letter - From the Lost Days.mp3",
+            letra: "Letter - From the Lost Days.json"
+          }
+        ]
       };
 
-      // Checagem propria, e nao 'MODES[m]': chaves herdadas de Object.prototype
-      // passariam pelo teste e derrubariam a montagem da cena.
-      const known = m => Object.prototype.hasOwnProperty.call(MODES, m);
+      // Cantos por onde a legenda passa, em ordem. Cada linha cai no seguinte.
+      const CANTOS = [
+        { top: "16vh", left: "7vw", align: "left" },
+        { bottom: "22vh", right: "7vw", align: "right" },
+        { top: "22vh", right: "9vw", align: "right" },
+        { bottom: "28vh", left: "9vw", align: "left" },
+        { top: "30vh", left: "12vw", align: "left" },
+        { bottom: "18vh", right: "12vw", align: "right" }
+      ];
+
+      // A cena e uma peca larga que se repete: o percurso nao depende do
+      // tamanho do arquivo, e trocar a arte nao mexe em mais nada.
+      const CENA = {
+        depths: [0.25, 1],                             // velocidade de cada camada
+        files: ["a-fundo.png", "a-frente.png"],
+        reach: 5,                                      // larguras de tela de percurso
+        span: 6,                                       // alturas de tela de rolagem
+        hint: "role para percorrer"
+      };
 
       /* ══════════════════════════════════════════════════════════
          ESTADO
@@ -788,12 +883,14 @@
         sheet: document.getElementById("sheet"),
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
-        toggle: document.getElementById("switch")
+        toggle: document.getElementById("switch"),
+        som: document.getElementById("sound"),
+        lyric: document.getElementById("lyric")
       };
 
       const app = {
-        mode: "a",
         phase: 0,
+        som: false,
         items: [],
         byId: new Map(),
         read: new Set(),
@@ -813,15 +910,176 @@
       function restore() {
         try {
           const raw = localStorage.getItem(STORE);
-          if (raw) (JSON.parse(raw).read || []).forEach(id => app.read.add(id));
+          if (!raw) return;
+          const d = JSON.parse(raw);
+          (d.read || []).forEach(id => app.read.add(id));
+          app.som = !!d.som;
         } catch (e) { /* armazenamento indisponivel: segue sem historico */ }
       }
 
       function persist() {
         try {
-          localStorage.setItem(STORE, JSON.stringify({ read: [...app.read] }));
+          localStorage.setItem(STORE, JSON.stringify({ read: [...app.read], som: app.som }));
         } catch (e) { /* idem */ }
       }
+
+      /* ══════════════════════════════════════════════════════════
+         SOM
+         ══════════════════════════════════════════════════════════ */
+      const som = (function () {
+        let faixa = null, indice = 0, tocando = false, timer = 0;
+        let blocos = [], blocoAtivo = -1, versoAtivo = -1, relogio = 0, canto = 0, tema = "";
+
+        // A legenda acompanha o tempo da faixa. Sem arquivo de letra, fica quieta.
+        async function carregarLetra(nome) {
+          blocos = []; blocoAtivo = -1; versoAtivo = -1; tema = "";
+          apagarLegenda();
+          if (!nome) return;
+          try {
+            const res = await fetch(AUDIO.dir + encodeURIComponent(nome));
+            if (!res.ok) return;
+            const d = await res.json();
+            tema = d.tema || "";
+            blocos = agrupar((d.linhas || []).slice().sort((x, y) => x.t - y.t));
+          } catch (e) { /* sem letra: a faixa toca do mesmo jeito */ }
+        }
+
+        // Versos separados por um respiro curto sao a mesma estrofe: ficam juntos
+        // no mesmo canto e se acumulam. Saltar a cada linha despedaca a leitura.
+        function agrupar(linhas) {
+          const RESPIRO = 3;
+          const out = [];
+          linhas.forEach(l => {
+            const b = out[out.length - 1];
+            const anterior = b ? b.linhas[b.linhas.length - 1] : null;
+            const fecha = anterior ? (anterior.fim != null ? anterior.fim : anterior.t) : -99;
+            if (!b || l.t - fecha > RESPIRO) out.push({ linhas: [l] });
+            else b.linhas.push(l);
+          });
+          out.forEach(b => {
+            b.t = b.linhas[0].t;
+            const u = b.linhas[b.linhas.length - 1];
+            b.fim = u.fim != null ? u.fim : u.t + 6;
+          });
+          return out;
+        }
+
+        function acompanhar() {
+          if (!faixa || !blocos.length) return;
+          const t = faixa.currentTime;
+
+          let bi = -1;
+          for (let k = 0; k < blocos.length; k++) {
+            if (t >= blocos[k].t - 0.3 && t <= blocos[k].fim + 1.2) { bi = k; break; }
+          }
+          if (bi !== blocoAtivo) {
+            blocoAtivo = bi;
+            versoAtivo = -1;
+            bi >= 0 ? abrirBloco(blocos[bi]) : apagarLegenda();
+          }
+          if (bi < 0) return;
+
+          const linhas = blocos[bi].linhas;
+          let vi = -1;
+          for (let k = 0; k < linhas.length; k++) if (linhas[k].t <= t) vi = k; else break;
+          if (vi === versoAtivo) return;
+          versoAtivo = vi;
+          [...el.lyric.children].forEach((p, k) => {
+            p.classList.toggle("viva", k === vi);
+            p.classList.toggle("passou", k < vi);
+          });
+        }
+
+        function abrirBloco(bloco) {
+          const c = CANTOS[bloco.linhas[0].canto != null
+            ? bloco.linhas[0].canto % CANTOS.length
+            : canto++ % CANTOS.length];
+          const n = el.lyric;
+          n.classList.remove("on");
+          n.style.cssText = "";
+          Object.keys(c).forEach(k => { if (k !== "align") n.style[k] = c[k]; });
+          n.style.textAlign = c.align;
+          n.dataset.tema = tema;
+          n.textContent = "";
+          bloco.linhas.forEach(l => {
+            const p = document.createElement("p");
+            p.textContent = l.texto;
+            n.appendChild(p);
+          });
+          requestAnimationFrame(() => n.classList.add("on"));
+        }
+
+        function apagarLegenda() {
+          el.lyric.classList.remove("on");
+        }
+
+        function tocar() {
+          if (!faixa) {
+            faixa = new Audio();
+            faixa.preload = "auto";
+            faixa.volume = 0;
+            faixa.addEventListener("ended", proxima);
+            faixa.addEventListener("error", desligar);
+          }
+          const atual = AUDIO.faixas[indice];
+          faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
+          carregarLetra(atual.letra);
+          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(desligar);
+        }
+
+        function proxima() {
+          indice = (indice + 1) % AUDIO.faixas.length;
+          tocar();
+        }
+
+        // Rampa de volume: entrar ou sair de uma vez incomoda mais que o silencio.
+        function esmaecer(alvo, aoFim) {
+          clearInterval(timer);
+          const inicio = faixa ? faixa.volume : 0;
+          const t0 = performance.now();
+          timer = setInterval(() => {
+            const k = clamp((performance.now() - t0) / AUDIO.fade, 0, 1);
+            if (faixa) faixa.volume = clamp(inicio + (alvo - inicio) * k, 0, 1);
+            if (k >= 1) { clearInterval(timer); if (aoFim) aoFim(); }
+          }, 40);
+        }
+
+        function ligar() {
+          if (tocando || !AUDIO.faixas.length) return;
+          tocando = true;
+          el.som.setAttribute("aria-pressed", "true");
+          tocar();
+          clearInterval(relogio);
+          relogio = setInterval(acompanhar, 200);
+        }
+
+        function desligar() {
+          if (!tocando) return;
+          tocando = false;
+          el.som.setAttribute("aria-pressed", "false");
+          clearInterval(relogio);
+          linhaAtual = -1;
+          apagarLegenda();
+          esmaecer(0, () => { if (faixa) faixa.pause(); });
+        }
+
+        return {
+          alternar() {
+            tocando ? desligar() : ligar();
+            app.som = tocando;
+            persist();
+          },
+          // O navegador so libera audio depois de um gesto; se a preferencia
+          // estava ligada, o som entra no primeiro toque do visitante.
+          retomar() {
+            if (!app.som || tocando) return;
+            ligar();
+          },
+          disponivel: () => AUDIO.faixas.length > 0,
+          // O leitor pede silencio visual: a legenda sai de cena enquanto ele esta aberto.
+          recolher(v) { el.lyric.classList.toggle("oculta", v); }
+        };
+      })();
 
       /* ══════════════════════════════════════════════════════════
          DADOS
@@ -845,12 +1103,11 @@
          MONTAGEM DA CENA
          ══════════════════════════════════════════════════════════ */
       function buildScene() {
-        const cfg = MODES[app.mode];
         app.layers.forEach(l => l.node.remove());
         app.layers = [];
 
-        cfg.files.forEach((file, i) => {
-          const l = { node: layerNode(file, cfg.tile), depth: cfg.depths[i], aspect: 0 };
+        CENA.files.forEach((file, i) => {
+          const l = { node: layerNode(file), depth: CENA.depths[i], aspect: 0 };
           app.layers.push(l);
           // A peca so pode ser dimensionada depois que a proporcao real e conhecida.
           probe(ART + file, r => { l.aspect = r; measure(); request(); });
@@ -858,8 +1115,8 @@
 
         app.layers.forEach(l => el.scene.insertBefore(l.node, el.markers));
 
-        el.track.style.height = (cfg.span * 100) + "vh";
-        el.hint.textContent = cfg.hint;
+        el.track.style.height = (CENA.span * 100) + "vh";
+        el.hint.textContent = CENA.hint;
       }
 
       function probe(url, done) {
@@ -868,23 +1125,12 @@
         im.src = url;
       }
 
-      function layerNode(file, tile) {
+      function layerNode(file) {
         const d = document.createElement("div");
         d.className = "layer";
-        if (tile) {
-          // Uma imagem repetida pelo proprio navegador. Fatiar em elementos filhos
-          // multiplica a area promovida a GPU e derruba a taxa de quadros.
-          d.classList.add("tiled");
-          d.style.backgroundImage = "url('" + ART + file + "')";
-          d.style.backgroundRepeat = tile === "x" ? "repeat-x" : "repeat-y";
-          d.style.backgroundPosition = tile === "x" ? "0px center" : "center 0px";
-        } else {
-          const img = document.createElement("img");
-          img.src = ART + file;
-          img.alt = "";
-          img.decoding = "async";
-          d.appendChild(img);
-        }
+        d.style.backgroundImage = "url('" + ART + file + "')";
+        d.style.backgroundRepeat = "repeat-x";
+        d.style.backgroundPosition = "0px center";
         return d;
       }
 
@@ -900,7 +1146,6 @@
           m.dataset.id = f.id;
           m.setAttribute("aria-label", f.titulo);
           m.innerHTML = '<span class="glyph"></span><span class="tag"></span>';
-          m.querySelector(".tag").textContent = app.read.has(f.id) ? f.titulo : f.tipo;
           m.addEventListener("click", () => show(f.id));
           el.markers.appendChild(m);
 
@@ -914,6 +1159,7 @@
         refreshSeen();
       }
 
+      // Um fragmento ja lido perde o brilho e passa a exibir o titulo no lugar do tipo.
       function refreshSeen() {
         app.nodes.forEach((n, id) => {
           const f = app.byId.get(id);
@@ -929,24 +1175,17 @@
          ══════════════════════════════════════════════════════════ */
       function measure() {
         const w = window.innerWidth, h = window.innerHeight;
-        const cfg = MODES[app.mode];
         const b = app.box;
-        const down = cfg.tile === "y";
         b.w = w;
         b.h = h;
-        // A peca se repete, entao o percurso nao depende do tamanho do arquivo.
-        b.travel = (down ? h : w) * cfg.reach;
+        b.travel = w * CENA.reach;
 
-        app.layers.forEach((l, i) => {
-          // 'bleed' estica a peca para fora da tela no eixo transversal, empurrando
-          // as bordas da arte para longe do enquadramento.
-          const bleed = (cfg.bleeds && cfg.bleeds[i]) || 1;
-          const cross = (down ? w : h) * bleed;
-          l.step = l.aspect ? (down ? cross / l.aspect : cross * l.aspect) : (down ? h : w);
-
-          l.node.style.backgroundSize = down ? cross + "px auto" : "auto " + cross + "px";
-          l.node.style.width = (down ? w : w + l.step) + "px";
-          l.node.style.height = (down ? h + l.step : h) + "px";
+        app.layers.forEach(l => {
+          // A peca e alta como a tela; a largura vem da proporcao real do arquivo.
+          l.step = l.aspect ? h * l.aspect : w;
+          l.node.style.backgroundSize = "auto " + h + "px";
+          l.node.style.width = (w + l.step) + "px";
+          l.node.style.height = h + "px";
         });
       }
 
@@ -954,29 +1193,21 @@
          PROJECAO — a unica coisa que muda entre A, B e C
          ══════════════════════════════════════════════════════════ */
       function project(p) {
-        const b = app.box, cfg = MODES[app.mode];
-        const down = cfg.tile === "y";
+        const b = app.box;
         const shift = p * b.travel;
-        const size = down ? b.h : b.w;
 
         app.layers.forEach(l => {
           // Desliza no maximo uma peca e reinicia: a repeticao esconde o salto.
           const d = l.step ? -((shift * l.depth) % l.step) : 0;
-          l.node.style.transform = down
-            ? "translate3d(0," + d + "px,0)"
-            : "translate3d(" + d + "px,0,0)";
+          l.node.style.transform = "translate3d(" + d + "px,0,0)";
         });
 
-        el.markers.style.transform = down
-          ? "translate3d(0," + (-shift) + "px,0)"
-          : "translate3d(" + (-shift) + "px,0,0)";
+        el.markers.style.transform = "translate3d(" + (-shift) + "px,0,0)";
 
         app.items.forEach(f => {
           // Ancorado de modo que o objeto fique centrado exatamente quando p == at.
-          const along = f.at * b.travel + size / 2;
-          const x = down ? f.alt * b.w : along;
-          const y = down ? along : f.alt * b.h;
-          place(app.nodes.get(f.id), f, x, y, focusFrom((f.at - p) * b.travel, size));
+          const x = f.at * b.travel + b.w / 2;
+          place(app.nodes.get(f.id), f, x, f.alt * b.h, focusFrom((f.at - p) * b.travel, b.w));
         });
       }
 
@@ -1086,6 +1317,7 @@
         el.sheet.scrollTop = 0;
         el.reader.classList.add("open");
         app.open = id;
+        som.recolher(true);
         document.documentElement.classList.add("held");
         el.close.focus();
 
@@ -1099,6 +1331,7 @@
       function hide() {
         el.reader.classList.remove("open");
         app.open = null;
+        som.recolher(false);
         document.documentElement.classList.remove("held");
         request();
       }
@@ -1145,18 +1378,6 @@
         request();
       }
 
-      function setMode(m) {
-        if (!known(m) || m === app.mode) return;
-        app.mode = m;
-        document.querySelectorAll(".modes button").forEach(b => {
-          b.setAttribute("aria-pressed", b.dataset.mode === m ? "true" : "false");
-        });
-        buildScene();
-        measure();
-        window.scrollTo(0, 0);
-        request();
-      }
-
       /* ══════════════════════════════════════════════════════════
          INICIO
          ══════════════════════════════════════════════════════════ */
@@ -1167,10 +1388,12 @@
         el.close.addEventListener("click", hide);
         el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
         el.toggle.addEventListener("click", () => setPhase(app.phase === 0 ? 1 : 0));
+        el.som.addEventListener("click", () => som.alternar());
 
-        document.querySelectorAll(".modes button").forEach(b => {
-          b.addEventListener("click", () => setMode(b.dataset.mode));
-        });
+        // Primeiro gesto do visitante: e a unica brecha para retomar o som.
+        ["pointerdown", "keydown", "wheel", "touchstart"].forEach(ev =>
+          window.addEventListener(ev, () => som.retomar(), { once: true, passive: true }));
+
 
         document.addEventListener("keydown", e => {
           if (e.key === "Escape" && app.open) hide();
@@ -1193,9 +1416,6 @@
 
       (async function start() {
         restore();
-        const params = new URLSearchParams(location.search);
-        const m = (params.get("m") || "a").toLowerCase();
-        if (known(m)) app.mode = m;
 
         try {
           await load();
@@ -1205,22 +1425,16 @@
           return;
         }
 
-        setMode0();
+        buildScene();
+        buildMarkers();
+        measure();
         bind();
+        if (som.disponivel()) el.som.hidden = false;
         app.ready = true;
         tick();
         requestAnimationFrame(() => el.veil.classList.add("gone"));
       })();
 
-      // Monta a projecao inicial sem passar por setMode (que rejeita o modo atual).
-      function setMode0() {
-        document.querySelectorAll(".modes button").forEach(b => {
-          b.setAttribute("aria-pressed", b.dataset.mode === app.mode ? "true" : "false");
-        });
-        buildScene();
-        buildMarkers();
-        measure();
-      }
     })();
   </script>
 </body>

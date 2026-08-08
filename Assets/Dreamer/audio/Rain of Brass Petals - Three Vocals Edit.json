@@ -1,0 +1,120 @@
+{
+  "tema": "vozes",
+  "linhas": [
+    {
+      "t": 64.21,
+      "fim": 66.28,
+      "texto": "i am the first"
+    },
+    {
+      "t": 67.12,
+      "fim": 69.65,
+      "texto": "a shadow at the end"
+    },
+    {
+      "t": 69.82,
+      "fim": 73.45,
+      "texto": "of the hallway"
+    },
+    {
+      "t": 76.62,
+      "fim": 79.47,
+      "texto": "i spin the carousel"
+    },
+    {
+      "t": 80.39,
+      "fim": 84.75,
+      "texto": "the laughter recedes away"
+    },
+    {
+      "t": 85.42,
+      "fim": 89.44,
+      "texto": "my finger on your lips"
+    },
+    {
+      "t": 90.45,
+      "fim": 94.85,
+      "texto": "i stole something precious"
+    },
+    {
+      "t": 151.5,
+      "fim": 155.34,
+      "texto": "i am the second"
+    },
+    {
+      "t": 156.68,
+      "fim": 160.48,
+      "texto": "alone in a faceless crowd"
+    },
+    {
+      "t": 161.6,
+      "fim": 164.33,
+      "texto": "a human caught"
+    },
+    {
+      "t": 164.83,
+      "fim": 167.05,
+      "texto": "in monochrome dreams"
+    },
+    {
+      "t": 167.56,
+      "fim": 171.66,
+      "texto": "i scream to wake up"
+    },
+    {
+      "t": 172.49,
+      "fim": 178.36,
+      "texto": "my voice drowns deep underground"
+    },
+    {
+      "t": 178.51,
+      "fim": 182.24,
+      "texto": "only the dead can hear me,"
+    },
+    {
+      "t": 182.28,
+      "fim": 186.34,
+      "texto": "see me"
+    },
+    {
+      "t": 237.96,
+      "fim": 240.4,
+      "texto": "i am the third"
+    },
+    {
+      "t": 241.12,
+      "fim": 243.02,
+      "texto": "a master"
+    },
+    {
+      "t": 243.66,
+      "fim": 247.48,
+      "texto": "a sentinel of awakeness"
+    },
+    {
+      "t": 249.77,
+      "fim": 252.93,
+      "texto": "i hold truth like a torch"
+    },
+    {
+      "t": 253.46,
+      "fim": 257.82,
+      "texto": "shadows blicker before me"
+    },
+    {
+      "t": 260.49,
+      "fim": 263.05,
+      "texto": "rapid eye follow the"
+    },
+    {
+      "t": 263.06,
+      "fim": 265.15,
+      "texto": "chain of thought"
+    },
+    {
+      "t": 265.28,
+      "fim": 271.55,
+      "texto": "until the silence ends"
+    }
+  ]
+}
