@@ -96,6 +96,101 @@
     .scene {
       position: absolute;
       inset: 0;
+      animation: respiro 26s ease-in-out infinite alternate;
+    }
+
+    /* Meio por cento de deriva: o olho registra que a cena nao esta congelada. */
+    @keyframes respiro {
+      from {
+        transform: scale(1.004) translate3d(-0.25%, 0.15%, 0);
+      }
+
+      to {
+        transform: scale(1.014) translate3d(0.3%, -0.2%, 0);
+      }
+    }
+
+    /* Brilho sobre a lampada da arte, repetido junto com a peca. */
+    .layer .lampada {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      background: radial-gradient(circle closest-side,
+          rgba(255, 196, 128, 0.55) 0%,
+          rgba(255, 172, 92, 0.2) 24%,
+          rgba(255, 150, 70, 0.05) 48%,
+          transparent 72%);
+      animation: tremeluz 5.7s linear infinite;
+    }
+
+    /* Passos irregulares: contato ruim tem tremor, nao pulso. */
+    @keyframes tremeluz {
+      0% {
+        opacity: 0.92;
+      }
+
+      7% {
+        opacity: 0.58;
+      }
+
+      11% {
+        opacity: 1;
+      }
+
+      13% {
+        opacity: 0.34;
+      }
+
+      16% {
+        opacity: 0.88;
+      }
+
+      35% {
+        opacity: 0.95;
+      }
+
+      37% {
+        opacity: 0.46;
+      }
+
+      39% {
+        opacity: 0.9;
+      }
+
+      58% {
+        opacity: 0.83;
+      }
+
+      60% {
+        opacity: 1;
+      }
+
+      63% {
+        opacity: 0.22;
+      }
+
+      66% {
+        opacity: 0.86;
+      }
+
+      84% {
+        opacity: 0.94;
+      }
+
+      86% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 0.92;
+      }
+    }
+
+    .dust {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
     }
 
     :root[data-phase="1"] .stage {
@@ -879,6 +974,7 @@
 
   <div class="stage" aria-hidden="true">
     <div class="scene" id="scene">
+      <canvas class="dust" id="dust" aria-hidden="true"></canvas>
       <div class="markers" id="markers"></div>
     </div>
   </div>
@@ -962,6 +1058,8 @@
       const CENA = {
         depths: [0.6, 1],                              // velocidade de cada camada
         ancora: 0,                                     // camada a que os fragmentos pertencem
+        poeiraAtras: 1,                                // camada que passa na frente da poeira
+        lampada: { camada: 0, x: 0.313, y: 0.209 },     // posicao da luz dentro da peca
         files: ["a-fundo.png", "a-frente.png"],
         reach: 5,                                      // larguras de tela de percurso
         span: 6,                                       // alturas de tela de rolagem
@@ -986,6 +1084,7 @@
         toggle: document.getElementById("switch"),
         som: document.getElementById("sound"),
         lyric: document.getElementById("lyric"),
+        dust: document.getElementById("dust"),
         scrub: document.getElementById("scrub")
       };
 
@@ -1355,6 +1454,74 @@
       })();
 
       /* ══════════════════════════════════════════════════════════
+         POEIRA
+         ══════════════════════════════════════════════════════════ */
+      const poeira = (function () {
+        const tela = document.getElementById("dust");
+        const ctx = tela.getContext("2d");
+        let pontos = [], w = 0, h = 0, rodando = false, ultimo = 0, desloc = 0;
+
+        function nascer(espalhado) {
+          return {
+            x: Math.random() * w,
+            y: espalhado ? Math.random() * h : h + 12,
+            r: 0.25 + Math.random() * 0.75,
+            v: 3 + Math.random() * 10,
+            a: 0.05 + Math.random() * 0.18,
+            fase: Math.random() * 6.283,
+            amp: 4 + Math.random() * 15
+          };
+        }
+
+        function dimensionar() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = window.innerWidth;
+          h = window.innerHeight;
+          tela.width = w * dpr;
+          tela.height = h * dpr;
+          tela.style.width = w + "px";
+          tela.style.height = h + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.fillStyle = "#cfc6b0";
+          const quantos = w < 760 ? 60 : 156;
+          pontos = [];
+          for (let i = 0; i < quantos; i++) pontos.push(nascer(true));
+        }
+
+        function quadro(t) {
+          if (!rodando) return;
+          const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0;
+          ultimo = t;
+          ctx.clearRect(0, 0, w, h);
+          for (const p of pontos) {
+            p.y -= p.v * dt;
+            p.fase += dt * 0.5;
+            if (p.y < -12) Object.assign(p, nascer(false));
+            // x vive no espaco da parede e da a volta pela tela: assim o grao
+            // acompanha o fundo sem precisar nascer e morrer a cada rolagem.
+            const x = p.x + Math.sin(p.fase) * p.amp - desloc;
+            ctx.globalAlpha = p.a;
+            ctx.beginPath();
+            ctx.arc(((x % w) + w) % w, p.y, p.r, 0, 6.283);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+          requestAnimationFrame(quadro);
+        }
+
+        return {
+          iniciar() {
+            if (rodando) return;
+            rodando = true;
+            dimensionar();
+            requestAnimationFrame(quadro);
+          },
+          dimensionar() { if (rodando) dimensionar(); },
+          mover(d) { desloc = d; }
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════
          MONTAGEM DA CENA
          ══════════════════════════════════════════════════════════ */
       function buildScene() {
@@ -1369,6 +1536,11 @@
         });
 
         app.layers.forEach(l => el.scene.insertBefore(l.node, el.markers));
+
+        // A poeira e volume do ambiente, nao um veu sobre a cena: fica atras da
+        // camada da frente para que o entulho a encubra.
+        const frente = app.layers[CENA.poeiraAtras];
+        if (frente) el.scene.insertBefore(el.dust, frente.node);
 
         el.track.style.height = (CENA.span * 100) + "vh";
         el.hint.textContent = CENA.hint;
@@ -1441,6 +1613,28 @@
           l.node.style.width = (w + l.step) + "px";
           l.node.style.height = h + "px";
         });
+
+        acenderLampadas();
+      }
+
+      function acenderLampadas() {
+        const cfg = CENA.lampada;
+        const l = cfg && app.layers[cfg.camada];
+        if (!l || !l.step) return;
+        const quantas = Math.ceil((app.box.w + l.step) / l.step) + 1;
+        while (l.node.children.length > quantas) l.node.lastChild.remove();
+        while (l.node.children.length < quantas) {
+          const g = document.createElement("i");
+          g.className = "lampada";
+          l.node.appendChild(g);
+        }
+        const raio = app.box.h * 0.46;
+        [...l.node.children].forEach((g, k) => {
+          g.style.width = g.style.height = (raio * 2) + "px";
+          g.style.left = (cfg.x * l.step + k * l.step - raio) + "px";
+          g.style.top = (cfg.y * app.box.h - raio) + "px";
+          g.style.animationDelay = (-k * 2.3) + "s";
+        });
       }
 
       /* ══════════════════════════════════════════════════════════
@@ -1460,6 +1654,7 @@
         // contra a parede em vez de pertencer a ela.
         const dm = CENA.depths[CENA.ancora];
         const alcance = b.travel * dm;
+        poeira.mover(shift * dm);
         el.markers.style.transform = "translate3d(" + (-shift * dm) + "px,0,0)";
 
         app.items.forEach(f => {
@@ -1641,7 +1836,12 @@
          ══════════════════════════════════════════════════════════ */
       function bind() {
         window.addEventListener("scroll", request, { passive: true });
-        window.addEventListener("resize", () => { measure(); request(); if (!el.scrub.hidden) trilha.montar(); });
+        window.addEventListener("resize", () => {
+          measure();
+          request();
+          poeira.dimensionar();
+          if (!el.scrub.hidden) trilha.montar();
+        });
 
         el.close.addEventListener("click", hide);
         el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
@@ -1693,6 +1893,9 @@
         buildMarkers();
         measure();
         bind();
+        // Poeira e a unica peca que roda sozinha o tempo todo; fica de fora de
+        // quem pediu menos movimento.
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) poeira.iniciar();
         if (som.disponivel()) { el.som.hidden = false; som.preludio(); }
         app.ready = true;
         tick();
