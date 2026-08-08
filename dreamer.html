@@ -86,6 +86,13 @@
       transition: opacity 240ms var(--ease);
     }
 
+    /* Com o ponteiro em cima o nome nao depende mais da proximidade do centro. */
+    .marker.pego .tag {
+      opacity: 1;
+      color: var(--ink);
+      transition: opacity 240ms var(--ease), color 240ms var(--ease);
+    }
+
     .reader,
     .sheet {
       cursor: default;
@@ -242,18 +249,19 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 46vmax;
-      height: 46vmax;
-      margin: -23vmax 0 0 -23vmax;
+      width: 38vmax;
+      height: 38vmax;
+      margin: -19vmax 0 0 -19vmax;
       pointer-events: none;
-      mix-blend-mode: soft-light;
+      mix-blend-mode: screen;
       opacity: 0;
       transition: opacity 900ms var(--ease);
       background: radial-gradient(circle closest-side,
-          rgba(255, 226, 186, 0.5) 0%,
-          rgba(255, 206, 150, 0.22) 30%,
-          rgba(255, 190, 130, 0.06) 55%,
-          transparent 76%);
+          rgba(255, 233, 198, 0.2) 0%,
+          rgba(255, 214, 160, 0.12) 20%,
+          rgba(255, 196, 130, 0.05) 44%,
+          rgba(255, 180, 110, 0.015) 66%,
+          transparent 82%);
     }
 
     .lume.on {
@@ -449,11 +457,11 @@
       left: 50%;
       transform: translateX(-50%);
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       white-space: nowrap;
-      color: var(--ink-dim);
+      color: var(--ink);
       opacity: calc(var(--f, 0) * var(--f, 0));
       transition: color 260ms var(--ease);
     }
@@ -464,7 +472,7 @@
     }
 
     .marker.seen .tag {
-      color: var(--ink-faint);
+      color: var(--ink-dim);
     }
 
     .marker.on:hover .glyph {
