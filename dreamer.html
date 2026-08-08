@@ -1494,7 +1494,11 @@
          ══════════════════════════════════════════════════════════ */
       const som = (function () {
         let faixa = null, indice = 0, timer = 0, relogio = 0;
-        let tocando = false, mudo = false, audivel = false;
+        let tocando = false, audivel = false;
+        // Autoplay de audio no Chrome depende da nota do site, nao do mudo.
+        // Antes do gesto o tempo corre aqui e o elemento fica so carregado.
+        let preludiando = false, virtual = 0, marca = 0;
+        let carregada = "";      // arquivo que ja esta no elemento
         let blocos = [], blocoAtivo = -1, versoAtivo = -1, canto = 0, tema = "";
 
         /* ── letra ── */
@@ -1549,10 +1553,26 @@
           el.lyric.classList.remove("on");
         }
 
+        // Fonte unica do tempo: relogio proprio no preludio, elemento depois dele.
+        function agora() {
+          return preludiando ? virtual : (faixa ? faixa.currentTime : 0);
+        }
+
+        function duracao() {
+          return faixa && isFinite(faixa.duration) ? faixa.duration : 0;
+        }
+
         function acompanhar() {
+          if (preludiando) {
+            const n = performance.now();
+            virtual += (n - marca) / 1000;
+            marca = n;
+            const d = duracao();
+            if (d && virtual >= d) virtual = 0;
+          }
           trilha.pintar();
           if (!faixa || !blocos.length) return;
-          const t = faixa.currentTime;
+          const t = agora();
 
           let bi = -1;
           for (let k = 0; k < blocos.length; k++) {
@@ -1581,20 +1601,37 @@
         }
 
         /* ── reproducao ── */
-        function tocar() {
+        // Carregar nao exige gesto; so tocar exige. O preludio para por aqui.
+        // Reatribuir o src reinicia o elemento e descarta qualquer busca de
+        // tempo feita em seguida, entao so recarrega quando a faixa muda.
+        function preparar() {
           if (!faixa) {
             faixa = new Audio();
             faixa.preload = "auto";
-            faixa.volume = 0;
             faixa.addEventListener("ended", proxima);
             faixa.addEventListener("error", falhar);
+            faixa.addEventListener("loadedmetadata", () => trilha.montar());
           }
           const atual = AUDIO.faixas[indice];
+          if (carregada === atual.arquivo) return;
+          carregada = atual.arquivo;
+          faixa.volume = 0;
           faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
-          faixa.muted = mudo;
-          faixa.volume = mudo ? AUDIO.volume : 0;
           carregarLetra(atual.letra);
-          faixa.play().then(() => { if (!mudo) esmaecer(AUDIO.volume); }).catch(falhar);
+        }
+
+        // Buscar antes dos metadados nao tem efeito: nesse caso espera por eles.
+        function irA(t) {
+          if (faixa.readyState >= 1) faixa.currentTime = t;
+          else faixa.addEventListener("loadedmetadata",
+            () => { faixa.currentTime = t; }, { once: true });
+        }
+
+        function tocar(de) {
+          preparar();
+          faixa.volume = 0;
+          if (de) irA(de);
+          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
         }
 
         function proxima() {
@@ -1619,27 +1656,24 @@
           relogio = setInterval(acompanhar, 200);
         }
 
-        function ligar() {
+        function ligar(de) {
           if (tocando || !AUDIO.faixas.length) return;
+          preludiando = false;
           tocando = true;
-          audivel = !mudo;
-          el.som.setAttribute("aria-pressed", audivel ? "true" : "false");
-          tocar();
+          audivel = true;
+          el.som.setAttribute("aria-pressed", "true");
+          tocar(de);
           el.scrub.hidden = false;
           trilha.montar();
           acompanharDeNovo();
         }
 
-        // Autoplay so e permitido sem som. A faixa corre muda desde a abertura e
-        // a legenda ja aparece; o primeiro gesto do visitante libera o volume.
+        // O gesto entrega o som no ponto em que o relogio chegou, nao do zero.
         function revelar() {
-          if (!tocando || audivel || !faixa) return;
-          mudo = false;
-          audivel = true;
-          faixa.muted = false;
-          faixa.volume = 0;
-          esmaecer(AUDIO.volume);
-          el.som.setAttribute("aria-pressed", "true");
+          if (!preludiando) return;
+          const de = virtual;
+          preludiando = false;
+          ligar(de);
           app.som = true;
         }
 
@@ -1657,10 +1691,8 @@
         function seguir() {
           if (tocando || !faixa || !faixa.src) return;
           tocando = true;
-          mudo = false;
           audivel = true;
           el.som.setAttribute("aria-pressed", "true");
-          faixa.muted = false;
           faixa.volume = 0;
           faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
           acompanharDeNovo();
@@ -1669,7 +1701,7 @@
         // Falha de carregamento tira tudo de cena; pausa do visitante nao.
         function falhar() {
           tocando = false;
-          mudo = false;
+          preludiando = false;
           audivel = false;
           el.som.setAttribute("aria-pressed", "false");
           clearInterval(timer);
@@ -1682,20 +1714,26 @@
         return {
           disponivel: () => AUDIO.faixas.length > 0,
 
-          // Faixa muda desde a abertura, para a legenda existir antes do gesto.
+          // Legenda e fio correm antes de qualquer gesto, sem tocar o audio.
           preludio() {
-            if (!app.som || tocando) return;
-            mudo = true;
-            ligar();
+            if (!app.som || tocando || preludiando) return;
+            preludiando = true;
+            marca = performance.now();
+            preparar();
+            el.som.setAttribute("aria-pressed", "false");
+            el.scrub.hidden = false;
+            trilha.montar();
+            acompanharDeNovo();
           },
 
           retomar() {
-            if (tocando) { revelar(); return; }
+            if (preludiando) { revelar(); return; }
+            if (tocando) return;
             if (app.som) ligar();
           },
 
           alternar() {
-            if (tocando && !audivel) { revelar(); return; }   // primeiro toque abre o volume
+            if (preludiando) { revelar(); return; }   // primeiro toque entrega o som
             if (tocando) { pausar(); app.som = false; return; }
             faixa && faixa.src ? seguir() : ligar();
             app.som = true;
@@ -1707,14 +1745,14 @@
             if (audivel) esmaecer(v ? AUDIO.volume * AUDIO.recuo : AUDIO.volume, 500);
           },
 
-          posicao: () => ({
-            atual: faixa ? faixa.currentTime : 0,
-            total: faixa && isFinite(faixa.duration) ? faixa.duration : 0
-          }),
+          posicao: () => ({ atual: agora(), total: duracao() }),
 
           irPara(p) {
-            if (!faixa || !isFinite(faixa.duration)) return;
-            faixa.currentTime = clamp(p, 0, 1) * faixa.duration;
+            const d = duracao();
+            if (!d) return;
+            const t = clamp(p, 0, 1) * d;
+            if (preludiando) { virtual = t; marca = performance.now(); }
+            else irA(t);
             blocoAtivo = -1;              // forca a legenda a reencontrar o trecho
             versoAtivo = -1;
             acompanhar();
