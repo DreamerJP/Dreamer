@@ -1,5 +1,5 @@
 {
-  "_leia": "Todo o conteudo abaixo e rascunho de estrutura, nao texto final. Escreva o seu por cima e remova o campo 'rascunho' de cada fragmento para tirar a marcacao da tela.",
+  "_leia": "Texto provisorio. Os campos de estrutura (at, alt, tipo, requer, estado) ja estao configurados; falta so escrever o conteudo por cima e remover o campo 'rascunho'.",
   "_campos": {
     "id": "identificador unico, usado pelos links",
     "titulo": "aparece no leitor e no rotulo do objeto ja visitado",
@@ -15,120 +15,108 @@
   "fragmentos": [
     {
       "id": "limiar",
-      "titulo": "O limiar",
+      "titulo": "Fragmento 01",
       "tipo": "sonho",
-      "data": "— sem data —",
+      "data": "a definir",
       "at": 0.04,
       "alt": 0.74,
       "rascunho": true,
       "texto": [
-        "Comeca sempre no mesmo ponto. Nao porque eu escolha, mas porque e o unico lugar que o resto aceita como inicio.",
-        "Ha uma diferenca entre estar parado e ainda nao ter saido. Daqui, as duas coisas se parecem.",
-        "Adiante o chao continua. [[corredor|Continua]] mais do que devia."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[corredor|outro fragmento]], e a cena percorre ate ele antes de abrir."
       ],
       "revisita": [
-        "De novo o mesmo ponto. A diferenca e que agora eu sei o que tem no fim, e mesmo assim ando.",
-        "O limiar nao muda. Quem passa por ele e que volta menor."
+        "Texto alternativo, exibido a partir da segunda leitura."
       ]
     },
     {
       "id": "relogio",
-      "titulo": "O relogio parado",
+      "titulo": "Fragmento 02",
       "tipo": "nota",
-      "data": "quarta, talvez",
+      "data": "a definir",
       "at": 0.14,
       "alt": 0.79,
       "rascunho": true,
       "texto": [
-        "Parou faz tempo e ninguem trocou a pilha. Virou movel.",
-        "Reparei que passei a usar ele como referencia mesmo assim. Nao para saber a hora — para saber que ainda estou no mesmo comodo.",
-        "Um objeto quebrado que continua no lugar deixa de ser objeto e vira [[chave|marcacao]]."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[chave|outro fragmento]], e a cena percorre ate ele antes de abrir."
       ]
     },
     {
       "id": "corredor",
-      "titulo": "Corredor",
+      "titulo": "Fragmento 03",
       "tipo": "sonho",
-      "data": "recorrente",
+      "data": "a definir",
       "at": 0.26,
       "alt": 0.71,
       "rascunho": true,
       "texto": [
-        "O corredor tem portas dos dois lados e nenhuma delas e a saida. Isso nao me incomoda no sonho. Incomoda depois.",
-        "Ando ate cansar. Quando canso, ele recomeca — nao do inicio, de um ponto um pouco antes de onde eu estava.",
-        "Uma das portas fica entreaberta. Nunca a mesma. [[espelho|Atras dela]] tem alguem esperando eu desistir de olhar."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[espelho|um fragmento de outra fase]], e a cena percorre ate ele antes de abrir."
       ],
       "revisita": [
-        "Contei as portas desta vez. Perdi a conta duas vezes e na terceira desisti, que e o que ele queria.",
-        "Nao e um corredor. E a mesma parte de um corredor, repetida ate parecer distancia."
+        "Texto alternativo, exibido a partir da segunda leitura."
       ]
     },
     {
       "id": "chave",
-      "titulo": "A chave que sobrou",
+      "titulo": "Fragmento 04",
       "tipo": "memoria",
-      "data": "arquivo antigo",
+      "data": "a definir",
       "at": 0.37,
       "alt": 0.77,
       "rascunho": true,
       "texto": [
-        "Sobrou uma chave sem fechadura conhecida. Guardei por anos achando que ia lembrar.",
-        "Nao lembrei. Mas continuo guardando, porque jogar fora seria admitir que a porta tambem nao existe mais.",
-        "Tem coisas que a gente guarda para nao ter que concluir nada. Uma [[carta|carta fechada]] serve para o mesmo."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[carta|outro fragmento]], e a cena percorre ate ele antes de abrir."
       ]
     },
     {
       "id": "espelho",
-      "titulo": "O espelho fica do outro lado",
+      "titulo": "Fragmento 05",
       "tipo": "sonho",
-      "data": "— ilegivel —",
+      "data": "a definir",
       "at": 0.49,
       "alt": 0.73,
       "estado": 1,
       "rascunho": true,
       "texto": [
-        "Aqui so existe quando a luz vira. No outro estado a parede e lisa e eu juraria que sempre foi.",
-        "O reflexo demora. Nao muito — o suficiente para eu perceber que ele decide se me acompanha.",
-        "Volta antes que ele termine de copiar."
+        "Conteudo em preparo.",
+        "Este existe apenas em uma das duas fases da cena."
       ]
     },
     {
       "id": "carta",
-      "titulo": "Carta que nao foi enviada",
+      "titulo": "Fragmento 06",
       "tipo": "carta",
-      "data": "sem destinatario",
+      "data": "a definir",
       "at": 0.6,
       "alt": 0.8,
       "rascunho": true,
       "texto": [
-        "Escrevi inteira e nao mandei. Reli no dia seguinte e o problema nao era o texto, era eu ter escrito.",
-        "Ficou na gaveta com as outras. Em algum momento parou de ser rascunho e virou registro.",
-        "Talvez seja mais honesta assim. Uma carta entregue vira conversa; guardada, continua sendo o que eu de fato pensei naquela noite."
+        "Conteudo em preparo."
       ],
       "revisita": [
-        "Reli de novo. A parte que eu tinha vergonha e a unica que ainda e verdade.",
-        "Continua na gaveta."
+        "Texto alternativo, exibido a partir da segunda leitura."
       ]
     },
     {
       "id": "degrau",
-      "titulo": "O degrau a mais",
+      "titulo": "Fragmento 07",
       "tipo": "nota",
-      "data": "madrugada",
+      "data": "a definir",
       "at": 0.71,
       "alt": 0.72,
       "rascunho": true,
       "texto": [
-        "Toda escada tem um degrau a mais quando se desce no escuro. O corpo conta um, o chao entrega outro.",
-        "Aquele meio segundo de queda que nao acontece e a coisa mais parecida com medo que eu consigo descrever sem exagerar.",
-        "Depois a gente acende a luz e conta de novo. Bate certo. Nunca bate na hora."
+        "Conteudo em preparo."
       ]
     },
     {
       "id": "quarto",
-      "titulo": "O quarto no fim",
+      "titulo": "Fragmento 08",
       "tipo": "memoria",
-      "data": "reconstruido",
+      "data": "a definir",
       "at": 0.83,
       "alt": 0.76,
       "requer": [
@@ -137,23 +125,22 @@
       ],
       "rascunho": true,
       "texto": [
-        "Este so aparece depois — nao por truque, por ordem. Tem coisa que nao faz sentido antes de outras duas.",
-        "O quarto e pequeno e eu lembro dele maior. Essa e a unica informacao confiavel que eu tenho sobre a minha memoria.",
-        "Fica no fim do [[corredor|corredor]], que e onde tudo neste lugar acaba ficando."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[corredor|outro fragmento]], e a cena percorre ate ele antes de abrir.",
+        "Este so aparece depois que os fragmentos exigidos forem lidos."
       ]
     },
     {
       "id": "ruido",
-      "titulo": "Ruido de fundo",
+      "titulo": "Fragmento 09",
       "tipo": "sonho",
-      "data": "constante",
+      "data": "a definir",
       "at": 0.94,
       "alt": 0.75,
       "rascunho": true,
       "texto": [
-        "Tem um som aqui que so da para ouvir quando se para de procurar por ele.",
-        "Nao e ameaca. E companhia, do tipo que a gente nao escolheu.",
-        "Quando o percurso termina, ele continua. Volte ao [[limiar|comeco]] e repare que o comeco tambem tem."
+        "Conteudo em preparo.",
+        "Uma palavra marcada leva a [[limiar|o primeiro fragmento]], e a cena percorre ate ele antes de abrir."
       ]
     }
   ]
