@@ -211,6 +211,26 @@
       }
     }
 
+    /* Cobre so a camada dos quartos, porque a parede e desenhada depois.
+       O furo acompanha a lanterna; fora dele o comodo nao existe. */
+    .veu {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--lx, -999px) var(--ly, -999px),
+          transparent 0px,
+          transparent 14px,
+          rgba(4, 5, 10, 0.6) 48px,
+          #04050a 96px);
+    }
+
+    /* Sem ponteiro nao ha o que revelar: o comodo fica apenas rebaixado. */
+    @media (hover: none) {
+      .veu {
+        background: rgba(4, 5, 10, 0.74);
+      }
+    }
+
     .dust {
       position: absolute;
       inset: 0;
@@ -1075,6 +1095,7 @@
 
   <div class="stage" aria-hidden="true">
     <div class="scene" id="scene">
+      <div class="veu" id="veu" aria-hidden="true"></div>
       <canvas class="dust" id="dust" aria-hidden="true"></canvas>
       <div class="lume" id="lume" aria-hidden="true"></div>
       <div class="markers" id="markers"></div>
@@ -1161,11 +1182,11 @@
 
       // A peca se repete, entao o percurso independe do tamanho do arquivo.
       const CENA = {
-        depths: [0.6, 1],                              // velocidade de cada camada
-        ancora: 0,                                     // camada a que os fragmentos pertencem
-        poeiraAtras: 1,                                // camada que passa na frente da poeira
-        lampada: { camada: 0, x: 0.313, y: 0.209 },     // posicao da luz dentro da peca
-        files: ["a-fundo.png", "a-frente.png"],
+        depths: [0.6, 0.6, 1],                         // velocidade de cada camada
+        ancora: 1,                                     // camada a que os fragmentos pertencem
+        poeiraAtras: 2,                                // camada que passa na frente da poeira
+        lampada: { camada: 1, x: 0.313, y: 0.209 },    // posicao da luz dentro da peca
+        files: ["a-quartos.png", "a-fundo.png", "a-frente.png"],
         reach: 5,                                      // larguras de tela de percurso
         span: 6,                                       // alturas de tela de rolagem
         hint: "role para percorrer"
@@ -1191,6 +1212,7 @@
         lyric: document.getElementById("lyric"),
         dust: document.getElementById("dust"),
         lume: document.getElementById("lume"),
+        veu: document.getElementById("veu"),
         ponta: document.getElementById("ponta"),
         scrub: document.getElementById("scrub")
       };
@@ -1656,6 +1678,8 @@
           viva = false;
           el.lume.classList.remove("on");
           el.ponta.classList.remove("on");
+          el.veu.style.removeProperty("--lx");
+          el.veu.style.removeProperty("--ly");
         });
 
         return {
@@ -1673,6 +1697,8 @@
             x += (alvoX - x) * k;
             y += (alvoY - y) * k;
             el.lume.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+            el.veu.style.setProperty("--lx", x.toFixed(0) + "px");
+            el.veu.style.setProperty("--ly", y.toFixed(0) + "px");
           }
         };
       })();
@@ -1700,6 +1726,8 @@
           el.scene.insertBefore(el.dust, frente.node);
           el.scene.insertBefore(el.lume, frente.node);
         }
+        const parede = app.layers[CENA.ancora];
+        if (parede) el.scene.insertBefore(el.veu, parede.node);
 
         el.track.style.height = (CENA.span * 100) + "vh";
         el.hint.textContent = CENA.hint;
