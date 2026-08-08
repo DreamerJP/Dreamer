@@ -65,6 +65,30 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* O halo faz as vezes de cursor; a seta do sistema volta so onde ha o que
+       operar, que e onde ela ainda informa alguma coisa. */
+    button,
+    .sheet .link,
+    .reader {
+      cursor: pointer;
+    }
+
+    /* Nada de seta aqui: a mira ja virou o proprio fragmento. */
+    .marker.on {
+      cursor: none;
+    }
+
+    .marker.pego .glyph {
+      opacity: 0;
+      transition: opacity 240ms var(--ease);
+    }
+
+    .reader,
+    .sheet {
+      cursor: default;
     }
 
     button {
@@ -191,6 +215,83 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+    }
+
+    /* Fica dentro da cena e atras do primeiro plano: o entulho corta a luz. */
+    .lume {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 46vmax;
+      height: 46vmax;
+      margin: -23vmax 0 0 -23vmax;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      opacity: 0;
+      transition: opacity 900ms var(--ease);
+      background: radial-gradient(circle closest-side,
+          rgba(255, 226, 186, 0.5) 0%,
+          rgba(255, 206, 150, 0.22) 30%,
+          rgba(255, 190, 130, 0.06) 55%,
+          transparent 76%);
+    }
+
+    .lume.on {
+      opacity: 1;
+    }
+
+    /* Ponto nitido no lugar exato do ponteiro: o halo e amortecido demais para
+       servir de mira sozinho. */
+    .ponta {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 30;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 300ms var(--ease);
+    }
+
+    .ponta.on {
+      opacity: 1;
+    }
+
+    /* O deslocamento fica no pai e a forma no filho: a posicao e reescrita a
+       cada movimento e apagaria a rotacao se estivessem no mesmo transform. */
+    .ponta i {
+      display: block;
+      width: 5px;
+      height: 5px;
+      margin: -2.5px 0 0 -2.5px;
+      border-radius: 50%;
+      background: rgba(255, 232, 198, 0.75);
+      box-shadow: 0 0 7px 1px rgba(255, 198, 130, 0.55);
+      transition: width 280ms var(--ease), height 280ms var(--ease),
+        margin 280ms var(--ease), border-radius 280ms var(--ease),
+        transform 280ms var(--ease), background 280ms var(--ease),
+        box-shadow 280ms var(--ease);
+    }
+
+    /* Sobre um fragmento alcancavel a mira assume a forma dele. */
+    .ponta.achou i {
+      width: 13px;
+      height: 13px;
+      margin: -6.5px 0 0 -6.5px;
+      border-radius: 0;
+      transform: rotate(45deg);
+      background: var(--accent);
+      box-shadow: 0 0 18px 4px var(--accent);
+    }
+
+    @media (hover: none) {
+      body {
+        cursor: auto;
+      }
+
+      .lume,
+      .ponta {
+        display: none;
+      }
     }
 
     :root[data-phase="1"] .stage {
@@ -975,6 +1076,7 @@
   <div class="stage" aria-hidden="true">
     <div class="scene" id="scene">
       <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+      <div class="lume" id="lume" aria-hidden="true"></div>
       <div class="markers" id="markers"></div>
     </div>
   </div>
@@ -1017,6 +1119,8 @@
 
   <div class="lyric" id="lyric" aria-hidden="true"></div>
 
+  <div class="ponta" id="ponta" aria-hidden="true"><i></i></div>
+
   <div class="veil" id="veil"><span>abrindo</span></div>
 
   <script>
@@ -1035,6 +1139,7 @@
         dir: "./Assets/Dreamer/audio/",
         volume: 0.7,                                   // teto de volume, 0 a 1
         fade: 1600,                                    // entrada e saida do som, em ms
+        recuo: 0.35,                                   // fracao do volume enquanto se le um fragmento
         // 'letra' e opcional: sem ele a faixa toca sem legenda.
         faixas: [
           {
@@ -1085,6 +1190,8 @@
         som: document.getElementById("sound"),
         lyric: document.getElementById("lyric"),
         dust: document.getElementById("dust"),
+        lume: document.getElementById("lume"),
+        ponta: document.getElementById("ponta"),
         scrub: document.getElementById("scrub")
       };
 
@@ -1098,6 +1205,7 @@
         nodes: new Map(),   // id -> { marker, pip }
         box: { w: 0, h: 0, art: 0, artH: 0, travel: 1, offX: 0, offY: 0 },
         p: 0,
+        alvo: 0,
         open: null,
         ready: false
       };
@@ -1235,12 +1343,13 @@
           tocar();
         }
 
-        function esmaecer(alvo, aoFim) {
+        function esmaecer(alvo, ms, aoFim) {
           clearInterval(timer);
+          const dur = ms || AUDIO.fade;
           const inicio = faixa ? faixa.volume : 0;
           const t0 = performance.now();
           timer = setInterval(() => {
-            const k = clamp((performance.now() - t0) / AUDIO.fade, 0, 1);
+            const k = clamp((performance.now() - t0) / dur, 0, 1);
             if (faixa) faixa.volume = clamp(inicio + (alvo - inicio) * k, 0, 1);
             if (k >= 1) { clearInterval(timer); if (aoFim) aoFim(); }
           }, 40);
@@ -1327,7 +1436,11 @@
           },
           disponivel: () => AUDIO.faixas.length > 0,
           // Esconde a legenda enquanto o leitor esta aberto.
-          recolher(v) { el.lyric.classList.toggle("oculta", v); },
+          recolher(v) {
+            el.lyric.classList.toggle("oculta", v);
+            // O leitor manda no som tambem: a faixa recua para segundo plano.
+            if (audivel) esmaecer(v ? AUDIO.volume * AUDIO.recuo : AUDIO.volume, 500);
+          },
           posicao: () => ({
             atual: faixa ? faixa.currentTime : 0,
             total: faixa && isFinite(faixa.duration) ? faixa.duration : 0
@@ -1459,7 +1572,7 @@
       const poeira = (function () {
         const tela = document.getElementById("dust");
         const ctx = tela.getContext("2d");
-        let pontos = [], w = 0, h = 0, rodando = false, ultimo = 0, desloc = 0;
+        let pontos = [], w = 0, h = 0, rodando = false, desloc = 0;
 
         function nascer(espalhado) {
           return {
@@ -1488,10 +1601,8 @@
           for (let i = 0; i < quantos; i++) pontos.push(nascer(true));
         }
 
-        function quadro(t) {
+        function passo(dt) {
           if (!rodando) return;
-          const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0;
-          ultimo = t;
           ctx.clearRect(0, 0, w, h);
           for (const p of pontos) {
             p.y -= p.v * dt;
@@ -1506,7 +1617,6 @@
             ctx.fill();
           }
           ctx.globalAlpha = 1;
-          requestAnimationFrame(quadro);
         }
 
         return {
@@ -1514,10 +1624,56 @@
             if (rodando) return;
             rodando = true;
             dimensionar();
-            requestAnimationFrame(quadro);
           },
+          passo: passo,
           dimensionar() { if (rodando) dimensionar(); },
           mover(d) { desloc = d; }
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════
+         LUZ DO PONTEIRO
+         ══════════════════════════════════════════════════════════ */
+      const luz = (function () {
+        let alvoX = 0, alvoY = 0, x = 0, y = 0, viva = false;
+
+        window.addEventListener("pointermove", e => {
+          if (e.pointerType === "touch") return;
+          alvoX = e.clientX;
+          alvoY = e.clientY;
+          // A mira acompanha o ponteiro sem atraso; so o halo tem peso.
+          el.ponta.style.transform = "translate3d(" + alvoX + "px," + alvoY + "px,0)";
+          if (!viva) {
+            viva = true;
+            x = alvoX;
+            y = alvoY;
+            el.lume.classList.add("on");
+            el.ponta.classList.add("on");
+          }
+        }, { passive: true });
+
+        window.addEventListener("pointerleave", () => {
+          viva = false;
+          el.lume.classList.remove("on");
+          el.ponta.classList.remove("on");
+        });
+
+        return {
+          achar(m) {
+            el.ponta.classList.add("achou");
+            m.classList.add("pego");
+          },
+          largar(m) {
+            el.ponta.classList.remove("achou");
+            m.classList.remove("pego");
+          },
+          passo(dt) {
+            if (!viva) return;
+            const k = 1 - Math.pow(1 - 0.16, dt * 60);
+            x += (alvoX - x) * k;
+            y += (alvoY - y) * k;
+            el.lume.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+          }
         };
       })();
 
@@ -1532,7 +1688,7 @@
           const l = { node: layerNode(file), depth: CENA.depths[i], aspect: 0 };
           app.layers.push(l);
           // A peca so pode ser dimensionada depois que a proporcao real e conhecida.
-          probe(ART + file, r => { l.aspect = r; measure(); request(); });
+          probe(ART + file, r => { l.aspect = r; measure(); });
         });
 
         app.layers.forEach(l => el.scene.insertBefore(l.node, el.markers));
@@ -1540,7 +1696,10 @@
         // A poeira e volume do ambiente, nao um veu sobre a cena: fica atras da
         // camada da frente para que o entulho a encubra.
         const frente = app.layers[CENA.poeiraAtras];
-        if (frente) el.scene.insertBefore(el.dust, frente.node);
+        if (frente) {
+          el.scene.insertBefore(el.dust, frente.node);
+          el.scene.insertBefore(el.lume, frente.node);
+        }
 
         el.track.style.height = (CENA.span * 100) + "vh";
         el.hint.textContent = CENA.hint;
@@ -1574,6 +1733,8 @@
           m.setAttribute("aria-label", f.titulo);
           m.innerHTML = '<span class="glyph"></span><span class="tag"></span>';
           m.addEventListener("click", () => show(f.id));
+          m.addEventListener("pointerenter", () => luz.achar(m));
+          m.addEventListener("pointerleave", () => luz.largar(m));
           el.markers.appendChild(m);
 
           const pip = document.createElement("i");
@@ -1684,18 +1845,29 @@
       /* ══════════════════════════════════════════════════════════
          LACO
          ══════════════════════════════════════════════════════════ */
-      let queued = false;
-      function tick() {
-        queued = false;
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        app.p = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
-        project(app.p);
-        el.fill.style.width = (app.p * 100) + "%";
-        el.hint.style.opacity = app.p > 0.02 ? 0 : 1;
-      }
+      const INERCIA = 0.12;                            // fracao da distancia vencida por quadro a 60fps
+      let ultimo = 0;
 
-      function request() {
-        if (!queued && app.ready) { queued = true; requestAnimationFrame(tick); }
+      function tick(t) {
+        requestAnimationFrame(tick);
+        if (!app.ready) return;
+
+        const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 1 / 60;
+        ultimo = t;
+
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        app.alvo = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+
+        // Amortecimento independente da taxa de quadros: em 144Hz o passo e menor.
+        const k = 1 - Math.pow(1 - INERCIA, dt * 60);
+        app.p += (app.alvo - app.p) * k;
+        if (Math.abs(app.alvo - app.p) < 0.00002) app.p = app.alvo;
+
+        project(app.p);
+        luz.passo(dt);
+        poeira.passo(dt);
+        el.fill.style.width = (app.p * 100) + "%";
+        el.hint.style.opacity = app.alvo > 0.02 ? 0 : 1;
       }
 
       /* ══════════════════════════════════════════════════════════
@@ -1786,7 +1958,6 @@
         app.open = null;
         som.recolher(false);
         document.documentElement.classList.remove("held");
-        request();
       }
 
       // Seguir um link percorre a cena ate o destino antes de abrir o fragmento.
@@ -1828,17 +1999,14 @@
         el.toggle.setAttribute("aria-pressed", n === 1 ? "true" : "false");
         // A cena mudou por baixo do leitor: fecha em vez de deixar o texto defasado.
         if (app.open) hide();
-        request();
       }
 
       /* ══════════════════════════════════════════════════════════
          INICIO
          ══════════════════════════════════════════════════════════ */
       function bind() {
-        window.addEventListener("scroll", request, { passive: true });
         window.addEventListener("resize", () => {
           measure();
-          request();
           poeira.dimensionar();
           if (!el.scrub.hidden) trilha.montar();
         });
