@@ -31,7 +31,7 @@
 
       --serif: "EB Garamond", Georgia, serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
-      /* Face propria da legenda: precisa soar diferente do texto dos fragmentos. */
+      /* Usada so pela legenda, para nao se confundir com o texto dos fragmentos. */
       --canto: "Cormorant Garamond", "EB Garamond", Georgia, serif;
 
       --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -318,7 +318,6 @@
       color: var(--ink);
     }
 
-    /* As barras so se mexem quando ha som saindo. */
     .switch .wave {
       display: flex;
       align-items: flex-end;
@@ -434,14 +433,83 @@
     }
 
     /* ============================================================
+       ANDAMENTO
+       ============================================================ */
+    .scrub {
+      position: fixed;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 15;
+      width: 38px;
+      height: 46vh;
+      opacity: 0.4;
+      transition: opacity 500ms var(--ease);
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .scrub.puxando {
+      cursor: grabbing;
+    }
+
+    .scrub:hover,
+    .scrub.puxando {
+      opacity: 1;
+    }
+
+    .scrub svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .scrub .resto {
+      stroke: var(--ink-faint);
+      stroke-width: 1.4;
+      opacity: 0.5;
+    }
+
+    .scrub .feito {
+      stroke: var(--accent);
+      stroke-width: 1.6;
+      transition: stroke 900ms var(--ease);
+      filter: drop-shadow(0 0 4px var(--accent));
+    }
+
+    .scrub .pega {
+      fill: var(--accent);
+      opacity: 0;
+      transition: opacity 320ms var(--ease), fill 900ms var(--ease);
+      filter: drop-shadow(0 0 6px var(--accent));
+    }
+
+    .scrub:hover .pega,
+    .scrub.puxando .pega {
+      opacity: 1;
+    }
+
+    @media (max-width: 760px),
+    (hover: none) {
+      .scrub {
+        display: none;
+      }
+    }
+
+    /* ============================================================
        LEGENDA
        ============================================================ */
-    /* Anda pelos cantos e nunca ocupa o centro, que e onde os fragmentos vivem.
-       A estrofe inteira ocupa um canto; os versos acendem um a um dentro dela. */
+    /* Faixa vertical fixa: limita a estrofe ao viewport qualquer que seja a
+       altura do bloco. */
     .lyric {
       position: fixed;
       z-index: 10;
-      max-width: min(30ch, 42vw);
+      top: 13vh;
+      bottom: 13vh;
+      width: min(30ch, 42vw);
+      display: flex;
+      flex-direction: column;
       pointer-events: none;
       font-family: var(--canto);
       font-weight: 300;
@@ -450,6 +518,7 @@
       line-height: 1.35;
       letter-spacing: 0.01em;
       color: var(--ink-dim);
+      overflow: hidden;
       text-shadow: 0 0 30px rgba(4, 5, 10, 0.95), 0 2px 4px rgba(4, 5, 10, 0.85);
       opacity: 0;
       filter: blur(4px);
@@ -463,14 +532,39 @@
       transform: none;
     }
 
+    .lyric.esq {
+      left: 6vw;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .lyric.dir {
+      right: 6vw;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .lyric.acima {
+      justify-content: flex-start;
+    }
+
+    .lyric.abaixo {
+      justify-content: flex-end;
+    }
+
+    .lyric.meio {
+      justify-content: center;
+    }
+
     .lyric p {
       margin-bottom: 0.2em;
+      /* Reparte o verso em linhas parecidas em vez de deixar uma palavra sozinha. */
+      text-wrap: balance;
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 520ms var(--ease), transform 520ms var(--ease), color 520ms var(--ease);
     }
 
-    /* O verso que soa agora tem corpo; os ja ditos ficam como eco. */
     .lyric p.viva {
       opacity: 0.92;
       transform: none;
@@ -482,25 +576,28 @@
       transform: none;
     }
 
-    /* Tres vozes que nunca se encontram: reta, espacada, sem calor.
-       Sem italico e com entrelinha alta, cada verso soa como declaracao isolada. */
+    /* Fora da janela sai do fluxo: sem isso a estrofe cresce alem da faixa. */
+    .lyric p.fora {
+      display: none;
+    }
+
     .lyric[data-tema="vozes"] {
       font-style: normal;
       font-size: clamp(21px, 2.4vw, 31px);
       line-height: 1.85;
       letter-spacing: 0.09em;
-      max-width: min(26ch, 38vw);
+      width: min(26ch, 38vw);
     }
 
     .lyric[data-tema="vozes"] p {
       margin-bottom: 0;
     }
 
-    /* Uma carta: inclinada, corrida, mais proxima do rosto. */
+    /* Largo o bastante para os versos longos nao quebrarem em tres linhas. */
     .lyric[data-tema="carta"] {
-      font-size: clamp(24px, 2.9vw, 38px);
-      line-height: 1.3;
-      max-width: min(24ch, 44vw);
+      font-size: clamp(21px, 2.4vw, 31px);
+      line-height: 1.28;
+      width: min(34ch, 46vw);
     }
 
     .lyric[data-tema="carta"] p:first-child {
@@ -518,7 +615,7 @@
       .lyric,
       .lyric[data-tema="vozes"],
       .lyric[data-tema="carta"] {
-        max-width: 74vw;
+        width: 74vw;
         font-size: 21px;
       }
     }
@@ -814,6 +911,14 @@
   </div>
   <button class="close" id="close" type="button" aria-label="Fechar">&#215;</button>
 
+  <div class="scrub" id="scrub" hidden>
+    <svg id="scrubSvg" aria-hidden="true">
+      <path class="resto" id="scrubResto" fill="none" />
+      <path class="feito" id="scrubFeito" fill="none" />
+      <circle class="pega" id="scrubPega" r="4" />
+    </svg>
+  </div>
+
   <div class="lyric" id="lyric" aria-hidden="true"></div>
 
   <div class="veil" id="veil"><span>abrindo</span></div>
@@ -829,8 +934,7 @@
       const ART = "./Assets/Dreamer/camadas/";
       const STORE = "dreamer.progress";
 
-      // Som ambiente. As faixas tocam em sequencia e voltam ao inicio.
-      // Para trocar o repertorio, mexa so nesta lista.
+      // Faixas tocadas em sequencia, em ciclo.
       const AUDIO = {
         dir: "./Assets/Dreamer/audio/",
         volume: 0.7,                                   // teto de volume, 0 a 1
@@ -848,20 +952,16 @@
         ]
       };
 
-      // Cantos por onde a legenda passa, em ordem. Cada linha cai no seguinte.
+      // Lado da tela e apoio dentro da faixa vertical, percorridos em ordem.
       const CANTOS = [
-        { top: "16vh", left: "7vw", align: "left" },
-        { bottom: "22vh", right: "7vw", align: "right" },
-        { top: "22vh", right: "9vw", align: "right" },
-        { bottom: "28vh", left: "9vw", align: "left" },
-        { top: "30vh", left: "12vw", align: "left" },
-        { bottom: "18vh", right: "12vw", align: "right" }
+        "esq acima", "dir abaixo", "dir acima",
+        "esq abaixo", "esq meio", "dir meio"
       ];
 
-      // A cena e uma peca larga que se repete: o percurso nao depende do
-      // tamanho do arquivo, e trocar a arte nao mexe em mais nada.
+      // A peca se repete, entao o percurso independe do tamanho do arquivo.
       const CENA = {
-        depths: [0.25, 1],                             // velocidade de cada camada
+        depths: [0.6, 1],                              // velocidade de cada camada
+        ancora: 0,                                     // camada a que os fragmentos pertencem
         files: ["a-fundo.png", "a-frente.png"],
         reach: 5,                                      // larguras de tela de percurso
         span: 6,                                       // alturas de tela de rolagem
@@ -885,12 +985,13 @@
         veil: document.getElementById("veil"),
         toggle: document.getElementById("switch"),
         som: document.getElementById("sound"),
-        lyric: document.getElementById("lyric")
+        lyric: document.getElementById("lyric"),
+        scrub: document.getElementById("scrub")
       };
 
       const app = {
         phase: 0,
-        som: false,
+        som: true,               // vale so nesta visita: recarregar volta a ligar
         items: [],
         byId: new Map(),
         read: new Set(),
@@ -913,13 +1014,12 @@
           if (!raw) return;
           const d = JSON.parse(raw);
           (d.read || []).forEach(id => app.read.add(id));
-          app.som = !!d.som;
         } catch (e) { /* armazenamento indisponivel: segue sem historico */ }
       }
 
       function persist() {
         try {
-          localStorage.setItem(STORE, JSON.stringify({ read: [...app.read], som: app.som }));
+          localStorage.setItem(STORE, JSON.stringify({ read: [...app.read] }));
         } catch (e) { /* idem */ }
       }
 
@@ -928,9 +1028,9 @@
          ══════════════════════════════════════════════════════════ */
       const som = (function () {
         let faixa = null, indice = 0, tocando = false, timer = 0;
+        let mudo = false, audivel = false;
         let blocos = [], blocoAtivo = -1, versoAtivo = -1, relogio = 0, canto = 0, tema = "";
 
-        // A legenda acompanha o tempo da faixa. Sem arquivo de letra, fica quieta.
         async function carregarLetra(nome) {
           blocos = []; blocoAtivo = -1; versoAtivo = -1; tema = "";
           apagarLegenda();
@@ -944,8 +1044,7 @@
           } catch (e) { /* sem letra: a faixa toca do mesmo jeito */ }
         }
 
-        // Versos separados por um respiro curto sao a mesma estrofe: ficam juntos
-        // no mesmo canto e se acumulam. Saltar a cada linha despedaca a leitura.
+        // Versos com menos de RESPIRO segundos entre si formam uma estrofe.
         function agrupar(linhas) {
           const RESPIRO = 3;
           const out = [];
@@ -965,6 +1064,7 @@
         }
 
         function acompanhar() {
+          trilha.pintar();
           if (!faixa || !blocos.length) return;
           const t = faixa.currentTime;
 
@@ -984,9 +1084,14 @@
           for (let k = 0; k < linhas.length; k++) if (linhas[k].t <= t) vi = k; else break;
           if (vi === versoAtivo) return;
           versoAtivo = vi;
+          // Janela deslizante limita a altura do bloco. O verso adiante fica no
+          // fluxo para que a transicao tenha um estado anterior de onde partir.
+          const ATRAS = 3, ADIANTE = 1;
+          const centro = Math.max(vi, 0);
           [...el.lyric.children].forEach((p, k) => {
             p.classList.toggle("viva", k === vi);
             p.classList.toggle("passou", k < vi);
+            p.classList.toggle("fora", k < centro - ATRAS || k > centro + ADIANTE);
           });
         }
 
@@ -995,10 +1100,7 @@
             ? bloco.linhas[0].canto % CANTOS.length
             : canto++ % CANTOS.length];
           const n = el.lyric;
-          n.classList.remove("on");
-          n.style.cssText = "";
-          Object.keys(c).forEach(k => { if (k !== "align") n.style[k] = c[k]; });
-          n.style.textAlign = c.align;
+          n.className = "lyric " + c;
           n.dataset.tema = tema;
           n.textContent = "";
           bloco.linhas.forEach(l => {
@@ -1019,12 +1121,14 @@
             faixa.preload = "auto";
             faixa.volume = 0;
             faixa.addEventListener("ended", proxima);
-            faixa.addEventListener("error", desligar);
+            faixa.addEventListener("error", falhar);
           }
           const atual = AUDIO.faixas[indice];
           faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
+          faixa.muted = mudo;
+          faixa.volume = mudo ? AUDIO.volume : 0;
           carregarLetra(atual.letra);
-          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(desligar);
+          faixa.play().then(() => { if (!mudo) esmaecer(AUDIO.volume); }).catch(falhar);
         }
 
         function proxima() {
@@ -1032,7 +1136,6 @@
           tocar();
         }
 
-        // Rampa de volume: entrar ou sair de uma vez incomoda mais que o silencio.
         function esmaecer(alvo, aoFim) {
           clearInterval(timer);
           const inicio = faixa ? faixa.volume : 0;
@@ -1047,37 +1150,96 @@
         function ligar() {
           if (tocando || !AUDIO.faixas.length) return;
           tocando = true;
-          el.som.setAttribute("aria-pressed", "true");
+          audivel = !mudo;
+          el.som.setAttribute("aria-pressed", audivel ? "true" : "false");
           tocar();
+          el.scrub.hidden = false;
+          trilha.montar();
           clearInterval(relogio);
           relogio = setInterval(acompanhar, 200);
         }
 
-        function desligar() {
+        // Autoplay so e permitido sem som. A faixa corre muda desde a abertura e
+        // a legenda ja aparece; o primeiro gesto do visitante libera o volume.
+        function revelar() {
+          if (!tocando || audivel || !faixa) return;
+          mudo = false;
+          audivel = true;
+          faixa.muted = false;
+          faixa.volume = 0;
+          esmaecer(AUDIO.volume);
+          el.som.setAttribute("aria-pressed", "true");
+          app.som = true;
+        }
+
+        // Pausa: para na hora e deixa legenda e fio onde estao.
+        function pausar() {
           if (!tocando) return;
           tocando = false;
+          audivel = false;
           el.som.setAttribute("aria-pressed", "false");
+          clearInterval(timer);
           clearInterval(relogio);
-          linhaAtual = -1;
+          if (faixa) faixa.pause();
+        }
+
+        function seguir() {
+          if (tocando || !faixa || !faixa.src) return;
+          tocando = true;
+          mudo = false;
+          audivel = true;
+          el.som.setAttribute("aria-pressed", "true");
+          faixa.muted = false;
+          faixa.volume = 0;
+          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
+          clearInterval(relogio);
+          relogio = setInterval(acompanhar, 200);
+        }
+
+        // Falha de carregamento tira tudo de cena; pausa do visitante nao.
+        function falhar() {
+          tocando = false;
+          mudo = false;
+          audivel = false;
+          el.som.setAttribute("aria-pressed", "false");
+          clearInterval(timer);
+          clearInterval(relogio);
+          el.scrub.hidden = true;
           apagarLegenda();
-          esmaecer(0, () => { if (faixa) faixa.pause(); });
+          if (faixa) faixa.pause();
         }
 
         return {
           alternar() {
-            tocando ? desligar() : ligar();
-            app.som = tocando;
-            persist();
+            if (tocando && !audivel) { revelar(); return; }   // primeiro toque abre o volume
+            if (tocando) { pausar(); app.som = false; return; }
+            faixa && faixa.src ? seguir() : ligar();
+            app.som = true;
           },
-          // O navegador so libera audio depois de um gesto; se a preferencia
-          // estava ligada, o som entra no primeiro toque do visitante.
           retomar() {
+            if (tocando) { revelar(); return; }
+            if (app.som) ligar();
+          },
+          // Faixa muda desde a abertura, para a legenda existir antes do gesto.
+          preludio() {
             if (!app.som || tocando) return;
+            mudo = true;
             ligar();
           },
           disponivel: () => AUDIO.faixas.length > 0,
-          // O leitor pede silencio visual: a legenda sai de cena enquanto ele esta aberto.
-          recolher(v) { el.lyric.classList.toggle("oculta", v); }
+          // Esconde a legenda enquanto o leitor esta aberto.
+          recolher(v) { el.lyric.classList.toggle("oculta", v); },
+          posicao: () => ({
+            atual: faixa ? faixa.currentTime : 0,
+            total: faixa && isFinite(faixa.duration) ? faixa.duration : 0
+          }),
+          irPara(p) {
+            if (!faixa || !isFinite(faixa.duration)) return;
+            faixa.currentTime = clamp(p, 0, 1) * faixa.duration;
+            blocoAtivo = -1;               // forca a legenda a reencontrar o trecho
+            versoAtivo = -1;
+            acompanhar();
+          }
         };
       })();
 
@@ -1098,6 +1260,99 @@
         if (f.requer && !f.requer.every(id => app.read.has(id))) return false;
         return true;
       }
+
+      /* ══════════════════════════════════════════════════════════
+         ANDAMENTO
+         ══════════════════════════════════════════════════════════ */
+      const trilha = (function () {
+        const svg = document.getElementById("scrubSvg");
+        const resto = document.getElementById("scrubResto");
+        const feito = document.getElementById("scrubFeito");
+        const pega = document.getElementById("scrubPega");
+        let total = 0, amostras = [], alto = 0, puxando = false;
+
+        // Duas frequencias somadas para o traco nao virar um seno regular.
+        function onda(w, h) {
+          const meio = w / 2, passos = 96;
+          let d = "";
+          for (let i = 0; i <= passos; i++) {
+            const k = i / passos;
+            const x = meio
+              + Math.sin(k * Math.PI * 8) * (w * 0.3)
+              + Math.sin(k * Math.PI * 21 + 1.1) * (w * 0.11);
+            d += (i ? "L" : "M") + x.toFixed(2) + " " + (k * h).toFixed(2);
+          }
+          return d;
+        }
+
+        function montar() {
+          const r = el.scrub.getBoundingClientRect();
+          if (!r.height) return;
+          alto = r.height;
+          const d = onda(r.width, r.height);
+          svg.setAttribute("viewBox", "0 0 " + r.width + " " + r.height);
+          resto.setAttribute("d", d);
+          feito.setAttribute("d", d);
+          total = feito.getTotalLength();
+          feito.style.strokeDasharray = total;
+          // O gesto e vertical e o traco nao: tabela converte altura em comprimento.
+          amostras = [];
+          for (let i = 0; i <= 160; i++) {
+            const c = (i / 160) * total;
+            amostras.push({ c: c, y: feito.getPointAtLength(c).y });
+          }
+          pintar();
+        }
+
+        function comprimentoEm(p) {
+          const y = clamp(p, 0, 1) * alto;
+          for (let i = 1; i < amostras.length; i++) {
+            if (amostras[i].y >= y) {
+              const a = amostras[i - 1], b = amostras[i];
+              const f = b.y === a.y ? 0 : (y - a.y) / (b.y - a.y);
+              return a.c + (b.c - a.c) * f;
+            }
+          }
+          return total;
+        }
+
+        function pintar() {
+          if (!total) return;
+          const s = som.posicao();
+          const c = comprimentoEm(s.total ? s.atual / s.total : 0);
+          feito.style.strokeDashoffset = total - c;
+          const pt = feito.getPointAtLength(c);
+          pega.setAttribute("cx", pt.x);
+          pega.setAttribute("cy", pt.y);
+        }
+
+        function fracao(e) {
+          const r = el.scrub.getBoundingClientRect();
+          return clamp((e.clientY - r.top) / r.height, 0, 1);
+        }
+
+        function soltar() {
+          puxando = false;
+          el.scrub.classList.remove("puxando");
+        }
+
+        el.scrub.addEventListener("pointerdown", e => {
+          puxando = true;
+          el.scrub.classList.add("puxando");
+          el.scrub.setPointerCapture(e.pointerId);
+          som.irPara(fracao(e));
+          pintar();
+        });
+        el.scrub.addEventListener("pointermove", e => {
+          if (!puxando) return;
+          som.irPara(fracao(e));
+          pintar();
+        });
+        el.scrub.addEventListener("pointerup", soltar);
+        el.scrub.addEventListener("pointercancel", soltar);
+
+        return { montar: montar, pintar: pintar };
+      })();
 
       /* ══════════════════════════════════════════════════════════
          MONTAGEM DA CENA
@@ -1159,7 +1414,6 @@
         refreshSeen();
       }
 
-      // Um fragmento ja lido perde o brilho e passa a exibir o titulo no lugar do tipo.
       function refreshSeen() {
         app.nodes.forEach((n, id) => {
           const f = app.byId.get(id);
@@ -1197,17 +1451,21 @@
         const shift = p * b.travel;
 
         app.layers.forEach(l => {
-          // Desliza no maximo uma peca e reinicia: a repeticao esconde o salto.
+          // Desliza no maximo uma peca e reinicia; a repeticao esconde o salto.
           const d = l.step ? -((shift * l.depth) % l.step) : 0;
           l.node.style.transform = "translate3d(" + d + "px,0,0)";
         });
 
-        el.markers.style.transform = "translate3d(" + (-shift) + "px,0,0)";
+        // Os fragmentos acompanham a camada em que estao apoiados, senao deslizam
+        // contra a parede em vez de pertencer a ela.
+        const dm = CENA.depths[CENA.ancora];
+        const alcance = b.travel * dm;
+        el.markers.style.transform = "translate3d(" + (-shift * dm) + "px,0,0)";
 
         app.items.forEach(f => {
-          // Ancorado de modo que o objeto fique centrado exatamente quando p == at.
-          const x = f.at * b.travel + b.w / 2;
-          place(app.nodes.get(f.id), f, x, f.alt * b.h, focusFrom((f.at - p) * b.travel, b.w));
+          // Ancora que deixa o objeto centrado exatamente quando p == at.
+          const x = f.at * alcance + b.w / 2;
+          place(app.nodes.get(f.id), f, x, f.alt * b.h, focusFrom((f.at - p) * alcance, b.w));
         });
       }
 
@@ -1336,7 +1594,7 @@
         request();
       }
 
-      // Seguir um link move a cena ate o destino: o texto e o espaco andam juntos.
+      // Seguir um link percorre a cena ate o destino antes de abrir o fragmento.
       function travel(id) {
         const f = app.byId.get(id);
         if (!f) return;
@@ -1373,7 +1631,7 @@
         app.phase = n;
         document.documentElement.dataset.phase = n;
         el.toggle.setAttribute("aria-pressed", n === 1 ? "true" : "false");
-        // A cena mudou por baixo: o leitor sai de cena junto, em vez de ficar defasado.
+        // A cena mudou por baixo do leitor: fecha em vez de deixar o texto defasado.
         if (app.open) hide();
         request();
       }
@@ -1383,16 +1641,22 @@
          ══════════════════════════════════════════════════════════ */
       function bind() {
         window.addEventListener("scroll", request, { passive: true });
-        window.addEventListener("resize", () => { measure(); request(); });
+        window.addEventListener("resize", () => { measure(); request(); if (!el.scrub.hidden) trilha.montar(); });
 
         el.close.addEventListener("click", hide);
         el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
         el.toggle.addEventListener("click", () => setPhase(app.phase === 0 ? 1 : 0));
         el.som.addEventListener("click", () => som.alternar());
 
-        // Primeiro gesto do visitante: e a unica brecha para retomar o som.
-        ["pointerdown", "keydown", "wheel", "touchstart"].forEach(ev =>
-          window.addEventListener(ev, () => som.retomar(), { once: true, passive: true }));
+        // Autoplay so e liberado apos um gesto do visitante, e rolagem nao conta
+        // como um. Sem 'once' porque a primeira tentativa pode ser recusada.
+        // O botao de som tem tratamento proprio: sem isto o gesto liberaria o
+        // volume e o clique seguinte o cortaria de novo.
+        ["pointerdown", "keydown", "touchstart"].forEach(ev =>
+          window.addEventListener(ev, e => {
+            if (e.target && el.som.contains(e.target)) return;
+            som.retomar();
+          }, { passive: true }));
 
 
         document.addEventListener("keydown", e => {
@@ -1429,7 +1693,7 @@
         buildMarkers();
         measure();
         bind();
-        if (som.disponivel()) el.som.hidden = false;
+        if (som.disponivel()) { el.som.hidden = false; som.preludio(); }
         app.ready = true;
         tick();
         requestAnimationFrame(() => el.veil.classList.add("gone"));
