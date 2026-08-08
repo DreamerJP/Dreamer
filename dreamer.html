@@ -11,9 +11,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap"
     rel="stylesheet" />
+
   <style>
     /* ============================================================
-       TOKENS
+       1 · TOKENS
        ============================================================ */
     :root {
       --bg: #04050a;
@@ -44,6 +45,9 @@
       --grain: 0.085;
     }
 
+    /* ============================================================
+       2 · BASE
+       ============================================================ */
     * {
       margin: 0;
       padding: 0;
@@ -54,6 +58,7 @@
       background: var(--bg);
     }
 
+    /* Trava a rolagem enquanto o leitor esta aberto. */
     html.held {
       overflow: hidden;
     }
@@ -68,36 +73,6 @@
       cursor: none;
     }
 
-    /* O halo faz as vezes de cursor; a seta do sistema volta so onde ha o que
-       operar, que e onde ela ainda informa alguma coisa. */
-    button,
-    .sheet .link,
-    .reader {
-      cursor: pointer;
-    }
-
-    /* Nada de seta aqui: a mira ja virou o proprio fragmento. */
-    .marker.on {
-      cursor: none;
-    }
-
-    .marker.pego .glyph {
-      opacity: 0;
-      transition: opacity 240ms var(--ease);
-    }
-
-    /* Com o ponteiro em cima o nome nao depende mais da proximidade do centro. */
-    .marker.pego .tag {
-      opacity: 1;
-      color: var(--ink);
-      transition: opacity 240ms var(--ease), color 240ms var(--ease);
-    }
-
-    .reader,
-    .sheet {
-      cursor: default;
-    }
-
     button {
       font: inherit;
       color: inherit;
@@ -106,13 +81,29 @@
       cursor: pointer;
     }
 
+    /* O halo faz as vezes de cursor; a seta do sistema volta so onde ha o que
+       operar. Sobre um fragmento nem isso: a mira ja virou a forma dele. */
+    .sheet .link,
+    .reader {
+      cursor: pointer;
+    }
+
+    .reader,
+    .sheet {
+      cursor: default;
+    }
+
+    .marker.on {
+      cursor: none;
+    }
+
     ::selection {
       background: var(--accent);
       color: #06070c;
     }
 
     /* ============================================================
-       PALCO — camadas
+       3 · PALCO
        ============================================================ */
     /* O filtro cobre cena e camadas de uma vez, sem repintar cada uma. */
     .stage {
@@ -124,13 +115,16 @@
       filter: sepia(0.3) saturate(0.75) contrast(1.05) brightness(0.98);
     }
 
+    :root[data-phase="1"] .stage {
+      filter: sepia(0.1) saturate(0.6) contrast(1.22) brightness(0.82) hue-rotate(35deg);
+    }
+
     .scene {
       position: absolute;
       inset: 0;
       animation: respiro 26s ease-in-out infinite alternate;
     }
 
-    /* Meio por cento de deriva: o olho registra que a cena nao esta congelada. */
     @keyframes respiro {
       from {
         transform: scale(1.004) translate3d(-0.25%, 0.15%, 0);
@@ -139,6 +133,19 @@
       to {
         transform: scale(1.014) translate3d(0.3%, -0.2%, 0);
       }
+    }
+
+    /* ============================================================
+       4 · CAMADAS
+       ============================================================ */
+    /* A peca repetida e desenhada pelo proprio navegador, num elemento so.
+       Fatiar em filhos multiplica a area promovida a GPU e trava o quadro. */
+    .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-repeat: repeat-x;
+      will-change: transform;
     }
 
     /* Brilho sobre a lampada da arte, repetido junto com a peca. */
@@ -218,6 +225,9 @@
       }
     }
 
+    /* ============================================================
+       5 · QUARTOS ATRAS DA PAREDE
+       ============================================================ */
     /* Cobre so a camada dos quartos, porque a parede e desenhada depois.
        O furo acompanha a lanterna; fora dele o comodo nao existe. */
     .veu {
@@ -231,19 +241,18 @@
           #04050a 96px);
     }
 
-    /* Sem ponteiro nao ha o que revelar: o comodo fica apenas rebaixado. */
-    @media (hover: none) {
-      .veu {
-        background: rgba(4, 5, 10, 0.74);
-      }
-    }
-
+    /* ============================================================
+       6 · POEIRA
+       ============================================================ */
     .dust {
       position: absolute;
       inset: 0;
       pointer-events: none;
     }
 
+    /* ============================================================
+       7 · LANTERNA
+       ============================================================ */
     /* Fica dentro da cena e atras do primeiro plano: o entulho corta a luz. */
     .lume {
       position: absolute;
@@ -311,41 +320,9 @@
       box-shadow: 0 0 18px 4px var(--accent);
     }
 
-    @media (hover: none) {
-      body {
-        cursor: auto;
-      }
-
-      .lume,
-      .ponta {
-        display: none;
-      }
-    }
-
-    :root[data-phase="1"] .stage {
-      filter: sepia(0.1) saturate(0.6) contrast(1.22) brightness(0.82) hue-rotate(35deg);
-    }
-
-    .layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      will-change: transform, opacity;
-    }
-
-    /* A peca repetida e desenhada pelo proprio navegador, num elemento so.
-       Fatiar em filhos multiplica a area promovida a GPU e trava o quadro. */
-
-    .layer img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    /* ── neblina e vinheta ── */
+    /* ============================================================
+       8 · ATMOSFERA
+       ============================================================ */
     .haze {
       position: fixed;
       inset: 0;
@@ -400,7 +377,7 @@
     }
 
     /* ============================================================
-       OBJETOS ANCORADOS
+       9 · FRAGMENTOS
        ============================================================ */
     .markers {
       position: absolute;
@@ -426,8 +403,8 @@
       pointer-events: auto;
     }
 
-    /* Os valores abaixo sao escritos a cada quadro pelo laco; sem transicao,
-       para que o movimento venha da rolagem e nao de uma animacao concorrente. */
+    /* Escritos a cada quadro pelo laco; sem transicao, para que o movimento
+       venha da rolagem e nao de uma animacao concorrente. */
     .marker .glyph {
       position: relative;
       width: 9px;
@@ -475,17 +452,23 @@
       color: var(--ink-dim);
     }
 
-    .marker.on:hover .glyph {
-      transform: rotate(45deg) scale(calc((0.35 + var(--f, 0) * 0.9) * 1.8));
+    /* Com o ponteiro em cima a forma migra para a mira e o nome deixa de
+       depender da proximidade do centro. */
+    .marker.pego .glyph {
+      opacity: 0;
+      transition: opacity 240ms var(--ease);
     }
 
-    .marker.on:hover .tag {
+    .marker.pego .tag {
+      opacity: 1;
       color: var(--ink);
+      transition: opacity 240ms var(--ease), color 240ms var(--ease);
     }
 
     /* ============================================================
-       INTERFACE
+       10 · CABECALHO
        ============================================================ */
+    /* Altura rolavel; a cena nao rola junto, ela e traduzida pelo progresso. */
     .track {
       position: relative;
       z-index: 1;
@@ -542,6 +525,15 @@
       color: var(--ink);
     }
 
+    .switch .bulb {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 9px var(--accent);
+      transition: background 900ms var(--ease), box-shadow 900ms var(--ease);
+    }
+
     .switch .wave {
       display: flex;
       align-items: flex-end;
@@ -581,16 +573,9 @@
       }
     }
 
-    .switch .bulb {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 9px var(--accent);
-      transition: background 900ms var(--ease), box-shadow 900ms var(--ease);
-    }
-
-    /* ── trilho de progresso ── */
+    /* ============================================================
+       11 · TRILHO DE PROGRESSO
+       ============================================================ */
     .rail {
       position: fixed;
       left: 50%;
@@ -657,7 +642,7 @@
     }
 
     /* ============================================================
-       ANDAMENTO
+       12 · ANDAMENTO DO SOM
        ============================================================ */
     .scrub {
       position: fixed;
@@ -673,13 +658,13 @@
       cursor: grab;
     }
 
-    .scrub.puxando {
-      cursor: grabbing;
-    }
-
     .scrub:hover,
     .scrub.puxando {
       opacity: 1;
+    }
+
+    .scrub.puxando {
+      cursor: grabbing;
     }
 
     .scrub svg {
@@ -714,15 +699,8 @@
       opacity: 1;
     }
 
-    @media (max-width: 760px),
-    (hover: none) {
-      .scrub {
-        display: none;
-      }
-    }
-
     /* ============================================================
-       LEGENDA
+       13 · LEGENDA
        ============================================================ */
     /* Faixa vertical fixa: limita a estrofe ao viewport qualquer que seja a
        altura do bloco. */
@@ -734,6 +712,7 @@
       width: min(30ch, 42vw);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
       pointer-events: none;
       font-family: var(--canto);
       font-weight: 300;
@@ -742,7 +721,6 @@
       line-height: 1.35;
       letter-spacing: 0.01em;
       color: var(--ink-dim);
-      overflow: hidden;
       text-shadow: 0 0 30px rgba(4, 5, 10, 0.95), 0 2px 4px rgba(4, 5, 10, 0.85);
       opacity: 0;
       filter: blur(4px);
@@ -754,6 +732,11 @@
       opacity: 1;
       filter: none;
       transform: none;
+    }
+
+    .lyric.oculta {
+      opacity: 0 !important;
+      filter: blur(4px) !important;
     }
 
     .lyric.esq {
@@ -806,11 +789,11 @@
     }
 
     .lyric[data-tema="vozes"] {
+      width: min(26ch, 38vw);
       font-style: normal;
       font-size: clamp(21px, 2.4vw, 31px);
       line-height: 1.85;
       letter-spacing: 0.09em;
-      width: min(26ch, 38vw);
     }
 
     .lyric[data-tema="vozes"] p {
@@ -819,9 +802,9 @@
 
     /* Largo o bastante para os versos longos nao quebrarem em tres linhas. */
     .lyric[data-tema="carta"] {
+      width: min(34ch, 46vw);
       font-size: clamp(21px, 2.4vw, 31px);
       line-height: 1.28;
-      width: min(34ch, 46vw);
     }
 
     .lyric[data-tema="carta"] p:first-child {
@@ -829,23 +812,8 @@
       transition: color 900ms var(--ease);
     }
 
-    .lyric.oculta {
-      opacity: 0 !important;
-      filter: blur(4px) !important;
-    }
-
-    @media (max-width: 760px) {
-
-      .lyric,
-      .lyric[data-tema="vozes"],
-      .lyric[data-tema="carta"] {
-        width: 74vw;
-        font-size: 21px;
-      }
-    }
-
     /* ============================================================
-       LEITOR
+       14 · LEITOR
        ============================================================ */
     .reader {
       position: fixed;
@@ -897,12 +865,12 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 14px;
+      margin-bottom: 18px;
       font-family: var(--mono);
       font-size: 10px;
       letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin-bottom: 18px;
     }
 
     .sheet .meta .kind {
@@ -918,18 +886,18 @@
     }
 
     .sheet h2 {
+      margin-bottom: 30px;
       font-weight: 500;
       font-size: clamp(30px, 5.4vw, 46px);
       line-height: 1.12;
       letter-spacing: -0.015em;
-      margin-bottom: 30px;
     }
 
     .sheet p {
+      margin-bottom: 22px;
       font-size: clamp(17px, 2.1vw, 19px);
       line-height: 1.78;
       color: var(--ink);
-      margin-bottom: 22px;
       opacity: 0;
       transform: translateY(8px);
       animation: rise 900ms var(--ease) forwards;
@@ -945,8 +913,8 @@
 
     .sheet .link {
       position: relative;
-      color: var(--ink);
       padding: 0 1px;
+      color: var(--ink);
       border-bottom: 1px solid var(--accent);
       transition: color 260ms var(--ease), background 260ms var(--ease);
     }
@@ -994,35 +962,15 @@
     }
 
     /* ============================================================
-       AVISOS / ABERTURA
+       15 · ABERTURA E AVISOS
        ============================================================ */
-    .notice {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      display: grid;
-      place-items: center;
-      padding: 30px;
-      text-align: center;
-      background: var(--bg);
-      color: var(--ink-dim);
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height: 2;
-      letter-spacing: 0.1em;
-    }
-
-    .notice code {
-      color: var(--accent);
-    }
-
     .veil {
       position: fixed;
       inset: 0;
       z-index: 50;
-      background: var(--bg);
       display: grid;
       place-items: center;
+      background: var(--bg);
       transition: opacity 1400ms var(--ease), visibility 1400ms;
     }
 
@@ -1053,8 +1001,28 @@
       }
     }
 
+    .notice {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      text-align: center;
+      background: var(--bg);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 2;
+      letter-spacing: 0.1em;
+    }
+
+    .notice code {
+      color: var(--accent);
+    }
+
     /* ============================================================
-       TELAS ESTREITAS
+       16 · TELAS ESTREITAS E MENOS MOVIMENTO
        ============================================================ */
     @media (max-width: 760px) {
       .top {
@@ -1081,12 +1049,41 @@
         height: 96px;
         margin: -48px 0 0 -48px;
       }
+
+      .scrub {
+        display: none;
+      }
+
+      .lyric,
+      .lyric[data-tema="vozes"],
+      .lyric[data-tema="carta"] {
+        width: 74vw;
+        font-size: 21px;
+      }
+    }
+
+    /* Sem ponteiro nao ha lanterna: o comodo fica apenas rebaixado. */
+    @media (hover: none) {
+      body {
+        cursor: auto;
+      }
+
+      .lume,
+      .ponta,
+      .scrub {
+        display: none;
+      }
+
+      .veu {
+        background: rgba(4, 5, 10, 0.74);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
 
       .haze,
       .edge,
+      .scene,
       .veil span {
         animation: none;
       }
@@ -1101,11 +1098,13 @@
 
 <body>
 
+  <!-- As camadas sao inseridas em .scene pelo script, na ordem de pintura:
+       quartos · veu · parede · poeira · lume · frente · marcadores -->
   <div class="stage" aria-hidden="true">
     <div class="scene" id="scene">
-      <div class="veu" id="veu" aria-hidden="true"></div>
-      <canvas class="dust" id="dust" aria-hidden="true"></canvas>
-      <div class="lume" id="lume" aria-hidden="true"></div>
+      <div class="veu" id="veu"></div>
+      <canvas class="dust" id="dust"></canvas>
+      <div class="lume" id="lume"></div>
       <div class="markers" id="markers"></div>
     </div>
   </div>
@@ -1122,21 +1121,10 @@
         <span class="wave"><i></i><i></i><i></i></span><span>som</span>
       </button>
       <button class="switch" id="switch" type="button" aria-pressed="false">
-        <span class="bulb"></span><span id="switchLabel">alternar · E</span>
+        <span class="bulb"></span><span>alternar · E</span>
       </button>
     </div>
   </header>
-
-  <div class="rail" id="rail">
-    <div class="bar"></div>
-    <div class="fill" id="fill"></div>
-    <div class="hint" id="hint">role para percorrer</div>
-  </div>
-
-  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-    <article class="sheet" id="sheet"></article>
-  </div>
-  <button class="close" id="close" type="button" aria-label="Fechar">&#215;</button>
 
   <div class="scrub" id="scrub" hidden>
     <svg id="scrubSvg" aria-hidden="true">
@@ -1146,7 +1134,18 @@
     </svg>
   </div>
 
+  <div class="rail" id="rail">
+    <div class="bar"></div>
+    <div class="fill" id="fill"></div>
+    <div class="hint" id="hint">role para percorrer</div>
+  </div>
+
   <div class="lyric" id="lyric" aria-hidden="true"></div>
+
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <article class="sheet" id="sheet"></article>
+  </div>
+  <button class="close" id="close" type="button" aria-label="Fechar">&#215;</button>
 
   <div class="ponta" id="ponta" aria-hidden="true"><i></i></div>
 
@@ -1157,19 +1156,29 @@
       "use strict";
 
       /* ══════════════════════════════════════════════════════════
-         CONFIGURACAO
+         1 · CONFIGURACAO
          ══════════════════════════════════════════════════════════ */
       const SOURCE = "./Assets/Dreamer/fragmentos.json";
       const ART = "./Assets/Dreamer/camadas/";
       const STORE = "dreamer.progress";
 
-      // Faixas tocadas em sequencia, em ciclo.
+      // A peca se repete, entao o percurso independe do tamanho do arquivo.
+      const CENA = {
+        files: ["a-quartos.png", "a-fundo.png", "a-frente.png"],
+        depths: [0.6, 0.6, 1],                       // velocidade de cada camada
+        ancora: 1,                                   // camada a que os fragmentos pertencem
+        poeiraAtras: 2,                              // camada que passa na frente da poeira
+        lampada: { camada: 1, x: 0.313, y: 0.209 },  // posicao da luz dentro da peca
+        reach: 5,                                    // larguras de tela de percurso
+        span: 6                                      // alturas de tela de rolagem
+      };
+
+      // Faixas tocadas em sequencia, em ciclo. 'letra' e opcional.
       const AUDIO = {
         dir: "./Assets/Dreamer/audio/",
-        volume: 0.7,                                   // teto de volume, 0 a 1
-        fade: 1600,                                    // entrada e saida do som, em ms
-        recuo: 0.35,                                   // fracao do volume enquanto se le um fragmento
-        // 'letra' e opcional: sem ele a faixa toca sem legenda.
+        volume: 0.7,                                 // teto de volume, 0 a 1
+        fade: 1600,                                  // entrada do som, em ms
+        recuo: 0.35,                                 // fracao do volume enquanto se le
         faixas: [
           {
             arquivo: "Rain of Brass Petals - Three Vocals Edit.mp3",
@@ -1188,69 +1197,67 @@
         "esq abaixo", "esq meio", "dir meio"
       ];
 
-      // A peca se repete, entao o percurso independe do tamanho do arquivo.
-      const CENA = {
-        depths: [0.6, 0.6, 1],                         // velocidade de cada camada
-        ancora: 1,                                     // camada a que os fragmentos pertencem
-        poeiraAtras: 2,                                // camada que passa na frente da poeira
-        lampada: { camada: 1, x: 0.313, y: 0.209 },    // posicao da luz dentro da peca
-        files: ["a-quartos.png", "a-fundo.png", "a-frente.png"],
-        reach: 5,                                      // larguras de tela de percurso
-        span: 6,                                       // alturas de tela de rolagem
-        hint: "role para percorrer"
-      };
+      const RESPIRO = 3;        // segundos de silencio que separam duas estrofes
+      const ATRAS = 3;          // versos de eco mantidos atras do atual
+      const ADIANTE = 1;        // verso adiante ja no fluxo, para a transicao ter de onde partir
+      const INERCIA = 0.12;     // fracao da distancia vencida por quadro a 60fps
+      const PESO_LUZ = 0.16;    // idem, para o halo do ponteiro
 
       /* ══════════════════════════════════════════════════════════
-         ESTADO
+         2 · ELEMENTOS
          ══════════════════════════════════════════════════════════ */
       const el = {
-        stage: document.querySelector(".stage"),
         scene: document.getElementById("scene"),
+        veu: document.getElementById("veu"),
+        dust: document.getElementById("dust"),
+        lume: document.getElementById("lume"),
+        ponta: document.getElementById("ponta"),
         markers: document.getElementById("markers"),
         track: document.getElementById("track"),
         rail: document.getElementById("rail"),
         fill: document.getElementById("fill"),
         hint: document.getElementById("hint"),
+        scrub: document.getElementById("scrub"),
+        lyric: document.getElementById("lyric"),
         reader: document.getElementById("reader"),
         sheet: document.getElementById("sheet"),
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
         toggle: document.getElementById("switch"),
-        som: document.getElementById("sound"),
-        lyric: document.getElementById("lyric"),
-        dust: document.getElementById("dust"),
-        lume: document.getElementById("lume"),
-        veu: document.getElementById("veu"),
-        ponta: document.getElementById("ponta"),
-        scrub: document.getElementById("scrub")
+        som: document.getElementById("sound")
       };
 
+      /* ══════════════════════════════════════════════════════════
+         3 · ESTADO
+         ══════════════════════════════════════════════════════════ */
       const app = {
         phase: 0,
-        som: true,               // vale so nesta visita: recarregar volta a ligar
+        som: true,              // vale so nesta visita: recarregar volta a ligar
         items: [],
         byId: new Map(),
         read: new Set(),
         layers: [],
-        nodes: new Map(),   // id -> { marker, pip }
-        box: { w: 0, h: 0, art: 0, artH: 0, travel: 1, offX: 0, offY: 0 },
-        p: 0,
-        alvo: 0,
+        nodes: new Map(),       // id -> { marker, pip }
+        box: { w: 0, h: 0, travel: 1 },
+        p: 0,                   // progresso amortecido
+        alvo: 0,                // progresso cru da rolagem
         open: null,
         ready: false
       };
 
       const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
       const smooth = t => t * t * (3 - 2 * t);
+      // Amortecimento independente da taxa de quadros: em 144Hz o passo e menor.
+      const passoDe = (fracao, dt) => 1 - Math.pow(1 - fracao, dt * 60);
+
       /* ══════════════════════════════════════════════════════════
-         PERSISTENCIA
+         4 · PERSISTENCIA
          ══════════════════════════════════════════════════════════ */
       function restore() {
         try {
           const raw = localStorage.getItem(STORE);
           if (!raw) return;
-          const d = JSON.parse(raw);
-          (d.read || []).forEach(id => app.read.add(id));
+          (JSON.parse(raw).read || []).forEach(id => app.read.add(id));
         } catch (e) { /* armazenamento indisponivel: segue sem historico */ }
       }
 
@@ -1261,232 +1268,7 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         SOM
-         ══════════════════════════════════════════════════════════ */
-      const som = (function () {
-        let faixa = null, indice = 0, tocando = false, timer = 0;
-        let mudo = false, audivel = false;
-        let blocos = [], blocoAtivo = -1, versoAtivo = -1, relogio = 0, canto = 0, tema = "";
-
-        async function carregarLetra(nome) {
-          blocos = []; blocoAtivo = -1; versoAtivo = -1; tema = "";
-          apagarLegenda();
-          if (!nome) return;
-          try {
-            const res = await fetch(AUDIO.dir + encodeURIComponent(nome));
-            if (!res.ok) return;
-            const d = await res.json();
-            tema = d.tema || "";
-            blocos = agrupar((d.linhas || []).slice().sort((x, y) => x.t - y.t));
-          } catch (e) { /* sem letra: a faixa toca do mesmo jeito */ }
-        }
-
-        // Versos com menos de RESPIRO segundos entre si formam uma estrofe.
-        function agrupar(linhas) {
-          const RESPIRO = 3;
-          const out = [];
-          linhas.forEach(l => {
-            const b = out[out.length - 1];
-            const anterior = b ? b.linhas[b.linhas.length - 1] : null;
-            const fecha = anterior ? (anterior.fim != null ? anterior.fim : anterior.t) : -99;
-            if (!b || l.t - fecha > RESPIRO) out.push({ linhas: [l] });
-            else b.linhas.push(l);
-          });
-          out.forEach(b => {
-            b.t = b.linhas[0].t;
-            const u = b.linhas[b.linhas.length - 1];
-            b.fim = u.fim != null ? u.fim : u.t + 6;
-          });
-          return out;
-        }
-
-        function acompanhar() {
-          trilha.pintar();
-          if (!faixa || !blocos.length) return;
-          const t = faixa.currentTime;
-
-          let bi = -1;
-          for (let k = 0; k < blocos.length; k++) {
-            if (t >= blocos[k].t - 0.3 && t <= blocos[k].fim + 1.2) { bi = k; break; }
-          }
-          if (bi !== blocoAtivo) {
-            blocoAtivo = bi;
-            versoAtivo = -1;
-            bi >= 0 ? abrirBloco(blocos[bi]) : apagarLegenda();
-          }
-          if (bi < 0) return;
-
-          const linhas = blocos[bi].linhas;
-          let vi = -1;
-          for (let k = 0; k < linhas.length; k++) if (linhas[k].t <= t) vi = k; else break;
-          if (vi === versoAtivo) return;
-          versoAtivo = vi;
-          // Janela deslizante limita a altura do bloco. O verso adiante fica no
-          // fluxo para que a transicao tenha um estado anterior de onde partir.
-          const ATRAS = 3, ADIANTE = 1;
-          const centro = Math.max(vi, 0);
-          [...el.lyric.children].forEach((p, k) => {
-            p.classList.toggle("viva", k === vi);
-            p.classList.toggle("passou", k < vi);
-            p.classList.toggle("fora", k < centro - ATRAS || k > centro + ADIANTE);
-          });
-        }
-
-        function abrirBloco(bloco) {
-          const c = CANTOS[bloco.linhas[0].canto != null
-            ? bloco.linhas[0].canto % CANTOS.length
-            : canto++ % CANTOS.length];
-          const n = el.lyric;
-          n.className = "lyric " + c;
-          n.dataset.tema = tema;
-          n.textContent = "";
-          bloco.linhas.forEach(l => {
-            const p = document.createElement("p");
-            p.textContent = l.texto;
-            n.appendChild(p);
-          });
-          requestAnimationFrame(() => n.classList.add("on"));
-        }
-
-        function apagarLegenda() {
-          el.lyric.classList.remove("on");
-        }
-
-        function tocar() {
-          if (!faixa) {
-            faixa = new Audio();
-            faixa.preload = "auto";
-            faixa.volume = 0;
-            faixa.addEventListener("ended", proxima);
-            faixa.addEventListener("error", falhar);
-          }
-          const atual = AUDIO.faixas[indice];
-          faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
-          faixa.muted = mudo;
-          faixa.volume = mudo ? AUDIO.volume : 0;
-          carregarLetra(atual.letra);
-          faixa.play().then(() => { if (!mudo) esmaecer(AUDIO.volume); }).catch(falhar);
-        }
-
-        function proxima() {
-          indice = (indice + 1) % AUDIO.faixas.length;
-          tocar();
-        }
-
-        function esmaecer(alvo, ms, aoFim) {
-          clearInterval(timer);
-          const dur = ms || AUDIO.fade;
-          const inicio = faixa ? faixa.volume : 0;
-          const t0 = performance.now();
-          timer = setInterval(() => {
-            const k = clamp((performance.now() - t0) / dur, 0, 1);
-            if (faixa) faixa.volume = clamp(inicio + (alvo - inicio) * k, 0, 1);
-            if (k >= 1) { clearInterval(timer); if (aoFim) aoFim(); }
-          }, 40);
-        }
-
-        function ligar() {
-          if (tocando || !AUDIO.faixas.length) return;
-          tocando = true;
-          audivel = !mudo;
-          el.som.setAttribute("aria-pressed", audivel ? "true" : "false");
-          tocar();
-          el.scrub.hidden = false;
-          trilha.montar();
-          clearInterval(relogio);
-          relogio = setInterval(acompanhar, 200);
-        }
-
-        // Autoplay so e permitido sem som. A faixa corre muda desde a abertura e
-        // a legenda ja aparece; o primeiro gesto do visitante libera o volume.
-        function revelar() {
-          if (!tocando || audivel || !faixa) return;
-          mudo = false;
-          audivel = true;
-          faixa.muted = false;
-          faixa.volume = 0;
-          esmaecer(AUDIO.volume);
-          el.som.setAttribute("aria-pressed", "true");
-          app.som = true;
-        }
-
-        // Pausa: para na hora e deixa legenda e fio onde estao.
-        function pausar() {
-          if (!tocando) return;
-          tocando = false;
-          audivel = false;
-          el.som.setAttribute("aria-pressed", "false");
-          clearInterval(timer);
-          clearInterval(relogio);
-          if (faixa) faixa.pause();
-        }
-
-        function seguir() {
-          if (tocando || !faixa || !faixa.src) return;
-          tocando = true;
-          mudo = false;
-          audivel = true;
-          el.som.setAttribute("aria-pressed", "true");
-          faixa.muted = false;
-          faixa.volume = 0;
-          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
-          clearInterval(relogio);
-          relogio = setInterval(acompanhar, 200);
-        }
-
-        // Falha de carregamento tira tudo de cena; pausa do visitante nao.
-        function falhar() {
-          tocando = false;
-          mudo = false;
-          audivel = false;
-          el.som.setAttribute("aria-pressed", "false");
-          clearInterval(timer);
-          clearInterval(relogio);
-          el.scrub.hidden = true;
-          apagarLegenda();
-          if (faixa) faixa.pause();
-        }
-
-        return {
-          alternar() {
-            if (tocando && !audivel) { revelar(); return; }   // primeiro toque abre o volume
-            if (tocando) { pausar(); app.som = false; return; }
-            faixa && faixa.src ? seguir() : ligar();
-            app.som = true;
-          },
-          retomar() {
-            if (tocando) { revelar(); return; }
-            if (app.som) ligar();
-          },
-          // Faixa muda desde a abertura, para a legenda existir antes do gesto.
-          preludio() {
-            if (!app.som || tocando) return;
-            mudo = true;
-            ligar();
-          },
-          disponivel: () => AUDIO.faixas.length > 0,
-          // Esconde a legenda enquanto o leitor esta aberto.
-          recolher(v) {
-            el.lyric.classList.toggle("oculta", v);
-            // O leitor manda no som tambem: a faixa recua para segundo plano.
-            if (audivel) esmaecer(v ? AUDIO.volume * AUDIO.recuo : AUDIO.volume, 500);
-          },
-          posicao: () => ({
-            atual: faixa ? faixa.currentTime : 0,
-            total: faixa && isFinite(faixa.duration) ? faixa.duration : 0
-          }),
-          irPara(p) {
-            if (!faixa || !isFinite(faixa.duration)) return;
-            faixa.currentTime = clamp(p, 0, 1) * faixa.duration;
-            blocoAtivo = -1;               // forca a legenda a reencontrar o trecho
-            versoAtivo = -1;
-            acompanhar();
-          }
-        };
-      })();
-
-      /* ══════════════════════════════════════════════════════════
-         DADOS
+         5 · DADOS
          ══════════════════════════════════════════════════════════ */
       async function load() {
         const res = await fetch(SOURCE);
@@ -1504,7 +1286,118 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         ANDAMENTO
+         6 · POEIRA
+         ══════════════════════════════════════════════════════════ */
+      const poeira = (function () {
+        const ctx = el.dust.getContext("2d");
+        let pontos = [], w = 0, h = 0, rodando = false, desloc = 0;
+
+        function nascer(espalhado) {
+          return {
+            x: Math.random() * w,
+            y: espalhado ? Math.random() * h : h + 12,
+            r: 0.25 + Math.random() * 0.75,
+            v: 3 + Math.random() * 10,
+            a: 0.05 + Math.random() * 0.18,
+            fase: Math.random() * 6.283,
+            amp: 4 + Math.random() * 15
+          };
+        }
+
+        function dimensionar() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = window.innerWidth;
+          h = window.innerHeight;
+          el.dust.width = w * dpr;
+          el.dust.height = h * dpr;
+          el.dust.style.width = w + "px";
+          el.dust.style.height = h + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.fillStyle = "#cfc6b0";
+          const quantos = w < 760 ? 60 : 156;
+          pontos = [];
+          for (let i = 0; i < quantos; i++) pontos.push(nascer(true));
+        }
+
+        return {
+          iniciar() {
+            if (rodando) return;
+            rodando = true;
+            dimensionar();
+          },
+          redimensionar() { if (rodando) dimensionar(); },
+          mover(d) { desloc = d; },
+          passo(dt) {
+            if (!rodando) return;
+            ctx.clearRect(0, 0, w, h);
+            for (const p of pontos) {
+              p.y -= p.v * dt;
+              p.fase += dt * 0.5;
+              if (p.y < -12) Object.assign(p, nascer(false));
+              // x vive no espaco da parede e da a volta pela tela: assim o grao
+              // acompanha o fundo sem precisar nascer e morrer a cada rolagem.
+              const x = p.x + Math.sin(p.fase) * p.amp - desloc;
+              ctx.globalAlpha = p.a;
+              ctx.beginPath();
+              ctx.arc(((x % w) + w) % w, p.y, p.r, 0, 6.283);
+              ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+          }
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════
+         7 · LANTERNA
+         ══════════════════════════════════════════════════════════ */
+      const luz = (function () {
+        let alvoX = 0, alvoY = 0, x = 0, y = 0, viva = false;
+
+        window.addEventListener("pointermove", e => {
+          if (e.pointerType === "touch") return;
+          alvoX = e.clientX;
+          alvoY = e.clientY;
+          // A mira acompanha o ponteiro sem atraso; so o halo tem peso.
+          el.ponta.style.transform = "translate3d(" + alvoX + "px," + alvoY + "px,0)";
+          if (viva) return;
+          viva = true;
+          x = alvoX;
+          y = alvoY;
+          el.lume.classList.add("on");
+          el.ponta.classList.add("on");
+        }, { passive: true });
+
+        window.addEventListener("pointerleave", () => {
+          viva = false;
+          el.lume.classList.remove("on");
+          el.ponta.classList.remove("on");
+          el.veu.style.removeProperty("--lx");
+          el.veu.style.removeProperty("--ly");
+        });
+
+        return {
+          achar(m) {
+            el.ponta.classList.add("achou");
+            m.classList.add("pego");
+          },
+          largar(m) {
+            el.ponta.classList.remove("achou");
+            m.classList.remove("pego");
+          },
+          passo(dt) {
+            if (!viva) return;
+            const k = passoDe(PESO_LUZ, dt);
+            x += (alvoX - x) * k;
+            y += (alvoY - y) * k;
+            el.lume.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+            el.veu.style.setProperty("--lx", x.toFixed(0) + "px");
+            el.veu.style.setProperty("--ly", y.toFixed(0) + "px");
+          }
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════
+         8 · ANDAMENTO DO SOM
          ══════════════════════════════════════════════════════════ */
       const trilha = (function () {
         const svg = document.getElementById("scrubSvg");
@@ -1597,138 +1490,252 @@
       })();
 
       /* ══════════════════════════════════════════════════════════
-         POEIRA
+         9 · SOM E LEGENDA
          ══════════════════════════════════════════════════════════ */
-      const poeira = (function () {
-        const tela = document.getElementById("dust");
-        const ctx = tela.getContext("2d");
-        let pontos = [], w = 0, h = 0, rodando = false, desloc = 0;
+      const som = (function () {
+        let faixa = null, indice = 0, timer = 0, relogio = 0;
+        let tocando = false, mudo = false, audivel = false;
+        let blocos = [], blocoAtivo = -1, versoAtivo = -1, canto = 0, tema = "";
 
-        function nascer(espalhado) {
-          return {
-            x: Math.random() * w,
-            y: espalhado ? Math.random() * h : h + 12,
-            r: 0.25 + Math.random() * 0.75,
-            v: 3 + Math.random() * 10,
-            a: 0.05 + Math.random() * 0.18,
-            fase: Math.random() * 6.283,
-            amp: 4 + Math.random() * 15
-          };
+        /* ── letra ── */
+        async function carregarLetra(nome) {
+          blocos = []; blocoAtivo = -1; versoAtivo = -1; tema = "";
+          apagarLegenda();
+          if (!nome) return;
+          try {
+            const res = await fetch(AUDIO.dir + encodeURIComponent(nome));
+            if (!res.ok) return;
+            const d = await res.json();
+            tema = d.tema || "";
+            blocos = agrupar((d.linhas || []).slice().sort((x, y) => x.t - y.t));
+          } catch (e) { /* sem letra: a faixa toca do mesmo jeito */ }
         }
 
-        function dimensionar() {
-          const dpr = Math.min(window.devicePixelRatio || 1, 2);
-          w = window.innerWidth;
-          h = window.innerHeight;
-          tela.width = w * dpr;
-          tela.height = h * dpr;
-          tela.style.width = w + "px";
-          tela.style.height = h + "px";
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          ctx.fillStyle = "#cfc6b0";
-          const quantos = w < 760 ? 60 : 156;
-          pontos = [];
-          for (let i = 0; i < quantos; i++) pontos.push(nascer(true));
+        // Versos com menos de RESPIRO segundos entre si formam uma estrofe.
+        function agrupar(linhas) {
+          const out = [];
+          linhas.forEach(l => {
+            const b = out[out.length - 1];
+            const anterior = b ? b.linhas[b.linhas.length - 1] : null;
+            const fecha = anterior ? (anterior.fim != null ? anterior.fim : anterior.t) : -99;
+            if (!b || l.t - fecha > RESPIRO) out.push({ linhas: [l] });
+            else b.linhas.push(l);
+          });
+          out.forEach(b => {
+            b.t = b.linhas[0].t;
+            const u = b.linhas[b.linhas.length - 1];
+            b.fim = u.fim != null ? u.fim : u.t + 6;
+          });
+          return out;
         }
 
-        function passo(dt) {
-          if (!rodando) return;
-          ctx.clearRect(0, 0, w, h);
-          for (const p of pontos) {
-            p.y -= p.v * dt;
-            p.fase += dt * 0.5;
-            if (p.y < -12) Object.assign(p, nascer(false));
-            // x vive no espaco da parede e da a volta pela tela: assim o grao
-            // acompanha o fundo sem precisar nascer e morrer a cada rolagem.
-            const x = p.x + Math.sin(p.fase) * p.amp - desloc;
-            ctx.globalAlpha = p.a;
-            ctx.beginPath();
-            ctx.arc(((x % w) + w) % w, p.y, p.r, 0, 6.283);
-            ctx.fill();
+        function abrirBloco(bloco) {
+          const c = CANTOS[bloco.linhas[0].canto != null
+            ? bloco.linhas[0].canto % CANTOS.length
+            : canto++ % CANTOS.length];
+          const n = el.lyric;
+          n.className = "lyric " + c;
+          n.dataset.tema = tema;
+          n.textContent = "";
+          bloco.linhas.forEach(l => {
+            const p = document.createElement("p");
+            p.textContent = l.texto;
+            n.appendChild(p);
+          });
+          requestAnimationFrame(() => n.classList.add("on"));
+        }
+
+        function apagarLegenda() {
+          el.lyric.classList.remove("on");
+        }
+
+        function acompanhar() {
+          trilha.pintar();
+          if (!faixa || !blocos.length) return;
+          const t = faixa.currentTime;
+
+          let bi = -1;
+          for (let k = 0; k < blocos.length; k++) {
+            if (t >= blocos[k].t - 0.3 && t <= blocos[k].fim + 1.2) { bi = k; break; }
           }
-          ctx.globalAlpha = 1;
+          if (bi !== blocoAtivo) {
+            blocoAtivo = bi;
+            versoAtivo = -1;
+            bi >= 0 ? abrirBloco(blocos[bi]) : apagarLegenda();
+          }
+          if (bi < 0) return;
+
+          const linhas = blocos[bi].linhas;
+          let vi = -1;
+          for (let k = 0; k < linhas.length; k++) if (linhas[k].t <= t) vi = k; else break;
+          if (vi === versoAtivo) return;
+          versoAtivo = vi;
+
+          // Janela deslizante limita a altura do bloco.
+          const centro = Math.max(vi, 0);
+          [...el.lyric.children].forEach((p, k) => {
+            p.classList.toggle("viva", k === vi);
+            p.classList.toggle("passou", k < vi);
+            p.classList.toggle("fora", k < centro - ATRAS || k > centro + ADIANTE);
+          });
+        }
+
+        /* ── reproducao ── */
+        function tocar() {
+          if (!faixa) {
+            faixa = new Audio();
+            faixa.preload = "auto";
+            faixa.volume = 0;
+            faixa.addEventListener("ended", proxima);
+            faixa.addEventListener("error", falhar);
+          }
+          const atual = AUDIO.faixas[indice];
+          faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
+          faixa.muted = mudo;
+          faixa.volume = mudo ? AUDIO.volume : 0;
+          carregarLetra(atual.letra);
+          faixa.play().then(() => { if (!mudo) esmaecer(AUDIO.volume); }).catch(falhar);
+        }
+
+        function proxima() {
+          indice = (indice + 1) % AUDIO.faixas.length;
+          tocar();
+        }
+
+        function esmaecer(alvo, ms) {
+          clearInterval(timer);
+          const dur = ms || AUDIO.fade;
+          const inicio = faixa ? faixa.volume : 0;
+          const t0 = performance.now();
+          timer = setInterval(() => {
+            const k = clamp((performance.now() - t0) / dur, 0, 1);
+            if (faixa) faixa.volume = clamp(inicio + (alvo - inicio) * k, 0, 1);
+            if (k >= 1) clearInterval(timer);
+          }, 40);
+        }
+
+        function acompanharDeNovo() {
+          clearInterval(relogio);
+          relogio = setInterval(acompanhar, 200);
+        }
+
+        function ligar() {
+          if (tocando || !AUDIO.faixas.length) return;
+          tocando = true;
+          audivel = !mudo;
+          el.som.setAttribute("aria-pressed", audivel ? "true" : "false");
+          tocar();
+          el.scrub.hidden = false;
+          trilha.montar();
+          acompanharDeNovo();
+        }
+
+        // Autoplay so e permitido sem som. A faixa corre muda desde a abertura e
+        // a legenda ja aparece; o primeiro gesto do visitante libera o volume.
+        function revelar() {
+          if (!tocando || audivel || !faixa) return;
+          mudo = false;
+          audivel = true;
+          faixa.muted = false;
+          faixa.volume = 0;
+          esmaecer(AUDIO.volume);
+          el.som.setAttribute("aria-pressed", "true");
+          app.som = true;
+        }
+
+        // Pausa: para na hora e deixa legenda e fio onde estao.
+        function pausar() {
+          if (!tocando) return;
+          tocando = false;
+          audivel = false;
+          el.som.setAttribute("aria-pressed", "false");
+          clearInterval(timer);
+          clearInterval(relogio);
+          if (faixa) faixa.pause();
+        }
+
+        function seguir() {
+          if (tocando || !faixa || !faixa.src) return;
+          tocando = true;
+          mudo = false;
+          audivel = true;
+          el.som.setAttribute("aria-pressed", "true");
+          faixa.muted = false;
+          faixa.volume = 0;
+          faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
+          acompanharDeNovo();
+        }
+
+        // Falha de carregamento tira tudo de cena; pausa do visitante nao.
+        function falhar() {
+          tocando = false;
+          mudo = false;
+          audivel = false;
+          el.som.setAttribute("aria-pressed", "false");
+          clearInterval(timer);
+          clearInterval(relogio);
+          el.scrub.hidden = true;
+          apagarLegenda();
+          if (faixa) faixa.pause();
         }
 
         return {
-          iniciar() {
-            if (rodando) return;
-            rodando = true;
-            dimensionar();
+          disponivel: () => AUDIO.faixas.length > 0,
+
+          // Faixa muda desde a abertura, para a legenda existir antes do gesto.
+          preludio() {
+            if (!app.som || tocando) return;
+            mudo = true;
+            ligar();
           },
-          passo: passo,
-          dimensionar() { if (rodando) dimensionar(); },
-          mover(d) { desloc = d; }
+
+          retomar() {
+            if (tocando) { revelar(); return; }
+            if (app.som) ligar();
+          },
+
+          alternar() {
+            if (tocando && !audivel) { revelar(); return; }   // primeiro toque abre o volume
+            if (tocando) { pausar(); app.som = false; return; }
+            faixa && faixa.src ? seguir() : ligar();
+            app.som = true;
+          },
+
+          // Enquanto o leitor esta aberto a legenda sai e a faixa recua.
+          recolher(v) {
+            el.lyric.classList.toggle("oculta", v);
+            if (audivel) esmaecer(v ? AUDIO.volume * AUDIO.recuo : AUDIO.volume, 500);
+          },
+
+          posicao: () => ({
+            atual: faixa ? faixa.currentTime : 0,
+            total: faixa && isFinite(faixa.duration) ? faixa.duration : 0
+          }),
+
+          irPara(p) {
+            if (!faixa || !isFinite(faixa.duration)) return;
+            faixa.currentTime = clamp(p, 0, 1) * faixa.duration;
+            blocoAtivo = -1;              // forca a legenda a reencontrar o trecho
+            versoAtivo = -1;
+            acompanhar();
+          }
         };
       })();
 
       /* ══════════════════════════════════════════════════════════
-         LUZ DO PONTEIRO
-         ══════════════════════════════════════════════════════════ */
-      const luz = (function () {
-        let alvoX = 0, alvoY = 0, x = 0, y = 0, viva = false;
-
-        window.addEventListener("pointermove", e => {
-          if (e.pointerType === "touch") return;
-          alvoX = e.clientX;
-          alvoY = e.clientY;
-          // A mira acompanha o ponteiro sem atraso; so o halo tem peso.
-          el.ponta.style.transform = "translate3d(" + alvoX + "px," + alvoY + "px,0)";
-          if (!viva) {
-            viva = true;
-            x = alvoX;
-            y = alvoY;
-            el.lume.classList.add("on");
-            el.ponta.classList.add("on");
-          }
-        }, { passive: true });
-
-        window.addEventListener("pointerleave", () => {
-          viva = false;
-          el.lume.classList.remove("on");
-          el.ponta.classList.remove("on");
-          el.veu.style.removeProperty("--lx");
-          el.veu.style.removeProperty("--ly");
-        });
-
-        return {
-          achar(m) {
-            el.ponta.classList.add("achou");
-            m.classList.add("pego");
-          },
-          largar(m) {
-            el.ponta.classList.remove("achou");
-            m.classList.remove("pego");
-          },
-          passo(dt) {
-            if (!viva) return;
-            const k = 1 - Math.pow(1 - 0.16, dt * 60);
-            x += (alvoX - x) * k;
-            y += (alvoY - y) * k;
-            el.lume.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
-            el.veu.style.setProperty("--lx", x.toFixed(0) + "px");
-            el.veu.style.setProperty("--ly", y.toFixed(0) + "px");
-          }
-        };
-      })();
-
-      /* ══════════════════════════════════════════════════════════
-         MONTAGEM DA CENA
+         10 · MONTAGEM DA CENA
          ══════════════════════════════════════════════════════════ */
       function buildScene() {
-        app.layers.forEach(l => l.node.remove());
-        app.layers = [];
-
         CENA.files.forEach((file, i) => {
-          const l = { node: layerNode(file), depth: CENA.depths[i], aspect: 0 };
+          const l = { node: layerNode(file), depth: CENA.depths[i], aspect: 0, step: 0 };
           app.layers.push(l);
+          el.scene.insertBefore(l.node, el.markers);
           // A peca so pode ser dimensionada depois que a proporcao real e conhecida.
           probe(ART + file, r => { l.aspect = r; measure(); });
         });
 
-        app.layers.forEach(l => el.scene.insertBefore(l.node, el.markers));
-
-        // A poeira e volume do ambiente, nao um veu sobre a cena: fica atras da
-        // camada da frente para que o entulho a encubra.
+        // A poeira e o halo sao volume do ambiente: ficam atras do primeiro
+        // plano para que o entulho os encubra. O veu cobre so os quartos.
         const frente = app.layers[CENA.poeiraAtras];
         if (frente) {
           el.scene.insertBefore(el.dust, frente.node);
@@ -1738,7 +1745,13 @@
         if (parede) el.scene.insertBefore(el.veu, parede.node);
 
         el.track.style.height = (CENA.span * 100) + "vh";
-        el.hint.textContent = CENA.hint;
+      }
+
+      function layerNode(file) {
+        const d = document.createElement("div");
+        d.className = "layer";
+        d.style.backgroundImage = "url('" + ART + file + "')";
+        return d;
       }
 
       function probe(url, done) {
@@ -1747,20 +1760,7 @@
         im.src = url;
       }
 
-      function layerNode(file) {
-        const d = document.createElement("div");
-        d.className = "layer";
-        d.style.backgroundImage = "url('" + ART + file + "')";
-        d.style.backgroundRepeat = "repeat-x";
-        d.style.backgroundPosition = "0px center";
-        return d;
-      }
-
       function buildMarkers() {
-        el.markers.textContent = "";
-        el.rail.querySelectorAll(".pip").forEach(n => n.remove());
-        app.nodes.clear();
-
         app.items.forEach(f => {
           const m = document.createElement("button");
           m.type = "button";
@@ -1794,14 +1794,13 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         MEDIDAS
+         11 · MEDIDAS
          ══════════════════════════════════════════════════════════ */
       function measure() {
         const w = window.innerWidth, h = window.innerHeight;
-        const b = app.box;
-        b.w = w;
-        b.h = h;
-        b.travel = w * CENA.reach;
+        app.box.w = w;
+        app.box.h = h;
+        app.box.travel = w * CENA.reach;
 
         app.layers.forEach(l => {
           // A peca e alta como a tela; a largura vem da proporcao real do arquivo.
@@ -1818,6 +1817,7 @@
         const cfg = CENA.lampada;
         const l = cfg && app.layers[cfg.camada];
         if (!l || !l.step) return;
+
         const quantas = Math.ceil((app.box.w + l.step) / l.step) + 1;
         while (l.node.children.length > quantas) l.node.lastChild.remove();
         while (l.node.children.length < quantas) {
@@ -1825,6 +1825,7 @@
           g.className = "lampada";
           l.node.appendChild(g);
         }
+
         const raio = app.box.h * 0.46;
         [...l.node.children].forEach((g, k) => {
           g.style.width = g.style.height = (raio * 2) + "px";
@@ -1835,7 +1836,7 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         PROJECAO — a unica coisa que muda entre A, B e C
+         12 · PROJECAO
          ══════════════════════════════════════════════════════════ */
       function project(p) {
         const b = app.box;
@@ -1866,11 +1867,11 @@
         return smooth(clamp(1 - Math.abs(offset) / (size * 0.3), 0, 1));
       }
 
-      function place(n, f, x, y, focus, z) {
+      function place(n, f, x, y, focus) {
         if (!n) return;
         const live = available(f);
         const on = live && focus > 0.12;
-        n.marker.style.transform = "translate3d(" + x + "px," + y + "px," + (z || 0) + "px)";
+        n.marker.style.transform = "translate3d(" + x + "px," + y + "px,0)";
         n.marker.style.opacity = live ? focus : 0;
         n.marker.style.setProperty("--f", focus.toFixed(3));
         n.marker.classList.toggle("on", on);
@@ -1879,9 +1880,8 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         LACO
+         13 · LACO
          ══════════════════════════════════════════════════════════ */
-      const INERCIA = 0.12;                            // fracao da distancia vencida por quadro a 60fps
       let ultimo = 0;
 
       function tick(t) {
@@ -1894,20 +1894,20 @@
         const max = document.documentElement.scrollHeight - window.innerHeight;
         app.alvo = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
 
-        // Amortecimento independente da taxa de quadros: em 144Hz o passo e menor.
-        const k = 1 - Math.pow(1 - INERCIA, dt * 60);
-        app.p += (app.alvo - app.p) * k;
+        // O progresso persegue a rolagem em vez de colar nela: a cena ganha peso.
+        app.p += (app.alvo - app.p) * passoDe(INERCIA, dt);
         if (Math.abs(app.alvo - app.p) < 0.00002) app.p = app.alvo;
 
         project(app.p);
         luz.passo(dt);
         poeira.passo(dt);
+
         el.fill.style.width = (app.p * 100) + "%";
         el.hint.style.opacity = app.alvo > 0.02 ? 0 : 1;
       }
 
       /* ══════════════════════════════════════════════════════════
-         LEITOR
+         14 · LEITOR
          ══════════════════════════════════════════════════════════ */
       // [[id|palavra]] vira um link para outro fragmento.
       function withLinks(line) {
@@ -1926,7 +1926,7 @@
             b.addEventListener("click", () => travel(id));
             out.append(b);
           } else {
-            out.append(label);          // destino indisponivel: fica texto comum
+            out.append(label);             // destino indisponivel: fica texto comum
           }
           last = re.lastIndex;
         }
@@ -2003,7 +2003,7 @@
         hide();
         const max = document.documentElement.scrollHeight - window.innerHeight;
         // O leitor trava a rolagem, entao so pode abrir quando o percurso terminar.
-        glide(clamp(targetScroll(f) * max, 0, max), () => show(id));
+        glide(clamp(f.at, 0, 1) * max, () => show(id));
       }
 
       // Deslocamento proprio: o fim e conhecido, sem depender de evento do navegador.
@@ -2021,13 +2021,8 @@
         })(t0);
       }
 
-      // Todo objeto esta no ponto de leitura quando o progresso iguala seu 'at'.
-      function targetScroll(f) {
-        return clamp(f.at, 0, 1);
-      }
-
       /* ══════════════════════════════════════════════════════════
-         FASE E PROJECAO
+         15 · FASE
          ══════════════════════════════════════════════════════════ */
       function setPhase(n) {
         app.phase = n;
@@ -2038,12 +2033,12 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         INICIO
+         16 · INICIO
          ══════════════════════════════════════════════════════════ */
       function bind() {
         window.addEventListener("resize", () => {
           measure();
-          poeira.dimensionar();
+          poeira.redimensionar();
           if (!el.scrub.hidden) trilha.montar();
         });
 
@@ -2052,16 +2047,14 @@
         el.toggle.addEventListener("click", () => setPhase(app.phase === 0 ? 1 : 0));
         el.som.addEventListener("click", () => som.alternar());
 
-        // Autoplay so e liberado apos um gesto do visitante, e rolagem nao conta
-        // como um. Sem 'once' porque a primeira tentativa pode ser recusada.
-        // O botao de som tem tratamento proprio: sem isto o gesto liberaria o
-        // volume e o clique seguinte o cortaria de novo.
+        // Autoplay so e liberado apos um gesto, e rolagem nao conta como um.
+        // Sem 'once' porque a primeira tentativa pode ser recusada. O botao de
+        // som fica de fora: senao o gesto abriria o volume e o clique o cortaria.
         ["pointerdown", "keydown", "touchstart"].forEach(ev =>
           window.addEventListener(ev, e => {
             if (e.target && el.som.contains(e.target)) return;
             som.retomar();
           }, { passive: true }));
-
 
         document.addEventListener("keydown", e => {
           if (e.key === "Escape" && app.open) hide();
@@ -2097,10 +2090,12 @@
         buildMarkers();
         measure();
         bind();
-        // Poeira e a unica peca que roda sozinha o tempo todo; fica de fora de
-        // quem pediu menos movimento.
+
+        // A poeira e a unica peca que roda sozinha o tempo todo; fica de fora
+        // de quem pediu menos movimento.
         if (!matchMedia("(prefers-reduced-motion: reduce)").matches) poeira.iniciar();
         if (som.disponivel()) { el.som.hidden = false; som.preludio(); }
+
         app.ready = true;
         tick();
         requestAnimationFrame(() => el.veil.classList.add("gone"));
