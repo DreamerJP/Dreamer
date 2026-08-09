@@ -1,5 +1,5 @@
 {
-  "_leia": "Texto provisorio. Os campos de estrutura (at, alt, tipo, requer, estado) ja estao configurados; falta so escrever o conteudo por cima e remover o campo 'rascunho'.",
+  "_leia": "Texto provisorio. Os campos de estrutura (at, alt, tipo, requer) ja estao configurados; falta so escrever o conteudo por cima e remover o campo 'rascunho'.",
   "_campos": {
     "id": "identificador unico, usado pelos links",
     "titulo": "aparece no leitor e no rotulo do objeto ja visitado",
@@ -7,7 +7,6 @@
     "data": "texto livre; pode ser vago ou ilegivel",
     "at": "0 a 1 — posicao ao longo do percurso",
     "alt": "0 a 1 — deslocamento transversal do objeto na cena",
-    "estado": "0, 1 ou ausente — em qual dos dois estados o objeto existe",
     "texto": "paragrafos; [[id|palavra]] vira link para outro fragmento",
     "revisita": "paragrafos alternativos exibidos a partir da segunda leitura",
     "requer": "lista de ids que precisam ter sido lidos para este existir"
@@ -52,7 +51,7 @@
       "rascunho": true,
       "texto": [
         "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[espelho|um fragmento de outra fase]], e a cena percorre ate ele antes de abrir."
+        "Uma palavra marcada leva a [[espelho|outro fragmento]], e a cena percorre ate ele antes de abrir."
       ],
       "revisita": [
         "Texto alternativo, exibido a partir da segunda leitura."
@@ -78,11 +77,9 @@
       "data": "a definir",
       "at": 0.49,
       "alt": 0.73,
-      "estado": 1,
       "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Este existe apenas em uma das duas fases da cena."
+        "Conteudo em preparo."
       ]
     },
     {

@@ -38,12 +38,6 @@
       --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    :root[data-phase="1"] {
-      --accent: #7ba07f;
-      --tint-a: rgba(58, 96, 74, 0.16);
-      --tint-b: rgba(30, 46, 52, 0.26);
-      --grain: 0.085;
-    }
 
     /* ============================================================
        2 · BASE
@@ -115,9 +109,6 @@
       filter: sepia(0.3) saturate(0.75) contrast(1.05) brightness(0.98);
     }
 
-    :root[data-phase="1"] .stage {
-      filter: sepia(0.1) saturate(0.6) contrast(1.22) brightness(0.82) hue-rotate(35deg);
-    }
 
     .scene {
       position: absolute;
@@ -525,14 +516,6 @@
       color: var(--ink);
     }
 
-    .switch .bulb {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 9px var(--accent);
-      transition: background 900ms var(--ease), box-shadow 900ms var(--ease);
-    }
 
     .switch .wave {
       display: flex;
@@ -1143,9 +1126,7 @@
       <button class="switch" id="sound" type="button" aria-pressed="false" aria-label="Som ambiente" hidden>
         <span class="wave"><i></i><i></i><i></i></span><span>som</span>
       </button>
-      <button class="switch" id="switch" type="button" aria-pressed="false">
-        <span class="bulb"></span><span>alternar · E</span>
-      </button>
+
     </div>
   </header>
 
@@ -1247,7 +1228,7 @@
         sheet: document.getElementById("sheet"),
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
-        toggle: document.getElementById("switch"),
+
         som: document.getElementById("sound")
       };
 
@@ -1255,7 +1236,7 @@
          3 · ESTADO
          ══════════════════════════════════════════════════════════ */
       const app = {
-        phase: 0,
+
         som: true,              // vale so nesta visita: recarregar volta a ligar
         items: [],
         byId: new Map(),
@@ -1302,11 +1283,9 @@
         app.items.forEach(f => app.byId.set(f.id, f));
       }
 
-      // Um fragmento existe se a fase confere e os pre-requisitos ja foram lidos.
+      // Um fragmento existe quando os pre-requisitos dele ja foram lidos.
       function available(f) {
-        if (f.estado != null && f.estado !== app.phase) return false;
-        if (f.requer && !f.requer.every(id => app.read.has(id))) return false;
-        return true;
+        return !f.requer || f.requer.every(id => app.read.has(id));
       }
 
       /* ══════════════════════════════════════════════════════════
@@ -2172,18 +2151,7 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         15 · FASE
-         ══════════════════════════════════════════════════════════ */
-      function setPhase(n) {
-        app.phase = n;
-        document.documentElement.dataset.phase = n;
-        el.toggle.setAttribute("aria-pressed", n === 1 ? "true" : "false");
-        // A cena mudou por baixo do leitor: fecha em vez de deixar o texto defasado.
-        if (app.open) hide();
-      }
-
-      /* ══════════════════════════════════════════════════════════
-         16 · INICIO
+         15 · INICIO
          ══════════════════════════════════════════════════════════ */
       function bind() {
         percurso.ligar();
@@ -2196,7 +2164,7 @@
 
         el.close.addEventListener("click", hide);
         el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
-        el.toggle.addEventListener("click", () => setPhase(app.phase === 0 ? 1 : 0));
+
         el.som.addEventListener("click", () => som.alternar());
 
         // Autoplay so e liberado apos um gesto, e rolagem nao conta como um.
@@ -2210,9 +2178,6 @@
 
         document.addEventListener("keydown", e => {
           if (e.key === "Escape" && app.open) hide();
-          if ((e.key === "e" || e.key === "E") && !e.metaKey && !e.ctrlKey && !e.altKey) {
-            setPhase(app.phase === 0 ? 1 : 0);
-          }
         });
       }
 
