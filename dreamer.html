@@ -1192,7 +1192,8 @@
         ancora: 1,                                   // camada a que os fragmentos pertencem
         poeiraAtras: 2,                              // camada que passa na frente da poeira
         lampada: { camada: 1, x: 0.313, y: 0.209 },  // posicao da luz dentro da peca
-        reach: 5,                                    // larguras de tela de percurso
+        reach: 5,                                    // larguras de tela de percurso, no ponteiro
+        voltas: 1.6,                                 // voltas da peca de percurso, no toque
         span: 6                                      // alturas de tela de rolagem
       };
 
@@ -1882,7 +1883,6 @@
         const w = window.innerWidth, h = window.innerHeight;
         app.box.w = w;
         app.box.h = h;
-        app.box.travel = w * CENA.reach;
 
         app.layers.forEach(l => {
           // A peca e alta como a tela; a largura vem da proporcao real do arquivo.
@@ -1891,6 +1891,15 @@
           l.node.style.width = (w + l.step) + "px";
           l.node.style.height = h + "px";
         });
+
+        // A peca e escalada pela altura, entao numa tela estreita ela fica muito
+        // maior que a janela e um percurso medido em larguras de tela cobriria so
+        // um pedaco do corredor. No toque a medida passa a ser a propria peca.
+        const ancora = app.layers[CENA.ancora];
+        const fundo = CENA.depths[CENA.ancora] || 1;
+        app.box.travel = percurso.toque && ancora && ancora.step
+          ? ancora.step * CENA.voltas / fundo
+          : w * CENA.reach;
 
         acenderLampadas();
       }
