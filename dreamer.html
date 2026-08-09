@@ -945,7 +945,71 @@
     }
 
     /* ============================================================
-       15 · ABERTURA E AVISOS
+       15 · ESTADO ANTERIOR
+       ============================================================ */
+    /* A mesma parede antes da ruina. Desenhada como as camadas da cena, com a
+       mesma altura, repeticao e origem, para registrar com ela na dissolucao. */
+    .novo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      /* Sem repeticao: a emenda da peca aparece demais na parede limpa. */
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-image: url('./Assets/Dreamer/camadas/a-novo.png');
+    }
+
+    /* A mascara so existe durante a travessia: com raio zero ela ainda abriria
+       um halo no meio da tela, deixando o estado velho vazar por baixo. */
+    .novo.indo {
+      -webkit-mask-image: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%),
+          transparent 0, transparent var(--ruina, 0px),
+          #000 calc(var(--ruina, 0px) + 22vmax));
+      mask-image: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%),
+          transparent 0, transparent var(--ruina, 0px),
+          #000 calc(var(--ruina, 0px) + 22vmax));
+    }
+
+    /* Fora da camada, senao andaria junto com a parede ao percorrer o corredor. */
+    .convite {
+      position: fixed;
+      left: 50%;
+      bottom: 11vh;
+      z-index: 5;
+      transform: translateX(-50%);
+      pointer-events: none;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: rgba(214, 218, 226, 0.5);
+      animation: fade 3.2s ease-in-out infinite;
+    }
+
+    html:not(.antes) .convite {
+      opacity: 0;
+      animation: none;
+      transition: opacity 320ms var(--ease);
+    }
+
+    /* Nada da travessia existe antes de entrar, e o corredor inteiro esta aceso:
+       nao ha lanterna para carregar, entao o cursor do sistema volta. */
+    html.antes body {
+      cursor: auto;
+    }
+
+    html.antes .ponta,
+    html.antes .scrub,
+    html.antes .lyric,
+    html.antes .rail,
+    html.antes #sound {
+      display: none;
+    }
+
+    /* ============================================================
+       16 · ABERTURA E AVISOS
        ============================================================ */
     .veil {
       position: fixed;
@@ -1005,7 +1069,7 @@
     }
 
     /* ============================================================
-       16 · TELAS ESTREITAS E MENOS MOVIMENTO
+       17 · TELAS ESTREITAS E MENOS MOVIMENTO
        ============================================================ */
     @media (max-width: 760px) {
       .top {
@@ -1115,6 +1179,9 @@
     </div>
   </div>
 
+  <div class="novo" id="novo" aria-hidden="true"></div>
+  <div class="convite" id="convite">clique para entrar</div>
+
   <div class="haze" aria-hidden="true"></div>
   <div class="edge" aria-hidden="true"></div>
 
@@ -1126,7 +1193,6 @@
       <button class="switch" id="sound" type="button" aria-pressed="false" aria-label="Som ambiente" hidden>
         <span class="wave"><i></i><i></i><i></i></span><span>som</span>
       </button>
-
     </div>
   </header>
 
@@ -1228,6 +1294,8 @@
         sheet: document.getElementById("sheet"),
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
+        novo: document.getElementById("novo"),
+        convite: document.getElementById("convite"),
 
         som: document.getElementById("sound")
       };
@@ -1247,7 +1315,8 @@
         p: 0,                   // progresso amortecido
         alvo: 0,                // progresso cru da rolagem
         open: null,
-        ready: false
+        ready: false,
+        entrou: false
       };
 
       const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
@@ -1806,7 +1875,6 @@
         if (parede) el.scene.insertBefore(el.veu, parede.node);
 
         // No toque a pagina nao rola: o espacador nao precisa de altura.
-        el.track.style.height = percurso.toque ? "100vh" : (CENA.span * 100) + "vh";
       }
 
       function layerNode(file) {
@@ -1880,6 +1948,14 @@
           ? ancora.step * CENA.voltas / fundo
           : w * CENA.reach;
 
+        // Encurtar o espacador e o que faz a rolagem parar sozinha antes da
+        // emenda, sem precisar brigar com a roda do mouse.
+        const volta = app.entrou ? 1 : anterior.limite();
+        el.track.style.height = percurso.toque
+          ? "100vh"
+          : ((1 + (CENA.span - 1) * volta) * 100) + "vh";
+
+        anterior.medir();
         acenderLampadas();
       }
 
@@ -1912,10 +1988,13 @@
         const b = app.box;
         const shift = p * b.travel;
 
-        app.layers.forEach(l => {
+        app.layers.forEach((l, i) => {
           // Desliza no maximo uma peca e reinicia; a repeticao esconde o salto.
           const d = l.step ? -((shift * l.depth) % l.step) : 0;
           l.node.style.transform = "translate3d(" + d + "px,0,0)";
+          // A parede intacta corre junto com a arruinada: a dissolucao registra
+          // em qualquer ponto do corredor, nao so no comeco.
+          if (i === CENA.ancora && !el.novo.hidden) anterior.mover(d);
         });
 
         // Os fragmentos acompanham a camada em que estao apoiados, senao deslizam
@@ -1960,25 +2039,32 @@
         const BORDA = 26;     // faixa lateral reservada ao gesto de voltar do sistema
         let valor = 0, arrastando = false, ultimoX = 0;
 
-        function rolagemMax() {
-          return document.documentElement.scrollHeight - window.innerHeight;
+        // Denominador fixo. No estado anterior o espacador e encurtado para a
+        // parede nao chegar na emenda, e normalizar pela altura viva do documento
+        // esticaria o percurso curto de volta para o total.
+        function rolagemCheia() {
+          return Math.max(1, (CENA.span - 1) * window.innerHeight);
+        }
+
+        // Teto do percurso: a peca intacta so cobre uma volta.
+        function teto() {
+          return app.entrou ? 1 : anterior.limite();
         }
 
         // Comprimento em pixels: mantem o tempo de deslocamento igual nas duas origens.
         function extensao() {
-          return toque ? window.innerWidth * CURSO : rolagemMax();
+          return toque ? window.innerWidth * CURSO : rolagemCheia();
         }
 
         function alvo() {
           if (toque) return valor;
-          const max = rolagemMax();
-          return max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+          return clamp(window.scrollY / rolagemCheia(), 0, 1);
         }
 
         function definir(p) {
           p = clamp(p, 0, 1);
           if (toque) valor = p;
-          else window.scrollTo(0, p * rolagemMax());
+          else window.scrollTo(0, p * rolagemCheia());
         }
 
         function aceita(e) {
@@ -2001,7 +2087,7 @@
             if (!arrastando || e.touches.length !== 1) return;
             const x = e.touches[0].clientX;
             // Dedo para a esquerda empurra a cena para a frente.
-            valor = clamp(valor - (x - ultimoX) / (window.innerWidth * CURSO), 0, 1);
+            valor = clamp(valor - (x - ultimoX) / (window.innerWidth * CURSO), 0, teto());
             ultimoX = x;
           }, { passive: true });
 
@@ -2151,7 +2237,64 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         15 · INICIO
+         15 · ESTADO ANTERIOR
+         ══════════════════════════════════════════════════════════ */
+      // A ruina chega em circulo a partir do ponto tocado. O mesmo gesto libera
+      // o audio, entao nao existe aviso de "ativar som".
+      const anterior = (function () {
+        const CURSO = 2200;
+
+        let dx = 0;
+
+        // Ate onde da para andar antes de a peca acabar. Uma volta so.
+        function limite() {
+          const l = app.layers[CENA.ancora];
+          const alcance = app.box.travel * (CENA.depths[CENA.ancora] || 1);
+          if (!l || !l.step || !alcance) return 1;
+          return clamp((l.step - window.innerWidth) / alcance, 0, 1);
+        }
+
+        function medir() {
+          const l = app.layers[CENA.ancora];
+          const w = window.innerWidth, h = window.innerHeight;
+          el.novo.style.backgroundSize = "auto " + h + "px";
+          el.novo.style.width = (l && l.step ? l.step : w) + "px";
+          el.novo.style.height = h + "px";
+          el.convite.textContent = percurso.toque ? "toque para entrar" : "clique para entrar";
+        }
+
+        function mover(d) {
+          dx = d;
+          el.novo.style.transform = "translate3d(" + d + "px,0,0)";
+        }
+
+        function entrar(x, y) {
+          if (app.entrou || !app.ready) return;
+          app.entrou = true;
+          document.documentElement.classList.remove("antes");
+          measure();                     // devolve o espacador inteiro
+          el.novo.classList.add("indo");
+          // Em coordenadas da camada: assim a ruina fica presa a um ponto da
+          // parede e nao a um ponto da tela.
+          el.novo.style.setProperty("--rx", Math.round(x - dx) + "px");
+          el.novo.style.setProperty("--ry", Math.round(y) + "px");
+
+          const alvo = Math.hypot(window.innerWidth, window.innerHeight);
+          const t0 = performance.now();
+          (function passo(agora) {
+            const k = clamp((agora - t0) / CURSO, 0, 1);
+            const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+            el.novo.style.setProperty("--ruina", Math.round(alvo * e) + "px");
+            if (k < 1) requestAnimationFrame(passo);
+            else el.novo.hidden = true;
+          })(t0);
+        }
+
+        return { limite: limite, medir: medir, mover: mover, entrar: entrar };
+      })();
+
+      /* ══════════════════════════════════════════════════════════
+         16 · INICIO
          ══════════════════════════════════════════════════════════ */
       function bind() {
         percurso.ligar();
@@ -2173,8 +2316,28 @@
         ["pointerdown", "keydown", "touchstart"].forEach(ev =>
           window.addEventListener(ev, e => {
             if (e.target && el.som.contains(e.target)) return;
+            if (e.pointerType !== "touch" && e.type !== "touchstart") {
+              anterior.entrar(
+                e.clientX != null ? e.clientX : window.innerWidth / 2,
+                e.clientY != null ? e.clientY : window.innerHeight / 2);
+            }
             som.retomar();
           }, { passive: true }));
+
+        // No toque o arrasto percorre o corredor intacto, entao entrar precisa ser
+        // um toque parado; senao a primeira tentativa de olhar em volta ja entraria.
+        let toqueX = 0, toqueY = 0, andou = 0;
+        window.addEventListener("touchstart", e => {
+          const t = e.touches[0];
+          toqueX = t.clientX; toqueY = t.clientY; andou = 0;
+        }, { passive: true });
+        window.addEventListener("touchmove", e => {
+          const t = e.touches[0];
+          andou = Math.max(andou, Math.hypot(t.clientX - toqueX, t.clientY - toqueY));
+        }, { passive: true });
+        window.addEventListener("touchend", () => {
+          if (andou <= 10) anterior.entrar(toqueX, toqueY);
+        }, { passive: true });
 
         document.addEventListener("keydown", e => {
           if (e.key === "Escape" && app.open) hide();
@@ -2193,6 +2356,7 @@
       }
 
       (async function start() {
+        document.documentElement.classList.add("antes");
         restore();
 
         try {
@@ -2211,7 +2375,8 @@
         // A poeira e a unica peca que roda sozinha o tempo todo; fica de fora
         // de quem pediu menos movimento.
         if (!matchMedia("(prefers-reduced-motion: reduce)").matches) poeira.iniciar();
-        if (som.disponivel()) { el.som.hidden = false; som.preludio(); }
+        // Sem preludio: a entrada garante um gesto, entao a faixa comeca do zero.
+        if (som.disponivel()) el.som.hidden = false;
 
         app.ready = true;
         tick();
