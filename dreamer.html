@@ -1062,20 +1062,43 @@
       }
     }
 
-    /* Sem ponteiro nao ha lanterna: o comodo fica apenas rebaixado. */
     @media (hover: none) {
       body {
         cursor: auto;
       }
 
-      .lume,
-      .ponta,
-      .scrub {
+      /* O dedo ja e o ponteiro; a mira ficaria embaixo dele. */
+      .ponta {
         display: none;
       }
 
-      .veu {
-        background: rgba(4, 5, 10, 0.74);
+      /* A cena anda no arrasto horizontal, no mesmo eixo em que ela se move.
+         Sem travar o toque aqui o navegador disputaria o mesmo gesto. */
+      body {
+        touch-action: none;
+      }
+
+      /* Unico bloco que ainda rola sozinho. */
+      .sheet {
+        touch-action: pan-y;
+      }
+
+      /* Volta a aparecer mesmo abaixo de 760px, onde a regra por largura a
+         esconde: la o alvo e a janela estreita no desktop, nao o toque.
+         pan-y porque o arrasto so comeca na pega: o resto da faixa fica
+         permeavel e a pagina rola normalmente por cima dela. */
+      .scrub:not([hidden]) {
+        display: block;
+        opacity: 0.72;
+        touch-action: pan-y;
+      }
+
+      /* Sem hover a pega precisa estar sempre a vista, e o traco transparente
+         leva a area de toque a 44px sem engordar o desenho. */
+      .scrub .pega {
+        opacity: 1;
+        stroke: transparent;
+        stroke-width: 36;
       }
     }
 
@@ -1367,7 +1390,25 @@
           el.ponta.classList.add("on");
         }, { passive: true });
 
-        window.addEventListener("pointerleave", () => {
+        // O toque nao tem para onde sair: o facho fica onde o dedo largou.
+        // A rolagem por toque cancela os eventos de ponteiro assim que assume o
+        // gesto, mas o touchmove continua: e por ele que o facho anda no celular.
+        function mirar(t) {
+          alvoX = t.clientX;
+          alvoY = t.clientY;
+          if (viva) return;
+          viva = true;
+          x = alvoX;
+          y = alvoY;
+          el.lume.classList.add("on");
+        }
+
+        const seguirToque = e => { if (e.touches.length === 1) mirar(e.touches[0]); };
+        window.addEventListener("touchstart", seguirToque, { passive: true });
+        window.addEventListener("touchmove", seguirToque, { passive: true });
+
+        window.addEventListener("pointerleave", e => {
+          if (e.pointerType === "touch") return;
           viva = false;
           el.lume.classList.remove("on");
           el.ponta.classList.remove("on");
@@ -1472,6 +1513,8 @@
         }
 
         el.scrub.addEventListener("pointerdown", e => {
+          // Sem isso qualquer encosto na faixa ao rolar a pagina viraria um salto.
+          if (e.pointerType === "touch" && e.target !== pega) return;
           puxando = true;
           el.scrub.classList.add("puxando");
           el.scrub.setPointerCapture(e.pointerId);
@@ -1782,7 +1825,8 @@
         const parede = app.layers[CENA.ancora];
         if (parede) el.scene.insertBefore(el.veu, parede.node);
 
-        el.track.style.height = (CENA.span * 100) + "vh";
+        // No toque a pagina nao rola: o espacador nao precisa de altura.
+        el.track.style.height = percurso.toque ? "100vh" : (CENA.span * 100) + "vh";
       }
 
       function layerNode(file) {
@@ -1918,8 +1962,84 @@
       }
 
       /* ══════════════════════════════════════════════════════════
-         13 · LACO
+         13 · PERCURSO E LACO
          ══════════════════════════════════════════════════════════ */
+      // Duas origens para o mesmo numero: no ponteiro o percurso vem da rolagem
+      // vertical; no toque a pagina nao rola e o dedo arrasta a cena na horizontal.
+      const percurso = (function () {
+        const toque = matchMedia("(hover: none)").matches;
+        const CURSO = 4;      // larguras de tela de dedo para percorrer a cena inteira
+        const BORDA = 26;     // faixa lateral reservada ao gesto de voltar do sistema
+        let valor = 0, arrastando = false, ultimoX = 0;
+
+        function rolagemMax() {
+          return document.documentElement.scrollHeight - window.innerHeight;
+        }
+
+        // Comprimento em pixels: mantem o tempo de deslocamento igual nas duas origens.
+        function extensao() {
+          return toque ? window.innerWidth * CURSO : rolagemMax();
+        }
+
+        function alvo() {
+          if (toque) return valor;
+          const max = rolagemMax();
+          return max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+        }
+
+        function definir(p) {
+          p = clamp(p, 0, 1);
+          if (toque) valor = p;
+          else window.scrollTo(0, p * rolagemMax());
+        }
+
+        function aceita(e) {
+          if (app.open) return false;
+          const t = e.touches[0];
+          if (t.clientX < BORDA || t.clientX > window.innerWidth - BORDA) return false;
+          return !(e.target.closest && e.target.closest(".scrub, .reader, .top"));
+        }
+
+        function ligar() {
+          if (!toque) return;
+          el.hint.textContent = "arraste para percorrer";
+
+          window.addEventListener("touchstart", e => {
+            arrastando = e.touches.length === 1 && aceita(e);
+            if (arrastando) ultimoX = e.touches[0].clientX;
+          }, { passive: true });
+
+          window.addEventListener("touchmove", e => {
+            if (!arrastando || e.touches.length !== 1) return;
+            const x = e.touches[0].clientX;
+            // Dedo para a esquerda empurra a cena para a frente.
+            valor = clamp(valor - (x - ultimoX) / (window.innerWidth * CURSO), 0, 1);
+            ultimoX = x;
+          }, { passive: true });
+
+          const soltar = () => { arrastando = false; };
+          window.addEventListener("touchend", soltar, { passive: true });
+          window.addEventListener("touchcancel", soltar, { passive: true });
+        }
+
+        // Deslocamento proprio: o fim e conhecido, sem depender de evento do navegador.
+        function irPara(p, pronto) {
+          const de = alvo(), ate = clamp(p, 0, 1);
+          const dist = (ate - de) * extensao();
+          if (Math.abs(dist) < 4) { pronto(); return; }
+          const curso = clamp(420 + Math.abs(dist) * 0.4, 420, 1600);
+          const t0 = performance.now();
+          (function passo(agora) {
+            const k = clamp((agora - t0) / curso, 0, 1);
+            const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+            definir(de + (ate - de) * e);
+            if (k < 1) requestAnimationFrame(passo); else pronto();
+          })(t0);
+        }
+
+        return { toque: toque, alvo: alvo, ligar: ligar, irPara: irPara };
+      })();
+
       let ultimo = 0;
 
       function tick(t) {
@@ -1929,8 +2049,7 @@
         const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 1 / 60;
         ultimo = t;
 
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        app.alvo = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+        app.alvo = percurso.alvo();
 
         // O progresso persegue a rolagem em vez de colar nela: a cena ganha peso.
         app.p += (app.alvo - app.p) * passoDe(INERCIA, dt);
@@ -2039,24 +2158,8 @@
         const f = app.byId.get(id);
         if (!f) return;
         hide();
-        const max = document.documentElement.scrollHeight - window.innerHeight;
         // O leitor trava a rolagem, entao so pode abrir quando o percurso terminar.
-        glide(clamp(f.at, 0, 1) * max, () => show(id));
-      }
-
-      // Deslocamento proprio: o fim e conhecido, sem depender de evento do navegador.
-      function glide(to, done) {
-        const from = window.scrollY;
-        const dist = to - from;
-        if (Math.abs(dist) < 4) { done(); return; }
-        const span = clamp(420 + Math.abs(dist) * 0.4, 420, 1600);
-        const t0 = performance.now();
-        (function step(now) {
-          const k = clamp((now - t0) / span, 0, 1);
-          const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-          window.scrollTo(0, from + dist * e);
-          if (k < 1) requestAnimationFrame(step); else done();
-        })(t0);
+        percurso.irPara(clamp(f.at, 0, 1), () => show(id));
       }
 
       /* ══════════════════════════════════════════════════════════
@@ -2074,6 +2177,8 @@
          16 · INICIO
          ══════════════════════════════════════════════════════════ */
       function bind() {
+        percurso.ligar();
+
         window.addEventListener("resize", () => {
           measure();
           poeira.redimensionar();
