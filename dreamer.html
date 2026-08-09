@@ -957,7 +957,7 @@
       /* Sem repeticao: a emenda da peca aparece demais na parede limpa. */
       background-repeat: no-repeat;
       background-position: 0 0;
-      background-image: url('./Assets/Dreamer/camadas/a-novo.png');
+      background-image: url('./Assets/Dreamer/camadas/a-novo.jpg');
     }
 
     /* A mascara so existe durante a travessia: com raio zero ela ainda abriria
@@ -2068,7 +2068,9 @@
         }
 
         function aceita(e) {
-          if (app.open) return false;
+          // Durante a dissolucao o percurso fica parado: mover a parede levaria o
+          // furo da ruina para fora da tela junto com ela.
+          if (app.open || !el.novo.hidden && app.entrou) return false;
           const t = e.touches[0];
           if (t.clientX < BORDA || t.clientX > window.innerWidth - BORDA) return false;
           return !(e.target.closest && e.target.closest(".scrub, .reader, .top"));
@@ -2310,34 +2312,47 @@
 
         el.som.addEventListener("click", () => som.alternar());
 
-        // Autoplay so e liberado apos um gesto, e rolagem nao conta como um.
-        // Sem 'once' porque a primeira tentativa pode ser recusada. O botao de
-        // som fica de fora: senao o gesto abriria o volume e o clique o cortaria.
-        ["pointerdown", "keydown", "touchstart"].forEach(ev =>
+        // A porta e a unica origem do som: antes dela nada toca, senao a musica
+        // comecaria enquanto o visitante so olha em volta. Depois de entrar,
+        // qualquer gesto tenta de novo, porque a primeira tentativa pode ser
+        // recusada. O botao de som fica de fora: o gesto abriria o volume e o
+        // clique o cortaria.
+        function liberar(x, y) {
+          anterior.entrar(x, y);
+          if (app.entrou) som.retomar();
+        }
+
+        ["pointerdown", "keydown"].forEach(ev =>
           window.addEventListener(ev, e => {
             if (e.target && el.som.contains(e.target)) return;
-            if (e.pointerType !== "touch" && e.type !== "touchstart") {
-              anterior.entrar(
-                e.clientX != null ? e.clientX : window.innerWidth / 2,
-                e.clientY != null ? e.clientY : window.innerHeight / 2);
-            }
-            som.retomar();
+            if (e.pointerType === "touch") return;
+            liberar(
+              e.clientX != null ? e.clientX : window.innerWidth / 2,
+              e.clientY != null ? e.clientY : window.innerHeight / 2);
           }, { passive: true }));
 
-        // No toque o arrasto percorre o corredor intacto, entao entrar precisa ser
-        // um toque parado; senao a primeira tentativa de olhar em volta ja entraria.
-        let toqueX = 0, toqueY = 0, andou = 0;
+        // No toque o arrasto percorre o corredor intacto, entao so um toque parado
+        // entra. Um dedo so, e sempre com a lista de toques conferida: sem isso
+        // 'andou' congela em zero e um arrasto acaba abrindo a porta no meio.
+        let toqueX = 0, toqueY = 0, andou = 0, valido = false;
         window.addEventListener("touchstart", e => {
-          const t = e.touches[0];
-          toqueX = t.clientX; toqueY = t.clientY; andou = 0;
+          valido = e.touches.length === 1;
+          if (!valido) return;
+          toqueX = e.touches[0].clientX;
+          toqueY = e.touches[0].clientY;
+          andou = 0;
         }, { passive: true });
         window.addEventListener("touchmove", e => {
+          if (!valido || e.touches.length !== 1) { valido = false; return; }
           const t = e.touches[0];
           andou = Math.max(andou, Math.hypot(t.clientX - toqueX, t.clientY - toqueY));
         }, { passive: true });
-        window.addEventListener("touchend", () => {
-          if (andou <= 10) anterior.entrar(toqueX, toqueY);
+        window.addEventListener("touchend", e => {
+          if (e.touches.length) return;
+          if (valido && andou <= 10) liberar(toqueX, toqueY);
+          valido = false;
         }, { passive: true });
+        window.addEventListener("touchcancel", () => { valido = false; }, { passive: true });
 
         document.addEventListener("keydown", e => {
           if (e.key === "Escape" && app.open) hide();
