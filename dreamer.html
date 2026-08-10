@@ -1661,6 +1661,9 @@
         let preludiando = false, virtual = 0, marca = 0;
         let carregada = "";      // arquivo que ja esta no elemento
         let blocos = [], blocoAtivo = -1, versoAtivo = -1, canto = 0, tema = "";
+        // Canto ja sorteado de cada estrofe. Sobrevive a troca de idioma, que
+        // recarrega a letra e reabriria a estrofe no proximo canto da fila.
+        let cantos = [];
 
         /* ── letra ── */
         async function carregarLetra(nome) {
@@ -1694,10 +1697,12 @@
           return out;
         }
 
-        function abrirBloco(bloco) {
-          const c = CANTOS[bloco.linhas[0].canto != null
-            ? bloco.linhas[0].canto % CANTOS.length
-            : canto++ % CANTOS.length];
+        function abrirBloco(bloco, i) {
+          if (cantos[i] == null) {
+            const fixo = bloco.linhas[0].canto;
+            cantos[i] = fixo != null ? fixo % CANTOS.length : canto++ % CANTOS.length;
+          }
+          const c = CANTOS[cantos[i]];
           const n = el.lyric;
           n.className = "lyric " + c;
           n.dataset.tema = tema;
@@ -1748,7 +1753,7 @@
           if (bi !== blocoAtivo) {
             blocoAtivo = bi;
             versoAtivo = -1;
-            bi >= 0 ? abrirBloco(blocos[bi]) : apagarLegenda();
+            bi >= 0 ? abrirBloco(blocos[bi], bi) : apagarLegenda();
           }
           if (bi < 0) return;
 
@@ -1782,6 +1787,7 @@
           const atual = AUDIO.faixas[indice];
           if (carregada === atual.arquivo) return;
           carregada = atual.arquivo;
+          cantos = [];                 // outra faixa, outras estrofes
           faixa.volume = 0;
           faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
           carregarLetra(arquivoDaLetra());
