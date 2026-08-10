@@ -2146,7 +2146,10 @@
         const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 1 / 60;
         ultimo = t;
 
-        app.alvo = percurso.alvo();
+        // Congelado enquanto queima: a parede em chamas esta desenhada na tela e a
+        // arruinada continuaria deslizando por baixo, abrindo as duas na borda.
+        if (app.queimando) app.alvo = app.p;
+        else app.alvo = percurso.alvo();
 
         // O progresso persegue a rolagem em vez de colar nela: a cena ganha peso.
         app.p += (app.alvo - app.p) * passoDe(INERCIA, dt);
@@ -2262,10 +2265,15 @@
       /* ══════════════════════════════════════════════════════════
          15 · ESTADO ANTERIOR
          ══════════════════════════════════════════════════════════ */
-      // A ruina chega em circulo a partir do ponto tocado. O mesmo gesto libera
-      // o audio, entao nao existe aviso de "ativar som".
+      // A parede intacta, e a queima que a consome a partir do ponto tocado. O
+      // mesmo gesto libera o audio, entao nao existe aviso de "ativar som".
       const anterior = (function () {
         const CURSO = 5200;
+
+        // Carregada aqui e nao na hora da queima: um Image criado no clique ainda
+        // nao decodificou e os primeiros quadros sairiam vazios.
+        const arte = new Image();
+        arte.src = ART + "a-novo.jpg";
 
         let dx = 0;
 
@@ -2348,14 +2356,21 @@
           const chama = pctx.createImageData(pw, ph);
           const bA = buraco.data, bB = chama.data;
 
-          const arte = new Image();
-          arte.src = ART + "a-novo.jpg";
           const l = app.layers[CENA.ancora];
           const larg = l && l.step ? l.step : w;
 
           // Faixas em unidades do campo, contadas a partir do limiar.
           const NUCLEO = 0.005, BRASA = 0.019, TICAO = 0.125, LUZ = 0.030;
+          // A partir daqui so sobram os cantos: nao ha mais o que desalinhar, e
+          // segurar a pagina ate o ultimo quadro so parece travamento.
+          const SOLTA = 0.55;
           const t0 = performance.now();
+
+          function soltar() {
+            if (!app.queimando) return;
+            app.queimando = false;
+            document.documentElement.classList.remove("queimando");
+          }
 
           (function passo(agora) {
             const k = clamp((agora - t0) / CURSO, 0, 1);
@@ -2405,11 +2420,11 @@
             ctx.globalCompositeOperation = "source-over";
             ctx.drawImage(pq, 0, 0, w, h);
 
+            if (k > SOLTA) soltar();
             if (k < 1) requestAnimationFrame(passo);
             else {
               el.fogo.hidden = true;
-              app.queimando = false;
-              document.documentElement.classList.remove("queimando");
+              soltar();
             }
           })(t0);
         }
