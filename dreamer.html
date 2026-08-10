@@ -1153,6 +1153,12 @@
         stroke: transparent;
         stroke-width: 36;
       }
+
+      /* No toque a faixa fica visivel e ocupa ate 52px: a estrofe ancorada a
+         esquerda comecaria por cima dela. */
+      .lyric.esq {
+        left: 66px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
