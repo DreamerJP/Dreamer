@@ -960,15 +960,21 @@
       background-image: url('./Assets/Dreamer/camadas/a-novo.jpg');
     }
 
-    /* A mascara so existe durante a travessia: com raio zero ela ainda abriria
-       um halo no meio da tela, deixando o estado velho vazar por baixo. */
-    .novo.indo {
-      -webkit-mask-image: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%),
-          transparent 0, transparent var(--ruina, 0px),
-          #000 calc(var(--ruina, 0px) + 22vmax));
-      mask-image: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%),
-          transparent 0, transparent var(--ruina, 0px),
-          #000 calc(var(--ruina, 0px) + 22vmax));
+    /* A queima e desenhada, nao mascarada: borda dura irregular, brasa acesa e
+       papel tostando pedem controle por pixel que gradiente de CSS nao da. */
+    .fogo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Enquanto queima o percurso fica parado: a chama esta presa a tela. */
+    html.queimando {
+      overflow: hidden;
     }
 
     /* Fora da camada, senao andaria junto com a parede ao percorrer o corredor. */
@@ -1180,6 +1186,7 @@
   </div>
 
   <div class="novo" id="novo" aria-hidden="true"></div>
+  <canvas class="fogo" id="fogo" aria-hidden="true" hidden></canvas>
   <div class="convite" id="convite">clique para entrar</div>
 
   <div class="haze" aria-hidden="true"></div>
@@ -1295,6 +1302,7 @@
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
         novo: document.getElementById("novo"),
+        fogo: document.getElementById("fogo"),
         convite: document.getElementById("convite"),
 
         som: document.getElementById("sound")
@@ -1316,7 +1324,8 @@
         alvo: 0,                // progresso cru da rolagem
         open: null,
         ready: false,
-        entrou: false
+        entrou: false,
+        queimando: false
       };
 
       const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
@@ -1994,7 +2003,7 @@
           l.node.style.transform = "translate3d(" + d + "px,0,0)";
           // A parede intacta corre junto com a arruinada: a dissolucao registra
           // em qualquer ponto do corredor, nao so no comeco.
-          if (i === CENA.ancora && !el.novo.hidden) anterior.mover(d);
+          if (i === CENA.ancora && !app.entrou) anterior.mover(d);
         });
 
         // Os fragmentos acompanham a camada em que estao apoiados, senao deslizam
@@ -2070,7 +2079,7 @@
         function aceita(e) {
           // Durante a dissolucao o percurso fica parado: mover a parede levaria o
           // furo da ruina para fora da tela junto com ela.
-          if (app.open || !el.novo.hidden && app.entrou) return false;
+          if (app.open || app.queimando) return false;
           const t = e.touches[0];
           if (t.clientX < BORDA || t.clientX > window.innerWidth - BORDA) return false;
           return !(e.target.closest && e.target.closest(".scrub, .reader, .top"));
@@ -2244,7 +2253,7 @@
       // A ruina chega em circulo a partir do ponto tocado. O mesmo gesto libera
       // o audio, entao nao existe aviso de "ativar som".
       const anterior = (function () {
-        const CURSO = 2200;
+        const CURSO = 5200;
 
         let dx = 0;
 
@@ -2270,26 +2279,139 @@
           el.novo.style.transform = "translate3d(" + d + "px,0,0)";
         }
 
-        function entrar(x, y) {
-          if (app.entrou || !app.ready) return;
-          app.entrou = true;
-          document.documentElement.classList.remove("antes");
-          measure();                     // devolve o espacador inteiro
-          el.novo.classList.add("indo");
-          // Em coordenadas da camada: assim a ruina fica presa a um ponto da
-          // parede e nao a um ponto da tela.
-          el.novo.style.setProperty("--rx", Math.round(x - dx) + "px");
-          el.novo.style.setProperty("--ry", Math.round(y) + "px");
+        /* ── queima ── */
+        // Ruido de valor somado em oitavas: uma so daria bolhas redondas, as
+        // finas e que dao o recorte de papel.
+        function ruido(pw, ph) {
+          const out = new Float32Array(pw * ph);
+          let amp = 1, soma = 0;
+          for (let oit = 0; oit < 4; oit++) {
+            const cel = Math.max(3, 48 >> oit);
+            const gw = Math.ceil(pw / cel) + 2, gh = Math.ceil(ph / cel) + 2;
+            const g = new Float32Array(gw * gh);
+            for (let i = 0; i < g.length; i++) g[i] = Math.random();
+            for (let j = 0; j < ph; j++) {
+              const fy = j / cel, jy = fy | 0, ty = fy - jy;
+              const sy = ty * ty * (3 - 2 * ty);
+              for (let i = 0; i < pw; i++) {
+                const fx = i / cel, ix = fx | 0, tx = fx - ix;
+                const sx = tx * tx * (3 - 2 * tx);
+                const a = g[jy * gw + ix] + (g[jy * gw + ix + 1] - g[jy * gw + ix]) * sx;
+                const b = g[(jy + 1) * gw + ix] + (g[(jy + 1) * gw + ix + 1] - g[(jy + 1) * gw + ix]) * sx;
+                out[j * pw + i] += amp * (a + (b - a) * sy);
+              }
+            }
+            soma += amp; amp *= 0.5;
+          }
+          for (let i = 0; i < out.length; i++) out[i] /= soma;
+          return out;
+        }
 
-          const alvo = Math.hypot(window.innerWidth, window.innerHeight);
+        // Ordem em que cada ponto queima: distancia ao ponto tocado embaralhada
+        // pelo ruido. Calculada uma vez; cada quadro so compara com um limiar.
+        function queimar(x, y) {
+          const w = window.innerWidth, h = window.innerHeight;
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const cv = el.fogo, ctx = cv.getContext("2d");
+          cv.width = Math.round(w * dpr);
+          cv.height = Math.round(h * dpr);
+
+          const pw = Math.max(120, Math.round(w / 3));
+          const ph = Math.max(80, Math.round(h / 3));
+          const n = ruido(pw, ph);
+          const campo = new Float32Array(pw * ph);
+          const maxd = Math.hypot(Math.max(x, w - x), Math.max(y, h - y)) || 1;
+          for (let j = 0; j < ph; j++) {
+            const py = (j + 0.5) * h / ph;
+            for (let i = 0; i < pw; i++) {
+              const px = (i + 0.5) * w / pw;
+              campo[j * pw + i] = Math.hypot(px - x, py - y) / maxd * 0.70 + n[j * pw + i] * 0.30;
+            }
+          }
+
+          const pq = document.createElement("canvas");
+          pq.width = pw; pq.height = ph;
+          const pctx = pq.getContext("2d");
+          const buraco = pctx.createImageData(pw, ph);
+          const chama = pctx.createImageData(pw, ph);
+          const bA = buraco.data, bB = chama.data;
+
+          const arte = new Image();
+          arte.src = ART + "a-novo.jpg";
+          const l = app.layers[CENA.ancora];
+          const larg = l && l.step ? l.step : w;
+
+          // Faixas em unidades do campo, contadas a partir do limiar.
+          const NUCLEO = 0.005, BRASA = 0.019, TICAO = 0.125, LUZ = 0.030;
           const t0 = performance.now();
+
           (function passo(agora) {
             const k = clamp((agora - t0) / CURSO, 0, 1);
             const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-            el.novo.style.setProperty("--ruina", Math.round(alvo * e) + "px");
+            const t = -0.04 + e * 1.18;
+            // Duas senoides sem periodo comum: a brasa nao pulsa em compasso.
+            const tremor = 0.74 + 0.26 * Math.sin(agora / 37) * Math.sin(agora / 89);
+
+            for (let i = 0, p = 0; i < campo.length; i++, p += 4) {
+              const v = campo[i] - t;
+              if (v < 0) {
+                bA[p + 3] = 255;
+                // A brasa joga luz para dentro do buraco: sem isso a borda fica
+                // colada, como recorte de papel em vez de fogo.
+                if (v > -LUZ) {
+                  const u = 1 + v / LUZ;
+                  bB[p] = 255; bB[p + 1] = 176; bB[p + 2] = 96;
+                  bB[p + 3] = 130 * u * u * tremor;
+                } else { bB[p + 3] = 0; }
+                continue;
+              }
+              bA[p + 3] = 0;
+              if (v < NUCLEO) {
+                bB[p] = 255; bB[p + 1] = 238; bB[p + 2] = 196;
+                bB[p + 3] = 255 * tremor;
+              } else if (v < BRASA) {
+                const u = (v - NUCLEO) / (BRASA - NUCLEO);
+                bB[p] = 255; bB[p + 1] = 152 - 62 * u; bB[p + 2] = 44 - 32 * u;
+                bB[p + 3] = 252 * (1 - u) * tremor;
+              } else if (v < TICAO) {
+                const u = (v - BRASA) / (TICAO - BRASA);
+                bB[p] = 30; bB[p + 1] = 17; bB[p + 2] = 11;
+                bB[p + 3] = 247 * Math.pow(1 - u, 1.5);
+              } else { bB[p + 3] = 0; }
+            }
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.globalCompositeOperation = "source-over";
+            ctx.clearRect(0, 0, w, h);
+            if (arte.complete && arte.naturalWidth) ctx.drawImage(arte, dx, 0, larg, h);
+
+            pctx.putImageData(buraco, 0, 0);
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.drawImage(pq, 0, 0, w, h);
+
+            pctx.putImageData(chama, 0, 0);
+            ctx.globalCompositeOperation = "source-over";
+            ctx.drawImage(pq, 0, 0, w, h);
+
             if (k < 1) requestAnimationFrame(passo);
-            else el.novo.hidden = true;
+            else {
+              el.fogo.hidden = true;
+              app.queimando = false;
+              document.documentElement.classList.remove("queimando");
+            }
           })(t0);
+        }
+
+        function entrar(x, y) {
+          if (app.entrou || !app.ready) return;
+          app.entrou = true;
+          app.queimando = true;
+          document.documentElement.classList.remove("antes");
+          document.documentElement.classList.add("queimando");
+          measure();                     // devolve o espacador inteiro
+          el.fogo.hidden = false;
+          el.novo.hidden = true;         // daqui em diante quem desenha e a tela
+          queimar(x, y);
         }
 
         return { limite: limite, medir: medir, mover: mover, entrar: entrar };
