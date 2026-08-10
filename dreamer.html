@@ -1475,6 +1475,18 @@
         });
 
         return {
+          // Acende no ponto dado sem esperar o proximo movimento: o cursor do
+          // sistema ja saiu, entao quem entra com o mouse parado ficaria sem nada.
+          acender(px, py) {
+            alvoX = px; alvoY = py;
+            x = px; y = py;
+            viva = true;
+            el.lume.classList.add("on");
+            el.ponta.classList.add("on");
+            el.ponta.style.transform = "translate3d(" + px + "px," + py + "px,0)";
+            el.lume.style.transform = "translate3d(" + px + "px," + py + "px,0)";
+          },
+
           achar(m) {
             el.ponta.classList.add("achou");
             m.classList.add("pego");
@@ -2408,6 +2420,7 @@
           app.queimando = true;
           document.documentElement.classList.remove("antes");
           document.documentElement.classList.add("queimando");
+          luz.acender(x, y);
           measure();                     // devolve o espacador inteiro
           el.fogo.hidden = false;
           el.novo.hidden = true;         // daqui em diante quem desenha e a tela
