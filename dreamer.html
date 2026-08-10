@@ -1259,7 +1259,9 @@
         span: 6                                      // alturas de tela de rolagem
       };
 
-      // Faixas tocadas em sequencia, em ciclo. 'letra' e 'traducao' sao opcionais.
+      // Faixas tocadas em sequencia, em ciclo. 'letra', 'traducao' e 'inicio'
+      // sao opcionais. 'inicio' pula a introducao instrumental sem tocar no
+      // arquivo: os tempos da letra continuam absolutos.
       const AUDIO = {
         dir: "./Assets/Dreamer/audio/",
         volume: 0.7,                                 // teto de volume, 0 a 1
@@ -1269,11 +1271,13 @@
           {
             arquivo: "Letter - From the Lost Days.mp3",
             letra: "Letter - From the Lost Days.json",
-            traducao: "Letter - From the Lost Days.pt.json"
+            traducao: "Letter - From the Lost Days.pt.json",
+            inicio: 22          // 1o verso aos 29,1s
           },
           {
             arquivo: "Rain of Brass Petals - Three Vocals Edit.mp3",
-            letra: "Rain of Brass Petals - Three Vocals Edit.json"
+            letra: "Rain of Brass Petals - Three Vocals Edit.json",
+            inicio: 52          // 1o verso aos 64,1s
           }
         ]
       };
@@ -1686,6 +1690,12 @@
           return faixa && isFinite(faixa.duration) ? faixa.duration : 0;
         }
 
+        // Ponto de partida da faixa atual. O fio e a busca trabalham no trecho
+        // que sobra; a legenda continua no tempo real do arquivo.
+        function partida() {
+          return AUDIO.faixas[indice].inicio || 0;
+        }
+
         function acompanhar() {
           if (preludiando) {
             const n = performance.now();
@@ -1760,7 +1770,7 @@
         function tocar(de) {
           preparar();
           faixa.volume = 0;
-          if (de) irA(de);
+          irA(de || partida());
           faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
         }
 
@@ -1884,12 +1894,12 @@
             if (audivel) esmaecer(v ? AUDIO.volume * AUDIO.recuo : AUDIO.volume, 500);
           },
 
-          posicao: () => ({ atual: agora(), total: duracao() }),
+          posicao: () => ({ atual: agora() - partida(), total: duracao() - partida() }),
 
           irPara(p) {
-            const d = duracao();
-            if (!d) return;
-            const t = clamp(p, 0, 1) * d;
+            const d = duracao() - partida();
+            if (d <= 0) return;
+            const t = partida() + clamp(p, 0, 1) * d;
             if (preludiando) { virtual = t; marca = performance.now(); }
             else irA(t);
             blocoAtivo = -1;              // forca a legenda a reencontrar o trecho
