@@ -487,6 +487,8 @@
 
     .top .title {
       color: var(--ink-dim);
+      /* O cabecalho inteiro e transparente ao ponteiro; so o titulo recebe. */
+      pointer-events: auto;
     }
 
     .top .right {
@@ -1201,7 +1203,7 @@
   <div class="track" id="track"></div>
 
   <header class="top">
-    <div class="title">Dreamer</div>
+    <div class="title" id="title" role="button" tabindex="0" aria-pressed="false">Dreamer</div>
     <div class="right">
       <button class="switch" id="sound" type="button" aria-pressed="false" aria-label="Som ambiente" hidden>
         <span class="wave"><i></i><i></i><i></i></span><span>som</span>
@@ -1257,7 +1259,7 @@
         span: 6                                      // alturas de tela de rolagem
       };
 
-      // Faixas tocadas em sequencia, em ciclo. 'letra' e opcional.
+      // Faixas tocadas em sequencia, em ciclo. 'letra' e 'traducao' sao opcionais.
       const AUDIO = {
         dir: "./Assets/Dreamer/audio/",
         volume: 0.7,                                 // teto de volume, 0 a 1
@@ -1266,7 +1268,8 @@
         faixas: [
           {
             arquivo: "Letter - From the Lost Days.mp3",
-            letra: "Letter - From the Lost Days.json"
+            letra: "Letter - From the Lost Days.json",
+            traducao: "Letter - From the Lost Days.pt.json"
           },
           {
             arquivo: "Rain of Brass Petals - Three Vocals Edit.mp3",
@@ -1307,6 +1310,7 @@
         sheet: document.getElementById("sheet"),
         close: document.getElementById("close"),
         veil: document.getElementById("veil"),
+        title: document.getElementById("title"),
         novo: document.getElementById("novo"),
         fogo: document.getElementById("fogo"),
         convite: document.getElementById("convite"),
@@ -1331,7 +1335,8 @@
         open: null,
         ready: false,
         entrou: false,
-        queimando: false
+        queimando: false,
+        traduzido: false
       };
 
       const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
@@ -1736,7 +1741,13 @@
           carregada = atual.arquivo;
           faixa.volume = 0;
           faixa.src = AUDIO.dir + encodeURIComponent(atual.arquivo);
-          carregarLetra(atual.letra);
+          carregarLetra(arquivoDaLetra());
+        }
+
+        // Cai na original quando a faixa nao tem traducao.
+        function arquivoDaLetra() {
+          const atual = AUDIO.faixas[indice];
+          return app.traduzido && atual.traducao ? atual.traducao : atual.letra;
         }
 
         // Buscar antes dos metadados nao tem efeito: nesse caso espera por eles.
@@ -1857,6 +1868,15 @@
             faixa && faixa.src ? seguir() : ligar();
             app.som = true;
           },
+
+          // Troca o arquivo da letra sem tocar no audio: o tempo corre no
+          // elemento, entao a proxima estrofe ja abre no idioma novo.
+          traduzir(v) {
+            app.traduzido = v;
+            if (faixa) carregarLetra(arquivoDaLetra());
+          },
+
+          temTraducao: () => !!AUDIO.faixas[indice].traducao,
 
           // Enquanto o leitor esta aberto a legenda sai e a faixa recua.
           recolher(v) {
@@ -2467,6 +2487,18 @@
         el.reader.addEventListener("click", e => { if (e.target === el.reader) hide(); });
 
         el.som.addEventListener("click", () => som.alternar());
+
+        // Gatilho discreto da traducao. Fora enquanto queima: o clique que
+        // entrou na pagina nao deve trocar o idioma junto.
+        function alternarIdioma() {
+          if (!app.entrou || app.queimando || !som.temTraducao()) return;
+          som.traduzir(!app.traduzido);
+          el.title.setAttribute("aria-pressed", app.traduzido ? "true" : "false");
+        }
+        el.title.addEventListener("click", alternarIdioma);
+        el.title.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); alternarIdioma(); }
+        });
 
         // A porta e a unica origem do som: antes dela nada toca, senao a musica
         // comecaria enquanto o visitante so olha em volta. Depois de entrar,
