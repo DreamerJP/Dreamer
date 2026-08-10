@@ -1203,7 +1203,7 @@
   <div class="track" id="track"></div>
 
   <header class="top">
-    <div class="title" id="title" role="button" tabindex="0" aria-pressed="false">Dreamer</div>
+    <div class="title" id="title" role="button" tabindex="0" aria-pressed="true">Dreamer</div>
     <div class="right">
       <button class="switch" id="sound" type="button" aria-pressed="false" aria-label="Som ambiente" hidden>
         <span class="wave"><i></i><i></i><i></i></span><span>som</span>
@@ -1336,7 +1336,7 @@
         ready: false,
         entrou: false,
         queimando: false,
-        traduzido: false
+        traduzido: true       // abre em portugues; o titulo leva ao original
       };
 
       const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
