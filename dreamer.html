@@ -1435,7 +1435,7 @@
             if (!rodando) return;
             relogio += dt;
             // Tres periodos sem multiplo comum: o vento gira sem repetir um ciclo
-            // audivel. O termo constante em y e o assentamento do ambiente.
+            // perceptivel. O termo constante em y e o assentamento do ambiente.
             const ventoX = Math.sin(relogio * 0.042) * 3.6 + Math.sin(relogio * 0.014 + 2) * 2.2;
             const ventoY = Math.sin(relogio * 0.025 + 1) * 4 + 1.1;
             const facho = luz.onde();
@@ -1656,9 +1656,6 @@
       const som = (function () {
         let faixa = null, indice = 0, timer = 0, relogio = 0;
         let tocando = false, audivel = false;
-        // Autoplay de audio no Chrome depende da nota do site, nao do mudo.
-        // Antes do gesto o tempo corre aqui e o elemento fica so carregado.
-        let preludiando = false, virtual = 0, marca = 0;
         let carregada = "";      // arquivo que ja esta no elemento
         let blocos = [], blocoAtivo = -1, versoAtivo = -1, canto = 0, tema = "";
         // Canto ja sorteado de cada estrofe. Sobrevive a troca de idioma, que
@@ -1719,9 +1716,8 @@
           el.lyric.classList.remove("on");
         }
 
-        // Fonte unica do tempo: relogio proprio no preludio, elemento depois dele.
         function agora() {
-          return preludiando ? virtual : (faixa ? faixa.currentTime : 0);
+          return faixa ? faixa.currentTime : 0;
         }
 
         function duracao() {
@@ -1735,13 +1731,6 @@
         }
 
         function acompanhar() {
-          if (preludiando) {
-            const n = performance.now();
-            virtual += (n - marca) / 1000;
-            marca = n;
-            const d = duracao();
-            if (d && virtual >= d) virtual = 0;
-          }
           trilha.pintar();
           if (!faixa || !blocos.length) return;
           const t = agora();
@@ -1773,7 +1762,6 @@
         }
 
         /* ── reproducao ── */
-        // Carregar nao exige gesto; so tocar exige. O preludio para por aqui.
         // Reatribuir o src reinicia o elemento e descarta qualquer busca de
         // tempo feita em seguida, entao so recarrega quando a faixa muda.
         function preparar() {
@@ -1806,10 +1794,10 @@
             () => { faixa.currentTime = t; }, { once: true });
         }
 
-        function tocar(de) {
+        function tocar() {
           preparar();
           faixa.volume = 0;
-          irA(de || partida());
+          irA(partida());
           faixa.play().then(() => esmaecer(AUDIO.volume)).catch(falhar);
         }
 
@@ -1835,26 +1823,17 @@
           relogio = setInterval(acompanhar, 200);
         }
 
-        function ligar(de) {
+        function ligar() {
           if (tocando || !AUDIO.faixas.length) return;
-          preludiando = false;
           tocando = true;
           audivel = true;
           el.som.setAttribute("aria-pressed", "true");
-          tocar(de);
+          tocar();
           el.scrub.hidden = false;
           trilha.montar();
           acompanharDeNovo();
         }
 
-        // O gesto entrega o som no ponto em que o relogio chegou, nao do zero.
-        function revelar() {
-          if (!preludiando) return;
-          const de = virtual;
-          preludiando = false;
-          ligar(de);
-          app.som = true;
-        }
 
         // Pausa: para na hora e deixa legenda e fio onde estao.
         function pausar() {
@@ -1880,7 +1859,6 @@
         // Falha de carregamento tira tudo de cena; pausa do visitante nao.
         function falhar() {
           tocando = false;
-          preludiando = false;
           audivel = false;
           el.som.setAttribute("aria-pressed", "false");
           clearInterval(timer);
@@ -1893,26 +1871,12 @@
         return {
           disponivel: () => AUDIO.faixas.length > 0,
 
-          // Legenda e fio correm antes de qualquer gesto, sem tocar o audio.
-          preludio() {
-            if (!app.som || tocando || preludiando) return;
-            preludiando = true;
-            marca = performance.now();
-            preparar();
-            el.som.setAttribute("aria-pressed", "false");
-            el.scrub.hidden = false;
-            trilha.montar();
-            acompanharDeNovo();
-          },
-
           retomar() {
-            if (preludiando) { revelar(); return; }
             if (tocando) return;
             if (app.som) ligar();
           },
 
           alternar() {
-            if (preludiando) { revelar(); return; }   // primeiro toque entrega o som
             if (tocando) { pausar(); app.som = false; return; }
             faixa && faixa.src ? seguir() : ligar();
             app.som = true;
@@ -1938,9 +1902,7 @@
           irPara(p) {
             const d = duracao() - partida();
             if (d <= 0) return;
-            const t = partida() + clamp(p, 0, 1) * d;
-            if (preludiando) { virtual = t; marca = performance.now(); }
-            else irA(t);
+            irA(partida() + clamp(p, 0, 1) * d);
             blocoAtivo = -1;              // forca a legenda a reencontrar o trecho
             versoAtivo = -1;
             acompanhar();
@@ -2627,7 +2589,7 @@
         // A poeira e a unica peca que roda sozinha o tempo todo; fica de fora
         // de quem pediu menos movimento.
         if (!matchMedia("(prefers-reduced-motion: reduce)").matches) poeira.iniciar();
-        // Sem preludio: a entrada garante um gesto, entao a faixa comeca do zero.
+        // Nada toca aqui: quem libera o audio e o gesto que abre a porta.
         if (som.disponivel()) el.som.hidden = false;
 
         app.ready = true;
