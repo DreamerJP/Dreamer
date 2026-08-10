@@ -1386,17 +1386,25 @@
          ══════════════════════════════════════════════════════════ */
       const poeira = (function () {
         const ctx = el.dust.getContext("2d");
-        let pontos = [], w = 0, h = 0, rodando = false, desloc = 0;
+        // Fora do facho o grao nao some, so recua para o limite do percebido.
+        const FORA = 0.55, GANHO = 3.4;
+        let pontos = [], w = 0, h = 0, rodando = false, desloc = 0, relogio = 0;
 
-        function nascer(espalhado) {
+        // Grao em suspensao segue o ar, nao a gravidade: o vento e comum a todos
+        // e cada um so desvia um pouco dele. 'queda' cresce com o raio, entao os
+        // maiores assentam antes e os planos se separam.
+        function nascer() {
+          const r = 0.3125 + Math.random() * 0.9375;
           return {
             x: Math.random() * w,
-            y: espalhado ? Math.random() * h : h + 12,
-            r: 0.25 + Math.random() * 0.75,
-            v: 3 + Math.random() * 10,
+            y: Math.random() * h,
+            r: r,
+            dx: (Math.random() - 0.5) * 3.5,
+            dy: (Math.random() - 0.5) * 3.5,
+            queda: 0.22 + r * 0.6,
             a: 0.05 + Math.random() * 0.18,
             fase: Math.random() * 6.283,
-            amp: 4 + Math.random() * 15
+            amp: 2 + Math.random() * 6
           };
         }
 
@@ -1410,9 +1418,9 @@
           el.dust.style.height = h + "px";
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           ctx.fillStyle = "#cfc6b0";
-          const quantos = w < 760 ? 60 : 156;
+          const quantos = w < 760 ? 75 : 195;
           pontos = [];
-          for (let i = 0; i < quantos; i++) pontos.push(nascer(true));
+          for (let i = 0; i < quantos; i++) pontos.push(nascer());
         }
 
         return {
@@ -1425,17 +1433,38 @@
           mover(d) { desloc = d; },
           passo(dt) {
             if (!rodando) return;
+            relogio += dt;
+            // Tres periodos sem multiplo comum: o vento gira sem repetir um ciclo
+            // audivel. O termo constante em y e o assentamento do ambiente.
+            const ventoX = Math.sin(relogio * 0.042) * 3.6 + Math.sin(relogio * 0.014 + 2) * 2.2;
+            const ventoY = Math.sin(relogio * 0.025 + 1) * 4 + 1.1;
+            const facho = luz.onde();
+            const alcance = Math.max(w, h) * 0.19;   // mesmo raio do halo
             ctx.clearRect(0, 0, w, h);
             for (const p of pontos) {
-              p.y -= p.v * dt;
-              p.fase += dt * 0.5;
-              if (p.y < -12) Object.assign(p, nascer(false));
+              p.fase += dt * 0.28;
+              p.x += (ventoX + p.dx) * dt;
+              p.y += (ventoY + p.dy + p.queda) * dt;
+              // Da a volta pelas duas bordas: o vento inverte, entao nascer so
+              // embaixo deixaria o topo vazio quando a massa subisse.
+              if (p.y < -12) p.y = h + 12;
+              else if (p.y > h + 12) p.y = -12;
               // x vive no espaco da parede e da a volta pela tela: assim o grao
               // acompanha o fundo sem precisar nascer e morrer a cada rolagem.
               const x = p.x + Math.sin(p.fase) * p.amp - desloc;
-              ctx.globalAlpha = p.a;
+              const px = ((x % w) + w) % w;
+
+              // Um grao so e visivel porque espalha luz: dentro do facho ele
+              // existe, fora dele fica no limite do percebido.
+              let alfa = p.a * FORA;
+              if (facho) {
+                const g = 1 - Math.hypot(px - facho.x, p.y - facho.y) / alcance;
+                if (g > 0) alfa = p.a * (FORA + g * g * GANHO);
+              }
+
+              ctx.globalAlpha = Math.min(1, alfa);
               ctx.beginPath();
-              ctx.arc(((x % w) + w) % w, p.y, p.r, 0, 6.283);
+              ctx.arc(px, p.y, p.r, 0, 6.283);
               ctx.fill();
             }
             ctx.globalAlpha = 1;
@@ -1490,6 +1519,10 @@
         });
 
         return {
+          // Posicao amortecida, para quem precisa reagir ao facho. Nula quando
+          // nao ha lanterna acesa.
+          onde: () => (viva ? { x: x, y: y } : null),
+
           // Acende no ponto dado sem esperar o proximo movimento: o cursor do
           // sistema ja saiu, entao quem entra com o mouse parado ficaria sem nada.
           acender(px, py) {
