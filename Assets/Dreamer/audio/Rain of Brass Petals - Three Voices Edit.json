@@ -37,6 +37,34 @@
       "texto": "I stole something precious"
     },
     {
+      "t": 117,
+      "fim": 119.8,
+      "texto": "Now I lay me down to sleep",
+      "reverso": true,
+      "canto": 5
+    },
+    {
+      "t": 120,
+      "fim": 122.8,
+      "texto": "I pray the Lord my soul to keep",
+      "reverso": true,
+      "canto": 5
+    },
+    {
+      "t": 123,
+      "fim": 125.8,
+      "texto": "If I should die before I wake",
+      "reverso": true,
+      "canto": 5
+    },
+    {
+      "t": 126,
+      "fim": 128.8,
+      "texto": "I pray the Lord my soul to take",
+      "reverso": true,
+      "canto": 5
+    },
+    {
       "t": 151.4,
       "fim": 155.34,
       "texto": "I am the second"

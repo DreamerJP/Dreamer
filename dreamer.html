@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&family=Rock+Salt&display=swap"
     rel="stylesheet" />
 
   <style>
@@ -236,6 +236,13 @@
        6 · POEIRA
        ============================================================ */
     .dust {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* Marcas riscadas no reboco: vivem na cena, entre a parede e o entulho. */
+    .marca {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -792,6 +799,7 @@
       line-height: 1.28;
     }
 
+
     .lyric[data-tema="carta"] p:first-child {
       color: var(--accent);
       transition: color 900ms var(--ease);
@@ -1187,6 +1195,7 @@
   <div class="stage" aria-hidden="true">
     <div class="scene" id="scene">
       <div class="veu" id="veu"></div>
+      <canvas class="marca" id="marca" aria-hidden="true"></canvas>
       <canvas class="dust" id="dust"></canvas>
       <div class="lume" id="lume"></div>
       <div class="markers" id="markers"></div>
@@ -1254,6 +1263,12 @@
         ancora: 1,                                   // camada a que os fragmentos pertencem
         poeiraAtras: 2,                              // camada que passa na frente da poeira
         lampada: { camada: 1, x: 0.313, y: 0.209 },  // posicao da luz dentro da peca
+        // Trechos da peca sem porta, batente ou recorte, medidos na propria arte.
+        // O segundo passa de 1 porque atravessa a emenda da peca.
+        reboco: {
+          zonas: [{ de: 0.394, ate: 0.619 }, { de: 0.953, ate: 1.046 }],
+          alto: 0.46
+        },
         reach: 5,                                    // larguras de tela de percurso, no ponteiro
         voltas: 1.6,                                 // voltas da peca de percurso, no toque
         span: 6                                      // alturas de tela de rolagem
@@ -1275,8 +1290,8 @@
             inicio: 22          // 1o verso aos 29,1s
           },
           {
-            arquivo: "Rain of Brass Petals - Three Vocals Edit.mp3",
-            letra: "Rain of Brass Petals - Three Vocals Edit.json",
+            arquivo: "Rain of Brass Petals - Three Voices Edit.mp3",
+            letra: "Rain of Brass Petals - Three Voices Edit.json",
             inicio: 52          // 1o verso aos 64,1s
           }
         ]
@@ -1288,6 +1303,7 @@
         "esq abaixo", "esq meio", "dir meio"
       ];
 
+      const FONTE_RISCO = '"Rock Salt", "Segoe Script", cursive';
       const RESPIRO = 3;        // segundos de silencio que separam duas estrofes
       const ATRAS = 3;          // versos de eco mantidos atras do atual
       const ADIANTE = 1;        // verso adiante ja no fluxo, para a transicao ter de onde partir
@@ -1301,6 +1317,7 @@
         scene: document.getElementById("scene"),
         veu: document.getElementById("veu"),
         dust: document.getElementById("dust"),
+        marca: document.getElementById("marca"),
         lume: document.getElementById("lume"),
         ponta: document.getElementById("ponta"),
         markers: document.getElementById("markers"),
@@ -1555,6 +1572,194 @@
         };
       })();
 
+      // Riscado no reboco, nao escrito na tela: a marca vive em coordenada de
+      // parede, anda com ela e so aparece onde a lanterna passa.
+      const marca = (function () {
+        const ctx = el.marca.getContext("2d");
+        let arte = null, ancora = 0, base = 0, alvo = 0, opacidade = 0, dpr = 1;
+
+        function fundo() {
+          return CENA.depths[CENA.ancora] || 1;
+        }
+
+        function dimensionar() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          el.marca.width = Math.round(window.innerWidth * dpr);
+          el.marca.height = Math.round(window.innerHeight * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        // Traco a traco, com desvio por caractere: fonte de escrita desenhada
+        // em linha reta ainda parece tipografia, nao mao humana.
+        function riscar(c, texto, x, y, corpo) {
+          let cx = x;
+          for (const ch of texto) {
+            const larg = c.measureText(ch).width;
+            c.save();
+            c.translate(cx + larg / 2, y + (Math.random() - 0.5) * corpo * 0.09);
+            c.rotate((Math.random() - 0.5) * 0.05);
+            c.fillText(ch, -larg / 2, 0);
+            c.restore();
+            cx += larg * (0.99 + Math.random() * 0.04);
+          }
+        }
+
+        // A faixa de reboco e estreita e o verso inteiro nao cabe: quebra no
+        // espaco, medindo, em vez de transbordar para cima da porta.
+        function quebrar(c, texto, util) {
+          const saida = [];
+          let linha = "";
+          for (const p of texto.split(" ")) {
+            const tenta = linha ? linha + " " + p : p;
+            if (linha && c.measureText(tenta).width > util) { saida.push(linha); linha = p; }
+            else linha = tenta;
+          }
+          if (linha) saida.push(linha);
+          return saida;
+        }
+
+        // Largura de referencia: sempre a maior faixa. Medir pela faixa em que a
+        // marca calha de cair faria o tamanho dela mudar a cada volta.
+        function referencia() {
+          const passo = app.layers[CENA.ancora].step || window.innerWidth;
+          let maior = 0;
+          for (const z of CENA.reboco.zonas) maior = Math.max(maior, (z.ate - z.de) * passo);
+          return maior * 0.9;
+        }
+
+        // Trecho de reboco mais a vista neste instante, entre os que comportam a
+        // marca. Sem nenhum na tela, o mais proximo dela, para ela entrar em
+        // quadro conforme se anda.
+        function zona(largura) {
+          const w = window.innerWidth;
+          const passo = app.layers[CENA.ancora].step || w;
+          const desloc = app.p * app.box.travel * fundo();
+          let melhor = null;
+          for (const z of CENA.reboco.zonas) {
+            if ((z.ate - z.de) * passo < largura) continue;
+            const k0 = Math.floor((desloc - z.ate * passo) / passo);
+            for (let k = k0; k <= k0 + 2; k++) {
+              const a = (k + z.de) * passo - desloc;
+              const b = (k + z.ate) * passo - desloc;
+              const va = Math.max(a, 0), vb = Math.min(b, w);
+              const nota = vb > va ? vb - va : -Math.min(Math.abs(a - w / 2), Math.abs(b - w / 2));
+              if (!melhor || nota > melhor.nota) melhor = { nota: nota, a: a, b: b, va: va, vb: vb };
+            }
+          }
+          melhor.desloc = desloc;
+          return melhor;
+        }
+
+        // O que se ve nao e tinta, e o sulco: uma sombra dentro e um fio de luz
+        // no labio de cima. Fora disso viraria legenda colada na parede.
+        function compor(versos, util) {
+          const h = window.innerHeight;
+          const teto = h * 0.3;
+          const molde = document.createElement("canvas").getContext("2d");
+
+          let corpo = Math.round(h * 0.03), linhas = [];
+          for (;;) {
+            molde.font = corpo + "px " + FONTE_RISCO;
+            linhas = [];
+            versos.forEach(t => quebrar(molde, t, util).forEach(q => linhas.push(q)));
+            const largo = Math.max.apply(null, linhas.map(t => molde.measureText(t).width));
+            if (corpo <= 9 || (linhas.length * corpo * 1.9 <= teto && largo <= util)) break;
+            corpo -= 1;
+          }
+
+          const larguraDe = () => Math.max.apply(null, linhas.map(t => molde.measureText(t).width));
+          const alturaLinha = corpo * 1.9;
+          const pad = corpo * 0.9;
+          const cv = document.createElement("canvas");
+          cv.width = Math.ceil((larguraDe() + pad * 2) * dpr);
+          cv.height = Math.ceil((alturaLinha * linhas.length + pad * 2) * dpr);
+          const c = cv.getContext("2d");
+          // Escrita espelhada: o desenho inteiro inverte, entao cada letra vira
+          // junto e a primeira acaba a direita. Inverter so a ordem dos
+          // caracteres deixava cada letra virada para o lado certo.
+          c.setTransform(-dpr, 0, 0, dpr, cv.width, 0);
+          c.font = corpo + "px " + FONTE_RISCO;
+          c.textBaseline = "middle";
+
+          linhas.forEach((t, i) => {
+            const y = pad + alturaLinha * (i + 0.5);
+            const x = pad + (Math.random() - 0.5) * corpo * 0.6;
+            c.save();
+            c.translate(x, y);
+            c.rotate((Math.random() - 0.5) * 0.018);
+            c.fillStyle = "rgba(6, 6, 8, 0.85)";
+            riscar(c, t, 1.5, 1.5, corpo);
+            c.fillStyle = "rgba(228, 222, 206, 0.9)";
+            riscar(c, t, 0, 0, corpo);
+            c.restore();
+          });
+
+          // Reboco velho nao segura traco inteiro: pontos comidos ao acaso
+          // quebram a linha e tiram o ar de fonte impressa.
+          c.globalCompositeOperation = "destination-out";
+          const furos = Math.round(cv.width * cv.height / (dpr * dpr) / 260);
+          for (let i = 0; i < furos; i++) {
+            c.beginPath();
+            c.arc(Math.random() * cv.width / dpr, Math.random() * cv.height / dpr,
+              0.4 + Math.random() * 1.7, 0, 6.283);
+            c.fill();
+          }
+          c.globalCompositeOperation = "source-over";
+          return cv;
+        }
+
+        return {
+          dimensionar: dimensionar,
+
+          mostrar(bloco) {
+            arte = compor(bloco.linhas.map(l => l.texto), referencia());
+            // Centrada no pedaco a vista, mas sem encostar nos batentes.
+            const meia = arte.width / dpr / 2;
+            const z = zona(meia * 2);
+            const centro = z.vb > z.va ? (z.va + z.vb) / 2 : (z.a + z.b) / 2;
+            ancora = clamp(centro, z.a + meia, z.b - meia) + z.desloc;
+            base = window.innerHeight * CENA.reboco.alto;
+            alvo = 1;
+          },
+
+          esconder() { alvo = 0; },
+
+          passo(dt) {
+            if (!arte && opacidade < 0.002) return;
+            opacidade += (alvo - opacidade) * passoDe(0.05, dt);
+            const w = window.innerWidth, h = window.innerHeight;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, w, h);
+            if (opacidade < 0.002) { arte = null; return; }
+
+            const lw = arte.width / dpr, lh = arte.height / dpr;
+            const x = ancora - app.p * app.box.travel * fundo() - lw / 2;
+            const y = base - lh / 2;
+            if (x > w || x + lw < 0) return;
+
+            ctx.globalAlpha = opacidade;
+            ctx.drawImage(arte, x, y, lw, lh);
+            ctx.globalAlpha = 1;
+
+            // Sem facho nao ha marca: e a luz de raspao que acha o sulco.
+            const facho = luz.onde();
+            ctx.globalCompositeOperation = "destination-in";
+            if (facho) {
+              const raio = Math.max(w, h) * 0.17;
+              const g = ctx.createRadialGradient(facho.x, facho.y, 0, facho.x, facho.y, raio);
+              g.addColorStop(0, "rgba(0,0,0,1)");
+              g.addColorStop(0.5, "rgba(0,0,0,0.8)");
+              g.addColorStop(1, "rgba(0,0,0,0)");
+              ctx.fillStyle = g;
+              ctx.fillRect(0, 0, w, h);
+            } else {
+              ctx.clearRect(0, 0, w, h);
+            }
+            ctx.globalCompositeOperation = "source-over";
+          }
+        };
+      })();
+
       /* ══════════════════════════════════════════════════════════
          8 · ANDAMENTO DO SOM
          ══════════════════════════════════════════════════════════ */
@@ -1742,7 +1947,13 @@
           if (bi !== blocoAtivo) {
             blocoAtivo = bi;
             versoAtivo = -1;
-            bi >= 0 ? abrirBloco(blocos[bi], bi) : apagarLegenda();
+            // O trecho ao contrario nao e legenda: ele esta riscado na parede.
+            const naParede = bi >= 0 && blocos[bi].linhas.some(l => l.reverso);
+            if (naParede) { apagarLegenda(); marca.mostrar(blocos[bi]); }
+            else {
+              marca.esconder();
+              bi >= 0 ? abrirBloco(blocos[bi], bi) : apagarLegenda();
+            }
           }
           if (bi < 0) return;
 
@@ -1926,6 +2137,7 @@
         // plano para que o entulho os encubra. O veu cobre so os quartos.
         const frente = app.layers[CENA.poeiraAtras];
         if (frente) {
+          el.scene.insertBefore(el.marca, frente.node);
           el.scene.insertBefore(el.dust, frente.node);
           el.scene.insertBefore(el.lume, frente.node);
         }
@@ -2014,6 +2226,7 @@
           : ((1 + (CENA.span - 1) * volta) * 100) + "vh";
 
         anterior.medir();
+        marca.dimensionar();
         acenderLampadas();
       }
 
@@ -2194,6 +2407,7 @@
 
         project(app.p);
         luz.passo(dt);
+        marca.passo(dt);
         poeira.passo(dt);
 
         el.fill.style.width = (app.p * 100) + "%";
