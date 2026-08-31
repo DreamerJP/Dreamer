@@ -11133,6 +11133,27 @@
       "production": "C2 Motion Picture Group, Toff Guy Films, Black Bear Pictures, Red Sea Film Foundation",
       "boxOffice": "$27,117,528",
       "released": "2026-05-13"
+    },
+    {
+      "title": "A Garota Ideal",
+      "slug": "a-garota-ideal",
+      "year": "2007",
+      "plot": "Lars é extremamente tímido e considera impossível fazer amigos ou socializar. Seu irmão e cunhada se preocupam com ele, então quando anuncia que tem uma namorada que conheceu pela Internet, eles ficam cheios de alegria. Mas a nova namorada de Lars é uma boneca de plástico de tamanho real.",
+      "director": "Craig Gillespie",
+      "actors": "Ryan Gosling, Emily Mortimer, Paul Schneider, R.D. Reid, Kelli Garner",
+      "genre": "Drama, Romance",
+      "runtime": "102 min",
+      "imdbRating": "7.2",
+      "url": "https://letterboxd.com/film/lars-and-the-real-girl/",
+      "trailer": "https://www.youtube.com/watch?v=tVWXhZz5SAk",
+      "poster": "https://image.tmdb.org/t/p/w500/zBIC8b5dOjY8VVHfD9Jk1VbLmKz.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/2KeicelocjfYzViherowQn69moR.jpg",
+      "imdbVotes": "2150",
+      "country": "United States of America",
+      "language": "English, Español",
+      "production": "Sidney Kimmel Entertainment, Lars Productions",
+      "boxOffice": "$11,293,663",
+      "released": "2007-10-12"
     }
   ]
 }
