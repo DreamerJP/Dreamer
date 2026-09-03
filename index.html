@@ -127,6 +127,19 @@
       text-transform: uppercase;
       color: var(--ink-dim);
       mix-blend-mode: difference;
+      border-bottom: 1px solid transparent;
+      transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease;
+    }
+
+    /* Fora do topo a barra ganha fundo: sem ele o conteudo passa por baixo e a
+       inversao de cor duplica o texto. A inversao sai junto porque ela e o que
+       produz esse fantasma. */
+    .nav.is-scrolled {
+      mix-blend-mode: normal;
+      background: rgba(8, 7, 12, 0.82);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border-bottom-color: var(--line);
     }
 
     .nav-mark {
@@ -1471,6 +1484,22 @@
       }
       // first pulse shortly after load
       setTimeout(pulse, 1200);
+    })();
+
+    /* ───────── Fundo da barra ao sair do topo ───────── */
+    (function navScroll() {
+      const nav = document.querySelector('.nav');
+      if (!nav) return;
+      const LIMITE = 40;
+      let ligado = null;
+      function update() {
+        const passou = window.scrollY > LIMITE;
+        if (passou === ligado) return;
+        ligado = passou;
+        nav.classList.toggle('is-scrolled', passou);
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
     })();
 
     /* ───────── Clock ───────── */
