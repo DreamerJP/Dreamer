@@ -5,8 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#07070d" />
-  <meta name="description" content="Coleção pessoal de músicas · Dreamer Collection" />
   <title>Músicas · Dreamer Collection</title>
+  <meta name="description"
+    content="Coleção de músicas que ouvi, gostei e mantenho perto. Navegue por artista ou busque qualquer faixa." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreamerjp.github.io/Dreamer/musicas.html" />
+  <meta property="og:title" content="Músicas · Dreamer Collection" />
+  <meta property="og:description"
+    content="Coleção de músicas que ouvi, gostei e mantenho perto. Navegue por artista ou busque qualquer faixa." />
+  <meta property="og:image" content="https://dreamerjp.github.io/Dreamer/Assets/Musicas/musicas_background.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -2327,6 +2335,7 @@
       volume: 1,
       muted: false,
       shuffle: false,
+      shuffleOrder: [],          // posicoes da fila na ordem sorteada da rodada
       repeat: 0,                 // 0 off, 1 all, 2 one
       preloadIndex: -1,
       history: [],
@@ -2721,6 +2730,18 @@
       return a;
     }
 
+    /* Sorteio por rodada: a fila inteira e embaralhada uma vez e percorrida ate
+       o fim antes de um novo embaralhamento. Sortear a cada troca repetiria
+       faixa e deixaria outras de fora. */
+    function buildShuffleOrder(startIndex) {
+      const order = shuffleArr(Player.queue.map((_, i) => i));
+      if (startIndex >= 0) {
+        const at = order.indexOf(startIndex);
+        if (at > 0) { order.splice(at, 1); order.unshift(startIndex); }
+      }
+      Player.shuffleOrder = order;
+    }
+
     function loadQueue(queue, startIndex, append) {
       // Se mesma faixa: toggle
       const startUrl = queue[startIndex]?.url;
@@ -2732,6 +2753,7 @@
       Player.queue = append ? [...Player.queue, ...queue] : queue;
       Player.index = append ? Player.queue.length - queue.length + startIndex : startIndex;
       Player.preloadIndex = -1;
+      Player.shuffleOrder = [];
       Player.history = [];
       $('player').classList.remove('hidden');
       document.body.classList.remove('player-hidden');
@@ -2910,7 +2932,21 @@
     function getNextIndex() {
       if (!Player.queue.length) return -1;
       if (Player.repeat === 2) return Player.index;
-      if (Player.shuffle) return Math.floor(Math.random() * Player.queue.length);
+
+      if (Player.shuffle) {
+        if (Player.shuffleOrder.length !== Player.queue.length) buildShuffleOrder(Player.index);
+        const at = Player.shuffleOrder.indexOf(Player.index);
+        if (at + 1 < Player.shuffleOrder.length) return Player.shuffleOrder[at + 1];
+        if (Player.repeat === 1) {
+          buildShuffleOrder(-1);
+          // A rodada nova nao comeca pela faixa que acabou de tocar.
+          const o = Player.shuffleOrder;
+          if (o.length > 1 && o[0] === Player.index) { [o[0], o[1]] = [o[1], o[0]]; }
+          return o[0];
+        }
+        return -1;
+      }
+
       if (Player.index < Player.queue.length - 1) return Player.index + 1;
       if (Player.repeat === 1) return 0;
       return -1;
@@ -3263,6 +3299,53 @@
       else openNowPlaying();
     }
 
+    /* ============================================================
+       FOCO DO TECLADO NA TELA CHEIA
+       Com a tela cheia aberta o Tab circula dentro dela; ao fechar, o foco
+       volta para o controle que a abriu.
+       ============================================================ */
+    const focusTrap = { container: null, previous: null, onKeydown: null };
+
+    function focusablesIn(container) {
+      return [...container.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )].filter(el => el.getClientRects().length > 0);
+    }
+
+    function trapFocus(container) {
+      if (focusTrap.container === container) return;
+      releaseFocus(focusTrap.container);
+      focusTrap.container = container;
+      focusTrap.previous = document.activeElement;
+
+      focusTrap.onKeydown = e => {
+        if (e.key !== 'Tab' || focusTrap.container !== container) return;
+        const list = focusablesIn(container);
+        if (!list.length) { e.preventDefault(); return; }
+        const first = list[0], last = list[list.length - 1];
+        if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      };
+
+      document.addEventListener('keydown', focusTrap.onKeydown, true);
+      requestAnimationFrame(() => {
+        const list = focusablesIn(container);
+        if (list.length) list[0].focus();
+        else { container.tabIndex = -1; container.focus(); }
+      });
+    }
+
+    function releaseFocus(container) {
+      if (!container || focusTrap.container !== container) return;
+      document.removeEventListener('keydown', focusTrap.onKeydown, true);
+      const back = focusTrap.previous;
+      focusTrap.container = null;
+      focusTrap.previous = null;
+      focusTrap.onKeydown = null;
+      if (back && document.contains(back)) back.focus();
+    }
+
     function openNowPlaying() {
       if (Player.index < 0) return;
       ensureNpVisualizer();
@@ -3270,7 +3353,10 @@
       const overlay = $('npOverlay');
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
       document.body.style.overflow = 'hidden';
+      trapFocus(overlay);
       renderQueue();
       // Scrolla pra atual
       requestAnimationFrame(() => {
@@ -3284,7 +3370,10 @@
       const overlay = $('npOverlay');
       overlay.classList.remove('is-open');
       overlay.setAttribute('aria-hidden', 'true');
+      overlay.removeAttribute('role');
+      overlay.removeAttribute('aria-modal');
       document.body.style.overflow = '';
+      releaseFocus(overlay);
     }
 
     function ensureNpVisualizer() {
@@ -3524,6 +3613,7 @@
       $('btnShuffle').addEventListener('click', () => {
         Player.shuffle = !Player.shuffle;
         Player.preloadIndex = -1;
+        Player.shuffleOrder = [];
         $('btnShuffle').classList.toggle('is-active', Player.shuffle);
         Prefs.save({ shuffle: Player.shuffle });
         toast(Player.shuffle ? 'Aleatório ativado' : 'Aleatório desativado');

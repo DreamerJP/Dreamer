@@ -5,6 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Filmes · Dreamer Collection</title>
+  <meta name="description"
+    content="Coleção pessoal de filmes assistidos, com cartaz, sinopse, ficha técnica e trailer de cada um." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreamerjp.github.io/Dreamer/filmes.html" />
+  <meta property="og:title" content="Filmes · Dreamer Collection" />
+  <meta property="og:description"
+    content="Coleção pessoal de filmes assistidos, com cartaz, sinopse, ficha técnica e trailer de cada um." />
+  <meta property="og:image" content="https://dreamerjp.github.io/Dreamer/Assets/Filmes/AbsoluteCinema.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1593,6 +1602,13 @@
       }[c]));
     }
 
+    /* Endereco dentro de url(): apostrofo e barra invertida do proprio caminho
+       precisam de escape, senao a regra inteira e descartada e o card fica vazio.
+       Em atributo style o retorno ainda passa por escapeHtml. */
+    function cssUrl(u) {
+      return "url('" + String(u).replace(/['\\]/g, m => "\\" + m) + "')";
+    }
+
     function getMovieYear(movie) {
       const d = moviesWithDetails.get(movie.slug) || movie;
       if (d.year && d.year !== "N/A") {
@@ -1831,7 +1847,7 @@
       const slug = escapeHtml(movie.slug);
 
       if (d) {
-        const poster = d.poster ? `url('${escapeHtml(d.poster)}')` : "none";
+        const poster = d.poster ? escapeHtml(cssUrl(d.poster)) : "none";
         const genre1 = (d.genre && d.genre !== "N/A") ? d.genre.split(",")[0].trim() : "";
         const rating = parseFloat(d.imdbRating);
         const showRating = !isNaN(rating) && rating > 0;
@@ -2015,7 +2031,7 @@
       poster.classList.remove("skeleton", "is-loading");
 
       if (d.poster) {
-        poster.style.backgroundImage = `url('${d.poster}')`;
+        poster.style.backgroundImage = cssUrl(d.poster);
         poster.innerHTML = "";
       } else {
         poster.classList.add("is-loading");
@@ -2192,6 +2208,56 @@
     }
 
     /* ============================================================
+       FOCO DO TECLADO NAS FICHAS
+       Pilha porque uma ficha pode abrir sobre a outra; cada entrada guarda
+       o elemento que tinha o foco antes, para devolver ao fechar.
+       ============================================================ */
+    const focusStack = [];
+
+    function focusablesIn(container) {
+      return [...container.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])'
+      )].filter(el => el.getClientRects().length > 0);
+    }
+
+    function trapFocus(container) {
+      if (focusStack.some(e => e.container === container)) return;
+      const entry = { container, previous: document.activeElement, onKeydown: null };
+
+      container.setAttribute("role", "dialog");
+      container.setAttribute("aria-modal", "true");
+
+      entry.onKeydown = e => {
+        if (e.key !== "Tab" || focusStack[focusStack.length - 1] !== entry) return;
+        const list = focusablesIn(container);
+        if (!list.length) { e.preventDefault(); return; }
+        const first = list[0], last = list[list.length - 1];
+        if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      };
+
+      document.addEventListener("keydown", entry.onKeydown, true);
+      focusStack.push(entry);
+
+      requestAnimationFrame(() => {
+        const list = focusablesIn(container);
+        if (list.length) list[0].focus();
+        else { container.tabIndex = -1; container.focus(); }
+      });
+    }
+
+    function releaseFocus(container) {
+      const i = focusStack.findIndex(e => e.container === container);
+      if (i === -1) return;
+      const [entry] = focusStack.splice(i, 1);
+      document.removeEventListener("keydown", entry.onKeydown, true);
+      container.removeAttribute("role");
+      container.removeAttribute("aria-modal");
+      if (entry.previous && document.contains(entry.previous)) entry.previous.focus();
+    }
+
+    /* ============================================================
        MODAL: DETALHES
        ============================================================ */
     function openMovieModal(slug) {
@@ -2205,9 +2271,9 @@
 
       // Backdrop full-bleed
       if (d.backdrop && d.backdrop !== "N/A") {
-        backdrop.style.backgroundImage = `url('${d.backdrop}')`;
+        backdrop.style.backgroundImage = cssUrl(d.backdrop);
       } else if (d.poster) {
-        backdrop.style.backgroundImage = `url('${d.poster}')`;
+        backdrop.style.backgroundImage = cssUrl(d.poster);
       } else {
         backdrop.style.backgroundImage = "linear-gradient(135deg,#14141f,#1c1c2a)";
       }
@@ -2267,6 +2333,7 @@
 
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
+      trapFocus(modal);
 
       if (window.innerWidth <= 768) {
         history.pushState({ modalOpen: true }, "", "#movie-modal");
@@ -2279,8 +2346,10 @@
 
     function closeModal() {
       document.getElementById("modalContent")?.classList.remove("cinema-mode");
-      document.getElementById("movieModal").classList.remove("open");
+      const modal = document.getElementById("movieModal");
+      modal.classList.remove("open");
       document.body.style.overflow = "";
+      releaseFocus(modal);
     }
 
     function modalClickOutside(e) {
@@ -2305,10 +2374,11 @@
       const sep = embed.includes("?") ? "&" : "?";
       embed += `${sep}autoplay=1&rel=0&modestbranding=1`;
 
+      closeModal(); // fechar o modal de detalhes pra não sobrepor
       video.src = embed;
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
-      closeModal(); // fechar o modal de detalhes pra não sobrepor
+      trapFocus(modal);
     }
 
     function closeTrailerModal() {
@@ -2317,6 +2387,7 @@
       modal.classList.remove("open");
       video.src = "";
       document.body.style.overflow = "";
+      releaseFocus(modal);
     }
 
     function trailerClickOutside(e) {

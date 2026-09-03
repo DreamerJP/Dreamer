@@ -6,6 +6,15 @@
   <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jogos · Dreamer Collection</title>
+  <meta name="description"
+    content="Coleção pessoal de jogos finalizados, com capa, ficha técnica e trailer de cada um." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreamerjp.github.io/Dreamer/jogos.html" />
+  <meta property="og:title" content="Jogos · Dreamer Collection" />
+  <meta property="og:description"
+    content="Coleção pessoal de jogos finalizados, com capa, ficha técnica e trailer de cada um." />
+  <meta property="og:image" content="https://dreamerjp.github.io/Dreamer/Assets/Jogos/capa_jogos_zerados.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -1653,8 +1662,7 @@
     let currentCategory = "all";
     let currentPage = 1;
     let gamesWithDetails = new Map();
-    let resortDebounceTimer;
-    let isLoadingMore = false;
+    let infiniteObserver = null;
 
     /* ============================================================
        HELPERS
@@ -1663,6 +1671,13 @@
       return String(s ?? "").replace(/[&<>"']/g, (c) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
       }[c]));
+    }
+
+    /* Endereco dentro de url(): apostrofo e barra invertida do proprio caminho
+       precisam de escape, senao a regra inteira e descartada e a capa some.
+       Em atributo style o retorno ainda passa por escapeHtml. */
+    function cssUrl(u) {
+      return "url('" + String(u).replace(/['\\]/g, (m) => "\\" + m) + "')";
     }
 
     // IGDB usa rating 0-100 → normaliza para 0-10 com 1 casa
@@ -1699,7 +1714,7 @@
       if (el.tagName === "IMG") {
         el.src = originalUrl;
       } else {
-        el.style.backgroundImage = `url('${originalUrl}')`;
+        el.style.backgroundImage = cssUrl(originalUrl);
       }
     }
 
@@ -1747,16 +1762,6 @@
         .slice(0, 24);
     }
 
-    function debouncedResortAndRender() {
-      clearTimeout(resortDebounceTimer);
-      resortDebounceTimer = setTimeout(() => {
-        if (currentCategory === "recent") {
-          displayedGames = getSortedRecentGames();
-          renderGrid(displayedGames, 1);
-        }
-      }, 500);
-    }
-
     /* ============================================================
        CARREGAMENTO INICIAL
        ============================================================ */
@@ -1767,8 +1772,14 @@
         const data = await res.json();
         allGames = data.games || (Array.isArray(data) ? data : []);
 
+        // O JSON ja traz capa, nome, ano e ficha de cada jogo. Indexando antes
+        // do primeiro desenho, o card nasce completo em vez de nascer cinza e
+        // ser reescrito logo depois.
+        allGames.forEach((game) => gamesWithDetails.set(game.slug, game));
+
         // categoria padrão = "all"
-        await filterByCategory("all");
+        filterByCategory("all");
+        populateFilters();
         updateStats();
       } catch (err) {
         console.error("Erro ao carregar jogos:", err);
@@ -1794,7 +1805,7 @@
       if (details) {
         const rating10 = normalizeRating(details.rating);
         const coverUrl = upgradeCoverUrl(details.cover);
-        const cover = coverUrl ? `url('${coverUrl}')` : "none";
+        const cover = coverUrl ? escapeHtml(cssUrl(coverUrl)) : "none";
         const genre1 = details.genre && details.genre !== "N/A"
           ? details.genre.split(",")[0].trim()
           : "";
@@ -1803,9 +1814,9 @@
             <article class="game-card" onclick="openGameModal('${slug}')" data-slug="${slug}"
                      role="button" tabindex="0"
                      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameModal('${slug}')}">
-              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}" ${coverUrl && coverUrl !== details.cover ? `data-cover-fallback="${details.cover}"` : ''}>
+              <div class="poster${details.cover ? '' : ' is-loading'}" style="background-image: ${cover}">
                 ${!details.cover ? `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>` : ''}
-                ${coverUrl && coverUrl !== details.cover ? `<img src="${coverUrl}" style="display:none" onerror="const p=this.parentElement;if(p.dataset.coverFallback){p.style.backgroundImage='url('+p.dataset.coverFallback+')';}" alt="">` : ''}
+                ${coverUrl && coverUrl !== details.cover ? `<img src="${escapeHtml(coverUrl)}" data-original="${escapeHtml(details.cover)}" style="display:none" onerror="upgradeCoverFallback(this.parentElement, this.dataset.original)" alt="">` : ''}
               </div>
               <div class="game-info">
                 <h3 class="game-title">${escapeHtml(details.title || game.title)}</h3>
@@ -1840,6 +1851,7 @@
               <div>Tente outro filtro ou termo de busca.</div>
             </div>`;
         updateResultMeta(0);
+        teardownInfinite();
         return;
       }
 
@@ -1858,6 +1870,12 @@
 
       grid.innerHTML = html;
       updateResultMeta(games.length);
+
+      if (currentCategory === "all" && totalPages > 1) {
+        setupInfinite();
+      } else {
+        teardownInfinite();
+      }
     }
 
     function paginationHTML(page, totalPages, totalItems) {
@@ -1910,74 +1928,6 @@
     }
 
     /* ============================================================
-       ATUALIZAÇÃO IN-PLACE: ao chegarem detalhes
-       ============================================================ */
-    function updateGameCard(slug, details) {
-      const card = document.querySelector(`.game-card[data-slug="${CSS.escape(slug)}"]`);
-      if (!card) return;
-
-      const genre1 = details.genre && details.genre !== "N/A"
-        ? details.genre.split(",")[0].trim()
-        : "";
-
-      const poster = card.querySelector(".poster");
-      poster.classList.remove("skeleton", "is-loading");
-      if (details.cover) {
-        const upgradedCover = upgradeCoverUrl(details.cover);
-        poster.style.backgroundImage = `url('${upgradedCover}')`;
-        if (upgradedCover !== details.cover) {
-          // Fallback: se a imagem 2x falhar, restaura a original
-          const probe = new Image();
-          probe.onerror = () => { poster.style.backgroundImage = `url('${details.cover}')`; };
-          probe.src = upgradedCover;
-        }
-        poster.innerHTML = "";
-      } else {
-        poster.classList.add("is-loading");
-        poster.innerHTML = `<svg class="icon icon-stroke"><use href="#i-gamepad"/></svg>`;
-      }
-
-      const info = card.querySelector(".game-info");
-      info.innerHTML = `
-          <h3 class="game-title">${escapeHtml(details.title || "")}</h3>
-          <div class="game-meta">
-            ${details.year && details.year !== "N/A" ? `<span><svg class="icon icon-stroke"><use href="#i-calendar"/></svg>${escapeHtml(details.year)}</span>` : ''}
-            ${genre1 ? `<span>${escapeHtml(genre1)}</span>` : ''}
-          </div>`;
-    }
-
-    /* ============================================================
-       CARREGAMENTO PROGRESSIVO DE DETALHES
-       (não bloqueia o render inicial)
-       ============================================================ */
-    function loadGameDetailsBackground(games) {
-      const BATCH_SIZE = 8;
-      let i = 0;
-
-      function processBatch() {
-        const batch = games.slice(i, i + BATCH_SIZE);
-        batch.forEach((game) => {
-          if (!gamesWithDetails.has(game.slug)) {
-            // No JSON original os detalhes já vêm dentro do próprio item.
-            // O Map serve como cache "pronto": populamos com o próprio game.
-            gamesWithDetails.set(game.slug, game);
-            updateGameCard(game.slug, game);
-            debouncedResortAndRender();
-          }
-        });
-        i += BATCH_SIZE;
-        if (i < games.length) {
-          // setTimeout 0 cede o thread para o browser repintar entre batches
-          setTimeout(processBatch, 0);
-        } else {
-          populateFilters();
-          updateStats();
-        }
-      }
-      processBatch();
-    }
-
-    /* ============================================================
        FILTROS
        ============================================================ */
     function filterByCategory(category, btn) {
@@ -2003,7 +1953,6 @@
 
       displayedGames = games;
       renderGrid(displayedGames, 1);
-      loadGameDetailsBackground(games);
     }
 
     function searchGames() {
@@ -2125,6 +2074,56 @@
     }
 
     /* ============================================================
+       FOCO DO TECLADO NAS FICHAS
+       Pilha porque uma ficha pode abrir sobre a outra; cada entrada guarda
+       o elemento que tinha o foco antes, para devolver ao fechar.
+       ============================================================ */
+    const focusStack = [];
+
+    function focusablesIn(container) {
+      return [...container.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])'
+      )].filter((el) => el.getClientRects().length > 0);
+    }
+
+    function trapFocus(container) {
+      if (focusStack.some((e) => e.container === container)) return;
+      const entry = { container, previous: document.activeElement, onKeydown: null };
+
+      container.setAttribute("role", "dialog");
+      container.setAttribute("aria-modal", "true");
+
+      entry.onKeydown = (e) => {
+        if (e.key !== "Tab" || focusStack[focusStack.length - 1] !== entry) return;
+        const list = focusablesIn(container);
+        if (!list.length) { e.preventDefault(); return; }
+        const first = list[0], last = list[list.length - 1];
+        if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      };
+
+      document.addEventListener("keydown", entry.onKeydown, true);
+      focusStack.push(entry);
+
+      requestAnimationFrame(() => {
+        const list = focusablesIn(container);
+        if (list.length) list[0].focus();
+        else { container.tabIndex = -1; container.focus(); }
+      });
+    }
+
+    function releaseFocus(container) {
+      const i = focusStack.findIndex((e) => e.container === container);
+      if (i === -1) return;
+      const [entry] = focusStack.splice(i, 1);
+      document.removeEventListener("keydown", entry.onKeydown, true);
+      container.removeAttribute("role");
+      container.removeAttribute("aria-modal");
+      if (entry.previous && document.contains(entry.previous)) entry.previous.focus();
+    }
+
+    /* ============================================================
        MODAL: DETALHES
        ============================================================ */
     function openGameModal(slug) {
@@ -2138,9 +2137,9 @@
 
       // Backdrop full-bleed
       if (details.background && details.background !== "N/A") {
-        backdrop.style.backgroundImage = `url('${upgradeBackgroundUrl(details.background)}')`;
+        backdrop.style.backgroundImage = cssUrl(upgradeBackgroundUrl(details.background));
       } else if (details.cover) {
-        backdrop.style.backgroundImage = `url('${upgradeCoverUrl(details.cover)}')`;
+        backdrop.style.backgroundImage = cssUrl(upgradeCoverUrl(details.cover));
       } else {
         backdrop.style.backgroundImage = "linear-gradient(135deg,#14141f,#1c1c2a)";
       }
@@ -2212,6 +2211,7 @@
 
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
+      trapFocus(modal);
 
       // Histórico só no mobile (back fecha modal)
       if (window.innerWidth <= 768) {
@@ -2221,8 +2221,10 @@
 
     function closeModal() {
       document.getElementById("modalContent")?.classList.remove("cinema-mode");
-      document.getElementById("gameModal").classList.remove("open");
+      const modal = document.getElementById("gameModal");
+      modal.classList.remove("open");
       document.body.style.overflow = "";
+      releaseFocus(modal);
     }
 
     function toggleCinema() {
@@ -2249,12 +2251,13 @@
       const sep = embed.includes("?") ? "&" : "?";
       embed += `${sep}autoplay=1&rel=0&modestbranding=1`;
 
+      // fecha o modal de detalhes para não sobrepor
+      closeModal();
+
       video.src = embed;
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
-
-      // fecha o modal de detalhes para não sobrepor
-      closeModal();
+      trapFocus(modal);
     }
 
     function closeTrailerModal() {
@@ -2263,6 +2266,7 @@
       modal.classList.remove("open");
       video.src = "";
       document.body.style.overflow = "";
+      releaseFocus(modal);
     }
 
     function trailerClickOutside(e) {
@@ -2312,39 +2316,53 @@
     /* ============================================================
        LAZY LOAD INFINITO (categoria=all)
        ============================================================ */
-    window.addEventListener("scroll", () => {
-      if (currentCategory !== "all" || isLoadingMore) return;
-      const totalPages = Math.ceil(displayedGames.length / gamesPerPage);
-      if (currentPage >= totalPages) return;
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const winH = window.innerHeight;
-      const docH = document.documentElement.scrollHeight;
-      if (scrollTop + winH >= docH - 1000) loadMoreGames();
-    });
+    function setupInfinite() {
+      teardownInfinite();
+      const grid = document.getElementById("gamesGrid");
+
+      // Sentinela invisível no fim do grid
+      const sentinel = document.createElement("div");
+      sentinel.className = "infinite-loader";
+      sentinel.id = "infiniteSentinel";
+      sentinel.textContent = "Carregando mais…";
+      grid.appendChild(sentinel);
+
+      infiniteObserver = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) loadMoreGames();
+      }, { rootMargin: "600px" });
+
+      infiniteObserver.observe(sentinel);
+    }
+
+    function teardownInfinite() {
+      if (infiniteObserver) {
+        infiniteObserver.disconnect();
+        infiniteObserver = null;
+      }
+      document.getElementById("infiniteSentinel")?.remove();
+    }
 
     function loadMoreGames() {
-      if (isLoadingMore) return;
-      isLoadingMore = true;
-
-      const currentLen = displayedGames.length;
-      // Como categoria=all → displayedGames === allGames; renderiza próxima "página"
-      // mantendo o conceito de paginação interna de 24 + paginação visual oculta.
-      const nextPage = currentPage + 1;
       const totalPages = Math.ceil(displayedGames.length / gamesPerPage);
-      if (nextPage > totalPages) { isLoadingMore = false; return; }
-
-      // Anexa próxima página de cards ao grid (sem rerender)
-      const grid = document.getElementById("gamesGrid");
+      if (currentPage >= totalPages) {
+        teardownInfinite();
+        return;
+      }
+      const nextPage = currentPage + 1;
       const start = (nextPage - 1) * gamesPerPage;
       const end = start + gamesPerPage;
       const pageGames = displayedGames.slice(start, end);
 
+      const grid = document.getElementById("gamesGrid");
+      const sentinel = document.getElementById("infiniteSentinel");
+
       const tmp = document.createElement("div");
       tmp.innerHTML = pageGames.map(cardHTML).join("");
-      while (tmp.firstChild) grid.appendChild(tmp.firstChild);
+      // Inserir antes da sentinela
+      while (tmp.firstChild) grid.insertBefore(tmp.firstChild, sentinel);
 
       currentPage = nextPage;
-      isLoadingMore = false;
+      if (currentPage >= totalPages) teardownInfinite();
     }
 
     /* ============================================================

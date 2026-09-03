@@ -4,10 +4,11 @@
       "id": "wULeXeQkqd0",
       "title": "Queendom",
       "artist": "Aurora",
-      "description": "",
       "category": "Aurora",
+      "url": "https://www.youtube.com/embed/wULeXeQkqd0",
       "thumbnail": "./Assets/Videos/Capas/Queendom_Aurora.jpg",
-      "url": "https://www.youtube.com/embed/wULeXeQkqd0"
+      "duration": "3:28",
+      "description": ""
     },
     {
       "id": "PYdm_Z1wnQ0",
@@ -16,7 +17,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/PYdm_Z1wnQ0/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/PYdm_Z1wnQ0"
+      "url": "https://www.youtube.com/embed/PYdm_Z1wnQ0",
+      "duration": "3:59"
     },
     {
       "id": "SYKU7DfEJT4",
@@ -25,7 +27,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/SYKU7DfEJT4/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/SYKU7DfEJT4"
+      "url": "https://www.youtube.com/embed/SYKU7DfEJT4",
+      "duration": "3:09"
     },
     {
       "id": "jTwdGRHl5Mw",
@@ -34,7 +37,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/jTwdGRHl5Mw/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/jTwdGRHl5Mw"
+      "url": "https://www.youtube.com/embed/jTwdGRHl5Mw",
+      "duration": "3:36"
     },
     {
       "id": "eT6dLJd3rYk",
@@ -43,7 +47,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/eT6dLJd3rYk/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/eT6dLJd3rYk"
+      "url": "https://www.youtube.com/embed/eT6dLJd3rYk",
+      "duration": "3:44"
     },
     {
       "id": "06ht9MyJLT4",
@@ -52,7 +57,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/06ht9MyJLT4/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/06ht9MyJLT4"
+      "url": "https://www.youtube.com/embed/06ht9MyJLT4",
+      "duration": "3:39"
     },
     {
       "id": "d_HlPboLRL8",
@@ -61,7 +67,8 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/d_HlPboLRL8/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/d_HlPboLRL8"
+      "url": "https://www.youtube.com/embed/d_HlPboLRL8",
+      "duration": "4:10"
     },
     {
       "id": "dmVAmlpbnD4",
@@ -70,16 +77,18 @@
       "description": "",
       "category": "Aurora",
       "thumbnail": "https://img.youtube.com/vi/dmVAmlpbnD4/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/dmVAmlpbnD4"
+      "url": "https://www.youtube.com/embed/dmVAmlpbnD4",
+      "duration": "3:33"
     },
     {
       "id": "aeH2cfNRMiw",
       "title": "Act of the Apostle",
       "artist": "Emily Browning",
-      "description": "God Help the Girl",
       "category": "Emily Browning",
+      "url": "https://drive.google.com/file/d/1d2wAW6StAgl0UI4aRoBXJ4mbmJH8b3OR/preview",
       "thumbnail": "./Assets/Videos/Capas/Act_of_the_Apostle_Emily_Browning.jpg",
-      "url": "https://drive.google.com/file/d/1d2wAW6StAgl0UI4aRoBXJ4mbmJH8b3OR/preview"
+      "duration": "2:42",
+      "description": "God Help the Girl"
     },
     {
       "id": "n0aOSIgOsRE",
@@ -88,7 +97,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/n0aOSIgOsRE/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1cyA_smqZJLGacjv4p04PTj34LtUAgf9N/preview"
+      "url": "https://drive.google.com/file/d/1cyA_smqZJLGacjv4p04PTj34LtUAgf9N/preview",
+      "duration": "2:41"
     },
     {
       "id": "5m6JYEJmRIk",
@@ -97,7 +107,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/5m6JYEJmRIk/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1cxGnKR0acL59vXk8Xijtp6jrDy8txx8U/preview"
+      "url": "https://drive.google.com/file/d/1cxGnKR0acL59vXk8Xijtp6jrDy8txx8U/preview",
+      "duration": "3:57"
     },
     {
       "id": "VNGvzu51zsw",
@@ -106,7 +117,8 @@
       "description": "",
       "category": "Emily Browning",
       "thumbnail": "./Assets/Videos/Capas/God_Help_the_Girl_Emily_Browning.png",
-      "url": "https://drive.google.com/file/d/1cyWc0xQh80APGup6qrhD6s5UTjJjj-o6/preview"
+      "url": "https://drive.google.com/file/d/1cyWc0xQh80APGup6qrhD6s5UTjJjj-o6/preview",
+      "duration": "3:15"
     },
     {
       "id": "VcSeUHScWWk",
@@ -115,7 +127,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/VcSeUHScWWk/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1d3s6MVbu6Wkc-QNvjyGqUra9m4A1SD3i/preview"
+      "url": "https://drive.google.com/file/d/1d3s6MVbu6Wkc-QNvjyGqUra9m4A1SD3i/preview",
+      "duration": "3:32"
     },
     {
       "id": "cNzjkm3agq0",
@@ -124,7 +137,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/cNzjkm3agq0/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1d-7lGdmdfaLpLfwrWq6ifcEAsJ4emf69/preview"
+      "url": "https://drive.google.com/file/d/1d-7lGdmdfaLpLfwrWq6ifcEAsJ4emf69/preview",
+      "duration": "3:41"
     },
     {
       "id": "aacAT1i2SnY",
@@ -133,7 +147,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/aacAT1i2SnY/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1cySwaUlN1TDyV2OLzulJXLk1c7V2ueMp/preview"
+      "url": "https://drive.google.com/file/d/1cySwaUlN1TDyV2OLzulJXLk1c7V2ueMp/preview",
+      "duration": "4:00"
     },
     {
       "id": "mVeW2_t4gRg",
@@ -142,7 +157,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/mVeW2_t4gRg/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1d1kC_WMJ7Vo_cgw4F9hzbD1fwfn1DbKB/preview"
+      "url": "https://drive.google.com/file/d/1d1kC_WMJ7Vo_cgw4F9hzbD1fwfn1DbKB/preview",
+      "duration": "2:31"
     },
     {
       "id": "InGXbmScabQ",
@@ -151,7 +167,8 @@
       "description": "God Help the Girl",
       "category": "Emily Browning",
       "thumbnail": "https://img.youtube.com/vi/InGXbmScabQ/maxresdefault.jpg",
-      "url": "https://drive.google.com/file/d/1cwwgkOKutAOSn7x8ncGOzpgnQd_aBfjS/preview"
+      "url": "https://drive.google.com/file/d/1cwwgkOKutAOSn7x8ncGOzpgnQd_aBfjS/preview",
+      "duration": "2:46"
     },
     {
       "id": "2vNeBRMVCoU",
@@ -160,7 +177,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "./Assets/Videos/Capas/Empty_Threat_Chvrches.jpg",
-      "url": "https://www.youtube.com/embed/2vNeBRMVCoU"
+      "url": "https://www.youtube.com/embed/2vNeBRMVCoU",
+      "duration": "4:33"
     },
     {
       "id": "A2LtxHS9p44",
@@ -169,7 +187,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "./Assets/Videos/Capas/Leave_A_Trace_Chvrches.jpg",
-      "url": "https://www.youtube.com/embed/A2LtxHS9p44"
+      "url": "https://www.youtube.com/embed/A2LtxHS9p44",
+      "duration": "3:58"
     },
     {
       "id": "rUEmoxoOt9A",
@@ -178,7 +197,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "./Assets/Videos/Capas/Miracle_Chvrches.webp",
-      "url": "https://www.youtube.com/embed/rUEmoxoOt9A"
+      "url": "https://www.youtube.com/embed/rUEmoxoOt9A",
+      "duration": "3:18"
     },
     {
       "id": "gk4kbLYdg8U",
@@ -187,7 +207,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "https://img.youtube.com/vi/gk4kbLYdg8U/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/gk4kbLYdg8U"
+      "url": "https://www.youtube.com/embed/gk4kbLYdg8U",
+      "duration": "3:19"
     },
     {
       "id": "BeyA8si0tyI",
@@ -196,7 +217,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "./Assets/Videos/Capas/Now_is_Not_The_Time_Chvrches.jpg",
-      "url": "https://www.youtube.com/embed/BeyA8si0tyI"
+      "url": "https://www.youtube.com/embed/BeyA8si0tyI",
+      "duration": "4:17"
     },
     {
       "id": "G_eWRlXFvAk",
@@ -205,7 +227,8 @@
       "description": "",
       "category": "Chvrches",
       "thumbnail": "./Assets/Videos/Capas/Clearest_Blue_Chvrches.jpg",
-      "url": "https://www.youtube.com/embed/G_eWRlXFvAk"
+      "url": "https://www.youtube.com/embed/G_eWRlXFvAk",
+      "duration": "4:24"
     },
     {
       "id": "1TO48Cnl66w",
@@ -214,16 +237,18 @@
       "description": "",
       "category": "Variado",
       "thumbnail": "https://img.youtube.com/vi/1TO48Cnl66w/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/1TO48Cnl66w"
+      "url": "https://www.youtube.com/embed/1TO48Cnl66w",
+      "duration": "3:14"
     },
     {
       "id": "oofSnsGkops",
-      "title": "You\\",
+      "title": "You're Beautiful",
       "artist": "James Blunt",
       "description": "",
       "category": "Variado",
       "thumbnail": "https://img.youtube.com/vi/oofSnsGkops/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/oofSnsGkops"
+      "url": "https://www.youtube.com/embed/oofSnsGkops",
+      "duration": "3:23"
     },
     {
       "id": "smKf_cQCdeo",
@@ -232,7 +257,8 @@
       "description": "",
       "category": "Variado",
       "thumbnail": "https://img.youtube.com/vi/smKf_cQCdeo/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/smKf_cQCdeo"
+      "url": "https://www.youtube.com/embed/smKf_cQCdeo",
+      "duration": "2:53"
     },
     {
       "id": "ADBKdSCbmiM",
@@ -241,7 +267,8 @@
       "description": "",
       "category": "Variado",
       "thumbnail": "https://img.youtube.com/vi/ADBKdSCbmiM/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/ADBKdSCbmiM"
+      "url": "https://www.youtube.com/embed/ADBKdSCbmiM",
+      "duration": "3:32"
     },
     {
       "id": "hPC2Fp7IT7o",
@@ -250,7 +277,8 @@
       "description": "",
       "category": "Variado",
       "thumbnail": "https://img.youtube.com/vi/hPC2Fp7IT7o/maxresdefault.jpg",
-      "url": "https://www.youtube.com/embed/hPC2Fp7IT7o"
+      "url": "https://www.youtube.com/embed/hPC2Fp7IT7o",
+      "duration": "4:23"
     },
     {
       "id": "8N-qO3sPMjc",
@@ -259,7 +287,8 @@
       "description": "",
       "category": "Variado",
       "thumbnail": "./Assets/Videos/Capas/Kiss_Me_-__Sixpence_None_The_Richer.jpg",
-      "url": "https://www.youtube.com/embed/8N-qO3sPMjc"
+      "url": "https://www.youtube.com/embed/8N-qO3sPMjc",
+      "duration": "3:22"
     },
     {
       "id": "haYYbQSLa8o",
@@ -268,7 +297,8 @@
       "description": "",
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/Golden_LeavesNoemi_Smorra_ft_Lena_Katina.avif",
-      "url": "https://www.youtube.com/embed/haYYbQSLa8o"
+      "url": "https://www.youtube.com/embed/haYYbQSLa8o",
+      "duration": "4:03"
     },
     {
       "id": "OcwZKz46Jb4",
@@ -277,7 +307,8 @@
       "description": "",
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/Lift_Me_Up_Lena_Katina.png",
-      "url": "https://www.youtube.com/embed/OcwZKz46Jb4"
+      "url": "https://www.youtube.com/embed/OcwZKz46Jb4",
+      "duration": "3:27"
     },
     {
       "id": "L2Lmt_2ksNU",
@@ -286,7 +317,8 @@
       "description": "",
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/Not_gonna_get_us_t.A.T.u..jpg",
-      "url": "https://www.youtube.com/embed/L2Lmt_2ksNU"
+      "url": "https://www.youtube.com/embed/L2Lmt_2ksNU",
+      "duration": "3:59"
     },
     {
       "id": "KtD_gVNy_rA",
@@ -295,7 +327,8 @@
       "description": "",
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/All_about_us_t.A.T.u..jpg",
-      "url": "https://www.youtube.com/embed/KtD_gVNy_rA"
+      "url": "https://www.youtube.com/embed/KtD_gVNy_rA",
+      "duration": "3:30"
     },
     {
       "id": "EpM8EuizLAw",
@@ -304,15 +337,17 @@
       "description": "",
       "category": "t.A.T.u.",
       "thumbnail": "./Assets/Videos/Capas/Gomenasai_animated_t.A.T.u..jpg",
-      "url": "https://www.youtube.com/embed/EpM8EuizLAw"
+      "url": "https://www.youtube.com/embed/EpM8EuizLAw",
+      "duration": "3:42"
     },
     {
-      "id": "1769045519800",
+      "id": "IsxNUl1IHnE",
       "title": "Celestica",
       "artist": "Crystal Castles",
       "category": "Crystal Castles",
-      "url": "IsxNUl1IHnE",
+      "url": "https://www.youtube.com/embed/IsxNUl1IHnE",
       "thumbnail": "https://img.youtube.com/vi/IsxNUl1IHnE/maxresdefault.jpg",
+      "duration": "3:29",
       "description": ""
     }
   ]

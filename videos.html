@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vídeos · Dreamer Collection</title>
+    <meta name="description"
+      content="Coleção pessoal de videoclipes favoritos, separados por artista e com a duração de cada um." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dreamerjp.github.io/Dreamer/videos.html" />
+    <meta property="og:title" content="Vídeos · Dreamer Collection" />
+    <meta property="og:description"
+      content="Coleção pessoal de videoclipes favoritos, separados por artista e com a duração de cada um." />
+    <meta property="og:image" content="https://dreamerjp.github.io/Dreamer/Assets/Videos/videos_background.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/x-icon" href="./Assets/Home/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -941,7 +950,7 @@
           const dur = v.duration ? `<span class="badge">${v.duration}</span>` : "";
 
           card.innerHTML = `
-            <div class="thumb" style="background-image: url('${v.thumbnail}')">
+            <div class="thumb" style="background-image: ${escapeHtml(cssUrl(v.thumbnail))}">
               ${dur}
               <div class="play" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
@@ -962,6 +971,13 @@
         return String(s ?? "").replace(/[&<>"']/g, (c) => ({
           "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
         }[c]));
+      }
+
+      /* Endereco dentro de url(): apostrofo e barra invertida do proprio caminho
+         precisam de escape, senao a regra inteira e descartada e a miniatura some.
+         Em atributo style o retorno ainda passa por escapeHtml. */
+      function cssUrl(u) {
+        return "url('" + String(u).replace(/['\\]/g, (m) => "\\" + m) + "')";
       }
 
       function createFilters() {
@@ -1017,6 +1033,56 @@
       }
 
       /* ============================================================
+         FOCO DO TECLADO NA FICHA
+         Enquanto a ficha esta aberta o Tab circula dentro dela; ao fechar,
+         o foco volta para o card que a abriu.
+         ============================================================ */
+      const focusStack = [];
+
+      function focusablesIn(container) {
+        return [...container.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])'
+        )].filter((el) => el.getClientRects().length > 0);
+      }
+
+      function trapFocus(container) {
+        if (focusStack.some((e) => e.container === container)) return;
+        const entry = { container, previous: document.activeElement, onKeydown: null };
+
+        container.setAttribute("role", "dialog");
+        container.setAttribute("aria-modal", "true");
+
+        entry.onKeydown = (e) => {
+          if (e.key !== "Tab" || focusStack[focusStack.length - 1] !== entry) return;
+          const list = focusablesIn(container);
+          if (!list.length) { e.preventDefault(); return; }
+          const first = list[0], last = list[list.length - 1];
+          if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+          else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        };
+
+        document.addEventListener("keydown", entry.onKeydown, true);
+        focusStack.push(entry);
+
+        requestAnimationFrame(() => {
+          const list = focusablesIn(container);
+          if (list.length) list[0].focus();
+          else { container.tabIndex = -1; container.focus(); }
+        });
+      }
+
+      function releaseFocus(container) {
+        const i = focusStack.findIndex((e) => e.container === container);
+        if (i === -1) return;
+        const [entry] = focusStack.splice(i, 1);
+        document.removeEventListener("keydown", entry.onKeydown, true);
+        container.removeAttribute("role");
+        container.removeAttribute("aria-modal");
+        if (entry.previous && document.contains(entry.previous)) entry.previous.focus();
+      }
+
+      /* ============================================================
          MODAL DE VÍDEO
          ============================================================ */
       function playVideo(url) {
@@ -1025,6 +1091,7 @@
         player.src = normalizeYouTube(url);
         modal.classList.add("open");
         document.body.style.overflow = "hidden";
+        trapFocus(modal);
       }
 
       function normalizeYouTube(url) {
@@ -1046,6 +1113,7 @@
         player.src = "";
         modal.classList.remove("open");
         document.body.style.overflow = "";
+        releaseFocus(modal);
       }
 
       function modalClickOutside(e) {
