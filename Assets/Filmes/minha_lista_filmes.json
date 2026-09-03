@@ -11173,6 +11173,27 @@
       "production": "Sierra/Affinity, Bold Films",
       "boxOffice": "$47,425,835",
       "released": "2014-10-23"
+    },
+    {
+      "title": "47 Ronins",
+      "slug": "47-ronins",
+      "year": "2013",
+      "plot": "Um grupo de samurais banidos deseja reaver sua honra a partir de uma vingança contra o traiçoeiro Lorde Kira, responsável pela morte do mestre deles. O mais incomodado do grupo é Kai, que passa a ser questionado ao se apaixonar pela filha do mestre.",
+      "director": "Carl Rinsch",
+      "actors": "Keanu Reeves, Hiroyuki Sanada, 柴咲コウ, 浅野忠信, 田中泯",
+      "genre": "Drama, Ação, Fantasia",
+      "runtime": "119 min",
+      "imdbRating": "6.2",
+      "url": "https://letterboxd.com/film/47-ronin-2013/",
+      "trailer": "https://www.youtube.com/watch?v=l27dN6xVsH8",
+      "poster": "https://image.tmdb.org/t/p/w500/wSqCUJRW8HMnLSfTpUMKGHjPe5h.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/nyt0jlofZyjhRqiQkEp0cdoKaS3.jpg",
+      "imdbVotes": "4235",
+      "country": "Japan, United States of America, United Kingdom",
+      "language": "English, 日本語",
+      "production": "Mid Atlantic Films, Stuber Pictures, Moving Picture Company, H2F Entertainment, Universal Pictures, Relativity Media",
+      "boxOffice": "$151,783,839",
+      "released": "2013-12-06"
     }
   ]
 }
