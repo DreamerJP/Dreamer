@@ -13,22 +13,24 @@
   "fragmentos": [
     {
       "id": "limiar",
-      "titulo": "Ocorrência 0417",
+      "titulo": "Mesa de cabeceira",
       "tipo": "registro",
-      "data": "14/03, 18h52",
+      "data": "inventário do quarto",
       "at": 0.04,
       "alt": 0.74,
       "texto": [
-        "Ocorrência de trânsito sem vítimas.",
-        "Pedestre do sexo masculino atravessava fora da faixa, pelo [[corredor|corredor]] de ônibus, com o sinal aberto para os veículos. Um carro de passeio freou a cerca de meio metro dele. Não houve contato.",
-        "O condutor declara que freou por causa de uma pessoa do sexo feminino, aparentando dez ou doze anos, parada no meio da pista. Descalça, de costas para o carro, virada para o pedestre. Cabelo escuro e molhado. Não chovia.",
-        "A câmera do cruzamento registra o pedestre, o carro e a pista vazia entre os dois.",
-        "O pedestre recusou atendimento, pediu desculpas ao condutor três vezes e seguiu a pé. Testemunhas dizem que ia conversando baixo."
+        "Inventário da mesa de cabeceira.",
+        "Caixas de remédio da mesma receita, alinhadas pela borda da mesa. As vazias também foram guardadas.",
+        "Cartões de retorno de consultório, presos com um elástico, em ordem de data. O mais antigo é de dez anos atrás.",
+        "Dois copos de água, um em cada canto. Só um foi usado.",
+        "Um abajur. O interruptor está preso com fita na posição ligada.",
+        "Um [[corredor|caderno]] aberto ao lado do travesseiro, com uma caneta dentro.",
+        "Nada fora do lugar."
       ],
       "revisita": [
-        "Adendo à ocorrência 0417, após nova análise da imagem.",
-        "Três segundos antes de o carro entrar no quadro, o pedestre vira o rosto para a direita, onde não há ninguém, e concorda com a cabeça. Depois dá um passo para trás.",
-        "O carro ainda não era visível de onde ele estava."
+        "Inventário da mesa de cabeceira, refeito.",
+        "Tudo no mesmo lugar.",
+        "Os dois copos foram usados."
       ]
     },
     {
@@ -40,20 +42,25 @@
       "alt": 0.79,
       "texto": [
         "No verso de um recibo, uma pergunta riscada tantas vezes que não dá mais para ler. Embaixo:",
-        "[[chave|não.]]"
+        "[[espelho|não.]]"
       ]
     },
     {
       "id": "corredor",
-      "titulo": "Chamado das 3h12",
-      "tipo": "registro",
-      "data": "madrugada de domingo",
+      "titulo": "Caderno do travesseiro",
+      "tipo": "sonho",
+      "data": "uma linha por noite",
       "at": 0.26,
       "alt": 0.71,
       "texto": [
-        "Atendimento a chamado por cheiro de gás no terceiro andar. Vazamento na conexão do fogão do apartamento 32. Registro fechado, ambiente ventilado. Sem vítimas.",
-        "O morador já tinha aberto todas as janelas quando a equipe chegou. Declara que acordou às 3h sem motivo e foi direto para a cozinha, antes de sentir qualquer cheiro. Perguntado por que acordou, respondeu que [[espelho|o chamaram]].",
-        "Os vizinhos do andar não ouviram campainha nem batida na porta."
+        "Anotar ao acordar, antes de levantar. Só se aconteceu. Nunca o quê.",
+        "seg. sonhei.",
+        "ter. sonhei.",
+        "qua. sonhei. acordei antes do fim.",
+        "qui. não sei.",
+        "sex. não sei se ontem foi sonho.",
+        "sáb. sonhei.",
+        "dom. quando acordei, a linha de hoje [[espelho|já estava escrita]]."
       ]
     },
     {
@@ -65,6 +72,7 @@
       "alt": 0.77,
       "texto": [
         "Aluno quieto, faz as tarefas sem precisar de cobrança. Não participa de atividades em grupo. Arruma o material na carteira sempre na mesma ordem e fica muito agitado quando alguém mexe.",
+        "Passa semanas preso a um único assunto, sabe tudo sobre ele, e um dia larga de vez e começa outro.",
         "Distraído. Passa boa parte da aula olhando pela janela, como se sonhasse acordado. No recreio fica sozinho na escada dos fundos. Não conversa com [[carta|ninguém]].",
         "Na quinta-feira, parte do forro caiu sobre o degrau onde ele costuma sentar. Naquele dia ele tinha voltado para a sala antes do sinal. Perguntado por quê, não soube responder.",
         "Encaminhado à orientação."
@@ -93,14 +101,14 @@
         "Escrevo para ver se no papel você aparece.",
         "Não aparece. Só a letra, que nunca foi só minha.",
         "Obrigado por ontem. Foi por pouco de novo. Não vi nada. Nunca vejo.",
-        "Tem dias em que não acho motivo para levantar. Você acha antes de mim.",
+        "Tem dias em que não acho motivo para [[degrau|levantar]]. Você acha antes de mim.",
         "levanta.",
         "Um dia você passa para o lado de cá?"
       ],
       "revisita": [
-        "Relida. Tudo igual, menos embaixo da última pergunta, onde agora tem uma resposta na mesma letra.",
+        "Relida. Embaixo da última pergunta, onde antes não havia nada, agora tem uma resposta na mesma letra.",
         "Um dia você passa para o lado de cá?",
-        "já."
+        "espera."
       ]
     },
     {
@@ -134,9 +142,9 @@
       "texto": [
         "Vistoria no quarto dos fundos. Cômodo sem janela, uma cama, uma cadeira.",
         "Paredes com camadas de tinta sobrepostas. Na raspagem de amostra foram contadas mais de trezentas demãos, todas da mesma cor. A de cima ainda não secou.",
-        "Embaixo de todas, direto no reboco, há alguma coisa escrita à mão. Não é possível ler sem destruir as camadas de cima.",
-        "No pó do piso, marcas de dois pares de pés, lado a lado, do mesmo tamanho. Um calçado. Um descalço.",
-        "As marcas saem juntas pela porta e seguem pelo [[corredor|corredor]] até a escada.",
+        "Embaixo de todas, direto no reboco, há alguma coisa [[relogio|escrita à mão]]. Não é possível ler sem destruir as camadas de cima.",
+        "No pó do piso, marcas de dois pares de pés, lado a lado. Um calçado. Um descalço, que muda de tamanho de um passo para o outro.",
+        "As marcas saem juntas pela porta e seguem pelo corredor até a escada.",
         "Nenhuma irregularidade estrutural. Cômodo em condições de uso."
       ]
     },
@@ -153,7 +161,7 @@
         "Ri de alguma coisa e olhei para o lado, para ver se você tinha rido também. Não deu para ver.",
         "Eu desmonto tudo o que chega nas minhas mãos e monto de volta. Em mim não acho por onde abrir.",
         "Me oferecem companhia como quem empresta um casaco. Serve. Não é meu.",
-        "A porta fica destrancada. Por dentro.",
+        "Tudo de que eu gosto um dia passa. Você não.",
         "Amanhã vai ser igual?",
         "sim.",
         "Você também?",
