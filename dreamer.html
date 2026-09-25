@@ -855,8 +855,6 @@
       overscroll-behavior: contain;
       transform: translateY(18px);
       transition: transform 620ms var(--ease);
-      scrollbar-width: thin;
-      scrollbar-color: var(--ink-faint) transparent;
     }
 
     .reader.open .sheet {
@@ -867,8 +865,35 @@
       width: 3px;
     }
 
+    .sheet::-webkit-scrollbar-track,
+    .sheet::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    .sheet::-webkit-scrollbar-button {
+      display: none;
+    }
+
     .sheet::-webkit-scrollbar-thumb {
-      background: var(--ink-faint);
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    .sheet:hover::-webkit-scrollbar-thumb {
+      background: var(--line-strong);
+    }
+
+    /* So onde nao ha pseudo-elemento de barra: o Chrome ignora o desenho acima
+       quando as propriedades padrao estao definidas, e voltaria a mostrar setas. */
+    @supports not selector(::-webkit-scrollbar) {
+      .sheet {
+        scrollbar-width: thin;
+        scrollbar-color: var(--line) transparent;
+      }
+
+      .sheet:hover {
+        scrollbar-color: var(--line-strong) transparent;
+      }
     }
 
     .sheet .meta {
@@ -963,9 +988,12 @@
       transition: opacity 420ms var(--ease), visibility 420ms, color 260ms var(--ease);
     }
 
+    /* Visivel ja no instante da abertura, para poder receber o foco; o atraso
+       da visibilidade fica so no fechamento, onde a saida precisa dele. */
     .reader.open~.close {
       opacity: 1;
       visibility: visible;
+      transition: opacity 420ms var(--ease), visibility 0s, color 260ms var(--ease);
     }
 
     .close:hover {
@@ -1359,6 +1387,8 @@
         novo: document.getElementById("novo"),
         fogo: document.getElementById("fogo"),
         convite: document.getElementById("convite"),
+        stage: document.querySelector(".stage"),
+        top: document.querySelector(".top"),
 
         som: document.getElementById("sound")
       };
@@ -2190,9 +2220,11 @@
           m.type = "button";
           m.className = "marker";
           m.dataset.id = f.id;
+          m.tabIndex = -1;                 // entra na ordem do teclado so quando alcancavel
           m.setAttribute("aria-label", f.titulo);
           m.innerHTML = '<span class="glyph"></span><span class="tag"></span>';
-          m.addEventListener("click", () => show(f.id));
+          // O Enter dispara o clique mesmo com o objeto fora de alcance.
+          m.addEventListener("click", () => { if (m.classList.contains("on")) show(f.id); });
           m.addEventListener("pointerenter", () => luz.achar(m));
           m.addEventListener("pointerleave", () => luz.largar(m));
           el.markers.appendChild(m);
@@ -2318,7 +2350,10 @@
         n.marker.style.transform = "translate3d(" + x + "px," + y + "px,0)";
         n.marker.style.opacity = live ? focus : 0;
         n.marker.style.setProperty("--f", focus.toFixed(3));
-        n.marker.classList.toggle("on", on);
+        if (n.marker.classList.contains("on") !== on) {
+          n.marker.classList.toggle("on", on);
+          n.marker.tabIndex = on ? 0 : -1;
+        }
         n.pip.classList.toggle("near", on);
         n.pip.style.opacity = live ? 1 : 0.25;
       }
@@ -2509,6 +2544,7 @@
 
         el.sheet.scrollTop = 0;
         el.reader.classList.add("open");
+        fundoInerte(true);
         app.open = id;
         som.recolher(true);
         document.documentElement.classList.add("held");
@@ -2521,8 +2557,17 @@
         }
       }
 
+      // Com o leitor aberto o resto da pagina sai do alcance do teclado,
+      // senao o Tab continua pelos objetos escondidos atras do texto.
+      function fundoInerte(v) {
+        el.stage.inert = v;
+        el.top.inert = v;
+        el.scrub.inert = v;
+      }
+
       function hide() {
         el.reader.classList.remove("open");
+        fundoInerte(false);
         app.open = null;
         som.recolher(false);
         document.documentElement.classList.remove("held");

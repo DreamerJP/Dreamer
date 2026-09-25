@@ -1,9 +1,8 @@
 {
-  "_leia": "Texto provisorio. Os campos de estrutura (at, alt, tipo, requer) ja estao configurados; falta so escrever o conteudo por cima e remover o campo 'rascunho'.",
   "_campos": {
     "id": "identificador unico, usado pelos links",
     "titulo": "aparece no leitor e no rotulo do objeto ja visitado",
-    "tipo": "sonho | nota | memoria | carta — muda so o rotulo",
+    "tipo": "registro | bilhete | carta | sonho; muda so o rotulo",
     "data": "texto livre; pode ser vago ou ilegivel",
     "at": "0 a 1 — posicao ao longo do percurso",
     "alt": "0 a 1 — deslocamento transversal do objeto na cena",
@@ -14,130 +13,151 @@
   "fragmentos": [
     {
       "id": "limiar",
-      "titulo": "Fragmento 01",
-      "tipo": "sonho",
-      "data": "a definir",
+      "titulo": "Ocorrência 0417",
+      "tipo": "registro",
+      "data": "14/03, 18h52",
       "at": 0.04,
       "alt": 0.74,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[corredor|outro fragmento]], e a cena percorre ate ele antes de abrir."
+        "Ocorrência de trânsito sem vítimas.",
+        "Pedestre do sexo masculino atravessava fora da faixa, pelo [[corredor|corredor]] de ônibus, com o sinal aberto para os veículos. Um carro de passeio freou a cerca de meio metro dele. Não houve contato.",
+        "O condutor declara que freou por causa de uma pessoa do sexo feminino, aparentando dez ou doze anos, parada no meio da pista. Descalça, de costas para o carro, virada para o pedestre. Cabelo escuro e molhado. Não chovia.",
+        "A câmera do cruzamento registra o pedestre, o carro e a pista vazia entre os dois.",
+        "O pedestre recusou atendimento, pediu desculpas ao condutor três vezes e seguiu a pé. Testemunhas dizem que ia conversando baixo."
       ],
       "revisita": [
-        "Texto alternativo, exibido a partir da segunda leitura."
+        "Adendo à ocorrência 0417, após nova análise da imagem.",
+        "Três segundos antes de o carro entrar no quadro, o pedestre vira o rosto para a direita, onde não há ninguém, e concorda com a cabeça. Depois dá um passo para trás.",
+        "O carro ainda não era visível de onde ele estava."
       ]
     },
     {
       "id": "relogio",
-      "titulo": "Fragmento 02",
-      "tipo": "nota",
-      "data": "a definir",
+      "titulo": "Verso do recibo",
+      "tipo": "bilhete",
+      "data": "mesma letra",
       "at": 0.14,
       "alt": 0.79,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[chave|outro fragmento]], e a cena percorre ate ele antes de abrir."
+        "No verso de um recibo, uma pergunta riscada tantas vezes que não dá mais para ler. Embaixo:",
+        "[[chave|não.]]"
       ]
     },
     {
       "id": "corredor",
-      "titulo": "Fragmento 03",
-      "tipo": "sonho",
-      "data": "a definir",
+      "titulo": "Chamado das 3h12",
+      "tipo": "registro",
+      "data": "madrugada de domingo",
       "at": 0.26,
       "alt": 0.71,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[espelho|outro fragmento]], e a cena percorre ate ele antes de abrir."
-      ],
-      "revisita": [
-        "Texto alternativo, exibido a partir da segunda leitura."
+        "Atendimento a chamado por cheiro de gás no terceiro andar. Vazamento na conexão do fogão do apartamento 32. Registro fechado, ambiente ventilado. Sem vítimas.",
+        "O morador já tinha aberto todas as janelas quando a equipe chegou. Declara que acordou às 3h sem motivo e foi direto para a cozinha, antes de sentir qualquer cheiro. Perguntado por que acordou, respondeu que [[espelho|o chamaram]].",
+        "Os vizinhos do andar não ouviram campainha nem batida na porta."
       ]
     },
     {
       "id": "chave",
-      "titulo": "Fragmento 04",
-      "tipo": "memoria",
-      "data": "a definir",
+      "titulo": "Ficha de observação",
+      "tipo": "registro",
+      "data": "2ª série, 19__",
       "at": 0.37,
       "alt": 0.77,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[carta|outro fragmento]], e a cena percorre ate ele antes de abrir."
+        "Aluno quieto, faz as tarefas sem precisar de cobrança. Não participa de atividades em grupo. Arruma o material na carteira sempre na mesma ordem e fica muito agitado quando alguém mexe.",
+        "Distraído. Passa boa parte da aula olhando pela janela, como se sonhasse acordado. No recreio fica sozinho na escada dos fundos. Não conversa com [[carta|ninguém]].",
+        "Na quinta-feira, parte do forro caiu sobre o degrau onde ele costuma sentar. Naquele dia ele tinha voltado para a sala antes do sinal. Perguntado por quê, não soube responder.",
+        "Encaminhado à orientação."
       ]
     },
     {
       "id": "espelho",
-      "titulo": "Fragmento 05",
-      "tipo": "sonho",
-      "data": "a definir",
+      "titulo": "Vapor",
+      "tipo": "bilhete",
+      "data": "depois do banho",
       "at": 0.49,
       "alt": 0.73,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo."
+        "No espelho do banheiro, duas palavras que só aparecem quando o banho embaça o vidro. Estão ao contrário, como se tivessem sido escritas do lado de dentro.",
+        "hoje não."
       ]
     },
     {
       "id": "carta",
-      "titulo": "Fragmento 06",
+      "titulo": "Sem remetente",
       "tipo": "carta",
-      "data": "a definir",
+      "data": "dobrada em quatro",
       "at": 0.6,
       "alt": 0.8,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo."
+        "Escrevo para ver se no papel você aparece.",
+        "Não aparece. Só a letra, que nunca foi só minha.",
+        "Obrigado por ontem. Foi por pouco de novo. Não vi nada. Nunca vejo.",
+        "Tem dias em que não acho motivo para levantar. Você acha antes de mim.",
+        "levanta.",
+        "Um dia você passa para o lado de cá?"
       ],
       "revisita": [
-        "Texto alternativo, exibido a partir da segunda leitura."
+        "Relida. Tudo igual, menos embaixo da última pergunta, onde agora tem uma resposta na mesma letra.",
+        "Um dia você passa para o lado de cá?",
+        "já."
       ]
     },
     {
       "id": "degrau",
-      "titulo": "Fragmento 07",
-      "tipo": "nota",
-      "data": "a definir",
+      "titulo": "Leito 3",
+      "tipo": "registro",
+      "data": "anotações de enfermagem, toda noite",
       "at": 0.71,
       "alt": 0.72,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo."
+        "19h00. Chegou ao quarto sem precisar ser conduzido. Trouxe uma mochila com as roupas dobradas na ordem de uso.",
+        "22h10. Acordado. Cama arrumada, lençol esticado, travesseiro alinhado à cabeceira. Não deitou nela.",
+        "23h40. Encontrado sentado no chão, ao lado da cama. Responde quando chamado pelo nome, com atraso. Pede que não mexam nos objetos da mesa de cabeceira.",
+        "00h30. Ouvido conversando baixo no quarto, com pausas, como quem espera a vez de falar. Ao entrar, silêncio. Duas cadeiras puxadas para junto da cama. O quarto tem uma.",
+        "01h15. Assustou-se com o toque no ombro durante a aferição de pressão. Pediu desculpas várias vezes. Aferição retomada após aviso verbal. PA 11x7.",
+        "03h50. Relata, com as próprias palavras: \"Qualquer mudança de plano ou algo novo que aparece pode acabar com meu dia.\" Informado de que a troca de quarto prevista para as 06h está mantida.",
+        "05h40. Arrumado, penteado, sorrindo. Cumprimentou a equipe da manhã pelo nome. Nada digno de nota, como nas outras noites."
       ]
     },
     {
       "id": "quarto",
-      "titulo": "Fragmento 08",
-      "tipo": "memoria",
-      "data": "a definir",
+      "titulo": "Laudo de vistoria",
+      "tipo": "registro",
+      "data": "quarto dos fundos",
       "at": 0.83,
       "alt": 0.76,
       "requer": [
         "chave",
         "carta"
       ],
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[corredor|outro fragmento]], e a cena percorre ate ele antes de abrir.",
-        "Este so aparece depois que os fragmentos exigidos forem lidos."
+        "Vistoria no quarto dos fundos. Cômodo sem janela, uma cama, uma cadeira.",
+        "Paredes com camadas de tinta sobrepostas. Na raspagem de amostra foram contadas mais de trezentas demãos, todas da mesma cor. A de cima ainda não secou.",
+        "Embaixo de todas, direto no reboco, há alguma coisa escrita à mão. Não é possível ler sem destruir as camadas de cima.",
+        "No pó do piso, marcas de dois pares de pés, lado a lado, do mesmo tamanho. Um calçado. Um descalço.",
+        "As marcas saem juntas pela porta e seguem pelo [[corredor|corredor]] até a escada.",
+        "Nenhuma irregularidade estrutural. Cômodo em condições de uso."
       ]
     },
     {
       "id": "ruido",
-      "titulo": "Fragmento 09",
+      "titulo": "Em voz baixa",
       "tipo": "sonho",
-      "data": "a definir",
+      "data": "acordado",
       "at": 0.94,
       "alt": 0.75,
-      "rascunho": true,
       "texto": [
-        "Conteudo em preparo.",
-        "Uma palavra marcada leva a [[limiar|o primeiro fragmento]], e a cena percorre ate ele antes de abrir."
+        "Hoje eu te contei tudo de novo, em voz baixa, [[limiar|do começo]].",
+        "A mesma rua, as mesmas portas, a mesma lâmpada piscando no fim do corredor. Você ouviu como se fosse a primeira vez.",
+        "Ri de alguma coisa e olhei para o lado, para ver se você tinha rido também. Não deu para ver.",
+        "Eu desmonto tudo o que chega nas minhas mãos e monto de volta. Em mim não acho por onde abrir.",
+        "Me oferecem companhia como quem empresta um casaco. Serve. Não é meu.",
+        "A porta fica destrancada. Por dentro.",
+        "Amanhã vai ser igual?",
+        "sim.",
+        "Você também?",
+        "sim."
       ]
     }
   ]
