@@ -47,20 +47,18 @@
     },
     {
       "id": "corredor",
-      "titulo": "Caderno do travesseiro",
+      "titulo": "Como cheguei aqui",
       "tipo": "sonho",
-      "data": "uma linha por noite",
+      "data": "entre um e outro",
       "at": 0.26,
       "alt": 0.71,
       "texto": [
-        "Anotar ao acordar, antes de levantar. Só se aconteceu. Nunca o quê.",
-        "seg. sonhei.",
-        "ter. sonhei.",
-        "qua. sonhei. acordei antes do fim.",
-        "qui. não sei.",
-        "sex. não sei se ontem foi sonho.",
-        "sáb. sonhei.",
-        "dom. quando acordei, a linha de hoje [[espelho|já estava escrita]]."
+        "Você acha que existe diferença entre sonho e realidade?",
+        "Para mim, nunca existiu.",
+        "Num sonho ninguém se pergunta como chegou ali. A gente simplesmente está, e segue.",
+        "Acordado é a mesma coisa. Não lembro de ter chegado a nenhum dos meus dias.",
+        "E quando durmo, nada muda. Só fica um pouco mais real.",
+        "Será que é por isso que eu nunca consigo estar inteiro aqui?"
       ]
     },
     {
