@@ -24,7 +24,7 @@
         "Cartões de retorno de consultório, presos com um elástico, em ordem de data. O mais antigo é de dez anos atrás.",
         "Dois copos de água, um em cada canto. Só um foi usado.",
         "Um abajur. O interruptor está preso com fita na posição ligada.",
-        "Um [[corredor|caderno]] aberto ao lado do travesseiro, com uma caneta dentro.",
+        "Um [[carta|caderno]] aberto ao lado do travesseiro, com uma caneta dentro.",
         "Nada fora do lugar."
       ],
       "revisita": [
@@ -55,7 +55,7 @@
       "texto": [
         "Você acha que existe diferença entre sonho e realidade?",
         "Para mim, nunca existiu.",
-        "Num sonho ninguém se pergunta como chegou ali. A gente só está, e segue. Acordado também.",
+        "Num sonho ninguém se pergunta como chegou ali. A gente só está, e segue. [[chave|Acordado também]].",
         "Quando durmo, continuo outra vida, tão real quanto esta.",
         "Será que é por isso que eu nunca consigo estar inteiro aqui?"
       ]
@@ -118,11 +118,14 @@
       "texto": [
         "19h00. Chegou ao quarto sem precisar ser conduzido. Trouxe uma mochila com as roupas dobradas na ordem de uso.",
         "22h10. Acordado. Cama arrumada, lençol esticado, travesseiro alinhado à cabeceira. Não deitou nela.",
-        "23h40. Encontrado sentado no chão, ao lado da cama. Responde quando chamado pelo nome, com atraso. Pede que não mexam nos objetos da mesa de cabeceira.",
-        "00h30. Ouvido conversando baixo no quarto, com pausas, como quem espera a vez de falar. Ao entrar, silêncio.",
+        "23h40. Encontrado sentado no chão, ao lado da cama. Responde quando chamado pelo nome, com atraso. Pede que não mexam nos objetos da [[limiar|mesa de cabeceira]].",
+        "00h30. Ouvido [[ruido|conversando baixo]] no quarto, com pausas, como quem espera a vez de falar. Ao entrar, silêncio.",
         "01h15. Assustou-se com o toque no ombro durante a aferição de pressão. Pediu desculpas várias vezes. Aferição retomada após aviso verbal. PA 9x6.",
         "03h50. Não gosta de qualquer mudança de planos, e fica muito irritado após. Informado que a troca de quarto prevista para as 06h está mantida.",
         "07h00. Recusou o café da manhã, apesar da fome visível. Ficou observando tudo de longe, com atenção, como quem procura um jeito de se encaixar."
+      ],
+      "revisita": [
+        "Outra noite. As mesmas anotações, nos mesmos horários."
       ]
     },
     {
