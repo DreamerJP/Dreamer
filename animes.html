@@ -788,6 +788,234 @@
     }
 
     /* ============================================================
+       FAMÍLIA: selo de novidade, botões do card
+       ============================================================ */
+    .family-line {
+      font-size: 12px;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .family-line b { color: var(--text-2); font-weight: 500; }
+
+    .anime-title-btn {
+      all: unset;
+      cursor: pointer;
+    }
+
+    .anime-title-btn:hover .anime-title { text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+    .anime-title-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+    .anime-action {
+      display: flex;
+      gap: 8px;
+    }
+
+    .anime-action .btn-primary { flex: 1; }
+
+    .btn-parts { flex: 0 0 auto; white-space: nowrap; }
+
+    /* ============================================================
+       PAINEL DA FAMÍLIA
+       ============================================================ */
+    .sheet {
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      background: var(--bg-1);
+      color: var(--text-1);
+      padding: 0;
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100vh - 48px);
+      margin: auto;
+      overflow: hidden;
+      box-shadow: var(--shadow-3);
+    }
+
+    .sheet::backdrop {
+      background: rgba(4, 4, 8, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .sheet[open] { display: flex; flex-direction: column; animation: sheet-in 0.22s cubic-bezier(0.2, 0, 0, 1); }
+
+    @keyframes sheet-in {
+      from { opacity: 0; transform: translateY(12px) scale(0.985); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .sheet-scroll { overflow-y: auto; overscroll-behavior: contain; scrollbar-color: var(--bg-3) transparent; scrollbar-width: thin; }
+
+    .sheet-hero {
+      position: relative;
+      aspect-ratio: 21 / 9;
+      background: var(--bg-2) center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px 28px 20px;
+    }
+
+    .sheet-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12, 12, 20, 0.05) 30%, rgba(12, 12, 20, 0.92) 92%, var(--bg-1) 100%);
+    }
+
+    .sheet-hero > * { position: relative; z-index: 1; }
+
+    .sheet-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3.4vw, 34px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      max-width: 22ch;
+      text-wrap: balance;
+    }
+
+    .sheet-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 7, 13, 0.6);
+      backdrop-filter: blur(10px);
+      color: var(--text-1);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .sheet-close:hover { background: rgba(7, 7, 13, 0.85); }
+
+    .sheet-body { padding: 4px 28px 28px; }
+
+    .sheet-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .sheet-synopsis {
+      font-size: 14.5px;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 62ch;
+      margin-bottom: 26px;
+    }
+
+    .parts-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .parts-head h3 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .parts-head span { font-size: 12.5px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+    .timeline { list-style: none; margin: 0 0 24px; }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 44px 22px 1fr auto;
+      align-items: start;
+      column-gap: 10px;
+      padding: 11px 0;
+      position: relative;
+    }
+
+    .tl-item + .tl-item { border-top: 1px solid var(--border-subtle); }
+
+    .tl-year {
+      font-size: 12.5px;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+      padding-top: 2px;
+    }
+
+    .tl-node {
+      position: relative;
+      align-self: stretch;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tl-node::before {
+      content: "";
+      position: absolute;
+      top: -11px;
+      bottom: -11px;
+      width: 1.5px;
+      background: var(--border-default);
+    }
+
+    .tl-item:first-child .tl-node::before { top: 9px; }
+    .tl-item:last-child .tl-node::before { bottom: calc(100% - 9px); }
+
+    .tl-dot {
+      position: relative;
+      margin-top: 4px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--c);
+      box-shadow: 0 0 0 4px var(--bg-1);
+    }
+
+    .tl-item.extra .tl-dot {
+      width: 9px;
+      height: 9px;
+      margin-top: 5px;
+      background: var(--bg-1);
+      box-shadow: 0 0 0 4px var(--bg-1), inset 0 0 0 1.5px var(--c);
+    }
+
+    .tl-label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .tl-item.extra .tl-label { font-weight: 500; color: var(--text-2); }
+
+
+    .tl-sub {
+      display: block;
+      font-size: 12.5px;
+      color: var(--text-3);
+      margin-top: 1px;
+      overflow-wrap: anywhere;
+    }
+
+    .tl-eps {
+      font-size: 12.5px;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .tl-eps a { color: var(--accent); text-decoration: none; }
+    .tl-eps a:hover { text-decoration: underline; }
+
+    .sheet-actions { display: flex; gap: 10px; }
+    .sheet-actions .btn-primary { width: auto; flex: 1; padding: 12px 18px; font-size: 14px; }
+
+    /* ============================================================
        LOADING / EMPTY
        ============================================================ */
     .loading {
@@ -869,6 +1097,19 @@
       }
 
       .slide-nav { opacity: 1; } /* sempre visível em touch */
+
+      .sheet {
+        width: 100vw;
+        max-width: 100vw;
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .sheet-hero { aspect-ratio: 16 / 10; padding: 20px 16px 16px; }
+      .sheet-body { padding: 4px 16px 24px; }
+      .tl-item { grid-template-columns: 38px 18px 1fr auto; column-gap: 8px; }
     }
 
     /* Acessibilidade */
@@ -995,7 +1236,7 @@
 
           <div class="input-row">
             <div class="field">
-              <input type="text" id="searchInput" placeholder="Título ou sinopse…" oninput="onSearchInput()" aria-label="Buscar animes" />
+              <input type="text" id="searchInput" placeholder="Título, temporada ou sinopse…" oninput="onSearchInput()" aria-label="Buscar animes" />
             </div>
             <div class="field">
               <select id="ratingFilter" onchange="applyFilters()" aria-label="Filtrar por nota">
@@ -1012,15 +1253,15 @@
         <div class="stats">
           <div class="stat">
             <div class="stat-value" id="totalCount">0</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-label">Animes</div>
           </div>
           <div class="stat">
-            <div class="stat-value" id="currentCount">0</div>
-            <div class="stat-label">Exibindo</div>
+            <div class="stat-value" id="seasonCount">0</div>
+            <div class="stat-label">Temporadas</div>
           </div>
           <div class="stat">
-            <div class="stat-value" id="catCount">0</div>
-            <div class="stat-label">Categorias</div>
+            <div class="stat-value" id="extraCount">0</div>
+            <div class="stat-label">Filmes e extras</div>
           </div>
           <div class="stat">
             <div class="stat-value" id="avgRating">0</div>
@@ -1044,6 +1285,10 @@
       </div>
     </div>
   </main>
+
+  <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
+    <div class="sheet-scroll" id="sheetContent"></div>
+  </dialog>
 
   <script>
     /* ============================================================
@@ -1095,7 +1340,10 @@
         if (!res.ok) throw new Error("Falha ao carregar JSON");
         const data = await res.json();
         // Compatibilidade: aceita lista direta ou objeto com chave "animes"
-        allAnimes = Array.isArray(data) ? data : (data.animes || []);
+        allAnimes = (Array.isArray(data) ? data : (data.animes || [])).map(a => ({ ...a, parts: Array.isArray(a.parts) ? a.parts : [] }));
+        // maior nota primeiro; sem nota no fim; empate em ordem alfabética
+        const byTitle = new Intl.Collator("pt-BR", { sensitivity: "base", numeric: true });
+        allAnimes.sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0) || byTitle.compare(a.title || "", b.title || ""));
 
         renderCategoryChips();
         applyFilters();
@@ -1170,7 +1418,8 @@
       if (searchQuery) {
         list = list.filter(a =>
           (a.title || "").toLowerCase().includes(searchQuery) ||
-          (a.synopsis || "").toLowerCase().includes(searchQuery)
+          (a.synopsis || "").toLowerCase().includes(searchQuery) ||
+          a.parts.some(p => (p.title || "").toLowerCase().includes(searchQuery))
         );
       }
 
@@ -1183,20 +1432,46 @@
     /* ============================================================
        RENDER: cards
        ============================================================ */
+    /* ============================================================
+       FAMÍLIA: resumo das partes
+       ============================================================ */
+    const HOLO_STOPS = [[255, 109, 181], [182, 156, 255], [109, 212, 255], [132, 255, 209]];
+
+    // cor do gradiente holográfico na posição t (0 a 1), para cada parte da linha do tempo
+    function holoAt(t) {
+      const x = Math.min(Math.max(t, 0), 1) * (HOLO_STOPS.length - 1);
+      const i = Math.min(Math.floor(x), HOLO_STOPS.length - 2), f = x - i;
+      const c = HOLO_STOPS[i].map((v, k) => Math.round(v + (HOLO_STOPS[i + 1][k] - v) * f));
+      return `rgb(${c.join(",")})`;
+    }
+    const seasonNo = p => { const m = /^(\d+)ª temporada/i.exec(p.label || ""); return m ? m[1] : null; };
+    const plural = (n, um, varios) => `${n} ${n === 1 ? um : varios}`;
+
+    function familyInfo(anime) {
+      const parts = anime.parts;
+      const seasons = new Set(parts.map(seasonNo).filter(Boolean)).size;
+      const extras = parts.filter(p => !seasonNo(p));
+      const movies = extras.filter(p => p.type === "MOVIE").length;
+      const episodes = parts.filter(p => p.type !== "MOVIE").reduce((s, p) => s + (Number(p.episodes) || 0), 0);
+      let what;
+      if (!seasons) what = movies === extras.length ? plural(movies, "filme", "filmes") : plural(extras.length, "parte", "partes");
+      else what = plural(seasons, "temporada", "temporadas") + (extras.length ? ` e ${plural(extras.length, "extra", "extras")}` : "");
+      return { seasons, extras: extras.length, episodes, what };
+    }
+
+    function starsHTML(rating) {
+      // Estrelas: 5 totais (preenchidas até rating, vazias o resto). Sem nota, nada aparece.
+      if (!rating) return "";
+      return `<span class="anime-rating${rating === 5 ? " is-perfect" : ""}" aria-label="Nota: ${rating} de 5">${Array.from({ length: 5 }).map((_, i) =>
+        `<svg class="icon${i < rating ? "" : " empty"}"><use href="#i-star"/></svg>`).join("")}</span>`;
+    }
+
     function cardHTML(anime) {
       const id = String(anime.id);
       const images = Array.isArray(anime.images) ? anime.images : [];
       const hasImages = images.length > 0;
       const rating = Number(anime.rating) || 0;
-      const isPerfect = rating === 5;
-
-      // Estrelas: 5 totais (preenchidas até rating, vazias o resto)
-      // No modo "perfect" (5★) escondemos as vazias via CSS
-      const starsHtml = Array.from({ length: 5 }).map((_, i) =>
-        i < rating
-          ? `<svg class="icon"><use href="#i-star"/></svg>`
-          : `<svg class="icon empty"><use href="#i-star"/></svg>`
-      ).join("");
+      const info = familyInfo(anime);
 
       // Apenas a primeira imagem renderiza inicialmente (lazy do resto via setupCarousel)
       const coverHtml = hasImages
@@ -1226,15 +1501,18 @@
           <div class="anime-body">
             <div class="anime-meta">
               <span class="anime-cat">${escapeHtml(anime.category || "")}</span>
-              <span class="anime-rating${isPerfect ? ' is-perfect' : ''}" aria-label="Nota: ${rating} de 5">${starsHtml}</span>
-              ${anime.episodes ? `<div class="anime-episodes" style="margin-left: auto;"><svg class="icon icon-stroke"><use href="#i-tv"/></svg> ${escapeHtml(anime.episodes)}</div>` : ''}
+              ${starsHTML(rating)}
             </div>
-            <h3 class="anime-title">${escapeHtml(anime.title || "")}</h3>
+            <button type="button" class="anime-title-btn" onclick="openFamily('${escapeAttr(id)}')">
+              <h3 class="anime-title">${escapeHtml(anime.title || "")}</h3>
+            </button>
+            ${anime.parts.length ? `<div class="family-line"><b>${escapeHtml(info.what)}</b>${info.episodes ? `, ${plural(info.episodes, "episódio", "episódios")}` : ""}</div>` : ""}
             <p class="anime-synopsis">${escapeHtml(anime.synopsis || "")}</p>
             <div class="anime-action">
               <a class="btn btn-primary" href="${escapeAttr(anime.watchUrl || '#')}" target="_blank" rel="noopener noreferrer">
                 <svg class="icon"><use href="#i-play"/></svg> Assistir
               </a>
+              ${anime.parts.length > 1 ? `<button type="button" class="btn btn-parts" onclick="openFamily('${escapeAttr(id)}')">Ver as ${anime.parts.length} partes</button>` : ""}
             </div>
           </div>
         </article>`;
@@ -1458,27 +1736,88 @@
        STATS
        ============================================================ */
     function updateStats() {
-      const total = allAnimes.length;
-
-      const cats = new Set();
-      let sum = 0, n = 0;
+      let sum = 0, n = 0, seasons = 0, extras = 0;
       allAnimes.forEach(a => {
-        if (a.category) cats.add(a.category.toLowerCase());
         if (a.rating > 0) { sum += a.rating; n++; }
+        const info = familyInfo(a);
+        seasons += info.seasons;
+        extras += info.extras;
       });
-      const avg = n > 0 ? (sum / n).toFixed(1) : "0";
 
-      document.getElementById("totalCount").textContent = total;
-      document.getElementById("catCount").textContent = cats.size;
-      document.getElementById("avgRating").textContent = avg;
+      document.getElementById("totalCount").textContent = allAnimes.length;
+      document.getElementById("seasonCount").textContent = seasons;
+      document.getElementById("extraCount").textContent = extras;
+      // média só das famílias que já têm nota
+      document.getElementById("avgRating").textContent = n > 0 ? (sum / n).toFixed(1) : "–";
     }
 
     function updateResultMeta(count) {
       const total = allAnimes.length;
       const meta = document.getElementById("resultMeta");
       meta.textContent = (count === total) ? `${total} animes` : `${count} de ${total}`;
-      document.getElementById("currentCount").textContent = count;
     }
+
+    /* ============================================================
+       PAINEL DA FAMÍLIA
+       ============================================================ */
+    // filme não tem contagem de episódios: o rótulo já diz o que é
+    const TYPE_EPS = { MOVIE: "" };
+
+    function openFamily(id) {
+      const anime = allAnimes.find(a => String(a.id) === String(id));
+      if (!anime) return;
+      const parts = anime.parts, n = parts.length, info = familyInfo(anime);
+      const img = (anime.images || [])[0];
+      const rows = parts.map((p, i) => {
+        const extra = !seasonNo(p);
+        const c = holoAt(n === 1 ? 0.35 : i / (n - 1));
+        const year = (p.date || "").slice(0, 4) || "–";
+        const eps = p.type in TYPE_EPS ? TYPE_EPS[p.type] : (p.episodes ? `${Number(p.episodes)} ep` : "");
+        const label = escapeHtml(p.label || p.title || "");
+        const sub = p.title && p.title !== p.label ? `<span class="tl-sub">${escapeHtml(p.title)}</span>` : "";
+        return `<li class="tl-item${extra ? " extra" : ""}">
+            <span class="tl-year">${year}</span>
+            <span class="tl-node"><span class="tl-dot" style="--c:${c}"></span></span>
+            <span><span class="tl-label">${label}</span>${sub}</span>
+            <span class="tl-eps">${p.watchUrl ? `<a href="${escapeAttr(p.watchUrl)}" target="_blank" rel="noopener noreferrer">${eps || "Assistir"}</a>` : eps}</span>
+          </li>`;
+      }).join("");
+
+      document.getElementById("sheetContent").innerHTML = `
+        <div class="sheet-hero"${img ? ` style="background-image:url('${escapeAttr(img)}')"` : ""}>
+          <h2 class="sheet-title" id="sheetTitle">${escapeHtml(anime.title || "")}</h2>
+        </div>
+        <button type="button" class="sheet-close" aria-label="Fechar" onclick="closeFamily()">×</button>
+        <div class="sheet-body">
+          <div class="sheet-meta">
+            <span class="anime-cat">${escapeHtml(anime.category || "")}</span>
+            ${starsHTML(Number(anime.rating) || 0)}
+          </div>
+          <p class="sheet-synopsis">${escapeHtml(anime.synopsis || "")}</p>
+          ${n ? `<div class="parts-head">
+            <h3>${n > 1 ? "Ordem de lançamento" : "No acervo"}</h3>
+            <span>${escapeHtml(info.what)}${info.episodes ? `, ${plural(info.episodes, "episódio", "episódios")}` : ""}</span>
+          </div>
+          <ol class="timeline">${rows}</ol>` : ""}
+          <div class="sheet-actions">
+            <a class="btn btn-primary" href="${escapeAttr(anime.watchUrl || "#")}" target="_blank" rel="noopener noreferrer">
+              <svg class="icon"><use href="#i-play"/></svg> Assistir
+            </a>
+          </div>
+        </div>`;
+      const sheet = document.getElementById("sheet");
+      document.getElementById("sheetContent").scrollTop = 0;
+      if (!sheet.open) sheet.showModal();
+    }
+
+    function closeFamily() {
+      document.getElementById("sheet").close();
+    }
+
+    // clique fora do painel fecha
+    document.getElementById("sheet").addEventListener("click", e => {
+      if (e.target === e.currentTarget) closeFamily();
+    });
 
     /* ============================================================
        MENU MOBILE

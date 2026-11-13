@@ -1,39 +1,407 @@
 {
   "animes": [
     {
+      "id": "70",
+      "title": "Let's Go Kaikigumi",
+      "category": "comédia",
+      "rating": 3,
+      "synopsis": "Um rapaz medroso cruza com Mechako, líder da Kaikigumi, a organização de fantasmas encarregada de assustar os humanos. Sem saber como, ele acaba ajudando a reerguer o grupo, e a partir daí situações sobrenaturais esquisitas, mais engraçadas do que assustadoras, passam a persegui-lo.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Let's%20Go%20Kaikigumi",
+      "anilist": 200230,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Kaikigumi/Kaikigumi1.jpg",
+        "./Assets/Animes/Imagens/Kaikigumi/Kaikigumi2.jpg"
+      ],
+      "parts": [
+        {"anilist":200230,"label":"1ª temporada","title":"Let's go KAIKIGUMI","type":"TV","episodes":12,"date":"2026-07-05","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "69",
+      "title": "Isekai Mokushiroku Mynoghra: Hametsu no Bunmei de Hajimeru Sekai Seifuku",
+      "category": "aventura",
+      "rating": 3,
+      "synopsis": "Takuto morre jovem e renasce dentro do seu jogo de estratégia favorito, como o deus de Mynoghra, a civilização maligna mais difícil de jogar. Ao lado de Atou, a heroína da facção, ele precisa explorar, expandir e conquistar um mundo que trata o seu povo como ameaça desde o primeiro turno.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Isekai%20Mokushiroku%20Mynoghra%3A%20Hametsu%20no%20Bunmei%20de%20Hajimeru%20Sekai%20Seifuku",
+      "anilist": 178433,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Mynoghra/Mynoghra1.jpg",
+        "./Assets/Animes/Imagens/Mynoghra/Mynoghra2.jpg"
+      ],
+      "parts": [
+        {"anilist":178433,"label":"1ª temporada","title":"Apocalypse Bringer Mynoghra: World Conquest Starts with the Civilization of Ruin","type":"TV","episodes":13,"date":"2025-07-06","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "68",
+      "title": "Yasei no Last Boss ga Arawareta!",
+      "category": "ação",
+      "rating": 1,
+      "synopsis": "Um jogador de MMO acorda no corpo de Lufas, a temida tirana de asas negras que comandava seu personagem, duzentos anos depois da derrota dela. O mundo do jogo virou real, e a lenda de Lufas é de puro terror. Agora ele precisa sobreviver num lugar que quer a dona daquele corpo morta e entender por que foi parar ali.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Yasei%20no%20Last%20Boss%20ga%20Arawareta!",
+      "anilist": 180523,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Yasei_no_Last_Boss/Yasei_no_Last_Boss1.jpg",
+        "./Assets/Animes/Imagens/Yasei_no_Last_Boss/Yasei_no_Last_Boss2.jpg",
+        "./Assets/Animes/Imagens/Yasei_no_Last_Boss/Yasei_no_Last_Boss3.jpg"
+      ],
+      "parts": [
+        {"anilist":180523,"label":"1ª temporada","title":"A Wild Last Boss Appeared!","type":"ONA","episodes":12,"date":"2025-09-27","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "67",
+      "title": "Shinjiteita Nakama-tachi ni Dungeon Okuchi de Korosarekaketa ga Gift \"Mugen Gacha\" de Level 9999 no Nakama-tachi wo Te ni Irete Moto Party Member to Sekai ni Fukushuu & \"Zamaa!\" Shimasu!",
+      "category": "ação",
+      "rating": 2,
+      "synopsis": "Traído pelos companheiros em que confiava, Light é deixado para morrer no fundo da masmorra mais perigosa do mundo. Lá, sua habilidade de sorteio, que só dava itens inúteis, invoca aliados de nível 9999. Três anos depois, ele volta à superfície com um único objetivo: vingança.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Shinjiteita%20Nakama-tachi%20ni%20Dungeon%20Okuchi%20de%20Korosarekaketa%20ga%20Gift%20%22Mugen%20Gacha%22%20de%20Level%209999%20no%20Nakama-tachi%20wo%20Te%20ni%20Irete%20Moto%20Party%20Member%20to%20Sekai%20ni%20Fukushuu%20%26%20%22Zamaa!%22%20Shimasu!",
+      "anilist": 184322,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Mugen_Gacha/Mugen_Gacha1.jpg",
+        "./Assets/Animes/Imagens/Mugen_Gacha/Mugen_Gacha2.jpg",
+        "./Assets/Animes/Imagens/Mugen_Gacha/Mugen_Gacha3.jpg"
+      ],
+      "parts": [
+        {"anilist":184322,"label":"1ª temporada","title":"My Gift Lvl 9999 Unlimited Gacha: Backstabbed in a Backwater Dungeon, I'm Out for Revenge!","type":"TV","episodes":12,"date":"2025-10-03","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "66",
+      "title": "Isshun de Chiryou shiteita noni Yakutatazu to Tsuihou sareta Tensai Chiyushi, Yami Healer toshite Tanoshiku Ikiru",
+      "category": "aventura",
+      "rating": 2,
+      "synopsis": "Zenos aprendeu magia de cura sozinho nas favelas e foi expulso do seu grupo por ser considerado inútil, mesmo curando qualquer ferida num instante. Ele abre uma clínica clandestina nas sombras da cidade, atende quem ninguém atende, e aos poucos vira uma lenda que chama atenção até do palácio real.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Isshun%20de%20Chiryou%20shiteita%20noni%20Yakutatazu%20to%20Tsuihou%20sareta%20Tensai%20Chiyushi%2C%20Yami%20Healer%20toshite%20Tanoshiku%20Ikiru",
+      "anilist": 175872,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Yami_Healer/Yami_Healer1.jpg",
+        "./Assets/Animes/Imagens/Yami_Healer/Yami_Healer2.jpg",
+        "./Assets/Animes/Imagens/Yami_Healer/Yami_Healer3.jpg"
+      ],
+      "parts": [
+        {"anilist":175872,"label":"1ª temporada","title":"The Brilliant Healer's New Life in the Shadows","type":"TV","episodes":12,"date":"2025-04-03","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "65",
+      "title": "Salaryman ga Isekai ni Ittara Shitennou ni Natta Hanashi",
+      "category": "comédia",
+      "rating": 1,
+      "synopsis": "Uchimura, um funcionário de escritório comum, é levado para outro mundo pelo próprio Rei Demônio e nomeado um dos seus Quatro Generais. Ele não ganhou poder nenhum, só tem a experiência de empresa. E é com reuniões, negociação e jogo de cintura que vai tentar sobreviver às missões.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Salaryman%20ga%20Isekai%20ni%20Ittara%20Shitennou%20ni%20Natta%20Hanashi",
+      "anilist": 179689,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Salaryman_Isekai/Salaryman_Isekai1.jpg",
+        "./Assets/Animes/Imagens/Salaryman_Isekai/Salaryman_Isekai2.jpg",
+        "./Assets/Animes/Imagens/Salaryman_Isekai/Salaryman_Isekai3.jpg"
+      ],
+      "parts": [
+        {"anilist":179689,"label":"1ª temporada","title":"Headhunted to Another World: From Salaryman to Big Four!","type":"ONA","episodes":12,"date":"2025-01-01","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "64",
+      "title": "Maou 2099",
+      "category": "ação",
+      "rating": 3,
+      "synopsis": "Quinhentos anos depois de cair, o lendário Rei Demônio Veltol desperta numa Shinjuku cyberpunk, onde magia e tecnologia se fundiram e ele virou nota de rodapé nos livros de história. Sem exército e sem dinheiro, ele precisa se adaptar a esse novo mundo para reconquistar o trono.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Maou%202099",
+      "anilist": 163135,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Maou_2099/Maou_2099-1.jpg",
+        "./Assets/Animes/Imagens/Maou_2099/Maou_2099-2.jpg",
+        "./Assets/Animes/Imagens/Maou_2099/Maou_2099-3.jpg"
+      ],
+      "parts": [
+        {"anilist":163135,"label":"1ª temporada","title":"DEMON LORD 2099","type":"TV","episodes":12,"date":"2024-10-13","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "63",
+      "title": "Mieruko-chan",
+      "category": "comédia",
+      "rating": 2,
+      "synopsis": "Miko começou a ver espíritos horríveis por todo lado, e a única estratégia que encontrou foi fingir que não vê nada. Entre sustos de verdade e situações absurdas, ela tenta manter a rotina de estudante normal sem que os fantasmas percebam, nem as amigas.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Mieruko-chan",
+      "anilist": 131083,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Mieruko-chan/Mieruko-chan1.jpg",
+        "./Assets/Animes/Imagens/Mieruko-chan/Mieruko-chan2.jpg",
+        "./Assets/Animes/Imagens/Mieruko-chan/Mieruko-chan3.jpg"
+      ],
+      "parts": [
+        {"anilist":131083,"label":"1ª temporada","title":"Mieruko-chan","type":"TV","episodes":12,"date":"2021-10-03","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "62",
+      "title": "Clevatess: Majuu no Ou to Akago to Shikabane no Yuusha",
+      "category": "ação",
+      "rating": 1,
+      "synopsis": "Clevatess, o rei das feras sombrias, está farto dos heróis enviados para matá-lo e decide acabar com a humanidade. Antes disso, recebe uma missão inesperada: criar um bebê humano órfão, a última esperança de um mundo morrendo, com a ajuda do cadáver de um herói que ele mesmo derrotou.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Clevatess%3A%20Majuu%20no%20Ou%20to%20Akago%20to%20Shikabane%20no%20Yuusha",
+      "anilist": 178869,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Clevatess/Clevatess1.jpg",
+        "./Assets/Animes/Imagens/Clevatess/Clevatess2.jpg",
+        "./Assets/Animes/Imagens/Clevatess/Clevatess3.jpg",
+        "./Assets/Animes/Imagens/Clevatess/Clevatess4.jpg"
+      ],
+      "parts": [
+        {"anilist":178869,"label":"1ª temporada","title":"Clevatess","type":"TV","episodes":12,"date":"2025-07-02","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "61",
+      "title": "Akuyaku Reijou Level 99: Watashi wa Ura-Boss desu ga Maou dewa Arimasen",
+      "category": "comédia",
+      "rating": 2,
+      "synopsis": "Uma universitária renasce como Yumiella, a vilã escondida de um jogo de romance, e só quer uma vida tranquila. O problema é que o lado gamer fala mais alto e ela acaba chegando ao nível 99 sem querer. Agora todo mundo desconfia que ela é o Rei Demônio, e explicar o contrário não está fácil.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Akuyaku%20Reijou%20Level%2099%3A%20Watashi%20wa%20Ura-Boss%20desu%20ga%20Maou%20dewa%20Arimasen",
+      "anilist": 163076,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Villainess_Level_99/Villainess_Level_99-1.jpg",
+        "./Assets/Animes/Imagens/Villainess_Level_99/Villainess_Level_99-2.jpg",
+        "./Assets/Animes/Imagens/Villainess_Level_99/Villainess_Level_99-3.jpg"
+      ],
+      "parts": [
+        {"anilist":163076,"label":"1ª temporada","title":"Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord","type":"TV","episodes":12,"date":"2024-01-09","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "60",
+      "title": "Tsuihousha Shokudou e Youkoso!",
+      "category": "comédia",
+      "rating": 1,
+      "synopsis": "Dennis, um aventureiro de elite, é expulso do grupo mais forte do mundo e decide seguir o que sempre gostou de verdade: cozinhar. Com a ajuda de Atelier, ele abre um restaurante que atrai clientes cheios de problemas, e resolve cada um com faca de açougueiro, wok e muita comida boa.",
+      "watchUrl": "https://www.anibunker.com/anime/tsuihousha-shokudou-e-youkoso-episodio-12-legendado",
+      "anilist": 185544,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Tsuihousha_Shokudou/Tsuihousha_Shokudou1.jpg",
+        "./Assets/Animes/Imagens/Tsuihousha_Shokudou/Tsuihousha_Shokudou2.jpg",
+        "./Assets/Animes/Imagens/Tsuihousha_Shokudou/Tsuihousha_Shokudou3.jpg"
+      ],
+      "parts": [
+        {"anilist":185544,"label":"1ª temporada","title":"Welcome to the Outcast's Restaurant!","type":"TV","episodes":12,"date":"2025-07-04","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "59",
+      "title": "K-ON!",
+      "category": "comédia",
+      "rating": 4,
+      "synopsis": "Yui entra no clube de música leve sem saber tocar nenhum instrumento, só para salvar o clube de fechar. Entre ensaios que viram lanche, chá da tarde e muita bagunça, ela, Ritsu, Mio e Mugi formam uma banda e transformam o dia a dia da escola em algo que dá saudade.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=K-ON!",
+      "anilist": 5680,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/K-ON/K-ON1.jpg",
+        "./Assets/Animes/Imagens/K-ON/K-ON2.jpg",
+        "./Assets/Animes/Imagens/K-ON/K-ON3.jpg",
+        "./Assets/Animes/Imagens/K-ON/K-ON4.jpg",
+        "./Assets/Animes/Imagens/K-ON/K-ON5.jpg"
+      ],
+      "parts": [
+        {"anilist":5680,"label":"1ª temporada","title":"K-ON!","type":"TV","episodes":13,"date":"2009-04-03","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "58",
+      "title": "Chuunibyou demo Koi ga Shitai!",
+      "category": "romance",
+      "rating": 4,
+      "synopsis": "Yuuta passou a adolescência fingindo ter poderes sombrios e quer enterrar essa fase no ensino médio. O plano falha quando conhece Rikka, colega que ainda vive dentro da própria fantasia e enxerga nele um aliado. O que começa como vergonha vira um romance desajeitado e cheio de imaginação.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Chuunibyou%20demo%20Koi%20ga%20Shitai!",
+      "anilist": 14741,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Chuunibyou/Chuunibyou1.jpg",
+        "./Assets/Animes/Imagens/Chuunibyou/Chuunibyou2.jpg",
+        "./Assets/Animes/Imagens/Chuunibyou/Chuunibyou3.jpg",
+        "./Assets/Animes/Imagens/Chuunibyou/Chuunibyou4.jpg",
+        "./Assets/Animes/Imagens/Chuunibyou/Chuunibyou5.jpg"
+      ],
+      "parts": [
+        {"anilist":14741,"label":"1ª temporada","title":"Love, Chunibyo & Other Delusions","type":"TV","episodes":12,"date":"2012-10-04","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "57",
+      "title": "LV999 no Murabito",
+      "category": "aventura",
+      "rating": 1,
+      "synopsis": "Num mundo onde cada pessoa nasce com um papel fixo, os aldeões são os mais fracos e quase nunca passam do nível 5. Kouji é a exceção: chegou ao nível 999. Ao conhecer Alice, filha do Rei Demônio, descobre que os dois querem a mesma coisa impossível, que humanos e demônios convivam em paz.",
+      "watchUrl": "https://anibunker.com/anime/lv999-no-murabito-episodio-12-legendado",
+      "anilist": 197715,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/LV999_no_Murabito/LV999_no_Murabito1.jpg",
+        "./Assets/Animes/Imagens/LV999_no_Murabito/LV999_no_Murabito2.jpg",
+        "./Assets/Animes/Imagens/LV999_no_Murabito/LV999_no_Murabito3.jpg"
+      ],
+      "parts": [
+        {"anilist":197715,"label":"1ª temporada","title":"The Villager of Level 999","type":"ONA","episodes":12,"date":"2026-07-02","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "56",
+      "title": "Made in Abyss",
+      "category": "aventura",
+      "rating": 5,
+      "synopsis": "No fundo de um abismo gigantesco ficam relíquias impossíveis de reproduzir e criaturas que ninguém entende. Riko, uma órfã que sonha em ser exploradora como a mãe, encontra um robô com aparência de garoto e decide descer com ele até o fundo, sabendo que cada camada cobra um preço maior de quem volta.",
+      "watchUrl": "https://animefire.one/animes/pesquisar?q=Made%20in%20Abyss",
+      "anilist": 97986,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Made_in_Abyss/Made_in_Abyss1.jpg",
+        "./Assets/Animes/Imagens/Made_in_Abyss/Made_in_Abyss2.jpg",
+        "./Assets/Animes/Imagens/Made_in_Abyss/Made_in_Abyss3.jpg",
+        "./Assets/Animes/Imagens/Made_in_Abyss/Made_in_Abyss4.jpg",
+        "./Assets/Animes/Imagens/Made_in_Abyss/Made_in_Abyss5.jpg"
+      ],
+      "parts": [
+        {"anilist":97986,"label":"1ª temporada","title":"Made in Abyss","type":"TV","episodes":13,"date":"2017-07-07","addedAt":"2026-11-13"},
+        {"anilist":100643,"label":"Filme","title":"Made in Abyss: Dawn of the Deep Soul","type":"MOVIE","episodes":1,"date":"2020-01-17","addedAt":"2026-11-13"},
+        {"anilist":114745,"label":"2ª temporada","title":"Made in Abyss: The Golden City of the Scorching Sun","type":"TV","episodes":12,"date":"2022-07-06","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "26",
+      "title": "Tensei Shitara Slime Datta Ken",
+      "category": "aventura",
+      "rating": 5,
+      "synopsis": "Satoru Mikami, um funcionário comum, é esfaqueado e reencarna como um Slime em um mundo desconhecido. Ele adquire a habilidade \"Predador\", que permite devorar e imitar. Torna-se amigo do Dragão da Tempestade Veldora, prometendo libertá-lo e recebendo o nome Rimuru Tempest. Agora, Rimuru embarca em uma missão para provar seu valor, enquanto seus feitos se espalham, mudando seu destino.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tensura%20Nikki%3A%20Tensei%20shitara%20Slime%20Datta%20Ken",
+      "anilist": 101280,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki1.jpg",
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki2.jpg",
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki3.jpg",
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki4.jpg",
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki5.jpg",
+        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki6.jpg"
+      ],
+      "parts": [
+        {"anilist":101280,"label":"1ª temporada","title":"That Time I Got Reincarnated as a Slime","type":"TV","episodes":24,"date":"2018-10-02","addedAt":null},
+        {"anilist":106509,"label":"OVA","title":"That Time I Got Reincarnated as a Slime OAD","type":"OVA","episodes":5,"date":"2019-07-09","addedAt":null},
+        {"anilist":108511,"label":"2ª temporada","title":"That Time I Got Reincarnated as a Slime Season 2","type":"TV","episodes":12,"date":"2021-01-12","addedAt":null},
+        {"anilist":116741,"label":"Série derivada","title":"The Slime Diaries","type":"TV","episodes":12,"date":"2021-04-06","addedAt":null},
+        {"anilist":116742,"label":"2ª temporada, parte 2","title":"That Time I Got Reincarnated as a Slime Season 2 Part 2","type":"TV","episodes":12,"date":"2021-07-06","addedAt":null},
+        {"anilist":146503,"label":"ONA","title":"Tensei Shitara Slime Datta Ken: Sukuwareru Ramiris","type":"ONA","episodes":2,"date":"2022-03-19","addedAt":null},
+        {"anilist":139498,"label":"Filme","title":"That Time I Got Reincarnated as a Slime the Movie: Scarlet Bond","type":"MOVIE","episodes":1,"date":"2022-11-25","addedAt":null},
+        {"anilist":161802,"label":"OVA","title":"That Time I Got Reincarnated as a Slime: Visions of Coleus","type":"OVA","episodes":3,"date":"2023-11-01","addedAt":null},
+        {"anilist":156822,"label":"3ª temporada","title":"That Time I Got Reincarnated as a Slime Season 3","type":"TV","episodes":24,"date":"2024-04-05","addedAt":null},
+        {"anilist":182206,"label":"Filme","title":"That Time I Got Reincarnated as a Slime the Movie: Tears of the Azure Sea","type":"MOVIE","episodes":1,"date":"2026-02-27","addedAt":null},
+        {"anilist":182205,"label":"4ª temporada","title":"That Time I Got Reincarnated as a Slime Season 4","type":"TV","episodes":24,"date":"2026-04-03","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "23",
+      "title": "Yofukashi no Uta",
+      "category": "romance",
+      "rating": 5,
+      "synopsis": "Incapaz de dormir e insatisfeito com sua vida, Yamori Kou começa a explorar a cidade durante a noite. Ele conhece uma garota que lhe oferece ajuda para combater sua insônia, levando-o a um mundo noturno diferente e inesperado.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Yofukashi%20no%20Uta",
+      "anilist": 150583,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta1.jpg",
+        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta2.jpg",
+        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta3.jpg",
+        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta4.jpg",
+        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta5.jpg"
+      ],
+      "parts": [
+        {"anilist":150583,"label":"ONA","title":"Yofukashi no Uta Mini","type":"ONA","episodes":22,"date":"2022-06-06","addedAt":null},
+        {"anilist":141391,"label":"1ª temporada","title":"Call of the Night","type":"TV","episodes":13,"date":"2022-07-08","addedAt":null},
+        {"anilist":175914,"label":"2ª temporada","title":"Call of the Night Season 2","type":"TV","episodes":12,"date":"2025-07-04","addedAt":"2026-11-13"}
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Kaijuu 8-gou",
+      "category": "ação",
+      "rating": 2,
+      "synopsis": "Baseado na manga de Naoya Matsumoto, o anime Kaiju nº 8 conta a história do jovem Kafka Hibino, que passou sua infância acompanhando o mundo desmoronar após o surgimento de criaturas ameaçadoras conhecidas como Kaiju. Ao lado de sua melhor amiga, Mina Ashiro, os dois prometeram que ao crescer iriam se tornar membros da Força de Defesa do Japão e derrotar a ameaçadora presença dos monstros.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kaijuu%208-gou",
+      "anilist": 153288,
+      "updated": "2026-11-13",
+      "images": [
+        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou1.png",
+        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou2.png",
+        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou3.png",
+        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou4.png",
+        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou5.png"
+      ],
+      "parts": [
+        {"anilist":153288,"label":"1ª temporada","title":"Kaiju No. 8","type":"TV","episodes":12,"date":"2024-04-13","addedAt":null},
+        {"anilist":186300,"label":"ONA","title":"minute! Kaiju No. 8","type":"ONA","episodes":31,"date":"2024-12-06","addedAt":null},
+        {"anilist":179998,"label":"Filme","title":"Kaiju No. 8: Mission Recon","type":"MOVIE","episodes":1,"date":"2025-03-28","addedAt":null},
+        {"anilist":179999,"label":"Especial","title":"Kaiju No.8: Hoshina's Day Off","type":"SPECIAL","episodes":1,"date":"2025-03-28","addedAt":null},
+        {"anilist":178754,"label":"2ª temporada","title":"Kaiju No. 8 Season 2","type":"TV","episodes":11,"date":"2025-07-19","addedAt":"2026-11-13"},
+        {"anilist":204431,"label":"Especial","title":"Narumi's Week at Work","type":"SPECIAL","episodes":4,"date":"2026-09-05","addedAt":"2026-11-13"}
+      ]
+    },
+    {
       "id": "55",
       "title": "Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita",
       "category": "aventura",
-      "synopsis": "Ivy é considerada a domadora mais fraca de sua vila, mas após ser expulsa de seu grupo de aventureiros, ela descobre que seus verdadeiros talentos estão em encontrar e domar criaturas únicas. Sua jornada solitária se torna uma aventura de autodescoberta e crescimento.",
-      "episodes": "12 episódios",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Saijaku%20Tamer%20wa%20Gomi%20Hiroi%20no%20Tabi%20wo%20Hajimemashita",
       "rating": 1,
+      "synopsis": "Ivy é considerada a domadora mais fraca de sua vila, mas após ser expulsa de seu grupo de aventureiros, ela descobre que seus verdadeiros talentos estão em encontrar e domar criaturas únicas. Sua jornada solitária se torna uma aventura de autodescoberta e crescimento.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Saijaku%20Tamer%20wa%20Gomi%20Hiroi%20no%20Tabi%20wo%20Hajimemashita",
+      "anilist": 156891,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no1.jpg",
         "./Assets/Animes/Imagens/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no2.jpg",
         "./Assets/Animes/Imagens/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no3.jpg",
         "./Assets/Animes/Imagens/Saijaku-tamer-wa-gomi-hiroi-no/saijaku-tamer-wa-gomi-hiroi-no4.jpg"
+      ],
+      "parts": [
+        {"anilist":156891,"label":"1ª temporada","title":"The Weakest Tamer Began a Journey to Pick Up Trash","type":"TV","episodes":12,"date":"2024-01-12","addedAt":null}
       ]
     },
     {
       "id": "54",
       "title": "Seirei Gensouki",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "Rio é um órfão que vive nas favelas mas possui memórias de sua vida passada no Japão. Após salvar uma princesa, ele embarca em uma jornada épica através de um mundo de fantasia, buscando respostas sobre sua identidade enquanto desenvolve poderes mágicos extraordinários.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Seirei%20Gensouki",
+      "anilist": 126546,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Seirei%20Gensouki/SeireiGensouki1.jpg",
         "./Assets/Animes/Imagens/Seirei%20Gensouki/SeireiGensouki2.jpg",
         "./Assets/Animes/Imagens/Seirei%20Gensouki/SeireiGensouki3.jpg",
         "./Assets/Animes/Imagens/Seirei%20Gensouki/SeireiGensouki4.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Rio é um órfão que vive nas favelas mas possui memórias de sua vida passada no Japão. Após salvar uma princesa, ele embarca em uma jornada épica através de um mundo de fantasia, buscando respostas sobre sua identidade enquanto desenvolve poderes mágicos extraordinários.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Seirei%20Gensouki"
+      "parts": [
+        {"anilist":126546,"label":"1ª temporada","title":"Seirei Gensouki: Spirit Chronicles","type":"TV","episodes":12,"date":"2021-07-06","addedAt":null}
+      ]
     },
     {
       "id": "53",
       "title": "Malevolent Spirits: Mononogatari",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "Hyoma é um jovem que pode ver tsukumogami (espíritos de objetos antigos) e inicialmente os odeia. Ele é enviado para morar com uma família que convive pacificamente com esses espíritos, forçando-o a reconsiderar seus preconceitos enquanto enfrenta ameaças sobrenaturais.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Malevolent%20Spirits%3A%20Mononogatari",
+      "anilist": 141785,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Mononogatari/Mononogatari1.jpg",
         "./Assets/Animes/Imagens/Mononogatari/Mononogatari2.jpg",
@@ -41,31 +409,45 @@
         "./Assets/Animes/Imagens/Mononogatari/Mononogatari4.jpg",
         "./Assets/Animes/Imagens/Mononogatari/Mononogatari5.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Hyoma é um jovem que pode ver tsukumogami (espíritos de objetos antigos) e inicialmente os odeia. Ele é enviado para morar com uma família que convive pacificamente com esses espíritos, forçando-o a reconsiderar seus preconceitos enquanto enfrenta ameaças sobrenaturais.",
-      "episodes": "Episódios 24",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Malevolent%20Spirits%3A%20Mononogatari"
+      "parts": [
+        {"anilist":141785,"label":"1ª temporada","title":"Malevolent Spirits: Mononogatari","type":"TV","episodes":12,"date":"2023-01-10","addedAt":null},
+        {"anilist":163205,"label":"2ª temporada","title":"Malevolent Spirits: Mononogatari Cour 2","type":"TV","episodes":12,"date":"2023-07-04","addedAt":null}
+      ]
     },
     {
       "id": "52",
       "title": "No Game, No Life",
       "category": "comédia",
+      "rating": 4,
+      "synopsis": "A história de No Game, No Life se passa ao redor de Sora e Shiro, irmãos cuja a reputação como NEETs brilhantes, gamers reclusos, espalhou várias lendas urbanas pela internet, Esses dois gamers até mesmo consideram o mundo real como um jogo com péssimos gráficos. Certo dia, eles são evocados por um garoto chamado Deus para um mundo nativo. Lá, Deus proibiu a guerra e declarou este um mundo onde tudo é decidido com jogos, até fronteiras de países. A humanidade foi conduzida de volta à única cidade restante pelas outras raças. Sora e Shiro, os irmãos inúteis se tornarão os Salvadores da Humanidade neste mundo nativo? Que os jogos comecem!",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=No%20Game%2C%20No%20Life",
+      "anilist": 19815,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife1.jpg",
         "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife2.jpg",
         "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife3.jpg",
         "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife4.jpg",
-        "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife5.jpg"
+        "./Assets/Animes/Imagens/No_Game_No_Life/nogamenolife5.jpg",
+        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero1.png",
+        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero2.png",
+        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero3.png"
       ],
-      "rating": 4,
-      "synopsis": "A história de No Game, No Life se passa ao redor de Sora e Shiro, irmãos cuja a reputação como NEETs brilhantes, gamers reclusos, espalhou várias lendas urbanas pela internet, Esses dois gamers até mesmo consideram o mundo real como um jogo com péssimos gráficos. Certo dia, eles são evocados por um garoto chamado Deus para um mundo nativo. Lá, Deus proibiu a guerra e declarou este um mundo onde tudo é decidido com jogos, até fronteiras de países. A humanidade foi conduzida de volta à única cidade restante pelas outras raças. Sora e Shiro, os irmãos inúteis se tornarão os Salvadores da Humanidade neste mundo nativo? Que os jogos comecem!",
-      "episodes": "Episódios 12",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=No%20Game%2C%20No%20Life"
+      "parts": [
+        {"anilist":19815,"label":"1ª temporada","title":"No Game, No Life","type":"TV","episodes":12,"date":"2014-04-09","addedAt":null},
+        {"anilist":20769,"label":"Especial","title":"No Game No Life Specials","type":"SPECIAL","episodes":6,"date":"2014-06-25","addedAt":null},
+        {"anilist":21875,"label":"Filme","title":"No Game, No Life Zero","type":"MOVIE","episodes":1,"date":"2017-07-15","addedAt":null}
+      ]
     },
     {
       "id": "51",
       "title": "Chiyu Mahou no Machigatta Tsukaikata",
       "category": "comédia",
+      "rating": 2,
+      "synopsis": "Usato é transportado para outro mundo junto com dois colegas de classe e descobre que possui magia de cura. É recrutado pelo brutal pelotão de resgate do reino, onde aprende que magia de cura pode ser usada de formas muito mais violentas e criativas do que imaginava.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Chiyu%20Mahou%20no%20Machigatta%20Tsukaikata",
+      "anilist": 137908,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/ChiyuMahou/chiyumahou1.jpg",
         "./Assets/Animes/Imagens/ChiyuMahou/chiyumahou2.jpg",
@@ -73,15 +455,19 @@
         "./Assets/Animes/Imagens/ChiyuMahou/chiyumahou4.jpg",
         "./Assets/Animes/Imagens/ChiyuMahou/chiyumahou5.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Usato é transportado para outro mundo junto com dois colegas de classe e descobre que possui magia de cura. É recrutado pelo brutal pelotão de resgate do reino, onde aprende que magia de cura pode ser usada de formas muito mais violentas e criativas do que imaginava.",
-      "episodes": "Episódios 10",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Chiyu%20Mahou%20no%20Machigatta%20Tsukaikata"
+      "parts": [
+        {"anilist":137908,"label":"1ª temporada","title":"The Wrong Way to Use Healing Magic","type":"TV","episodes":13,"date":"2024-01-06","addedAt":null}
+      ]
     },
     {
       "id": "50",
       "title": "Kuro no Shoukanshi",
       "category": "ação",
+      "rating": 1,
+      "synopsis": "Acordando em um novo lugar estranho sem memória de sua vida passada, Kelvin descobre que ele trocou essas mesmas memórias em troca de novas habilidades poderosas durante sua recente transmigração. Indo para um mundo totalmente novo como um Summoner—com seu primeiro seguidor sendo a própria deusa que o trouxe!—Kelvin começa sua nova vida como um aventureiro, e não demora muito para que ele descubra sua disposição oculta como um viciado em batalhas. . Do Cavaleiro Negro do Antigo Castelo dos Espíritos Malignos ao demônio dentro da Caverna Oculta do Sábio, ele se diverte na luta contra um inimigo formidável após o outro. Junte-se a este aventureiro poderoso em uma saga emocionante e épica enquanto ele e seus aliados abrem caminho para os anais da história!",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kuro%20no%20Shoukanshi",
+      "anilist": 145260,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kuro_no_Shoukanshi/kuronoshoukanshi1.jpg",
         "./Assets/Animes/Imagens/Kuro_no_Shoukanshi/kuronoshoukanshi2.jpg",
@@ -89,43 +475,37 @@
         "./Assets/Animes/Imagens/Kuro_no_Shoukanshi/kuronoshoukanshi4.jpg",
         "./Assets/Animes/Imagens/Kuro_no_Shoukanshi/kuronoshoukanshi5.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Acordando em um novo lugar estranho sem memória de sua vida passada, Kelvin descobre que ele trocou essas mesmas memórias em troca de novas habilidades poderosas durante sua recente transmigração. Indo para um mundo totalmente novo como um Summoner—com seu primeiro seguidor sendo a própria deusa que o trouxe!—Kelvin começa sua nova vida como um aventureiro, e não demora muito para que ele descubra sua disposição oculta como um viciado em batalhas. . Do Cavaleiro Negro do Antigo Castelo dos Espíritos Malignos ao demônio dentro da Caverna Oculta do Sábio, ele se diverte na luta contra um inimigo formidável após o outro. Junte-se a este aventureiro poderoso em uma saga emocionante e épica enquanto ele e seus aliados abrem caminho para os anais da história!",
-      "episodes": "Episódios 12",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kuro%20no%20Shoukanshi"
-    },
-    {
-      "id": "49",
-      "title": "No Game, No Life Zero",
-      "category": "filmes",
-      "images": [
-        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero1.png",
-        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero2.png",
-        "./Assets/Animes/Imagens/No_Game_No_Life_Zero/nogamenolifezero3.png"
-      ],
-      "rating": 4,
-      "synopsis": "Este prequel, ambientado 6.000 anos antes da série principal, narra a história de Riku, o último líder da humanidade em um mundo devastado por uma guerra entre raças mágicas. O filme acompanha sua luta desesperada para salvar a humanidade da extinção através de estratégias impossíveis e sacrifícios imensos.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=No%20Game%2C%20No%20Life%20Zero"
+      "parts": [
+        {"anilist":145260,"label":"1ª temporada","title":"Black Summoner","type":"TV","episodes":12,"date":"2022-07-09","addedAt":null}
+      ]
     },
     {
       "id": "48",
       "title": "Toki wo Kakeru Shoujo",
       "category": "filmes",
+      "rating": 4,
+      "synopsis": "Uma estudante do ensino médio descobre a habilidade de saltar no tempo, voltando a momentos anteriores de sua vida. Inicialmente, ela usa esse poder para resolver problemas cotidianos, mas logo percebe que alterar o passado tem consequências inesperadas. Ela precisa aprender a lidar com as responsabilidades que vêm com essa extraordinária habilidade.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Toki%20wo%20Kakeru%20Shoujo",
+      "anilist": 2236,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo1.png",
         "./Assets/Animes/Imagens/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo2.png",
         "./Assets/Animes/Imagens/Toki_wo_Kakeru_Shoujo/tokiwokakerushoujo3.png"
       ],
-      "rating": 4,
-      "synopsis": "Uma estudante do ensino médio descobre a habilidade de saltar no tempo, voltando a momentos anteriores de sua vida. Inicialmente, ela usa esse poder para resolver problemas cotidianos, mas logo percebe que alterar o passado tem consequências inesperadas. Ela precisa aprender a lidar com as responsabilidades que vêm com essa extraordinária habilidade.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Toki%20wo%20Kakeru%20Shoujo"
+      "parts": [
+        {"anilist":2236,"label":"Filme","title":"The Girl Who Leapt Through Time","type":"MOVIE","episodes":1,"date":"2006-07-15","addedAt":null}
+      ]
     },
     {
       "id": "47",
       "title": "Koe no Katachi: A Voz do Silêncio",
       "category": "filmes",
+      "rating": 5,
+      "synopsis": "Nishimiya Shoko, uma aluna com deficiência auditiva, sofre bullying, principalmente de Ishida Shouya. Após ela se transferir de escola por causa dele, Shouya é ostracizado e perde seus amigos. Anos depois, ele tenta obter redenção por suas ações passadas, buscando uma forma de se reconectar com Shoko e consertar os erros que cometeu.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Koe%20no%20Katachi%3A%20A%20Voz%20do%20Sil%C3%AAncio",
+      "anilist": 20954,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Koe_no_Katachi/koenokatachi1.jpg",
         "./Assets/Animes/Imagens/Koe_no_Katachi/koenokatachi2.png",
@@ -134,15 +514,19 @@
         "./Assets/Animes/Imagens/Koe_no_Katachi/koenokatachi5.jpg",
         "./Assets/Animes/Imagens/Koe_no_Katachi/koenokatachi6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Nishimiya Shoko, uma aluna com deficiência auditiva, sofre bullying, principalmente de Ishida Shouya. Após ela se transferir de escola por causa dele, Shouya é ostracizado e perde seus amigos. Anos depois, ele tenta obter redenção por suas ações passadas, buscando uma forma de se reconectar com Shoko e consertar os erros que cometeu.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Koe%20no%20Katachi%3A%20A%20Voz%20do%20Sil%C3%AAncio"
+      "parts": [
+        {"anilist":20954,"label":"Filme","title":"A Silent Voice","type":"MOVIE","episodes":1,"date":"2016-09-17","addedAt":null}
+      ]
     },
     {
       "id": "46",
       "title": "Kokoro ga Sakebitagatterun Da.",
       "category": "filmes",
+      "rating": 4,
+      "synopsis": "Jun Naruse, uma garota que machucava as pessoas com suas palavras, encontra uma fada que sela sua voz para que ela não possa mais falar. Sua vida muda no liceu, onde ela descobre o poder da música e da amizade, e começa a encontrar uma nova forma de expressar seus verdadeiros sentimentos.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kokoro%20ga%20Sakebitagatterun%20Da.",
+      "anilist": 20968,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kokoro_ga_Sakebitagatterun_Da/kokor5.jpg",
         "./Assets/Animes/Imagens/Kokoro_ga_Sakebitagatterun_Da/kokoro1.jpg",
@@ -151,15 +535,19 @@
         "./Assets/Animes/Imagens/Kokoro_ga_Sakebitagatterun_Da/kokoro4.jpg",
         "./Assets/Animes/Imagens/Kokoro_ga_Sakebitagatterun_Da/kokoro6.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Jun Naruse, uma garota que machucava as pessoas com suas palavras, encontra uma fada que sela sua voz para que ela não possa mais falar. Sua vida muda no liceu, onde ela descobre o poder da música e da amizade, e começa a encontrar uma nova forma de expressar seus verdadeiros sentimentos.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kokoro%20ga%20Sakebitagatterun%20Da."
+      "parts": [
+        {"anilist":20968,"label":"Filme","title":"The Anthem of the Heart","type":"MOVIE","episodes":1,"date":"2015-09-19","addedAt":null}
+      ]
     },
     {
       "id": "45",
       "title": "Kimi no na wa",
       "category": "filmes",
+      "rating": 4,
+      "synopsis": "Mitsuha, uma estudante do ensino médio de Itomori, deseja uma vida mais emocionante em Tóquio. Taki, um estudante de Tóquio, começa a trocar de corpo com ela. Eles se comunicam através de bilhetes até que as trocas cessam. Taki, curioso, pesquisa sobre a cidade de Mitsuha, fazendo uma descoberta terrível que o impulsiona a investigar mais a fundo.",
+      "watchUrl": "https://xpanimes.com/filme-anime-kimi-no-na-wa-your-name/",
+      "anilist": 21519,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kimi_no_na_wa/kiminonawa1.jpeg",
         "./Assets/Animes/Imagens/Kimi_no_na_wa/kiminonawa2.jpeg",
@@ -168,15 +556,19 @@
         "./Assets/Animes/Imagens/Kimi_no_na_wa/kiminonawa5.jpeg",
         "./Assets/Animes/Imagens/Kimi_no_na_wa/kiminonawa6.jpeg"
       ],
-      "rating": 4,
-      "synopsis": "Mitsuha, uma estudante do ensino médio de Itomori, deseja uma vida mais emocionante em Tóquio. Taki, um estudante de Tóquio, começa a trocar de corpo com ela. Eles se comunicam através de bilhetes até que as trocas cessam. Taki, curioso, pesquisa sobre a cidade de Mitsuha, fazendo uma descoberta terrível que o impulsiona a investigar mais a fundo.",
-      "episodes": "",
-      "watchUrl": "https://xpanimes.com/filme-anime-kimi-no-na-wa-your-name/"
+      "parts": [
+        {"anilist":21519,"label":"Filme","title":"Your Name.","type":"MOVIE","episodes":1,"date":"2016-08-26","addedAt":null}
+      ]
     },
     {
       "id": "44",
       "title": "Sousou no Frieren",
       "category": "aventura",
+      "rating": 4,
+      "synopsis": "Após 10 anos derrotando o Rei Demônio com o herói Himmel, a maga elfa Frieren, que vive por milênios, promete retornar. 50 anos depois, ela visita Himmel e os outros, mas percebe que eles envelheceram. Após a morte de Himmel, Frieren se arrepende de não ter passado mais tempo com ele e embarca em uma nova jornada para se conectar e conhecer melhor as pessoas, vivendo incontáveis aventuras.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Sousou%20no%20Frieren",
+      "anilist": 154587,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Sousou_no_Frieren/sousounofrieren1.png",
         "./Assets/Animes/Imagens/Sousou_no_Frieren/sousounofrieren2.png",
@@ -184,15 +576,19 @@
         "./Assets/Animes/Imagens/Sousou_no_Frieren/sousounofrieren4.png",
         "./Assets/Animes/Imagens/Sousou_no_Frieren/sousounofrieren5.png"
       ],
-      "rating": 4,
-      "synopsis": "Após 10 anos derrotando o Rei Demônio com o herói Himmel, a maga elfa Frieren, que vive por milênios, promete retornar. 50 anos depois, ela visita Himmel e os outros, mas percebe que eles envelheceram. Após a morte de Himmel, Frieren se arrepende de não ter passado mais tempo com ele e embarca em uma nova jornada para se conectar e conhecer melhor as pessoas, vivendo incontáveis aventuras.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Sousou%20no%20Frieren"
+      "parts": [
+        {"anilist":154587,"label":"1ª temporada","title":"Frieren: Beyond Journey’s End","type":"TV","episodes":28,"date":"2023-09-29","addedAt":null}
+      ]
     },
     {
       "id": "43",
       "title": "My Unique Skill Makes Me OP even at Level 1",
       "category": "aventura",
+      "rating": 1,
+      "synopsis": "Ryota Sato, um assalariado, é transportado para uma masmorra em um mundo onde monstros soltam loots. Ele descobre que seus atributos são péssimos e seu nível está travado no 1. No entanto, ele possui a \"Habilidade de Drop: S Geral\", a mais poderosa existente. Com a ajuda de Emily, ele tenta sobreviver neste mundo bizarro.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=My%20Unique%20Skill%20Makes%20Me%20OP%20even%20at%20Level%201",
+      "anilist": 148465,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/UniqueSkill/uniqueskill1.jpg",
         "./Assets/Animes/Imagens/UniqueSkill/uniqueskill2.png",
@@ -202,73 +598,95 @@
         "./Assets/Animes/Imagens/UniqueSkill/uniqueskill6.jpg",
         "./Assets/Animes/Imagens/UniqueSkill/uniqueskill7.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Ryota Sato, um assalariado, é transportado para uma masmorra em um mundo onde monstros soltam loots. Ele descobre que seus atributos são péssimos e seu nível está travado no 1. No entanto, ele possui a \"Habilidade de Drop: S Geral\", a mais poderosa existente. Com a ajuda de Emily, ele tenta sobreviver neste mundo bizarro.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=My%20Unique%20Skill%20Makes%20Me%20OP%20even%20at%20Level%201"
+      "parts": [
+        {"anilist":148465,"label":"1ª temporada","title":"My Unique Skill Makes Me OP even at Level 1","type":"TV","episodes":12,"date":"2023-07-08","addedAt":null}
+      ]
     },
     {
       "id": "42",
       "title": "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "Uma garota é convidada para um VRMMORPG e, preocupada em sentir dor, cria uma personagem totalmente focada em defesa. Ao colocar todos os pontos em Vitalidade, ela ganha a habilidade \"Absolute Defense\", que a impede de sofrer dano ou sentir dor. Mesmo sem velocidade, magia ou força, Maple se aventura com seus amigos no mundo do jogo.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Itai%20no%20wa%20Iya%20nano%20de%20Bougyoryoku%20ni%20Kyokufuri%20Shitai%20to%20Omoimasu",
+      "anilist": 106479,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/DefenseMax/defensemax1.jpg",
         "./Assets/Animes/Imagens/DefenseMax/defensemax2.jpg",
         "./Assets/Animes/Imagens/DefenseMax/defensemax3.jpg",
         "./Assets/Animes/Imagens/DefenseMax/defensemax4.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Uma garota é convidada para um VRMMORPG e, preocupada em sentir dor, cria uma personagem totalmente focada em defesa. Ao colocar todos os pontos em Vitalidade, ela ganha a habilidade \"Absolute Defense\", que a impede de sofrer dano ou sentir dor. Mesmo sem velocidade, magia ou força, Maple se aventura com seus amigos no mundo do jogo.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Itai%20no%20wa%20Iya%20nano%20de%20Bougyoryoku%20ni%20Kyokufuri%20Shitai%20to%20Omoimasu"
+      "parts": [
+        {"anilist":106479,"label":"1ª temporada","title":"BOFURI: I Don't Want to Get Hurt, so I'll Max Out My Defense.","type":"TV","episodes":12,"date":"2020-01-08","addedAt":null},
+        {"anilist":116867,"label":"2ª temporada","title":"BOFURI: I Don't Want to Get Hurt, so I'll Max Out My Defense. Season 2","type":"TV","episodes":12,"date":"2023-01-11","addedAt":null}
+      ]
     },
     {
       "id": "41",
       "title": "Yowai 5000-nen no Soushoku Dragon",
       "category": "aventura",
+      "rating": 1,
+      "synopsis": "Reiko se oferece a um dragão de 5.000 anos para defender sua vila do rei demônio. Contudo, o dragão é vegetariano e fraco. Juntos, eles embarcam em uma jornada para derrotar o rei demônio. Reiko afirma ser discípula do dragão, capaz de extrair seus poderes infinitos, mas a verdade por trás disso ainda será revelada.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Yowai%205000-nen%20no%20Soushoku%20Dragon",
+      "anilist": 141879,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/HerbivorousDragon/herbivorousdragon1.jpg",
         "./Assets/Animes/Imagens/HerbivorousDragon/herbivorousdragon2.png",
         "./Assets/Animes/Imagens/HerbivorousDragon/herbivorousdragon3.jpg",
         "./Assets/Animes/Imagens/HerbivorousDragon/herbivorousdragon4.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Reiko se oferece a um dragão de 5.000 anos para defender sua vila do rei demônio. Contudo, o dragão é vegetariano e fraco. Juntos, eles embarcam em uma jornada para derrotar o rei demônio. Reiko afirma ser discípula do dragão, capaz de extrair seus poderes infinitos, mas a verdade por trás disso ainda será revelada.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Yowai%205000-nen%20no%20Soushoku%20Dragon"
+      "parts": [
+        {"anilist":141879,"label":"1ª temporada","title":"A Herbivorous Dragon of 5,000 Years Gets Unfairly Villainized","type":"ONA","episodes":12,"date":"2022-07-30","addedAt":null},
+        {"anilist":170578,"label":"2ª temporada","title":"A Herbivorous Dragon of 5,000 Years Gets Unfairly Villainized Season 2","type":"ONA","episodes":12,"date":"2024-10-02","addedAt":null}
+      ]
     },
     {
       "id": "40",
       "title": "Isekai Shikkaku",
       "category": "aventura",
+      "rating": 3,
+      "synopsis": "Para o melancólico autor Osamu Dazai, uma aventura em outro mundo com garotas fofas e poderes de videojogos não é um sonho. Puxado para outro mundo em 1948, ele não está interessado em aventuras, mas sim em encontrar o lugar perfeito para morrer. Apesar de arriscar a vida, tudo parece dar certo para ele nesta comédia isekai alegremente sombria.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Isekai%20Shikkaku",
+      "anilist": 152137,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Isekai_Shikkaku/isekaishikkaku1.jpg",
         "./Assets/Animes/Imagens/Isekai_Shikkaku/isekaishikkaku2.png",
         "./Assets/Animes/Imagens/Isekai_Shikkaku/isekaishikkaku3.jpg"
       ],
-      "rating": 3,
-      "synopsis": "Para o melancólico autor Osamu Dazai, uma aventura em outro mundo com garotas fofas e poderes de videojogos não é um sonho. Puxado para outro mundo em 1948, ele não está interessado em aventuras, mas sim em encontrar o lugar perfeito para morrer. Apesar de arriscar a vida, tudo parece dar certo para ele nesta comédia isekai alegremente sombria.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Isekai%20Shikkaku"
+      "parts": [
+        {"anilist":152137,"label":"1ª temporada","title":"No Longer Allowed in Another World","type":"TV","episodes":12,"date":"2024-07-09","addedAt":null}
+      ]
     },
     {
       "id": "39",
       "title": "Shinmai Ossan Boukensha, Saikyou Party ni Shinu hodo Kitaerarete Muteki ni Naru.",
       "category": "aventura",
+      "rating": 3,
+      "synopsis": "Geralmente, é melhor se tornar um aventureiro jovem para treinar o poder mágico. No entanto, Rick Gladiador, que se tornou aventureiro com mais de trinta anos, possui o poder de combate de um aventureiro rank S. Rick viveu uma vida inimaginável com os membros do lendário Orihalcon Fist, um grupo dos aventureiros mais fortes. Treinado por mentores \"monstros\", Rick derrota aventureiros de elite que o subestimam.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Shinmai%20Ossan%20Boukensha%2C%20Saikyou%20Party%20ni%20Shinu%20hodo%20Kitaerarete%20Muteki%20ni%20Naru.",
+      "anilist": 163292,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/TheOssan/TheOssan1.jpg",
         "./Assets/Animes/Imagens/TheOssan/TheOssan2.jpg",
         "./Assets/Animes/Imagens/TheOssan/TheOssan3.png"
       ],
-      "rating": 3,
-      "synopsis": "Geralmente, é melhor se tornar um aventureiro jovem para treinar o poder mágico. No entanto, Rick Gladiador, que se tornou aventureiro com mais de trinta anos, possui o poder de combate de um aventureiro rank S. Rick viveu uma vida inimaginável com os membros do lendário Orihalcon Fist, um grupo dos aventureiros mais fortes. Treinado por mentores \"monstros\", Rick derrota aventureiros de elite que o subestimam.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Shinmai%20Ossan%20Boukensha%2C%20Saikyou%20Party%20ni%20Shinu%20hodo%20Kitaerarete%20Muteki%20ni%20Naru."
+      "parts": [
+        {"anilist":163292,"label":"1ª temporada","title":"The Ossan Newbie Adventurer, Trained to Death by the Most Powerful Party, Became Invincible","type":"TV","episodes":12,"date":"2024-07-02","addedAt":null}
+      ]
     },
     {
       "id": "38",
       "title": "Ore wa Subete wo Parry suru: Gyaku Kanchigai no Sekai Saikyou wa Boukensha ni Naritai",
       "category": "aventura",
+      "rating": 3,
+      "synopsis": "O Reino de Clays enfrenta uma crise após uma tentativa de assassinato contra a Princesa Lynneburg. Enquanto países vizinhos planejam sua queda, Noor, recém-chegado à capital real após anos de treinamento isolado, sonha em ser um aventureiro. Apesar de só ter a habilidade \"Aparar\" milhares de espadas, ele acredita que precisa de mais. Sua jornada para realizar seu sonho será longa e árdua, mas Noor não teme o trabalho duro.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Ore%20wa%20Subete%20wo%20Parry%20suru%3A%20Gyaku%20Kanchigai%20no%20Sekai%20Saikyou%20wa%20Boukensha%20ni%20Naritai",
+      "anilist": 170695,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Parry/Parry1.jpg",
         "./Assets/Animes/Imagens/Parry/Parry2.png",
@@ -276,60 +694,78 @@
         "./Assets/Animes/Imagens/Parry/Parry4.jpg",
         "./Assets/Animes/Imagens/Parry/Parry5.jpg"
       ],
-      "rating": 3,
-      "synopsis": "O Reino de Clays enfrenta uma crise após uma tentativa de assassinato contra a Princesa Lynneburg. Enquanto países vizinhos planejam sua queda, Noor, recém-chegado à capital real após anos de treinamento isolado, sonha em ser um aventureiro. Apesar de só ter a habilidade \"Aparar\" milhares de espadas, ele acredita que precisa de mais. Sua jornada para realizar seu sonho será longa e árdua, mas Noor não teme o trabalho duro.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Ore%20wa%20Subete%20wo%20Parry%20suru%3A%20Gyaku%20Kanchigai%20no%20Sekai%20Saikyou%20wa%20Boukensha%20ni%20Naritai"
+      "parts": [
+        {"anilist":170695,"label":"1ª temporada","title":"I Parry Everything","type":"TV","episodes":12,"date":"2024-07-05","addedAt":null}
+      ]
     },
     {
       "id": "37",
       "title": "Lv2 kara Cheat datta Motoyuusha Kouho no Mattari Isekai Life",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "O Reino de Klyrode invoca heróis de outros mundos para a guerra contra o Escuro. Banaza, um comerciante comum, é um desses heróis, mas sem magia, habilidade de luta ou boas estatísticas. Preso em outro mundo e rejeitado, ele parece ter um destino sombrio. No entanto, sua vida muda quando ele adquire superpoderes de trapaça ao atingir o nível dois.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Lv2%20kara%20Cheat%20datta%20Motoyuusha%20Kouho%20no%20Mattari%20Isekai%20Life",
+      "anilist": 170130,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Lv2Cheat/lv2cheat1.jpg",
         "./Assets/Animes/Imagens/Lv2Cheat/lv2cheat2.png",
         "./Assets/Animes/Imagens/Lv2Cheat/lv2cheat3.jpg"
       ],
-      "rating": 2,
-      "synopsis": "O Reino de Klyrode invoca heróis de outros mundos para a guerra contra o Escuro. Banaza, um comerciante comum, é um desses heróis, mas sem magia, habilidade de luta ou boas estatísticas. Preso em outro mundo e rejeitado, ele parece ter um destino sombrio. No entanto, sua vida muda quando ele adquire superpoderes de trapaça ao atingir o nível dois.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Lv2%20kara%20Cheat%20datta%20Motoyuusha%20Kouho%20no%20Mattari%20Isekai%20Life"
+      "parts": [
+        {"anilist":170130,"label":"1ª temporada","title":"Chillin' in Another World with Level 2 Super Cheat Powers","type":"TV","episodes":12,"date":"2024-04-08","addedAt":null}
+      ]
     },
     {
       "id": "36",
       "title": "Goblin Slayer",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "Uma jovem sacerdotisa, em sua primeira aventura, encontra-se em perigo e é resgatada pelo Goblin Slayer, um homem que dedicou sua vida a exterminar goblins por todos os meios. Conforme os rumores de seus feitos se espalham, a sacerdotisa descobre o que virá a seguir.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Goblin%20Slayer",
+      "anilist": 101165,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Goblin_Slayer/goblinslayer1.jpg",
         "./Assets/Animes/Imagens/Goblin_Slayer/goblinslayer2.jpg",
         "./Assets/Animes/Imagens/Goblin_Slayer/goblinslayer3.jpg",
         "./Assets/Animes/Imagens/Goblin_Slayer/goblinslayer4.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Uma jovem sacerdotisa, em sua primeira aventura, encontra-se em perigo e é resgatada pelo Goblin Slayer, um homem que dedicou sua vida a exterminar goblins por todos os meios. Conforme os rumores de seus feitos se espalham, a sacerdotisa descobre o que virá a seguir.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Goblin%20Slayer"
+      "parts": [
+        {"anilist":101165,"label":"1ª temporada","title":"GOBLIN SLAYER","type":"TV","episodes":12,"date":"2018-10-07","addedAt":null},
+        {"anilist":108623,"label":"Filme","title":"GOBLIN SLAYER -GOBLIN’S CROWN-","type":"MOVIE","episodes":1,"date":"2020-02-01","addedAt":null},
+        {"anilist":129188,"label":"2ª temporada","title":"GOBLIN SLAYER II","type":"TV","episodes":12,"date":"2023-10-06","addedAt":null}
+      ]
     },
     {
       "id": "35",
       "title": "Zuihou de Zhaohuan Shi",
       "category": "aventura",
-      "synopsis": "A vida de um talentoso jovem cozinheiro muda quando uma garota faminta, Dora (um espírito convocado e deusa), aparece em sua cozinha e o chama de mestre. Ele não está interessado e tenta fugir dela. No entanto, ele se torna um invocador por acidente, sem ter como voltar atrás em sua vida.",
-      "episodes": "",
-      "watchUrl": "https://animesonlinecc.to/episodio/the-last-summoner-episodio-1/",
       "rating": 1,
+      "synopsis": "A vida de um talentoso jovem cozinheiro muda quando uma garota faminta, Dora (um espírito convocado e deusa), aparece em sua cozinha e o chama de mestre. Ele não está interessado e tenta fugir dela. No entanto, ele se torna um invocador por acidente, sem ter como voltar atrás em sua vida.",
+      "watchUrl": "https://animesonlinecc.to/episodio/the-last-summoner-episodio-1/",
+      "anilist": 114108,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi1.jpg",
         "./Assets/Animes/Imagens/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi2.png",
         "./Assets/Animes/Imagens/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi3.jpg",
         "./Assets/Animes/Imagens/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi4.jpg",
         "./Assets/Animes/Imagens/Zuihou_de_Zhaohuan_Shi/zuihoudezhaohuanshi5.jpg"
+      ],
+      "parts": [
+        {"anilist":114108,"label":"1ª temporada","title":"THE LAST SUMMONER","type":"ONA","episodes":12,"date":"2022-04-26","addedAt":null}
       ]
     },
     {
       "id": "34",
       "title": "Tsuki ga Michibiku Isekai Douchuu",
       "category": "aventura",
+      "rating": 5,
+      "synopsis": "Makoto Misumi é invocado para um mundo de fantasia para ser um herói, mas a Deusa do local o bane para uma região deserta por achá-lo \"feio\". Com grandes poderes nesse novo mundo, Makoto sobrevive e forma alianças inesperadas com criaturas como aranhas e dragões, com o objetivo de remodelar o mundo que o abandonou.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tsuki%20ga%20Michibiku%20Isekai%20Douchuu",
+      "anilist": 125206,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu1.jpg",
         "./Assets/Animes/Imagens/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu2.png",
@@ -338,15 +774,20 @@
         "./Assets/Animes/Imagens/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu5.jpg",
         "./Assets/Animes/Imagens/Tsuki_ga_Michibiku_Isekai_Douchuu/tsukigamichibikuisekaidouchuu6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Makoto Misumi é invocado para um mundo de fantasia para ser um herói, mas a Deusa do local o bane para uma região deserta por achá-lo \"feio\". Com grandes poderes nesse novo mundo, Makoto sobrevive e forma alianças inesperadas com criaturas como aranhas e dragões, com o objetivo de remodelar o mundo que o abandonou.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tsuki%20ga%20Michibiku%20Isekai%20Douchuu"
+      "parts": [
+        {"anilist":125206,"label":"1ª temporada","title":"TSUKIMICHI -Moonlit Fantasy-","type":"TV","episodes":12,"date":"2021-07-07","addedAt":null},
+        {"anilist":139518,"label":"2ª temporada","title":"TSUKIMICHI -Moonlit Fantasy- Season 2","type":"TV","episodes":25,"date":"2024-01-08","addedAt":null}
+      ]
     },
     {
       "id": "33",
       "title": "Kanata no Astra",
       "category": "aventura",
+      "rating": 5,
+      "synopsis": "Em 2061, durante um acampamento planetário, nove estudantes da Caird High School são transportados por uma esfera de luz para o espaço sideral, a 5012 anos-luz de distância de casa. Eles encontram uma nave espacial abandonada, a Astra, e embarcam em uma longa e perigosa jornada para voltar para casa.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kanata%20no%20Astra",
+      "anilist": 107663,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kanata_no_Astra/kanatanoastra1.jpg",
         "./Assets/Animes/Imagens/Kanata_no_Astra/kanatanoastra2.png",
@@ -355,15 +796,19 @@
         "./Assets/Animes/Imagens/Kanata_no_Astra/kanatanoastra5.jpg",
         "./Assets/Animes/Imagens/Kanata_no_Astra/kanatanoastra6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Em 2061, durante um acampamento planetário, nove estudantes da Caird High School são transportados por uma esfera de luz para o espaço sideral, a 5012 anos-luz de distância de casa. Eles encontram uma nave espacial abandonada, a Astra, e embarcam em uma longa e perigosa jornada para voltar para casa.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kanata%20no%20Astra"
+      "parts": [
+        {"anilist":107663,"label":"1ª temporada","title":"ASTRA LOST IN SPACE","type":"TV","episodes":12,"date":"2019-07-03","addedAt":null}
+      ]
     },
     {
       "id": "32",
       "title": "Majo no Tabitabi",
       "category": "aventura",
+      "rating": 4,
+      "synopsis": "Desde a infância, Elaina foi fascinada por histórias de bruxas viajantes. Ela se esforça para se tornar uma bruxa e, após conseguir, embarca em sua própria jornada. Ela encontra diversas pessoas, aprende suas histórias e explora o mundo em sua plenitude, vivenciando tanto seus lados brilhantes quanto sombrios.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Majo%20no%20Tabitabi",
+      "anilist": 112609,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Majo_no_Tabitabi/majonotabitabi1.jpg",
         "./Assets/Animes/Imagens/Majo_no_Tabitabi/majonotabitabi2.png",
@@ -372,15 +817,19 @@
         "./Assets/Animes/Imagens/Majo_no_Tabitabi/majonotabitabi5.jpg",
         "./Assets/Animes/Imagens/Majo_no_Tabitabi/majonotabitabi6.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Desde a infância, Elaina foi fascinada por histórias de bruxas viajantes. Ela se esforça para se tornar uma bruxa e, após conseguir, embarca em sua própria jornada. Ela encontra diversas pessoas, aprende suas histórias e explora o mundo em sua plenitude, vivenciando tanto seus lados brilhantes quanto sombrios.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Majo%20no%20Tabitabi"
+      "parts": [
+        {"anilist":112609,"label":"1ª temporada","title":"Wandering Witch: The Journey of Elaina","type":"TV","episodes":12,"date":"2020-10-02","addedAt":null}
+      ]
     },
     {
       "id": "31",
       "title": "Uchi no Ko no Tame naraba, Ore wa Moshikashitara Maou mo Taoseru kamo Shirenai",
       "category": "aventura",
+      "rating": 1,
+      "synopsis": "Dale, um aventureiro habilidoso, encontra uma garota demoníaca em péssimas condições na floresta. Ele a adota, tornando-se seu pai. Latina é adorável, mas Dale enfrenta as responsabilidades da paternidade e o mistério em torno da marca criminosa da garota.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Uchi%20no%20Ko%20no%20Tame%20naraba%2C%20Ore%20wa%20Moshikashitara%20Maou%20mo%20Taoseru%20kamo%20Shirenai",
+      "anilist": 107956,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/UchiNoKo/uchinoko1.jpg",
         "./Assets/Animes/Imagens/UchiNoKo/uchinoko2.jpg",
@@ -388,15 +837,19 @@
         "./Assets/Animes/Imagens/UchiNoKo/uchinoko4.jpg",
         "./Assets/Animes/Imagens/UchiNoKo/uchinoko5.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Dale, um aventureiro habilidoso, encontra uma garota demoníaca em péssimas condições na floresta. Ele a adota, tornando-se seu pai. Latina é adorável, mas Dale enfrenta as responsabilidades da paternidade e o mistério em torno da marca criminosa da garota.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Uchi%20no%20Ko%20no%20Tame%20naraba%2C%20Ore%20wa%20Moshikashitara%20Maou%20mo%20Taoseru%20kamo%20Shirenai"
+      "parts": [
+        {"anilist":107956,"label":"1ª temporada","title":"If It's for My Daughter, I'd Even Defeat a Demon Lord","type":"TV","episodes":12,"date":"2019-07-04","addedAt":null}
+      ]
     },
     {
       "id": "30",
       "title": "Dungeon ni Deai o Motomeru no wa Machigatteiru Darou ka?",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "A história segue Bell Cranel, um aventureiro de 14 anos da Família Héstia. Ele trabalha duro na masmorra para sobreviver e se aperfeiçoar, inspirado por Aiz Wallenstein, uma poderosa espadachim que o salvou. Bell não sabe que outras garotas e divindades também desenvolvem afeição por ele.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Dungeon%20ni%20Deai%20o%20Motomeru%20no%20wa%20Machigatteiru%20Darou%20ka%3F",
+      "anilist": 20920,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/BellCranel/bellcranel1.jpg",
         "./Assets/Animes/Imagens/BellCranel/bellcranel2.jpg",
@@ -405,15 +858,19 @@
         "./Assets/Animes/Imagens/BellCranel/bellcranel5.jpg",
         "./Assets/Animes/Imagens/BellCranel/bellcranel6.jpg"
       ],
-      "rating": 2,
-      "synopsis": "A história segue Bell Cranel, um aventureiro de 14 anos da Família Héstia. Ele trabalha duro na masmorra para sobreviver e se aperfeiçoar, inspirado por Aiz Wallenstein, uma poderosa espadachim que o salvou. Bell não sabe que outras garotas e divindades também desenvolvem afeição por ele.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Dungeon%20ni%20Deai%20o%20Motomeru%20no%20wa%20Machigatteiru%20Darou%20ka%3F"
+      "parts": [
+        {"anilist":20920,"label":"1ª temporada","title":"Is It Wrong to Try to Pick Up Girls in a Dungeon?","type":"TV","episodes":13,"date":"2015-04-04","addedAt":null}
+      ]
     },
     {
       "id": "29",
       "title": "Princess Connect! Re:Dive",
       "category": "aventura",
+      "rating": 5,
+      "synopsis": "Na terra de Astraea, Yuuki acorda sem memórias e encontra Kokkoro, uma guia; Pecorine, uma espadachim amável; e Karyl, uma feiticeira mandona. Unidos pelo destino, eles formam a Guilda Gourmet e embarcam em uma aventura.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Princess%20Connect!%20Re%3ADive",
+      "anilist": 107871,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Princess_Connect_Re_Dive/princessconnectredive1.jpg",
         "./Assets/Animes/Imagens/Princess_Connect_Re_Dive/princessconnectredive2.jpg",
@@ -421,15 +878,21 @@
         "./Assets/Animes/Imagens/Princess_Connect_Re_Dive/princessconnectredive4.jpg",
         "./Assets/Animes/Imagens/Princess_Connect_Re_Dive/princessconnectredive5.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Na terra de Astraea, Yuuki acorda sem memórias e encontra Kokkoro, uma guia; Pecorine, uma espadachim amável; e Karyl, uma feiticeira mandona. Unidos pelo destino, eles formam a Guilda Gourmet e embarcam em uma aventura.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Princess%20Connect!%20Re%3ADive"
+      "parts": [
+        {"anilist":107871,"label":"1ª temporada","title":"Princess Connect! Re:Dive","type":"TV","episodes":13,"date":"2020-04-07","addedAt":null},
+        {"anilist":122808,"label":"2ª temporada","title":"Princess Connect! Re:Dive Season 2","type":"TV","episodes":12,"date":"2022-01-11","addedAt":null},
+        {"anilist":187236,"label":"ONA","title":"Princess Connect! Michibiki no Hatsuhana: Fiore Storia","type":"ONA","episodes":1,"date":"2025-02-28","addedAt":null}
+      ]
     },
     {
       "id": "28",
       "title": "Mushoku Tensei: Isekai Ittara Honki Dasu",
       "category": "aventura",
+      "rating": 2,
+      "synopsis": "Um homem de 34 anos com uma vida infeliz reencarna como um bebê em um mundo de fantasia, no corpo de uma família de aventureiros. Com as memórias de sua vida passada e grande aptidão para magia, ele está determinado a aproveitar sua nova chance e não repetir seus erros anteriores.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Mushoku%20Tensei%3A%20Isekai%20Ittara%20Honki%20Dasu",
+      "anilist": 108465,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei1.jpg",
         "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei2.png",
@@ -437,15 +900,24 @@
         "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei4.png",
         "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei5.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Um homem de 34 anos com uma vida infeliz reencarna como um bebê em um mundo de fantasia, no corpo de uma família de aventureiros. Com as memórias de sua vida passada e grande aptidão para magia, ele está determinado a aproveitar sua nova chance e não repetir seus erros anteriores.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Mushoku%20Tensei%3A%20Isekai%20Ittara%20Honki%20Dasu"
+      "parts": [
+        {"anilist":108465,"label":"1ª temporada","title":"Mushoku Tensei: Jobless Reincarnation","type":"TV","episodes":11,"date":"2021-01-11","addedAt":null},
+        {"anilist":127720,"label":"1ª temporada, parte 2","title":"Mushoku Tensei: Jobless Reincarnation Cour 2","type":"TV","episodes":12,"date":"2021-10-04","addedAt":null},
+        {"anilist":141534,"label":"Especial","title":"Mushoku Tensei: Jobless Reincarnation Cour 2 - Eris the Goblin Slayer","type":"SPECIAL","episodes":1,"date":"2022-03-16","addedAt":null},
+        {"anilist":146065,"label":"2ª temporada","title":"Mushoku Tensei: Jobless Reincarnation Season 2","type":"TV","episodes":13,"date":"2023-07-03","addedAt":null},
+        {"anilist":166873,"label":"2ª temporada, parte 2","title":"Mushoku Tensei: Jobless Reincarnation Season 2 Part 2","type":"TV","episodes":12,"date":"2024-04-08","addedAt":null},
+        {"anilist":178789,"label":"3ª temporada","title":"Mushoku Tensei: Jobless Reincarnation Season 3","type":"TV","episodes":14,"date":"2026-07-04","addedAt":null}
+      ]
     },
     {
       "id": "27",
       "title": "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
       "category": "aventura",
+      "rating": 3,
+      "synopsis": "Após uma vida de excesso de trabalho, Azusa reencarna como uma bruxa imortal e invulnerável. Ela promete viver uma vida sem estresse, caçando slimes para sobreviver. Contudo, séculos de caça simples a levam a acumular poderes insanos, dificultando sua vida discreta.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=I've%20Been%20Killing%20Slimes%20for%20300%20Years%20and%20Maxed%20Out%20My%20Level",
+      "anilist": 112608,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/KillingSlimes300/killingslimes3001.jpg",
         "./Assets/Animes/Imagens/KillingSlimes300/killingslimes3002.jpg",
@@ -454,46 +926,37 @@
         "./Assets/Animes/Imagens/KillingSlimes300/killingslimes3005.jpg",
         "./Assets/Animes/Imagens/KillingSlimes300/killingslimes3006.jpg"
       ],
-      "rating": 3,
-      "synopsis": "Após uma vida de excesso de trabalho, Azusa reencarna como uma bruxa imortal e invulnerável. Ela promete viver uma vida sem estresse, caçando slimes para sobreviver. Contudo, séculos de caça simples a levam a acumular poderes insanos, dificultando sua vida discreta.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=I've%20Been%20Killing%20Slimes%20for%20300%20Years%20and%20Maxed%20Out%20My%20Level"
-    },
-    {
-      "id": "26",
-      "title": "Tensura Nikki: Tensei shitara Slime Datta Ken",
-      "category": "aventura",
-      "images": [
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki1.jpg",
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki2.jpg",
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki3.jpg",
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki4.jpg",
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki5.jpg",
-        "./Assets/Animes/Imagens/TensuraNikki/tensuranikki6.jpg"
-      ],
-      "rating": 5,
-      "synopsis": "Satoru Mikami, um funcionário comum, é esfaqueado e reencarna como um Slime em um mundo desconhecido. Ele adquire a habilidade \"Predador\", que permite devorar e imitar. Torna-se amigo do Dragão da Tempestade Veldora, prometendo libertá-lo e recebendo o nome Rimuru Tempest. Agora, Rimuru embarca em uma missão para provar seu valor, enquanto seus feitos se espalham, mudando seu destino.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tensura%20Nikki%3A%20Tensei%20shitara%20Slime%20Datta%20Ken"
+      "parts": [
+        {"anilist":112608,"label":"1ª temporada","title":"I've Been Killing Slimes for 300 Years and Maxed Out My Level","type":"TV","episodes":12,"date":"2021-04-10","addedAt":null}
+      ]
     },
     {
       "id": "25",
       "title": "Maou no Ore ga Dorei Elf wo Yome ni Shitanda ga, Dou Medereba Ii?",
       "category": "romance",
+      "rating": 2,
+      "synopsis": "Um lorde demônio se casa com uma escrava élfica como parte de um acordo político, mas rapidamente se apaixona por ela. A história acompanha seus desajeitados esforços para conquistar o coração de sua esposa enquanto ele lida com as complexidades de um casamento arranjado e as diferenças culturais entre demônios e elfos.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Maou%20no%20Ore%20ga%20Dorei%20Elf%20wo%20Yome%20ni%20Shitanda%20ga%2C%20Dou%20Medereba%20Ii%3F",
+      "anilist": 156023,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/ElfBride/elfbride1.jpg",
         "./Assets/Animes/Imagens/ElfBride/elfbride2.png",
         "./Assets/Animes/Imagens/ElfBride/elfbride3.png"
       ],
-      "rating": 2,
-      "synopsis": "Um lorde demônio se casa com uma escrava élfica como parte de um acordo político, mas rapidamente se apaixona por ela. A história acompanha seus desajeitados esforços para conquistar o coração de sua esposa enquanto ele lida com as complexidades de um casamento arranjado e as diferenças culturais entre demônios e elfos.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Maou%20no%20Ore%20ga%20Dorei%20Elf%20wo%20Yome%20ni%20Shitanda%20ga%2C%20Dou%20Medereba%20Ii%3F"
+      "parts": [
+        {"anilist":156023,"label":"1ª temporada","title":"An Archdemon's Dilemma: How to Love Your Elf Bride","type":"TV","episodes":12,"date":"2024-04-05","addedAt":null}
+      ]
     },
     {
       "id": "24",
       "title": "Aharen-san wa Hakarenai",
       "category": "romance",
+      "rating": 2,
+      "synopsis": "Reina Aharen, uma aluna pequena e com voz baixa, tem dificuldade em determinar distâncias e espaço pessoal. Ela pode estar a centímetros ou quilômetros de distância. Raidou Matsuboshi, seu colega de classe com um rosto ameaçador mas um coração gentil e uma imaginação fértil, é o único que tenta entender suas peculiaridades.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Aharen-san%20wa%20Hakarenai",
+      "anilist": 137281,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Aharen-san/aharensan1.jpg",
         "./Assets/Animes/Imagens/Aharen-san/aharensan2.jpg",
@@ -501,46 +964,38 @@
         "./Assets/Animes/Imagens/Aharen-san/aharensan4.jpg",
         "./Assets/Animes/Imagens/Aharen-san/aharensan5.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Reina Aharen, uma aluna pequena e com voz baixa, tem dificuldade em determinar distâncias e espaço pessoal. Ela pode estar a centímetros ou quilômetros de distância. Raidou Matsuboshi, seu colega de classe com um rosto ameaçador mas um coração gentil e uma imaginação fértil, é o único que tenta entender suas peculiaridades.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Aharen-san%20wa%20Hakarenai"
-    },
-    {
-      "id": "23",
-      "title": "Yofukashi no Uta",
-      "category": "romance",
-      "images": [
-        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta1.jpg",
-        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta2.jpg",
-        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta3.jpg",
-        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta4.jpg",
-        "./Assets/Animes/Imagens/Yofukashi_no_Uta/yofukashinouta5.jpg"
-      ],
-      "rating": 5,
-      "synopsis": "Incapaz de dormir e insatisfeito com sua vida, Yamori Kou começa a explorar a cidade durante a noite. Ele conhece uma garota que lhe oferece ajuda para combater sua insônia, levando-o a um mundo noturno diferente e inesperado.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Yofukashi%20no%20Uta"
+      "parts": [
+        {"anilist":137281,"label":"1ª temporada","title":"Aharen-san wa Hakarenai","type":"TV","episodes":12,"date":"2022-04-02","addedAt":null}
+      ]
     },
     {
       "id": "22",
       "title": "Tomo-chan wa Onnanoko!",
       "category": "romance",
+      "rating": 2,
+      "synopsis": "Tomo Aizawa, uma garota com aparência e personalidade de menino, decide confessar seu amor a seu melhor amigo de infância, Junichirou Kubota. No entanto, Junichirou, que sempre a viu como um \"irmão\", não percebe a confissão. A história acompanha as tentativas de Tomo para convencer Jun de que ela é uma garota e conquistar seu coração.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tomo-chan%20wa%20Onnanoko!",
+      "anilist": 151806,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko1.jpg",
         "./Assets/Animes/Imagens/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko2.jpg",
         "./Assets/Animes/Imagens/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko3.jpg",
         "./Assets/Animes/Imagens/Tomo-chan_wa_Onnanoko/tomochanwaonnanoko4.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Tomo Aizawa, uma garota com aparência e personalidade de menino, decide confessar seu amor a seu melhor amigo de infância, Junichirou Kubota. No entanto, Junichirou, que sempre a viu como um \"irmão\", não percebe a confissão. A história acompanha as tentativas de Tomo para convencer Jun de que ela é uma garota e conquistar seu coração.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Tomo-chan%20wa%20Onnanoko!"
+      "parts": [
+        {"anilist":151806,"label":"1ª temporada","title":"Tomo-chan Is a Girl!","type":"TV","episodes":13,"date":"2023-01-05","addedAt":null}
+      ]
     },
     {
       "id": "21",
       "title": "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen",
       "category": "romance",
+      "rating": 3,
+      "synopsis": "Miyuki Shirogane e Kaguya Shinomiya, presidente e vice-presidente do conselho estudantil da Academia Shuchiin, são considerados o casal perfeito. Apesar de terem sentimentos um pelo outro, nenhum está disposto a confessar, pois seria um sinal de fraqueza. Com seu orgulho em jogo, Miyuki e Kaguya embarcam em uma batalha de inteligência para fazer o outro confessar primeiro.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kaguya-sama%20wa%20Kokurasetai%3A%20Tensai-tachi%20no%20Renai%20Zunousen",
+      "anilist": 101921,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kaguya-sama/kaguyasama1.jpg",
         "./Assets/Animes/Imagens/Kaguya-sama/kaguyasama2.png",
@@ -549,15 +1004,19 @@
         "./Assets/Animes/Imagens/Kaguya-sama/kaguyasama5.jpg",
         "./Assets/Animes/Imagens/Kaguya-sama/kaguyasama6.jpg"
       ],
-      "rating": 3,
-      "synopsis": "Miyuki Shirogane e Kaguya Shinomiya, presidente e vice-presidente do conselho estudantil da Academia Shuchiin, são considerados o casal perfeito. Apesar de terem sentimentos um pelo outro, nenhum está disposto a confessar, pois seria um sinal de fraqueza. Com seu orgulho em jogo, Miyuki e Kaguya embarcam em uma batalha de inteligência para fazer o outro confessar primeiro.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kaguya-sama%20wa%20Kokurasetai%3A%20Tensai-tachi%20no%20Renai%20Zunousen"
+      "parts": [
+        {"anilist":101921,"label":"1ª temporada","title":"Kaguya-sama: Love is War","type":"TV","episodes":12,"date":"2019-01-12","addedAt":null}
+      ]
     },
     {
       "id": "20",
       "title": "Komi-san wa, Comyushou desu",
       "category": "romance",
+      "rating": 5,
+      "synopsis": "Shouko Komi é uma estudante popular na elite Itan High School por sua beleza e elegância. No entanto, seu colega Hitohito Tadano, um estudante comum, percebe que Komi tem sérios problemas de comunicação. Após um incidente, Komi revela seu sonho de fazer 100 amigos, e Tadano decide ajudá-la nessa jornada.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Komi-san%20wa%2C%20Comyushou%20desu",
+      "anilist": 133965,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Komi-san/Komi-san1.jpg",
         "./Assets/Animes/Imagens/Komi-san/Komi-san2.jpg",
@@ -566,15 +1025,20 @@
         "./Assets/Animes/Imagens/Komi-san/Komi-san5.jpg",
         "./Assets/Animes/Imagens/Komi-san/Komi-san6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Shouko Komi é uma estudante popular na elite Itan High School por sua beleza e elegância. No entanto, seu colega Hitohito Tadano, um estudante comum, percebe que Komi tem sérios problemas de comunicação. Após um incidente, Komi revela seu sonho de fazer 100 amigos, e Tadano decide ajudá-la nessa jornada.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Komi-san%20wa%2C%20Comyushou%20desu"
+      "parts": [
+        {"anilist":133965,"label":"1ª temporada","title":"Komi Can’t Communicate","type":"TV","episodes":12,"date":"2021-10-07","addedAt":null},
+        {"anilist":142984,"label":"1ª temporada, parte 2","title":"Komi Can't Communicate Part 2","type":"TV","episodes":12,"date":"2022-04-07","addedAt":null}
+      ]
     },
     {
       "id": "19",
       "title": "Uzaki-chan wa Asobitai!",
       "category": "romance",
+      "rating": 4,
+      "synopsis": "Shinichi Sakurai, um estudante universitário introvertido, é incomodado pela extrovertida Hana Uzaki, que decide torná-lo mais social. Apesar das provocações constantes de Uzaki, Shinichi começa a gostar da companhia dela e eles se tornam amigos. A série explora se é possível se divertir tanto com outra pessoa quanto sozinho, e como essa relação pode evoluir.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Uzaki-chan%20wa%20Asobitai!",
+      "anilist": 115113,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Uzaki-chan/uzakichan1.jpg",
         "./Assets/Animes/Imagens/Uzaki-chan/uzakichan2.jpg",
@@ -583,15 +1047,20 @@
         "./Assets/Animes/Imagens/Uzaki-chan/uzakichan5.jpg",
         "./Assets/Animes/Imagens/Uzaki-chan/uzakichan6.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Shinichi Sakurai, um estudante universitário introvertido, é incomodado pela extrovertida Hana Uzaki, que decide torná-lo mais social. Apesar das provocações constantes de Uzaki, Shinichi começa a gostar da companhia dela e eles se tornam amigos. A série explora se é possível se divertir tanto com outra pessoa quanto sozinho, e como essa relação pode evoluir.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Uzaki-chan%20wa%20Asobitai!"
+      "parts": [
+        {"anilist":115113,"label":"1ª temporada","title":"Uzaki-chan Wants to Hang Out!","type":"TV","episodes":12,"date":"2020-07-10","addedAt":null},
+        {"anilist":124395,"label":"2ª temporada","title":"Uzaki-chan Wants to Hang Out! Season 2","type":"TV","episodes":13,"date":"2022-10-01","addedAt":null}
+      ]
     },
     {
       "id": "18",
       "title": "Sono Bisque Doll wa Koi o Suru",
       "category": "romance",
+      "rating": 4,
+      "synopsis": "Wakana Gojo, um jovem que sonha em ser um artesão de bonecas tradicionais, é alheio às tendências sociais e tem dificuldade em se enturmar. Sua vida muda quando Marin Kitagawa, uma garota popular, compartilha um segredo inesperado, fazendo seus mundos colidirem. A história acompanha o desenvolvimento de um relacionamento através do cosplay.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Sono%20Bisque%20Doll%20wa%20Koi%20o%20Suru",
+      "anilist": 132405,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Sono_Bisque_Doll/sonobisquedoll1.jpg",
         "./Assets/Animes/Imagens/Sono_Bisque_Doll/sonobisquedoll2.png",
@@ -600,15 +1069,19 @@
         "./Assets/Animes/Imagens/Sono_Bisque_Doll/sonobisquedoll5.jpg",
         "./Assets/Animes/Imagens/Sono_Bisque_Doll/sonobisquedoll6.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Wakana Gojo, um jovem que sonha em ser um artesão de bonecas tradicionais, é alheio às tendências sociais e tem dificuldade em se enturmar. Sua vida muda quando Marin Kitagawa, uma garota popular, compartilha um segredo inesperado, fazendo seus mundos colidirem. A história acompanha o desenvolvimento de um relacionamento através do cosplay.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Sono%20Bisque%20Doll%20wa%20Koi%20o%20Suru"
+      "parts": [
+        {"anilist":132405,"label":"1ª temporada","title":"My Dress-Up Darling","type":"TV","episodes":12,"date":"2022-01-09","addedAt":null}
+      ]
     },
     {
       "id": "17",
       "title": "Darling in the Franxx",
       "category": "romance",
+      "rating": 5,
+      "synopsis": "Em um futuro distópico, os humanos vivem em \"plantações\" tecnológicas na superfície do planeta. Crianças, chamadas de \"parasitas\", são criadas em ambientes isolados para pilotar Franxxs em pares (um menino e uma menina) e defender a humanidade. Eles são destituídos de individualidade e treinados para desenvolver respostas emocionais específicas para a pilotagem.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Darling%20in%20the%20Franxx",
+      "anilist": 99423,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Darling_in_the_Franxx/darlinginthefranxx1.jpg",
         "./Assets/Animes/Imagens/Darling_in_the_Franxx/darlinginthefranxx2.jpg",
@@ -617,59 +1090,76 @@
         "./Assets/Animes/Imagens/Darling_in_the_Franxx/darlinginthefranxx5.jpg",
         "./Assets/Animes/Imagens/Darling_in_the_Franxx/darlinginthefranxx6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Em um futuro distópico, os humanos vivem em \"plantações\" tecnológicas na superfície do planeta. Crianças, chamadas de \"parasitas\", são criadas em ambientes isolados para pilotar Franxxs em pares (um menino e uma menina) e defender a humanidade. Eles são destituídos de individualidade e treinados para desenvolver respostas emocionais específicas para a pilotagem.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Darling%20in%20the%20Franxx"
+      "parts": [
+        {"anilist":99423,"label":"1ª temporada","title":"DARLING in the FRANXX","type":"TV","episodes":24,"date":"2018-01-13","addedAt":null}
+      ]
     },
     {
       "id": "16",
       "title": "Rokudenashi Majutsu Koushi to Akashic Records",
       "category": "ação",
+      "rating": 2,
+      "synopsis": "Glenn é um professor de magia preguiçoso e aparentemente incompetente em uma prestigiada academia mágica. Apesar de sua atitude desleixada, ele possui conhecimentos profundos sobre magia e, através de situações cômicas e perigosas, gradualmente conquista o respeito de seus estudantes.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Rokudenashi%20Majutsu%20Koushi%20to%20Akashic%20Records",
+      "anilist": 21700,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/AkashicRecords/akashicrecords1.png",
         "./Assets/Animes/Imagens/AkashicRecords/akashicrecords2.png",
         "./Assets/Animes/Imagens/AkashicRecords/akashicrecords3.png",
         "./Assets/Animes/Imagens/AkashicRecords/akashicrecords4.png"
       ],
-      "rating": 2,
-      "synopsis": "Glenn é um professor de magia preguiçoso e aparentemente incompetente em uma prestigiada academia mágica. Apesar de sua atitude desleixada, ele possui conhecimentos profundos sobre magia e, através de situações cômicas e perigosas, gradualmente conquista o respeito de seus estudantes.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Rokudenashi%20Majutsu%20Koushi%20to%20Akashic%20Records"
+      "parts": [
+        {"anilist":21700,"label":"1ª temporada","title":"Akashic Records of Bastard Magic Instructor","type":"TV","episodes":12,"date":"2017-04-04","addedAt":null}
+      ]
     },
     {
       "id": "15",
       "title": "Oniichan wa Oshimai!",
       "category": "comédia",
+      "rating": 3,
+      "synopsis": "Mahiro, um NEET viciado em jogos, acorda transformado em uma garota devido a uma droga experimental criada por sua irmã cientista. A comédia surge de suas tentativas de se adaptar à nova vida enquanto sua irmã o \"treina\" para ser uma garota adequada.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Oniichan%20wa%20Oshimai!",
+      "anilist": 147864,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Oniichan_wa_Oshimai/oniichanwaoshimai1.png",
         "./Assets/Animes/Imagens/Oniichan_wa_Oshimai/oniichanwaoshimai2.png",
         "./Assets/Animes/Imagens/Oniichan_wa_Oshimai/oniichanwaoshimai3.png"
       ],
-      "rating": 3,
-      "synopsis": "Mahiro, um NEET viciado em jogos, acorda transformado em uma garota devido a uma droga experimental criada por sua irmã cientista. A comédia surge de suas tentativas de se adaptar à nova vida enquanto sua irmã o \"treina\" para ser uma garota adequada.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Oniichan%20wa%20Oshimai!"
+      "parts": [
+        {"anilist":147864,"label":"1ª temporada","title":"ONIMAI: I'm Now Your Sister!","type":"TV","episodes":12,"date":"2023-01-05","addedAt":null}
+      ]
     },
     {
       "id": "14",
       "title": "Kill la Kill",
       "category": "comédia",
+      "rating": 5,
+      "synopsis": "Ryuuko Matoi busca vingar a morte de seu pai, o que a leva a um conflito violento com Satsuki Kiryuuin, a presidente do conselho estudantil da Academia Honnouji, e o império da moda de sua mãe.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kill%20la%20Kill",
+      "anilist": 18679,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kill_la_Kill/killlakill1.jpg",
         "./Assets/Animes/Imagens/Kill_la_Kill/killlakill2.jpg",
         "./Assets/Animes/Imagens/Kill_la_Kill/killlakill3.jpg",
         "./Assets/Animes/Imagens/Kill_la_Kill/killlakill4.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Ryuuko Matoi busca vingar a morte de seu pai, o que a leva a um conflito violento com Satsuki Kiryuuin, a presidente do conselho estudantil da Academia Honnouji, e o império da moda de sua mãe.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kill%20la%20Kill"
+      "parts": [
+        {"anilist":18679,"label":"1ª temporada","title":"Kill la Kill","type":"TV","episodes":24,"date":"2013-10-04","addedAt":null},
+        {"anilist":20572,"label":"OVA","title":"Kill la Kill: GOODBYE AGAIN","type":"OVA","episodes":1,"date":"2014-09-03","addedAt":null}
+      ]
     },
     {
       "id": "13",
       "title": "Bocchi the Rock!",
       "category": "comédia",
+      "rating": 5,
+      "synopsis": "Hitori Gotou é uma estudante colegial extremamente tímida que sonha em tocar em uma banda. Apesar de aprender a tocar guitarra, sua timidez a impede de fazer amigos. Seu sonho começa a se tornar realidade quando ela conhece Nijika Ijichi, uma baterista que procura um novo guitarrista para sua banda.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Bocchi%20the%20Rock!",
+      "anilist": 130003,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Bocchi_the_Rock/bocchitherock1.jpg",
         "./Assets/Animes/Imagens/Bocchi_the_Rock/bocchitherock2.jpg",
@@ -678,15 +1168,19 @@
         "./Assets/Animes/Imagens/Bocchi_the_Rock/bocchitherock5.jpg",
         "./Assets/Animes/Imagens/Bocchi_the_Rock/bocchitherock6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "Hitori Gotou é uma estudante colegial extremamente tímida que sonha em tocar em uma banda. Apesar de aprender a tocar guitarra, sua timidez a impede de fazer amigos. Seu sonho começa a se tornar realidade quando ela conhece Nijika Ijichi, uma baterista que procura um novo guitarrista para sua banda.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Bocchi%20the%20Rock!"
+      "parts": [
+        {"anilist":130003,"label":"1ª temporada","title":"BOCCHI THE ROCK!","type":"TV","episodes":12,"date":"2022-10-09","addedAt":null}
+      ]
     },
     {
       "id": "12",
       "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta",
       "category": "comédia",
+      "rating": 1,
+      "synopsis": "Katarina, uma filha de nobre, se lembra de sua vida passada e percebe que reencarnou como a vilã de um jogo otome que havia jogado. Para evitar os 'flags de destruição' que a levariam à ruína ou morte, ela traça planos mirabolantes, acabando por conquistar inadvertidamente a afeição de todos que deveriam se tornar seus inimigos.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Otome%20Game%20no%20Hametsu%20Flag%20shika%20Nai%20Akuyaku%20Reijou%20ni%20Tensei%20shiteshimatta",
+      "anilist": 104647,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Otome_Game/otomegame1.jpg",
         "./Assets/Animes/Imagens/Otome_Game/otomegame2.jpg",
@@ -695,15 +1189,22 @@
         "./Assets/Animes/Imagens/Otome_Game/otomegame5.jpg",
         "./Assets/Animes/Imagens/Otome_Game/otomegame6.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Katarina, uma filha de nobre, se lembra de sua vida passada e percebe que reencarnou como a vilã de um jogo otome que havia jogado. Para evitar os 'flags de destruição' que a levariam à ruína ou morte, ela traça planos mirabolantes, acabando por conquistar inadvertidamente a afeição de todos que deveriam se tornar seus inimigos.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Otome%20Game%20no%20Hametsu%20Flag%20shika%20Nai%20Akuyaku%20Reijou%20ni%20Tensei%20shiteshimatta"
+      "parts": [
+        {"anilist":104647,"label":"1ª temporada","title":"My Next Life as a Villainess: All Routes Lead to Doom!","type":"TV","episodes":12,"date":"2020-04-05","addedAt":null},
+        {"anilist":120209,"label":"2ª temporada","title":"My Next Life as a Villainess: All Routes Lead to Doom! X","type":"TV","episodes":12,"date":"2021-07-03","addedAt":null},
+        {"anilist":136829,"label":"OVA","title":"My Next Life as a Villainess: All Routes Lead to Doom! X - I Met My Destined One...","type":"OVA","episodes":1,"date":"2021-09-30","addedAt":null},
+        {"anilist":139359,"label":"Filme","title":"My Next Life as a Villainess: All Routes Lead to Doom! Movie","type":"MOVIE","episodes":1,"date":"2023-12-08","addedAt":null}
+      ]
     },
     {
       "id": "11",
       "title": "Kobayashi-san Chi no Maid Dragon",
       "category": "comédia",
+      "rating": 5,
+      "synopsis": "A vida simples da trabalhadora de escritório Kobayashi muda drasticamente após ela salvar a vida de Tohru, um dragão que pode se transformar em uma adorável garota humana. Tohru, que antes via os humanos como inferiores, agora se esforça para pagar sua dívida, resultando em uma comédia mítica sobre o cotidiano de uma senhora que trabalha em um escritório vivendo com uma menina dragão.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kobayashi-san%20Chi%20no%20Maid%20Dragon",
+      "anilist": 21776,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/No_Maid_Dragon/No_Maid_Dragon1.jpg",
         "./Assets/Animes/Imagens/No_Maid_Dragon/No_Maid_Dragon2.jpg",
@@ -712,15 +1213,26 @@
         "./Assets/Animes/Imagens/No_Maid_Dragon/No_Maid_Dragon5.jpg",
         "./Assets/Animes/Imagens/No_Maid_Dragon/No_Maid_Dragon6.jpg"
       ],
-      "rating": 5,
-      "synopsis": "A vida simples da trabalhadora de escritório Kobayashi muda drasticamente após ela salvar a vida de Tohru, um dragão que pode se transformar em uma adorável garota humana. Tohru, que antes via os humanos como inferiores, agora se esforça para pagar sua dívida, resultando em uma comédia mítica sobre o cotidiano de uma senhora que trabalha em um escritório vivendo com uma menina dragão.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kobayashi-san%20Chi%20no%20Maid%20Dragon"
+      "parts": [
+        {"anilist":21776,"label":"1ª temporada","title":"Miss Kobayashi's Dragon Maid","type":"TV","episodes":13,"date":"2017-01-12","addedAt":null},
+        {"anilist":98502,"label":"Especial","title":"Miss Kobayashi's Dragon Something","type":"SPECIAL","episodes":7,"date":"2017-03-15","addedAt":null},
+        {"anilist":98580,"label":"OVA","title":"Miss Kobayashi's Dragon Maid: Valentines and Hot Springs! (Please Don't Get Your Hopes Up)","type":"OVA","episodes":1,"date":"2017-09-20","addedAt":null},
+        {"anilist":132096,"label":"ONA","title":"Miss Kobayashi's Dragon Maid S: Miniature Dragon","type":"ONA","episodes":16,"date":"2021-04-07","addedAt":null},
+        {"anilist":107717,"label":"2ª temporada","title":"Miss Kobayashi's Dragon Maid S","type":"TV","episodes":12,"date":"2021-07-08","addedAt":null},
+        {"anilist":137804,"label":"Especial","title":"Miss Kobayashi's Dragon Maid S: Miniature Dragon EX","type":"SPECIAL","episodes":5,"date":"2021-09-15","addedAt":null},
+        {"anilist":136436,"label":"OVA","title":"Miss Kobayashi’s Dragon Maid S: Japanese Hospitality (The Attendant Is a Dragon)","type":"OVA","episodes":1,"date":"2022-01-19","addedAt":null},
+        {"anilist":181839,"label":"Filme","title":"Miss Kobayashi's Dragon Maid: A lonely dragon wants to be loved","type":"MOVIE","episodes":1,"date":"2025-06-27","addedAt":null}
+      ]
     },
     {
       "id": "10",
       "title": "Asobi Asobase",
       "category": "comédia",
+      "rating": 3,
+      "synopsis": "A história acompanha as vidas surreais de três estudantes: Hanako, uma estudante atlética e de mente poluída com um senso de moda peculiar; Olivia, uma estudante transferida americana que, na verdade, nasceu e foi criada no Japão e não sabe falar inglês de verdade; e Kasuki, que não gosta de passatempos. A comédia surge das interações hilárias e inesperadas entre essas garotas.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Asobi%20Asobase",
+      "anilist": 101001,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Asobi_Asobase/asobiasobase1.jpg",
         "./Assets/Animes/Imagens/Asobi_Asobase/asobiasobase2.jpg",
@@ -729,15 +1241,21 @@
         "./Assets/Animes/Imagens/Asobi_Asobase/asobiasobase5.jpg",
         "./Assets/Animes/Imagens/Asobi_Asobase/asobiasobase6.jpg"
       ],
-      "rating": 3,
-      "synopsis": "A história acompanha as vidas surreais de três estudantes: Hanako, uma estudante atlética e de mente poluída com um senso de moda peculiar; Olivia, uma estudante transferida americana que, na verdade, nasceu e foi criada no Japão e não sabe falar inglês de verdade; e Kasuki, que não gosta de passatempos. A comédia surge das interações hilárias e inesperadas entre essas garotas.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Asobi%20Asobase"
+      "parts": [
+        {"anilist":101001,"label":"1ª temporada","title":"Asobi Asobase - workshop of fun -","type":"TV","episodes":12,"date":"2018-07-08","addedAt":null},
+        {"anilist":104368,"label":"Especial","title":"Asobi Asobase Specials","type":"SPECIAL","episodes":2,"date":"2018-11-28","addedAt":null},
+        {"anilist":104170,"label":"OVA","title":"Asobi Asobase -workshop of fun- OVA","type":"OVA","episodes":1,"date":"2018-12-26","addedAt":null}
+      ]
     },
     {
       "id": "9",
       "title": "Spy × Family",
       "category": "comédia",
+      "rating": 2,
+      "synopsis": "O mestre espião \"Twilight\" recebe uma missão desafiadora: formar uma família temporária para iniciar uma nova vida. Esta comédia de espionagem e ação acompanha as aventuras e desventuras de uma família única, onde cada membro guarda segredos sobre suas verdadeiras identidades e propósitos.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Spy%20%C3%97%20Family",
+      "anilist": 140960,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Spy_x_Family/spyxfamily1.jpg",
         "./Assets/Animes/Imagens/Spy_x_Family/spyxfamily2.png",
@@ -746,48 +1264,52 @@
         "./Assets/Animes/Imagens/Spy_x_Family/spyxfamily5.jpg",
         "./Assets/Animes/Imagens/Spy_x_Family/spyxfamily6.jpg"
       ],
-      "rating": 2,
-      "synopsis": "O mestre espião \"Twilight\" recebe uma missão desafiadora: formar uma família temporária para iniciar uma nova vida. Esta comédia de espionagem e ação acompanha as aventuras e desventuras de uma família única, onde cada membro guarda segredos sobre suas verdadeiras identidades e propósitos.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Spy%20%C3%97%20Family"
-    },
-    {
-      "id": "8",
-      "title": "Kono Subarashii Sekai ni Bakuen wo!",
-      "category": "comédia",
-      "images": [
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu1.png",
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu2.png",
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu3.png",
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu4.png",
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu5.png"
-      ],
-      "rating": 5,
-      "synopsis": "Este spin-off foca em Megumin, a maga obcecada por magia explosiva, antes de ela conhecer Kazuma. A história explora sua infância, seu treinamento e os eventos que moldaram sua personalidade excêntrica e sua fixação por feitiços de explosão.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kono%20Subarashii%20Sekai%20ni%20Bakuen%20wo!"
+      "parts": [
+        {"anilist":140960,"label":"1ª temporada","title":"SPY x FAMILY","type":"TV","episodes":12,"date":"2022-04-09","addedAt":null}
+      ]
     },
     {
       "id": "7",
       "title": "Kono Subarashii Sekai Ni Shukufuku Wo!",
       "category": "comédia",
+      "rating": 5,
+      "synopsis": "Após uma morte embaraçosa, o adolescente hikikomori Kazuma Satō é reencarnado em um mundo de MMORPG por uma deusa chamada Aqua. Em retaliação às provocações de Aqua, Kazuma a escolhe para acompanhá-lo em sua jornada. No novo mundo, eles precisam trabalhar juntos para sobreviver, recrutando Megumin, uma maga obcecada por explosões, e Darkness, uma cruzada masoquista. Apesar das habilidades disfuncionais do grupo, eles são constantemente forçados a lutar contra os generais do Rei Demônio.",
+      "watchUrl": "https://xpanimes.com/assistir-kono-subarashii-sekai-ni-shukufuku-wo-1",
+      "anilist": 21202,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba1.jpg",
         "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba2.png",
         "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba3.jpg",
         "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba4.jpg",
         "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba5.jpg",
-        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba6.jpg"
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_Ni_Shukufuku_Wo/konosuba6.jpg",
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu1.png",
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu2.png",
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu3.png",
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu4.png",
+        "./Assets/Animes/Imagens/Kono_Subarashii_Sekai_ni_Bakuen_wo/KonosubaMegu5.png"
       ],
-      "rating": 5,
-      "synopsis": "Após uma morte embaraçosa, o adolescente hikikomori Kazuma Satō é reencarnado em um mundo de MMORPG por uma deusa chamada Aqua. Em retaliação às provocações de Aqua, Kazuma a escolhe para acompanhá-lo em sua jornada. No novo mundo, eles precisam trabalhar juntos para sobreviver, recrutando Megumin, uma maga obcecada por explosões, e Darkness, uma cruzada masoquista. Apesar das habilidades disfuncionais do grupo, eles são constantemente forçados a lutar contra os generais do Rei Demônio.",
-      "episodes": "",
-      "watchUrl": "https://xpanimes.com/assistir-kono-subarashii-sekai-ni-shukufuku-wo-1"
+      "parts": [
+        {"anilist":21202,"label":"1ª temporada","title":"KONOSUBA -God's blessing on this wonderful world!","type":"TV","episodes":10,"date":"2016-01-14","addedAt":null},
+        {"anilist":21574,"label":"OVA","title":"KONOSUBA -God's blessing on this wonderful world!: God's Blessings On This Wonderful Choker!","type":"OVA","episodes":1,"date":"2016-06-24","addedAt":null},
+        {"anilist":21699,"label":"2ª temporada","title":"KONOSUBA -God's blessing on this wonderful world! 2","type":"TV","episodes":10,"date":"2017-01-12","addedAt":null},
+        {"anilist":97996,"label":"OVA","title":"KONOSUBA -God's blessing on this wonderful world! 2: God's Blessings on These Wonderful Works of Art!","type":"OVA","episodes":1,"date":"2017-07-24","addedAt":null},
+        {"anilist":102976,"label":"Filme","title":"KONOSUBA -God's blessing on this wonderful world!- Legend of Crimson","type":"MOVIE","episodes":1,"date":"2019-08-30","addedAt":null},
+        {"anilist":150075,"label":"Série derivada","title":"KONOSUBA -An Explosion on This Wonderful World!","type":"TV","episodes":12,"date":"2023-04-06","addedAt":null},
+        {"anilist":136804,"label":"3ª temporada","title":"KONOSUBA -God's blessing on this wonderful world! 3","type":"TV","episodes":11,"date":"2024-04-10","addedAt":null},
+        {"anilist":181244,"label":"OVA","title":"KONOSUBA -God's Blessing on This Wonderful World! 3 -BONUS STAGE-","type":"OVA","episodes":2,"date":"2025-03-14","addedAt":null}
+      ]
     },
     {
       "id": "6",
       "title": "Kotoura-san",
       "category": "comédia",
+      "rating": 2,
+      "synopsis": "Haruka Kotoura possui um dom que considera uma maldição: ela consegue ler mentes. Sua habilidade causou o divórcio de seus pais e a fez viver isolada por medo de machucar os outros. Ao se transferir para uma nova escola, ela conhece Manabe, um colega cujos pensamentos pervertidos e eróticos acabam por trazê-la de volta à vida. Mais tarde, ela se junta à Sociedade de Pesquisas PES, onde a presidente Yuriko e seu amigo Daichi não se assustam com sua habilidade, mas se divertem com ela.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kotoura-san",
+      "anilist": 16636,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Kotoura-san/kotourasan1.jpg",
         "./Assets/Animes/Imagens/Kotoura-san/kotourasan2.png",
@@ -796,15 +1318,20 @@
         "./Assets/Animes/Imagens/Kotoura-san/kotourasan5.jpg",
         "./Assets/Animes/Imagens/Kotoura-san/kotourasan6.jpg"
       ],
-      "rating": 2,
-      "synopsis": "Haruka Kotoura possui um dom que considera uma maldição: ela consegue ler mentes. Sua habilidade causou o divórcio de seus pais e a fez viver isolada por medo de machucar os outros. Ao se transferir para uma nova escola, ela conhece Manabe, um colega cujos pensamentos pervertidos e eróticos acabam por trazê-la de volta à vida. Mais tarde, ela se junta à Sociedade de Pesquisas PES, onde a presidente Yuriko e seu amigo Daichi não se assustam com sua habilidade, mas se divertem com ela.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kotoura-san"
+      "parts": [
+        {"anilist":16636,"label":"ONA","title":"The Troubled Life of Miss Kotoura: Haruka no Heya","type":"ONA","episodes":6,"date":"2012-12-07","addedAt":null},
+        {"anilist":15379,"label":"1ª temporada","title":"The Troubled Life of Miss Kotoura","type":"TV","episodes":12,"date":"2013-01-11","addedAt":null}
+      ]
     },
     {
       "id": "5",
       "title": "Maou Gakuin no Futekigousha",
       "category": "ação",
+      "rating": 1,
+      "synopsis": "Nesse anime você acompanhará o rei demônio Anoth, que após vários séculos semeando caos e destruição, decide que quer ter uma vida mais calma na sua próxima encarnação. Por conta desse desejo, ele acaba reencarnado 2 mil anos depois, junto de seus servos, em uma escola de magia. O problema, no entanto, é que magia naquela época é bem fraca, e ninguém consegue medir o quão poderoso Anoth realmente é.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Maou%20Gakuin%20no%20Futekigousha",
+      "anilist": 112301,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/DemonKingAcademy/demonkingacademy1.jpg",
         "./Assets/Animes/Imagens/DemonKingAcademy/demonkingacademy2.png",
@@ -813,15 +1340,21 @@
         "./Assets/Animes/Imagens/DemonKingAcademy/demonkingacademy5.jpg",
         "./Assets/Animes/Imagens/DemonKingAcademy/demonkingacademy6.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Nesse anime você acompanhará o rei demônio Anoth, que após vários séculos semeando caos e destruição, decide que quer ter uma vida mais calma na sua próxima encarnação. Por conta desse desejo, ele acaba reencarnado 2 mil anos depois, junto de seus servos, em uma escola de magia. O problema, no entanto, é que magia naquela época é bem fraca, e ninguém consegue medir o quão poderoso Anoth realmente é.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Maou%20Gakuin%20no%20Futekigousha"
+      "parts": [
+        {"anilist":112301,"label":"1ª temporada","title":"The Misfit of Demon King Academy: History’s Strongest Demon King Reincarnates and Goes to School with His Descendants","type":"TV","episodes":13,"date":"2020-07-04","addedAt":null},
+        {"anilist":130588,"label":"2ª temporada","title":"The Misfit of Demon King Academy Ⅱ: History's Strongest Demon King Reincarnates and Goes to School with His Descendants","type":"TV","episodes":12,"date":"2023-01-08","addedAt":null},
+        {"anilist":130590,"label":"2ª temporada, parte 2","title":"The Misfit of Demon King Academy II (Cour 2)","type":"TV","episodes":12,"date":"2024-04-12","addedAt":null}
+      ]
     },
     {
       "id": "4",
       "title": "NieR:Automata Ver1.1a",
       "category": "ação",
+      "rating": 4,
+      "synopsis": "Em um futuro distante, 5012. A súbita invasão aérea da Terra por Aliens e suas criações Machine Lifeforms levou a humanidade à beira da extinção. O número sobrevivente de humanos se refugiou na lua para organizar um contra-ataque usando soldados androides para recapturar a Terra. No entanto, a guerra chega a um impasse, pois as formas de vida das máquinas continuam a se multiplicar infinitamente. Por sua vez, a humanidade implanta uma nova unidade de soldados androides como uma arma definitiva: YoRHa.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=NieR%3AAutomata%20Ver1.1a",
+      "anilist": 145665,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/NieR_Automata_Ver1_1a/nierautomataver11a1.jpg",
         "./Assets/Animes/Imagens/NieR_Automata_Ver1_1a/nierautomataver11a2.png",
@@ -830,46 +1363,38 @@
         "./Assets/Animes/Imagens/NieR_Automata_Ver1_1a/nierautomataver11a5.jpg",
         "./Assets/Animes/Imagens/NieR_Automata_Ver1_1a/nierautomataver11a6.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Em um futuro distante, 5012. A súbita invasão aérea da Terra por Aliens e suas criações Machine Lifeforms levou a humanidade à beira da extinção. O número sobrevivente de humanos se refugiou na lua para organizar um contra-ataque usando soldados androides para recapturar a Terra. No entanto, a guerra chega a um impasse, pois as formas de vida das máquinas continuam a se multiplicar infinitamente. Por sua vez, a humanidade implanta uma nova unidade de soldados androides como uma arma definitiva: YoRHa.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=NieR%3AAutomata%20Ver1.1a"
+      "parts": [
+        {"anilist":145665,"label":"1ª temporada","title":"NieR:Automata Ver1.1a","type":"TV","episodes":12,"date":"2023-01-08","addedAt":null}
+      ]
     },
     {
       "id": "3",
       "title": "Hazurewaku no 'Joutai Ijou Skill'",
       "category": "ação",
+      "rating": 1,
+      "synopsis": "Catapultados abruptamente para um mundo de fantasia, Mimori Touka e seus colegas foram convocados pela deusa residente do mundo para servir como heróis. Felizmente, a maioria dos alunos demonstra habilidades incríveis ao chegar, exceto Mimori, cujas habilidades chegam a um mísero rank E. Sem mais utilidade para ele, a deusa bane Mimori para uma masmorra da qual ninguém jamais voltou vivo. No entanto, acontece que as habilidades de Mimori não são tão inúteis quanto anormais.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Hazurewaku%20no%20'Joutai%20Ijou%20Skill'",
+      "anilist": 173694,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Hazurewaku/hazurewaku1.jpg",
         "./Assets/Animes/Imagens/Hazurewaku/hazurewaku2.jpg",
         "./Assets/Animes/Imagens/Hazurewaku/hazurewaku3.jpg",
         "./Assets/Animes/Imagens/Hazurewaku/hazurewaku4.jpg"
       ],
-      "rating": 1,
-      "synopsis": "Catapultados abruptamente para um mundo de fantasia, Mimori Touka e seus colegas foram convocados pela deusa residente do mundo para servir como heróis. Felizmente, a maioria dos alunos demonstra habilidades incríveis ao chegar, exceto Mimori, cujas habilidades chegam a um mísero rank E. Sem mais utilidade para ele, a deusa bane Mimori para uma masmorra da qual ninguém jamais voltou vivo. No entanto, acontece que as habilidades de Mimori não são tão inúteis quanto anormais.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Hazurewaku%20no%20'Joutai%20Ijou%20Skill'"
-    },
-    {
-      "id": "2",
-      "title": "Kaijuu 8-gou",
-      "category": "ação",
-      "images": [
-        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou1.png",
-        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou2.png",
-        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou3.png",
-        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou4.png",
-        "./Assets/Animes/Imagens/Kaijuu_8-gou/kaijuu8gou5.png"
-      ],
-      "rating": 2,
-      "synopsis": "Baseado na manga de Naoya Matsumoto, o anime Kaiju nº 8 conta a história do jovem Kafka Hibino, que passou sua infância acompanhando o mundo desmoronar após o surgimento de criaturas ameaçadoras conhecidas como Kaiju. Ao lado de sua melhor amiga, Mina Ashiro, os dois prometeram que ao crescer iriam se tornar membros da Força de Defesa do Japão e derrotar a ameaçadora presença dos monstros.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Kaijuu%208-gou"
+      "parts": [
+        {"anilist":173694,"label":"1ª temporada","title":"Failure Frame: I Became the Strongest and Annihilated Everything with Low-Level Spells","type":"TV","episodes":12,"date":"2024-07-05","addedAt":null}
+      ]
     },
     {
       "id": "1",
       "title": "Gate: Jieitai Kano Chi nite, Kaku Tatakaeri",
       "category": "ação",
+      "rating": 4,
+      "synopsis": "Um portal misterioso se abre em Tóquio, conectando o mundo moderno a um reino de fantasia medieval. As Forças de Autodefesa do Japão são enviadas para explorar este novo mundo, levando tecnologia moderna para um lugar de magia, dragões e política complexa.",
+      "watchUrl": "https://animefire.io/animes/pesquisar?q=Gate%3A%20Jieitai%20Kano%20Chi%20nite%2C%20Kaku%20Tatakaeri",
+      "anilist": 20994,
+      "updated": null,
       "images": [
         "./Assets/Animes/Imagens/Gate/gate1.jpg",
         "./Assets/Animes/Imagens/Gate/gate2.jpg",
@@ -877,10 +1402,10 @@
         "./Assets/Animes/Imagens/Gate/gate4.jpg",
         "./Assets/Animes/Imagens/Gate/gate5.jpg"
       ],
-      "rating": 4,
-      "synopsis": "Um portal misterioso se abre em Tóquio, conectando o mundo moderno a um reino de fantasia medieval. As Forças de Autodefesa do Japão são enviadas para explorar este novo mundo, levando tecnologia moderna para um lugar de magia, dragões e política complexa.",
-      "episodes": "",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Gate%3A%20Jieitai%20Kano%20Chi%20nite%2C%20Kaku%20Tatakaeri"
+      "parts": [
+        {"anilist":20994,"label":"1ª temporada","title":"Gate","type":"TV","episodes":12,"date":"2015-07-04","addedAt":null},
+        {"anilist":21364,"label":"1ª temporada, parte 2","title":"Gate 2","type":"TV","episodes":12,"date":"2016-01-09","addedAt":null}
+      ]
     }
   ]
 }
