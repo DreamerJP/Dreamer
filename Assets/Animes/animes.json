@@ -885,31 +885,6 @@
       ]
     },
     {
-      "id": "28",
-      "title": "Mushoku Tensei: Isekai Ittara Honki Dasu",
-      "category": "aventura",
-      "rating": 2,
-      "synopsis": "Um homem de 34 anos com uma vida infeliz reencarna como um bebê em um mundo de fantasia, no corpo de uma família de aventureiros. Com as memórias de sua vida passada e grande aptidão para magia, ele está determinado a aproveitar sua nova chance e não repetir seus erros anteriores.",
-      "watchUrl": "https://animefire.io/animes/pesquisar?q=Mushoku%20Tensei%3A%20Isekai%20Ittara%20Honki%20Dasu",
-      "anilist": 108465,
-      "updated": null,
-      "images": [
-        "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei1.jpg",
-        "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei2.png",
-        "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei3.jpg",
-        "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei4.png",
-        "./Assets/Animes/Imagens/Mushoku_Tensei/mushokutensei5.jpg"
-      ],
-      "parts": [
-        {"anilist":108465,"label":"1ª temporada","title":"Mushoku Tensei: Jobless Reincarnation","type":"TV","episodes":11,"date":"2021-01-11","addedAt":null},
-        {"anilist":127720,"label":"1ª temporada, parte 2","title":"Mushoku Tensei: Jobless Reincarnation Cour 2","type":"TV","episodes":12,"date":"2021-10-04","addedAt":null},
-        {"anilist":141534,"label":"Especial","title":"Mushoku Tensei: Jobless Reincarnation Cour 2 - Eris the Goblin Slayer","type":"SPECIAL","episodes":1,"date":"2022-03-16","addedAt":null},
-        {"anilist":146065,"label":"2ª temporada","title":"Mushoku Tensei: Jobless Reincarnation Season 2","type":"TV","episodes":13,"date":"2023-07-03","addedAt":null},
-        {"anilist":166873,"label":"2ª temporada, parte 2","title":"Mushoku Tensei: Jobless Reincarnation Season 2 Part 2","type":"TV","episodes":12,"date":"2024-04-08","addedAt":null},
-        {"anilist":178789,"label":"3ª temporada","title":"Mushoku Tensei: Jobless Reincarnation Season 3","type":"TV","episodes":14,"date":"2026-07-04","addedAt":null}
-      ]
-    },
-    {
       "id": "27",
       "title": "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
       "category": "aventura",
